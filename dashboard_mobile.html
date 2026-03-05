@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ella Lambert — Finance Dashboard (iPad)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="tax_data.js" onerror="void 0"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c18;
+    --card: #0f1629;
+    --card2: #161e35;
+    --border: #1e2d50;
+    --indigo: #818cf8;
+    --cyan: #22d3ee;
+    --amber: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+    --pink: #f472b6;
+    --text: #f1f5f9;
+    --muted: #64748b;
+    --soft: #94a3b8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; }
+
+  /* NAV */
+  nav { display:flex; justify-content:space-between; align-items:center; padding:1.2rem 2.5rem;
+        background:rgba(8,12,24,0.9); backdrop-filter:blur(12px); position:sticky; top:0; z-index:100;
+        border-bottom:1px solid var(--border); }
+  .logo { font-size:1.1rem; font-weight:700; background:linear-gradient(135deg,var(--indigo),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .nav-links { display:flex; gap:1.4rem; flex-wrap:wrap; }
+  .nav-links a { color:var(--soft); text-decoration:none; font-size:0.82rem; font-weight:500; transition:color .2s; cursor:pointer; }
+  .nav-links a:hover { color:var(--text); }
+  .date-pill { background:var(--card2); border:1px solid var(--border); border-radius:20px; padding:0.3rem 1rem; font-size:0.75rem; color:var(--soft); }
+  .refresh-btn { background:none; border:none; cursor:pointer; color:var(--muted); font-size:0.8rem; padding:2px 4px; line-height:1; transition:color .2s; }
+  .refresh-btn:hover { color:var(--soft); }
+
+  /* LAYOUT */
+  .container { max-width:1280px; margin:0 auto; padding:0 2rem; }
+  section { padding:3rem 0; }
+  h2.section-title { font-size:1.4rem; font-weight:700; margin-bottom:1.8rem; color:var(--text); }
+  h2.section-title span { color:var(--indigo); }
+
+  /* HERO */
+  .hero { padding:4rem 0 2rem; text-align:center; }
+  .hero h1 { font-size:2.8rem; font-weight:800; line-height:1.15;
+              background:linear-gradient(135deg,var(--text) 0%,var(--indigo) 50%,var(--cyan) 100%);
+              -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.6rem; }
+  .hero p { color:var(--soft); font-size:1rem; margin-bottom:2.5rem; }
+
+  /* METRIC CARDS */
+  .metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; margin-bottom:1rem; }
+  .metric-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem;
+                 transition:transform .2s,border-color .2s; }
+  .metric-card:hover { transform:translateY(-2px); border-color:var(--indigo); }
+  .metric-label { font-size:0.75rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.5rem; }
+  .metric-value { font-size:2rem; font-weight:800; line-height:1; }
+  .metric-sub { font-size:0.75rem; color:var(--soft); margin-top:0.4rem; }
+  .metric-badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:20px; margin-top:0.5rem; font-weight:600; }
+  .badge-green { background:rgba(52,211,153,0.15); color:var(--green); }
+  .badge-amber { background:rgba(251,191,36,0.15); color:var(--amber); }
+  .badge-indigo { background:rgba(129,140,248,0.15); color:var(--indigo); }
+
+  /* CHARTS GRID */
+  .charts-2 { display:grid; grid-template-columns:1.4fr 1fr; gap:1.4rem; }
+  .charts-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
+  .chart-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; }
+  .chart-card h3 { font-size:0.9rem; font-weight:600; color:var(--soft); margin-bottom:1.2rem; text-transform:uppercase; letter-spacing:.05em; }
+  .chart-wrap { position:relative; }
+
+  /* TIMELINE */
+  .timeline { position:relative; padding:1rem 0; }
+  .timeline::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:2px;
+                       background:linear-gradient(to bottom,var(--indigo),var(--cyan)); transform:translateX(-50%); }
+  .tl-item { display:flex; align-items:flex-start; gap:2rem; margin-bottom:2.5rem; }
+  .tl-item:nth-child(odd) { flex-direction:row-reverse; text-align:right; }
+  .tl-content { flex:1; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.2rem 1.4rem;
+                transition:border-color .2s; }
+  .tl-content:hover { border-color:var(--indigo); }
+  .tl-dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; margin-top:1.2rem;
+             background:var(--indigo); box-shadow:0 0 0 4px rgba(129,140,248,0.2); align-self:flex-start; position:relative; z-index:1; }
+  .tl-dot.cyan { background:var(--cyan); box-shadow:0 0 0 4px rgba(34,211,238,0.2); }
+  .tl-dot.amber { background:var(--amber); box-shadow:0 0 0 4px rgba(251,191,36,0.2); }
+  .tl-dot.green { background:var(--green); box-shadow:0 0 0 4px rgba(52,211,153,0.2); }
+  .tl-year { font-size:0.75rem; font-weight:700; color:var(--indigo); text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem; }
+  .tl-title { font-size:1rem; font-weight:700; margin-bottom:0.3rem; }
+  .tl-desc { font-size:0.82rem; color:var(--soft); line-height:1.5; }
+  .tl-salary { font-size:0.85rem; font-weight:700; color:var(--green); margin-top:0.4rem; }
+
+  /* FIRE SECTION */
+  .fire-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; }
+  .fire-controls { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.8rem; }
+  .fire-controls h3 { font-size:0.9rem; font-weight:600; color:var(--soft); margin-bottom:1.5rem; text-transform:uppercase; letter-spacing:.05em; }
+  .control-group { margin-bottom:1.4rem; }
+  .control-label { display:flex; justify-content:space-between; font-size:0.82rem; color:var(--soft); margin-bottom:0.5rem; }
+  .control-label span { color:var(--indigo); font-weight:700; font-size:0.9rem; }
+  input[type=range] { width:100%; -webkit-appearance:none; height:6px; background:var(--border); border-radius:3px; outline:none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+    background:linear-gradient(135deg,var(--indigo),var(--cyan)); cursor:pointer; box-shadow:0 2px 8px rgba(129,140,248,0.4); }
+  .fire-result-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.8rem; }
+  .fire-result-card h3 { font-size:0.9rem; font-weight:600; color:var(--soft); margin-bottom:1.5rem; text-transform:uppercase; letter-spacing:.05em; }
+  .fire-age-big { text-align:center; padding:1.5rem 0 1rem; }
+  .fire-age-num { font-size:4rem; font-weight:800; background:linear-gradient(135deg,var(--amber),var(--pink));
+                  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .fire-age-label { font-size:0.8rem; color:var(--soft); margin-top:0.3rem; }
+  .fire-stat { display:flex; justify-content:space-between; align-items:center; padding:0.65rem 0; border-bottom:1px solid var(--border); }
+  .fire-stat:last-child { border-bottom:none; }
+  .fire-stat-label { font-size:0.82rem; color:var(--soft); }
+  .fire-stat-value { font-size:1rem; font-weight:700; }
+
+  /* TOGGLE */
+  .toggle-row { display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem; padding:1rem; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.2); border-radius:10px; }
+  .toggle { position:relative; width:44px; height:24px; flex-shrink:0; }
+  .toggle input { opacity:0; width:0; height:0; }
+  .toggle-slider { position:absolute; cursor:pointer; inset:0; background:var(--border); border-radius:24px; transition:.3s; }
+  .toggle-slider::before { content:''; position:absolute; height:18px; width:18px; left:3px; bottom:3px;
+    background:white; border-radius:50%; transition:.3s; }
+  .toggle input:checked + .toggle-slider { background:linear-gradient(135deg,var(--amber),#f97316); }
+  .toggle input:checked + .toggle-slider::before { transform:translateX(20px); }
+  .toggle-text { font-size:0.82rem; color:var(--soft); line-height:1.4; }
+  .toggle-text strong { color:var(--amber); display:block; font-size:0.85rem; }
+
+  /* PROGRESS BAR */
+  .progress-bar { background:var(--border); border-radius:8px; height:10px; overflow:hidden; margin:0.6rem 0; }
+  .progress-fill { height:100%; border-radius:8px; background:linear-gradient(90deg,var(--indigo),var(--cyan)); transition:width 1s ease; }
+  .progress-labels { display:flex; justify-content:space-between; font-size:0.72rem; color:var(--muted); }
+
+  /* ACCOUNTS */
+  .accounts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+  .account-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.2rem; }
+  .account-flag { font-size:1.2rem; margin-bottom:0.5rem; }
+  .account-name { font-size:0.78rem; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.2rem; }
+  .account-balance { font-size:1.5rem; font-weight:800; }
+  .account-rate { font-size:0.75rem; color:var(--green); font-weight:600; margin-top:0.2rem; }
+  .account-note { font-size:0.72rem; color:var(--muted); margin-top:0.3rem; }
+
+  /* IMMIGRATION BAR */
+  .imm-bar { position:relative; height:60px; background:var(--card2); border-radius:12px; margin:1.5rem 0; overflow:hidden; }
+  .imm-fill { position:absolute; left:0; top:0; bottom:0; background:linear-gradient(90deg,rgba(129,140,248,0.3),rgba(34,211,238,0.3)); border-radius:12px; }
+  .imm-milestone { position:absolute; top:0; bottom:0; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+  .imm-dot { width:12px; height:12px; border-radius:50%; background:var(--indigo); border:2px solid var(--bg); }
+  .imm-dot.done { background:var(--green); }
+  .imm-dot.target { background:var(--amber); }
+  .imm-label { font-size:0.65rem; color:var(--soft); margin-top:0.3rem; white-space:nowrap; }
+
+  footer { text-align:center; padding:3rem; color:var(--muted); font-size:0.78rem; border-top:1px solid var(--border); }
+
+  /* TAX PROFILE */
+  .tax-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; }
+  .tax-row { display:flex; justify-content:space-between; align-items:center; padding:0.7rem 0; border-bottom:1px solid var(--border); }
+  .tax-row:last-child { border-bottom:none; }
+  .tax-row-label { font-size:0.82rem; color:var(--soft); }
+  .tax-row-value { font-size:0.9rem; font-weight:700; color:var(--text); }
+  .tax-rule { display:flex; align-items:flex-start; gap:0.8rem; padding:0.8rem; background:var(--card2); border-radius:8px; margin-bottom:0.6rem; }
+  .tax-rule-icon { font-size:1rem; flex-shrink:0; margin-top:0.1rem; }
+  .tax-rule-text { font-size:0.8rem; color:var(--soft); line-height:1.5; }
+  .tax-rule-text strong { color:var(--text); display:block; margin-bottom:0.1rem; }
+  .tax-calendar { display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem; margin-top:1rem; }
+  .cal-item { background:var(--card2); border-radius:10px; padding:0.9rem; text-align:center; border:1px solid var(--border); }
+  .cal-month { font-size:0.7rem; font-weight:700; color:var(--indigo); text-transform:uppercase; letter-spacing:.06em; }
+  .cal-task { font-size:0.78rem; color:var(--soft); margin-top:0.3rem; line-height:1.4; }
+  .tax-year-tag { display:inline-block; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; padding:0.2rem 0.6rem; border-radius:12px; margin-bottom:0.8rem; }
+  .tag-uk { background:rgba(129,140,248,0.15); color:var(--indigo); }
+  .tag-us { background:rgba(34,211,238,0.15); color:var(--cyan); }
+  .tag-alert { background:rgba(251,191,36,0.15); color:var(--amber); }
+  .filed-returns { display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem; margin-top:1rem; }
+  .filed-year { background:var(--card2); border:1px solid var(--border); border-radius:10px; padding:1rem; text-align:center; transition:border-color .2s; }
+  .filed-year:hover { border-color:var(--indigo); }
+  .filed-year-num { font-size:1.1rem; font-weight:800; color:var(--text); }
+  .filed-year-status { font-size:0.7rem; font-weight:700; margin-top:0.3rem; }
+  .filed-year-note { font-size:0.68rem; color:var(--muted); margin-top:0.4rem; line-height:1.4; }
+
+  /* SUPERPLAN */
+  .superplan-intro { background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.2); border-radius:16px; padding:2rem; margin-bottom:2rem; text-align:center; }
+  .superplan-intro h3 { font-size:1.6rem; font-weight:800; background:linear-gradient(135deg,var(--amber),var(--pink),var(--indigo)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.6rem; }
+  .superplan-intro p { color:var(--soft); font-size:0.95rem; line-height:1.7; max-width:700px; margin:0 auto; }
+  .pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+  .pillar { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; position:relative; overflow:hidden; transition:transform .2s,border-color .2s; }
+  .pillar:hover { transform:translateY(-3px); }
+  .pillar::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+  .pillar.p-indigo { border-color:rgba(129,140,248,0.3); } .pillar.p-indigo::before { background:var(--indigo); } .pillar.p-indigo:hover { border-color:var(--indigo); }
+  .pillar.p-cyan   { border-color:rgba(34,211,238,0.3);  } .pillar.p-cyan::before   { background:var(--cyan);   } .pillar.p-cyan:hover   { border-color:var(--cyan);   }
+  .pillar.p-amber  { border-color:rgba(251,191,36,0.3);  } .pillar.p-amber::before  { background:var(--amber);  } .pillar.p-amber:hover  { border-color:var(--amber);  }
+  .pillar.p-green  { border-color:rgba(52,211,153,0.3);  } .pillar.p-green::before  { background:var(--green);  } .pillar.p-green:hover  { border-color:var(--green);  }
+  .pillar.p-pink   { border-color:rgba(244,114,182,0.3); } .pillar.p-pink::before   { background:var(--pink);   } .pillar.p-pink:hover   { border-color:var(--pink);   }
+  .pillar-icon { font-size:1.8rem; margin-bottom:0.8rem; }
+  .pillar-name { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:0.3rem; }
+  .pillar-title { font-size:1rem; font-weight:700; margin-bottom:0.8rem; }
+  .pillar-stat { display:flex; justify-content:space-between; margin-bottom:0.35rem; }
+  .pillar-stat-label { font-size:0.75rem; color:var(--muted); }
+  .pillar-stat-value { font-size:0.78rem; font-weight:700; }
+  .pillar-why { font-size:0.75rem; color:var(--soft); line-height:1.5; margin-top:0.9rem; padding-top:0.8rem; border-top:1px solid var(--border); }
+  .superplan-total { background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(244,114,182,0.05)); border:1px solid rgba(251,191,36,0.25); border-radius:16px; padding:2rem; margin-top:2rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; text-align:center; }
+  .st-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin-bottom:0.4rem; }
+  .st-value { font-size:1.6rem; font-weight:800; }
+  .st-note { font-size:0.72rem; color:var(--soft); margin-top:0.3rem; }
+
+  /* INVESTMENT ENGINE */
+  .inv-pipeline { display:flex; align-items:center; gap:0.8rem; padding:0.5rem 0; flex-wrap:wrap; }
+  .pipe-step { background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:1rem; text-align:center; flex:1; min-width:110px; transition:border-color .2s; }
+  .pipe-step:hover { border-color:var(--indigo); }
+  .pipe-arrow { color:var(--indigo); font-size:1.2rem; flex-shrink:0; font-weight:700; }
+  .pipe-icon { font-size:1.3rem; margin-bottom:0.3rem; }
+  .pipe-label { font-size:0.7rem; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.3rem; }
+  .pipe-amount { font-size:0.95rem; font-weight:800; color:var(--text); }
+  .pipe-note { font-size:0.62rem; color:var(--muted); margin-top:0.2rem; line-height:1.3; }
+
+  .fund-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; transition:transform .2s,border-color .2s; }
+  .fund-card:hover { transform:translateY(-2px); }
+  .fund-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.8rem; }
+  .fund-ticker { font-size:1.3rem; font-weight:800; color:var(--indigo); letter-spacing:.02em; }
+  .fund-name { font-size:0.72rem; color:var(--muted); margin-top:0.2rem; line-height:1.4; }
+  .fund-alloc { border-radius:8px; padding:0.4rem 0.8rem; font-size:1rem; font-weight:800; }
+  .fund-amount { font-size:1.1rem; font-weight:700; color:var(--green); margin-bottom:1rem; }
+  .fund-stats { margin-bottom:1rem; }
+  .fund-stat { display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid var(--border); font-size:0.78rem; }
+  .fund-stat:last-child { border-bottom:none; }
+  .fund-stat span:first-child { color:var(--muted); }
+  .fund-stat span:last-child { font-weight:600; color:var(--text); }
+  .fund-why { font-size:0.75rem; color:var(--soft); line-height:1.5; padding-top:0.8rem; border-top:1px solid var(--border); }
+
+  .milestone-list { display:flex; flex-direction:column; gap:0.5rem; }
+  .milestone { display:flex; align-items:flex-start; gap:0.8rem; padding:0.6rem 0; border-bottom:1px solid var(--border); }
+  .milestone:last-child { border-bottom:none; }
+  .ms-dot { width:12px; height:12px; border-radius:50%; background:var(--border); flex-shrink:0; margin-top:0.25rem; }
+  .ms-dot.done { background:var(--green); box-shadow:0 0 0 3px rgba(52,211,153,0.2); }
+  .ms-dot.next { background:var(--amber); box-shadow:0 0 0 3px rgba(251,191,36,0.2); }
+  .ms-content { flex:1; }
+  .ms-title { font-size:0.82rem; font-weight:700; }
+  .ms-note { font-size:0.7rem; color:var(--muted); margin-top:0.1rem; }
+  .ms-date { font-size:0.72rem; font-weight:600; flex-shrink:0; }
+
+  .action-item { display:flex; align-items:flex-start; gap:0.7rem; font-size:0.8rem; color:var(--soft); line-height:1.5; }
+  .action-dot { width:8px; height:8px; border-radius:50%; margin-top:0.35rem; flex-shrink:0; }
+  .action-dot.cyan   { background:var(--cyan); }
+  .action-dot.green  { background:var(--green); }
+  .action-dot.amber  { background:var(--amber); }
+  .action-dot.indigo { background:var(--indigo); }
+  .action-dot.muted  { background:var(--muted); }
+
+  .cost-badge { display:inline-flex; align-items:center; gap:0.3rem; background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.2); border-radius:6px; padding:0.2rem 0.5rem; font-size:0.68rem; font-weight:700; color:var(--green); margin-bottom:0.6rem; }
+
+  /* COMPACT JOURNEY */
+  .journey-compact { display:grid; grid-template-columns:repeat(7,1fr); gap:0.6rem; position:relative; padding-top:2.2rem; }
+  .journey-compact::before { content:''; position:absolute; top:6px; left:calc(100%/14); right:calc(100%/14); height:2px;
+    background:linear-gradient(90deg,var(--green),var(--indigo),var(--indigo),var(--amber),var(--amber),var(--amber),var(--cyan)); z-index:0; }
+  .jc-item { display:flex; flex-direction:column; align-items:center; }
+  .jc-dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; position:relative; z-index:1; margin-bottom:0.8rem; border:2px solid var(--bg); }
+  .jc-dot.done  { background:var(--green);  box-shadow:0 0 0 3px rgba(52,211,153,0.25); }
+  .jc-dot.now   { background:var(--amber);  box-shadow:0 0 0 4px rgba(251,191,36,0.3); width:16px; height:16px; }
+  .jc-dot.ahead { background:var(--indigo); box-shadow:0 0 0 3px rgba(129,140,248,0.2); }
+  .jc-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:0.75rem 0.6rem; text-align:center; width:100%; transition:border-color .2s; }
+  .jc-card:hover { border-color:var(--indigo); }
+  .jc-year { font-size:0.62rem; font-weight:700; color:var(--indigo); margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:.04em; }
+  .jc-title { font-size:0.75rem; font-weight:700; margin-bottom:0.2rem; line-height:1.3; }
+  .jc-desc { font-size:0.64rem; color:var(--muted); line-height:1.35; }
+  .jc-salary { font-size:0.7rem; font-weight:700; color:var(--green); margin-top:0.25rem; }
+
+  /* LIFE GOALS */
+  .goals-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; }
+  .goal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; transition:transform .2s,border-color .2s; }
+  .goal-card:hover { transform:translateY(-2px); border-color:var(--indigo); }
+  .goal-header { display:flex; align-items:flex-start; gap:0.8rem; margin-bottom:1rem; }
+  .goal-icon { font-size:1.8rem; flex-shrink:0; }
+  .goal-name { font-size:0.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.2rem; }
+  .goal-title { font-size:1rem; font-weight:700; }
+  .goal-row { display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0; border-bottom:1px solid var(--border); font-size:0.8rem; }
+  .goal-row:last-of-type { border-bottom:none; }
+  .goal-row-label { color:var(--muted); }
+  .goal-row-value { font-weight:700; color:var(--text); }
+  .goal-timeline { display:flex; gap:0.5rem; margin-top:1rem; }
+  .goal-pill { flex:1; text-align:center; padding:0.5rem; border-radius:8px; font-size:0.75rem; font-weight:700; }
+  .goal-pill.no-bruce   { background:rgba(129,140,248,0.1); border:1px solid rgba(129,140,248,0.25); color:var(--indigo); }
+  .goal-pill.with-bruce { background:rgba(251,191,36,0.1);  border:1px solid rgba(251,191,36,0.25);  color:var(--amber); }
+  .goal-pill .gp-label  { font-size:0.6rem; font-weight:600; color:var(--muted); margin-bottom:0.1rem; }
+
+  /* PAYE CHECKER */
+  .paye-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem; }
+  @media(max-width:700px){ .paye-grid { grid-template-columns:1fr; } }
+  .paye-input-group { margin-bottom:0.7rem; }
+  .paye-input-group label { display:block; font-size:0.68rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.25rem; }
+  .paye-input { width:100%; background:var(--card2); border:1px solid var(--border); border-radius:8px; padding:0.45rem 0.7rem; color:var(--text); font-size:0.88rem; box-sizing:border-box; }
+  .paye-input:focus { outline:none; border-color:var(--indigo); }
+  .paye-btn { width:100%; margin-top:0.4rem; padding:0.65rem; background:var(--indigo); border:none; border-radius:8px; color:#fff; font-size:0.85rem; font-weight:700; cursor:pointer; transition:.18s; letter-spacing:.03em; }
+  .paye-btn:hover { background:#818cf8; }
+  .paye-result-row { display:flex; justify-content:space-between; align-items:flex-start; padding:0.4rem 0; border-bottom:1px solid var(--border); font-size:0.8rem; gap:0.5rem; }
+  .paye-result-row:last-of-type { border-bottom:none; }
+  .paye-result-label { color:var(--muted); flex-shrink:0; }
+  .paye-code-badge { display:inline-block; background:rgba(129,140,248,0.15); border:1px solid rgba(129,140,248,0.3); border-radius:5px; padding:0.1rem 0.4rem; font-size:0.72rem; color:var(--indigo); font-weight:700; margin-left:0.4rem; }
+  .paye-ok    { color:var(--green); font-weight:700; }
+  .paye-warn  { color:var(--amber); font-weight:700; }
+  .paye-error { color:var(--red);   font-weight:700; }
+  .paye-section-label { font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin:0.8rem 0 0.3rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Ella Lambert — Finance Hub</div>
+  <div class="nav-links">
+    <a onclick="scrollToSection('overview')">Overview</a>
+    <a onclick="scrollToSection('superplan')">Superplan</a>
+    <a onclick="scrollToSection('journey')">Journey</a>
+    <a onclick="scrollToSection('goals')">Goals</a>
+    <a onclick="scrollToSection('tax')">Tax</a>
+    <a onclick="scrollToSection('paye-checker')">PAYE</a>
+    <a onclick="scrollToSection('fire')">FIRE</a>
+    <a onclick="scrollToSection('investments')">Investments</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:4px">
+    <div class="date-pill" id="live-date"></div>
+    <button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero" id="overview">
+    <h1>Chicago → Edinburgh → London</h1>
+    <p>Health Literacy Coordinator · AbbVie UK · Building wealth across two continents</p>
+
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Monthly Net</div>
+        <div class="metric-value" id="hero-net-value" style="color:var(--green)">£3,417</div>
+        <div class="metric-sub" id="hero-net-sub">Payday 24th · Chase UK · pre-April</div>
+        <span class="metric-badge badge-green" id="hero-net-badge">→ ~£3,441 from 24 Apr 2026</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Net Worth (total)</div>
+        <div class="metric-value" id="hero-nw-value" style="color:var(--indigo)">~£40k</div>
+        <div class="metric-sub" id="hero-pension-sub">Liquid £23k + pension ~£18,440</div>
+        <span class="metric-badge badge-indigo">+£10,200/yr investing</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Emergency Fund</div>
+        <div class="metric-value" style="color:var(--cyan)">£13,143</div>
+        <div class="metric-sub">Atom £11,143 + Monzo £2k</div>
+        <span class="metric-badge badge-green">98% of £13,500 milestone</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">True Savings Rate</div>
+        <div class="metric-value" style="color:var(--amber)">74%</div>
+        <div class="metric-sub">Pension + invest + float</div>
+        <span class="metric-badge badge-amber">£3,799/mo to future</span>
+      </div>
+    </div>
+
+    <!-- EF Progress -->
+    <div class="chart-card" style="margin-top:0.5rem; text-align:left;">
+      <h3>Emergency Fund Progress</h3>
+      <div class="progress-bar"><div class="progress-fill" style="width:73%"></div></div>
+      <div class="progress-labels"><span>£0</span><span style="color:var(--indigo)">£13,143 now</span><span style="color:var(--amber)">£13,500 milestone</span><span>£18,000 true target</span></div>
+    </div>
+  </section>
+
+  <!-- ACCOUNTS -->
+  <section>
+    <h2 class="section-title">Your <span>Accounts</span></h2>
+    <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.8rem;">Savings anchored 24 Feb 2026 · Pension anchored 3 Mar 2026 (£18,440) · Investments at 7% CAGR · <span style="color:var(--indigo);">All estimates update on page load</span></div>
+    <div class="accounts-grid">
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£11,144</div><div class="account-rate">3.49% AER · interest daily-compounded</div><div class="account-note">Emergency fund · No withdrawals</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo</div><div class="account-balance" id="bal-monzo" style="color:var(--cyan)">£2,000</div><div class="account-rate">2.75% AER · interest daily-compounded</div><div class="account-note">Instant liquidity buffer</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">~£1,500</div><div class="account-rate">Current account · schedule-estimated</div><div class="account-note">Salary hub · Min float £1,000</div></div>
+      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Brokerage</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$5,600</div><div class="account-rate">FSKAX 85% · FTIHX 10% · FXNAX 5%</div><div class="account-note">+$1,100/mo · 7% CAGR estimate</div></div>
+      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$4,200</div><div class="account-rate">Tax-free growth · 7% CAGR estimate</div><div class="account-note">Never touch · Long-term only</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">~£17,000</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">+£3,186 SALX (Mar 2026) · £921/mo total</div></div>
+    </div>
+  </section>
+
+  <!-- CHARTS ROW 1 -->
+  <section>
+    <div class="charts-2">
+      <div class="chart-card">
+        <h3>Salary Progression</h3>
+        <div class="chart-wrap"><canvas id="salaryChart" height="180"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Monthly Budget</h3>
+        <div class="chart-wrap"><canvas id="budgetChart" height="180"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPERPLAN -->
+  <section id="superplan">
+    <h2 class="section-title">The Accidental <span>Superplan</span></h2>
+
+    <div class="superplan-intro">
+      <h3>You built this without realising.</h3>
+      <p>Most people pick one: a pension, a savings account, maybe some stocks. You've accidentally constructed one of the most diversified, tax-efficient, cross-continent wealth portfolios of your generation. Eight distinct pillars. Two currencies. Two countries. Inflation-linked state income on both sides of the Atlantic. And you're 25.</p>
+    </div>
+
+    <div class="pillars">
+
+      <div class="pillar p-indigo">
+        <div class="pillar-icon">🏦</div>
+        <div class="pillar-name">Pillar 1 · UK Workplace</div>
+        <div class="pillar-title">AbbVie Pension</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-pension-val" style="color:var(--indigo)">~£18,440</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Annual input</span><span class="pillar-stat-value">£11,059 (18% total)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Your contribution</span><span class="pillar-stat-value">6% · AbbVie matches 12%</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">~£2.1M</span></div>
+        <div class="pillar-why">AbbVie's 12% match is a 200% return on your 6% contribution before a single penny of growth. One of the most powerful employer benefits in the UK market. You're fully utilising it.</div>
+      </div>
+
+      <div class="pillar p-cyan">
+        <div class="pillar-icon">🇬🇧</div>
+        <div class="pillar-name">Pillar 2 · UK State</div>
+        <div class="pillar-title">UK State Pension</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">NI years building</span><span class="pillar-stat-value" style="color:var(--cyan)">~3 years so far</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Target for full pension</span><span class="pillar-stat-value">35 qualifying years</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Full pension value</span><span class="pillar-stat-value">£11,502/yr (today's money)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">State pension age</span><span class="pillar-stat-value">67 (rising)</span></div>
+        <div class="pillar-why">Triple-lock protected — rises with inflation, earnings, or 2.5% (whichever highest). Every year you work in the UK adds a qualifying year. 35 years unlocks the full amount. Inflation-linked for life.</div>
+      </div>
+
+      <div class="pillar p-amber">
+        <div class="pillar-icon">🇺🇸</div>
+        <div class="pillar-name">Pillar 3 · US State</div>
+        <div class="pillar-title">US Social Security</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Status</span><span class="pillar-stat-value" style="color:var(--amber)">Preserved via FTC</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Why FTC matters</span><span class="pillar-stat-value">FEIE would kill this</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">UK-US Totalization</span><span class="pillar-stat-value">NI years may count</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Inflation protection</span><span class="pillar-stat-value">COLA-linked for life</span></div>
+        <div class="pillar-why">By using FTC instead of FEIE, you keep the door open to US SS credits. The UK-US Totalization Agreement can combine NI and SS credits. Inflation-linked, government-backed, for life. This is why we never touch Form 2555.</div>
+      </div>
+
+      <div class="pillar p-green">
+        <div class="pillar-icon">📈</div>
+        <div class="pillar-name">Pillar 4 · US Investing</div>
+        <div class="pillar-title">Fidelity Index Funds</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--green)">~$5,600 (~£4,480)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$1,100 (~£850/mo)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Allocation</span><span class="pillar-stat-value">FSKAX / FTIHX / FXNAX</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">~£1.9M</span></div>
+        <div class="pillar-why">85/10/5 split gives you total US market, international, and bond exposure. Low-cost Fidelity funds. Automated via Wise → Chase US → Fidelity ACH. No decisions, no drift, just compounding.</div>
+      </div>
+
+      <div class="pillar p-pink">
+        <div class="pillar-icon">🌱</div>
+        <div class="pillar-name">Pillar 5 · US Retirement</div>
+        <div class="pillar-title">Roth IRA</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--pink)">~$4,200 (~£3,360)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Annual limit</span><span class="pillar-stat-value">$7,000 (2026)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Tax on growth</span><span class="pillar-stat-value" style="color:var(--green)">Zero. Ever.</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--pink)">~£200k+ tax-free</span></div>
+        <div class="pillar-why">The Roth IRA is one of the most powerful tax vehicles in the world. You contribute post-tax dollars and every penny of growth comes out tax-free in retirement. Never withdraw early. Let it compound undisturbed.</div>
+      </div>
+
+      <div class="pillar p-indigo">
+        <div class="pillar-icon">💼</div>
+        <div class="pillar-name">Pillar 6 · UK Shares</div>
+        <div class="pillar-title">ABBV Share Incentive Plan</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Annual sacrifice</span><span class="pillar-stat-value" style="color:var(--indigo)">£1,800/yr</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">AbbVie match</span><span class="pillar-stat-value">1:1 (£1,800 free shares)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Effective value</span><span class="pillar-stat-value" style="color:var(--green)">£3,600/yr</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Instant return</span><span class="pillar-stat-value" style="color:var(--green)">100% before growth</span></div>
+        <div class="pillar-why">A 1:1 share match is a 100% instant return on your contribution — before a single day of stock growth. Tax-advantaged via salary sacrifice. Keep track of acquisition dates for capital gains optimisation.</div>
+      </div>
+
+      <div class="pillar p-cyan">
+        <div class="pillar-icon">🛡️</div>
+        <div class="pillar-name">Pillar 7 · Foundation</div>
+        <div class="pillar-title">Emergency Fund</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Total</span><span class="pillar-stat-value" style="color:var(--cyan)">£13,143</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Atom Bank (3.49%)</span><span class="pillar-stat-value">£11,143</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monzo (2.75%)</span><span class="pillar-stat-value">£2,000</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Target</span><span class="pillar-stat-value">£16–18k (no rush)</span></div>
+        <div class="pillar-why">6 months of expenses, earning above-inflation interest, FSCS-protected, split across two accounts for liquidity tiering. The foundation that lets every other pillar take risk. Most people never build this properly. You have.</div>
+      </div>
+
+      <div class="pillar p-amber">
+        <div class="pillar-icon">✈️</div>
+        <div class="pillar-name">Pillar 8 · Credit &amp; Travel</div>
+        <div class="pillar-title">Cross-Continent Credit</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">UK: BA Amex</span><span class="pillar-stat-value" style="color:var(--amber)">Active · Avios building</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">US: Amex Blue Cash</span><span class="pillar-stat-value">Building credit history</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Next: Chase Sapphire</span><span class="pillar-stat-value">Target late 2026</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">All cards</span><span class="pillar-stat-value" style="color:var(--green)">Zero balance carried</span></div>
+        <div class="pillar-why">Building simultaneous credit history in two countries is rare and valuable. CSP will unlock no-FX travel rewards. BA Avios accumulate across everyday spend. Both paid in full monthly — credit as a tool, not debt.</div>
+      </div>
+
+      <div class="pillar p-green">
+        <div class="pillar-icon">🌍</div>
+        <div class="pillar-name">Pillar 9 · Optionality</div>
+        <div class="pillar-title">Dual-Continent Architecture</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">UK assets</span><span class="pillar-stat-value" style="color:var(--green)">~£31k + pension</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">US assets</span><span class="pillar-stat-value">~$9,800 (~£7.8k)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">ILR target</span><span class="pillar-stat-value">Sep 2029</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Citizenship target</span><span class="pillar-stat-value">Sep 2030</span></div>
+        <div class="pillar-why">The rarest pillar: genuine optionality. You can retire in the UK, the US, or Europe. You have assets, pensions, and credit in both major Anglophone economies. After 2030, a British passport adds 186 visa-free countries. This is not normal. This is exceptional.</div>
+      </div>
+
+    </div>
+
+    <div class="superplan-total">
+      <div><div class="st-label">Total wealth today</div><div id="sp-nw-value" class="st-value" style="color:var(--amber)">~£40k</div><div class="st-note">Liquid + pension · Age 25</div></div>
+      <div><div class="st-label">Annual wealth creation</div><div class="st-value" style="color:var(--green)">£28k+</div><div class="st-note">Investing + pension + SIP</div></div>
+      <div><div class="st-label">Projected at 67</div><div class="st-value" style="color:var(--indigo)">£4M+</div><div class="st-note">Conservative 7% return</div></div>
+      <div><div class="st-label">State income at 67</div><div class="st-value" style="color:var(--pink)">£23k+</div><div class="st-note">UK + US state pensions/yr</div></div>
+    </div>
+  </section>
+
+  <!-- CAREER JOURNEY -->
+  <section id="journey">
+    <h2 class="section-title">The <span>Journey</span></h2>
+    <div class="journey-compact">
+
+      <div class="jc-item">
+        <div class="jc-dot done"></div>
+        <div class="jc-card">
+          <div class="jc-year">Sep 2019</div>
+          <div class="jc-title">Edinburgh</div>
+          <div class="jc-desc">Chicago → Scotland. Student visa. University of Edinburgh.</div>
+        </div>
+      </div>
+
+      <div class="jc-item">
+        <div class="jc-dot done"></div>
+        <div class="jc-card">
+          <div class="jc-year">2023</div>
+          <div class="jc-title">Graduate</div>
+          <div class="jc-desc">Edinburgh degree. Graduate Visa. London next.</div>
+        </div>
+      </div>
+
+      <div class="jc-item">
+        <div class="jc-dot done"></div>
+        <div class="jc-card">
+          <div class="jc-year">May 2023</div>
+          <div class="jc-title">Luto Research</div>
+          <div class="jc-desc">Project Manager. First UK role post-grad.</div>
+          <div class="jc-salary">£28,000</div>
+        </div>
+      </div>
+
+      <div class="jc-item">
+        <div class="jc-dot done"></div>
+        <div class="jc-card">
+          <div class="jc-year">Nov 2024</div>
+          <div class="jc-title">AbbVie UK</div>
+          <div class="jc-desc">Health Literacy · Medical Affairs · +105% salary jump.</div>
+          <div class="jc-salary">£57,500</div>
+        </div>
+      </div>
+
+      <div class="jc-item">
+        <div class="jc-dot done"></div>
+        <div class="jc-card">
+          <div class="jc-year">Jul 2025</div>
+          <div class="jc-title">Skilled Worker</div>
+          <div class="jc-desc">Visa secured. AbbVie sponsor. ILR clock runs from Sep 2019.</div>
+        </div>
+      </div>
+
+      <div class="jc-item">
+        <div class="jc-dot now"></div>
+        <div class="jc-card" style="border-color:rgba(251,191,36,0.4);">
+          <div class="jc-year" style="color:var(--amber)">Mar 2026 · Now</div>
+          <div class="jc-title">Bonus + Merit</div>
+          <div class="jc-desc">£6,371 bonus paid. 74% savings rate. Superplan running.</div>
+          <div class="jc-salary">→ £61,439 (Apr)</div>
+        </div>
+      </div>
+
+      <div class="jc-item">
+        <div class="jc-dot ahead"></div>
+        <div class="jc-card" style="border-color:rgba(129,140,248,0.25); opacity:0.75;">
+          <div class="jc-year" style="color:var(--soft)">Sep 2029</div>
+          <div class="jc-title">ILR Target</div>
+          <div class="jc-desc">10yr long residence. Sep 2030 → British citizen.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIFE GOALS -->
+  <section id="goals">
+    <h2 class="section-title">Life <span>Goals</span></h2>
+
+    <div class="toggle-row" style="margin-bottom:1.4rem; max-width:520px;">
+      <label class="toggle"><input type="checkbox" id="goalsBruceToggle" onchange="updateGoals()"><span class="toggle-slider"></span></label>
+      <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts (+£16k/yr from summer 2026)</strong>Conservative plan keeps this OFF — toggle to see accelerated timelines.</div>
+    </div>
+
+    <div class="goals-grid">
+
+      <!-- Goal 1: Chase Sapphire Preferred — most imminent -->
+      <div class="goal-card">
+        <div class="goal-header">
+          <div class="goal-icon">💳</div>
+          <div>
+            <div class="goal-name">Goal 1 · Most imminent · Late 2026</div>
+            <div class="goal-title">Chase Sapphire Preferred</div>
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Clean Amex Blue Cash history — started Feb 2026 · need 6–9 months before applying</div>
+          <div class="progress-bar"><div class="progress-fill" id="csp-prog" style="background:linear-gradient(90deg,var(--indigo),var(--pink)); width:11%"></div></div>
+          <div class="progress-labels"><span>Feb 2026</span><span id="csp-months-lbl" style="color:var(--indigo)">1 month in</span><span>Apply Aug–Oct 2026</span></div>
+        </div>
+        <div class="goal-row"><span class="goal-row-label">Application window</span><span class="goal-row-value" style="color:var(--amber)">Aug–Oct 2026 · don't apply before 6 months</span></div>
+        <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">60,000 Chase UR after $4k spend in 3 months</span></div>
+        <div class="goal-row"><span class="goal-row-label">60k UR converts to</span><span class="goal-row-value" style="color:var(--indigo)">~50k Avios → off-peak Club World solved on day 1</span></div>
+        <div class="goal-row"><span class="goal-row-label">Transfer partners</span><span class="goal-row-value">BA Avios · Virgin Atlantic · United · Hyatt</span></div>
+        <div class="goal-row"><span class="goal-row-label">Ongoing earning</span><span class="goal-row-value">3× travel & dining · 1× everything else</span></div>
+        <div class="goal-timeline">
+          <div class="goal-pill no-bruce" id="csp-pill">
+            <div class="gp-label" id="csp-pill-label">Building credit history · 8 months to go</div>
+            <span id="csp-timeline">Late 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goal 2: Move to nicer flat — West Hampstead / Chiswick / Hampstead Heath -->
+      <div class="goal-card">
+        <div class="goal-header">
+          <div class="goal-icon">🗝️</div>
+          <div>
+            <div class="goal-name">Goal 2 · Nearest · 2027</div>
+            <div class="goal-title">Upgrade to a Nicer Flat</div>
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Flat Move Pot building — £150/mo from Mar 2026 · ~£5,000 needed to move</div>
+          <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
+          <div class="progress-labels"><span>£0</span><span id="move-saved-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">~£5,000 move-in costs</span></div>
+        </div>
+        <div class="goal-row"><span class="goal-row-label">Target areas</span><span class="goal-row-value" style="color:var(--cyan)">West Hampstead · Chiswick · Hampstead Heath</span></div>
+        <div class="goal-row"><span class="goal-row-label">Upfront costs</span><span class="goal-row-value">~£5,000 · 5-wk deposit + first month + moving</span></div>
+        <div class="goal-row"><span class="goal-row-label">Flat Move Pot</span><span class="goal-row-value">£150/mo earmarked from Mar 2026 · hands-off</span></div>
+        <div class="goal-row"><span class="goal-row-label">Higher rent capacity</span><span class="goal-row-value" style="color:var(--green)">~£462/mo floating → can absorb £200–300/mo rent rise</span></div>
+        <div class="goal-row"><span class="goal-row-label">Apr 2026 salary rise</span><span class="goal-row-value" style="color:var(--indigo)">£61,439 → breathing room to spend more on lifestyle</span></div>
+        <div class="goal-timeline">
+          <div class="goal-pill no-bruce" id="move-pill">
+            <div class="gp-label" id="move-pill-label">£150/mo pot · redirect some float to top up</div>
+            <span id="move-timeline">Mid-2027</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goal 3: Business class LHR → ORD -->
+      <div class="goal-card">
+        <div class="goal-header">
+          <div class="goal-icon">✈️</div>
+          <div>
+            <div class="goal-name">Goal 3 · Travel · ~Early 2027</div>
+            <div class="goal-title">Business class LHR → ORD</div>
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Unlocked by CSP welcome bonus — 60k Chase UR → ~50k Avios in one transfer</div>
+          <div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
+          <div class="progress-labels"><span>0</span><span style="color:var(--amber)">CSP solves this</span><span>50,000 Avios (off-peak Club World)</span></div>
+        </div>
+        <div class="goal-row"><span class="goal-row-label">Avios needed</span><span class="goal-row-value">50,000 one-way off-peak Club World LHR → ORD</span></div>
+        <div class="goal-row"><span class="goal-row-label">CSP welcome bonus</span><span class="goal-row-value" style="color:var(--green)">60k Chase UR → ~50k Avios = goal solved on day 1</span></div>
+        <div class="goal-row"><span class="goal-row-label">2-4-1 Amex voucher</span><span class="goal-row-value" style="color:var(--amber)">Already unlocked ✓ — could use for second seat</span></div>
+        <div class="goal-row"><span class="goal-row-label">Taxes & fees</span><span class="goal-row-value">~£600 cash per trip (unavoidable on US routes)</span></div>
+        <div class="goal-row"><span class="goal-row-label">After first trip</span><span class="goal-row-value">CSP 3× travel spend → replenish Avios fast every year</span></div>
+        <div class="goal-timeline">
+          <div class="goal-pill no-bruce" id="avios-pill">
+            <div class="gp-label" id="avios-pill-label">Waiting on CSP · book once bonus lands</div>
+            <span id="avios-timeline">~Early 2027</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goal 4: London flat deposit -->
+      <div class="goal-card">
+        <div class="goal-header">
+          <div class="goal-icon">🏠</div>
+          <div>
+            <div class="goal-name">Goal 4 · Biggest · Longest horizon</div>
+            <div class="goal-title">Buy a flat in London</div>
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Deposit Fund — same £150/mo pot, longer horizon. Rental move first, then this builds.</div>
+          <div class="progress-bar"><div class="progress-fill" id="flat-prog" style="width:0%"></div></div>
+          <div class="progress-labels"><span>£0</span><span id="flat-saved-lbl" style="color:var(--indigo)">£0 saved</span><span style="color:var(--amber)">£50k deposit</span></div>
+        </div>
+        <div class="goal-row"><span class="goal-row-label">Deposit target</span><span class="goal-row-value">£50,000 (~10% on ~£500k flat)</span></div>
+        <div class="goal-row"><span class="goal-row-label">Flat Move Pot</span><span class="goal-row-value">£150/mo · earmarked, hands-off</span></div>
+        <div class="goal-row"><span class="goal-row-label">Floating cash available</span><span class="goal-row-value">~£462/mo redirectable at any time</span></div>
+        <div class="goal-row"><span class="goal-row-label">Salary growth boost</span><span class="goal-row-value">Each promotion → redirect more to flat pot</span></div>
+        <div class="goal-timeline">
+          <div class="goal-pill no-bruce" id="flat-pill">
+            <div class="gp-label" id="flat-pill-label">Conservative · salary growth to ~£300/mo avg</div>
+            <span id="flat-timeline">~2033</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- IMMIGRATION -->
+  <section>
+    <h2 class="section-title">UK <span>Immigration</span> Timeline</h2>
+    <div class="chart-card">
+      <h3>Your path to ILR and Citizenship</h3>
+      <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-top:0.5rem; text-align:center;">
+        <div style="padding:1rem; background:rgba(52,211,153,0.1); border:1px solid var(--green); border-radius:10px;">
+          <div style="font-size:0.7rem; color:var(--green); font-weight:700; margin-bottom:0.3rem;">DONE ✓</div>
+          <div style="font-weight:700;">Sep 2019</div>
+          <div style="font-size:0.75rem; color:var(--soft);">UK arrival</div>
+        </div>
+        <div style="padding:1rem; background:rgba(52,211,153,0.1); border:1px solid var(--green); border-radius:10px;">
+          <div style="font-size:0.7rem; color:var(--green); font-weight:700; margin-bottom:0.3rem;">DONE ✓</div>
+          <div style="font-weight:700;">Jul 2025</div>
+          <div style="font-size:0.75rem; color:var(--soft);">Skilled Worker</div>
+        </div>
+        <div style="padding:1rem; background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.4); border-radius:10px;">
+          <div style="font-size:0.7rem; color:var(--amber); font-weight:700; margin-bottom:0.3rem;">PREPARE</div>
+          <div style="font-weight:700;">Mar 2029</div>
+          <div style="font-size:0.75rem; color:var(--soft);">Consult solicitor</div>
+        </div>
+        <div style="padding:1rem; background:rgba(129,140,248,0.1); border:1px solid rgba(129,140,248,0.4); border-radius:10px;">
+          <div style="font-size:0.7rem; color:var(--indigo); font-weight:700; margin-bottom:0.3rem;">TARGET</div>
+          <div style="font-weight:700;">Sep 2029</div>
+          <div style="font-size:0.75rem; color:var(--soft);">ILR application</div>
+        </div>
+        <div style="padding:1rem; background:rgba(34,211,238,0.08); border:1px solid rgba(34,211,238,0.3); border-radius:10px;">
+          <div style="font-size:0.7rem; color:var(--cyan); font-weight:700; margin-bottom:0.3rem;">GOAL</div>
+          <div style="font-weight:700;">Sep 2030</div>
+          <div style="font-size:0.75rem; color:var(--soft);">British citizen</div>
+        </div>
+      </div>
+      <div style="margin-top:1.2rem; font-size:0.78rem; color:var(--muted);">
+        10-year long residence route (Sep 2019 → Sep 2029) is ~10 months faster than Skilled Worker 5-year route (Jul 2030). No ISAs until CLN — regardless of ILR or citizenship.
+      </div>
+    </div>
+  </section>
+
+  <!-- TAX PROFILE -->
+  <section id="tax">
+    <h2 class="section-title">Tax <span>Profile</span></h2>
+
+    <!-- Compact year context strip -->
+    <div style="display:grid; grid-template-columns:1fr 28px 1fr 28px 1fr; gap:0; margin-bottom:1.4rem; align-items:center;">
+      <div style="background:rgba(129,140,248,0.07); border:1px solid rgba(129,140,248,0.25); border-radius:10px; padding:0.9rem 1.1rem;">
+        <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Finishing · UK 2025/26</div>
+        <div style="font-size:0.82rem; font-weight:700;">Ends 5 Apr 2026</div>
+        <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Bonus + March payslip land here</div>
+      </div>
+      <div style="text-align:center; color:var(--indigo); font-size:1rem; font-weight:700;">→</div>
+      <div style="background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.35); border-radius:10px; padding:0.9rem 1.1rem;">
+        <div style="font-size:0.62rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Starting Soon · UK 2026/27 · Primary</div>
+        <div style="font-size:0.82rem; font-weight:700;">6 Apr 2026 · Your £61,439 year</div>
+        <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Full breakdown below · 5 weeks away</div>
+      </div>
+      <div style="text-align:center; color:var(--muted); font-size:1rem;">|</div>
+      <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.2); border-radius:10px; padding:0.9rem 1.1rem;">
+        <div style="font-size:0.62rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Filing Now · US 2025</div>
+        <div style="font-size:0.82rem; font-weight:700;">~$0 owed · OLT · Free</div>
+        <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Jun 15 / Oct 15 deadline · Details below</div>
+      </div>
+    </div>
+
+    <!-- UK 2026/27 — FULL WIDTH PRIMARY -->
+    <div class="chart-card" style="margin-bottom:1.4rem;">
+      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;">
+        <div class="tax-year-tag tag-uk" style="margin:0;">UK Tax Year 2026/27 · From 6 Apr 2026 · HMRC formula</div>
+        <div style="font-size:0.75rem; color:var(--soft);">Your primary year — full calculation · Verify against first April 2026 payslip</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+        <!-- Left: gross → taxable -->
+        <div>
+          <div style="font-size:0.65rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.5rem;">Gross → Taxable Income</div>
+          <div class="tax-row"><span class="tax-row-label">Base salary</span><span class="tax-row-value">£61,439</span></div>
+          <div class="tax-row"><span class="tax-row-label">Pension sacrifice (6%) — saves IT + NI</span><span class="tax-row-value" style="color:var(--green)">−£3,686</span></div>
+          <div class="tax-row"><span class="tax-row-label">SIP shares — saves IT + NI</span><span class="tax-row-value" style="color:var(--green)">−£1,800</span></div>
+          <div class="tax-row"><span class="tax-row-label">GymFlex — NI only (HMRC OpRA)</span><span class="tax-row-value" style="color:var(--amber)">−£1,169</span></div>
+          <div class="tax-row"><span class="tax-row-label">IT basis after sacrifice (excl. GymFlex)</span><span class="tax-row-value">£55,953</span></div>
+          <div class="tax-row"><span class="tax-row-label">+ BiK addback (PMI + Dental × 12)</span><span class="tax-row-value" style="color:var(--amber)">+£1,689</span></div>
+          <div class="tax-row" style="border-top:2px solid var(--border); margin-top:0.3rem;"><span class="tax-row-label" style="font-weight:700; color:var(--text)">IT taxable income</span><span class="tax-row-value" style="font-size:1rem;">£57,642</span></div>
+        </div>
+        <!-- Right: deductions → net -->
+        <div>
+          <div style="font-size:0.65rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.5rem;">Deductions → Take-Home</div>
+          <div class="tax-row"><span class="tax-row-label">Income tax (PAYE)</span><span class="tax-row-value" style="color:var(--red)">−£10,385</span></div>
+          <div class="tax-row" style="padding-left:0.5rem;"><span class="tax-row-label" style="font-size:0.72rem; color:var(--muted)">20% × £37,700 = £7,540 · 40% × £7,112 = £2,845</span></div>
+          <div class="tax-row"><span class="tax-row-label">National Insurance</span><span class="tax-row-value" style="color:var(--red)">−£3,108</span></div>
+          <div class="tax-row" style="padding-left:0.5rem;"><span class="tax-row-label" style="font-size:0.72rem; color:var(--muted)">8% on £37,700 (PT→UEL) + 2% above UEL</span></div>
+          <div class="tax-row" style="border-top:2px solid var(--border); margin-top:0.3rem;"><span class="tax-row-label" style="font-weight:700; color:var(--text)">Net take-home</span><span class="tax-row-value" style="color:var(--green); font-size:1rem;">~£41,293/yr · ~£3,441/mo</span></div>
+          <div class="tax-row"><span class="tax-row-label">IT saved (pension + SIP)</span><span class="tax-row-value" style="color:var(--green)">+£2,195/yr</span></div>
+          <div class="tax-row"><span class="tax-row-label">NI saved (all sacrifice, mostly 2%)</span><span class="tax-row-value" style="color:var(--green)">+£133/yr</span></div>
+          <div class="tax-row"><span class="tax-row-label" style="font-size:0.72rem;">2025/26 bonus (£6,371) paid Mar 2026</span><span class="tax-row-value" style="color:var(--soft); font-size:0.75rem;">UK 2025/26 + US 2026</span></div>
+        </div>
+      </div>
+      <div style="font-size:0.72rem; background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2); border-radius:8px; padding:0.6rem 0.8rem; margin-top:1rem; line-height:1.5; color:var(--amber);">
+        ⚠️ Verify against your first April 2026 payslip. If net differs, the gap likely reflects pension timing or HMRC band confirmation for 2026/27.</div>
+    </div>
+
+    <!-- PAYE EXPLAINER — all UK info together -->
+    <div class="chart-card" style="margin-bottom:1.4rem;" id="paye-checker">
+      <h3>Why You Pay The Tax You Do <span style="font-size:0.72rem; color:var(--muted); font-weight:400; margin-left:0.4rem;">· PAYE breakdown · 2025/26</span></h3>
+
+      <!-- 3-concept intro -->
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; margin-bottom:1rem;">
+        <div style="background:rgba(129,140,248,0.07); border:1px solid rgba(129,140,248,0.2); border-radius:10px; padding:0.9rem 1rem;">
+          <div style="font-size:0.65rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.35rem;">1 · Tax Code</div>
+          <div style="font-size:1.1rem; font-weight:800; color:var(--text); margin-bottom:0.25rem;">1283L</div>
+          <div style="font-size:0.76rem; color:var(--soft); line-height:1.5;">You earn £12,830 tax-free per year. Standard £12,570 personal allowance <em>plus</em> £260 for your WFH claim. Check it at <a href="https://www.gov.uk/personal-tax-account" target="_blank" style="color:var(--indigo); text-decoration:none;">HMRC Personal Tax Account →</a></div>
+        </div>
+        <div style="background:rgba(52,211,153,0.07); border:1px solid rgba(52,211,153,0.2); border-radius:10px; padding:0.9rem 1rem;">
+          <div style="font-size:0.65rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.35rem;">2 · Cumulative System</div>
+          <div style="font-size:1.1rem; font-weight:800; color:var(--text); margin-bottom:0.25rem;">YTD-based</div>
+          <div style="font-size:0.76rem; color:var(--soft); line-height:1.5;">HMRC doesn't tax each month in isolation. AbbVie payroll looks at everything earned <em>year-to-date</em> and catches up. A big bonus month collects all the higher-rate tax at once.</div>
+        </div>
+        <div style="background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2); border-radius:10px; padding:0.9rem 1rem;">
+          <div style="font-size:0.65rem; color:var(--amber); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.35rem;">3 · Salary Sacrifice</div>
+          <div style="font-size:1.1rem; font-weight:800; color:var(--text); margin-bottom:0.25rem;">Reduces the bill</div>
+          <div style="font-size:0.76rem; color:var(--soft); line-height:1.5;">Pension + SIP come out <em>before</em> tax — shrinking taxable pay and saving IT + NI. GymFlex (from Apr 2026) saves NI only; HMRC adds the value back to IT taxable (OpRA rule).</div>
+        </div>
+      </div>
+
+      <!-- Higher Rate Reality — compact permanent reminder -->
+      <div style="background:rgba(248,113,113,0.04); border:1px solid rgba(248,113,113,0.2); border-radius:10px; padding:1rem 1.2rem; margin-bottom:1rem;">
+        <div style="font-size:0.65rem; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.7rem;">The Higher Rate Reality — why a raise feels smaller than it should</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; font-size:0.79rem;">
+          <div>
+            <div style="font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.35rem;">Basic rate band ≤ £50,270</div>
+            <div>£1,000 raise → <strong style="color:var(--green);">+£60/mo net</strong></div>
+            <div style="font-size:0.72rem; color:var(--muted); margin-top:0.2rem; line-height:1.5;">20% IT + 8% NI = 28% gone<br>Keep 72p of every £1 gross</div>
+          </div>
+          <div>
+            <div style="font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.35rem;">Higher rate band > £50,270 · You</div>
+            <div>£1,000 raise → <strong style="color:var(--amber);">+£48/mo net</strong></div>
+            <div style="font-size:0.72rem; color:var(--muted); margin-top:0.2rem; line-height:1.5;">40% IT + 2% NI = 42% gone<br>Keep 58p of every £1 gross</div>
+          </div>
+          <div>
+            <div style="font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.35rem;">Your £2,645 raise · Apr 2026</div>
+            <div style="font-size:0.78rem; line-height:1.9;">
+              <span style="color:var(--soft);">+£220/mo gross</span><br>
+              <span style="color:var(--red);">−£88 IT (40%)</span><br>
+              <span style="color:var(--red);">−£13 pension (6%)</span><br>
+              <span style="color:var(--muted); font-size:0.7rem;">−£97 GymFlex gross · +£2 NI saving = −£95 net*</span><br>
+              <strong style="color:var(--green);">≈ +£20/mo net vs pre-GymFlex</strong>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:0.71rem; color:var(--soft); margin-top:0.7rem; line-height:1.5; border-top:1px solid var(--border); padding-top:0.6rem;">*GymFlex: £97.40/mo gross sacrifice − £1.95 NI saving = <strong style="color:var(--text);">£95.45/mo net cost</strong> — a separate choice starting April 2026. It offsets the apparent gain but it's not the raise's fault. Without it, the £2,645 raise alone gives <strong style="color:var(--text);">+£115/mo net</strong>. The 40% band is working as intended. The raise still matters: it grows your pension, your NI record, and your future raise baseline.</div>
+      </div>
+
+      <!-- March 2026 prediction -->
+      <div class="paye-section-label" style="margin-bottom:0.5rem;">March 2026 — Bonus Month Prediction · Computed from verified Feb payslip</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+        <div style="font-size:0.79rem; background:var(--card2); border-radius:9px; padding:0.85rem 1rem; border:1px solid var(--border);">
+          <div style="font-size:0.65rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.4rem;">What Goes In (March taxable basis)</div>
+          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">Regular IT taxable + BiK addback (no GymFlex in March)</span><span>£4,596.30</span></div>
+          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">Bonus after SALX (50% to pension)</span><span style="color:var(--green);">£3,185.50</span></div>
+          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border); font-weight:700;"><span>March IT taxable total</span><span>£7,781.80</span></div>
+          <div style="display:flex; justify-content:space-between; padding:0.22rem 0;"><span style="color:var(--muted);">March NI basis</span><span>£7,641.01</span></div>
+        </div>
+        <div style="font-size:0.79rem; background:rgba(244,114,182,0.04); border-radius:9px; padding:0.85rem 1rem; border:1px solid rgba(244,114,182,0.25);">
+          <div style="font-size:0.65rem; color:var(--pink); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.4rem;">What Comes Out — March 2026</div>
+          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">Income Tax</span><span style="color:var(--pink); font-weight:700;">£2,096</span></div>
+          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">National Insurance</span><span style="color:var(--pink); font-weight:700;">£319</span></div>
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:2px solid var(--border); margin-top:0.2rem;"><span style="font-weight:700; color:var(--text);">Net pay (bonus month!)</span><span style="color:var(--green); font-weight:800; font-size:1.05rem;">~£5,136</span></div>
+          <div style="margin-top:0.7rem; font-size:0.65rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Full 2025/26 Tax Year</div>
+          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">Total IT</span><span style="font-weight:700;">~£11,717</span></div>
+          <div style="display:flex; justify-content:space-between; padding:0.22rem 0;"><span style="color:var(--muted);">Total NI</span><span style="font-weight:700;">~£3,192</span></div>
+        </div>
+      </div>
+
+      <div style="font-size:0.74rem; color:var(--muted); background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem; border:1px solid var(--border); line-height:1.7;">
+        <strong style="color:var(--amber);">Why taxable &gt; NIable every month:</strong> PMI (£116.91) + Dental (£23.88) = £140.79/mo added as BiK. From April 2026, GymFlex OpRA adds £97/mo more. Always the explanation — never a payroll error. &nbsp;·&nbsp; <strong style="color:var(--text);">1283L confirmed ✓</strong>
+      </div>
+    </div>
+
+    <!-- US 2025 — COMPACT SECONDARY -->
+    <div class="chart-card" style="margin-bottom:1.4rem; border-color:rgba(34,211,238,0.2); background:rgba(34,211,238,0.015);">
+      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;">
+        <div class="tax-year-tag tag-us" style="margin:0;">US Tax Year 2025 · Filing Now</div>
+        <div style="font-size:0.75rem; color:var(--muted);">Convert salary at IRS 2025 avg rate (irs.gov) · Mar 2026 bonus falls in US <strong style="color:var(--text);">2026</strong>, not 2025</div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem;">
+        <div style="background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Method</div>
+          <div style="font-size:0.85rem; font-weight:700; color:var(--indigo);">Form 1116 (FTC)</div>
+          <div style="font-size:0.7rem; color:var(--muted); margin-top:0.2rem;">Always · Never Form 2555</div>
+        </div>
+        <div style="background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">US Tax Owed</div>
+          <div style="font-size:0.85rem; font-weight:700; color:var(--green);">~$0</div>
+          <div style="font-size:0.7rem; color:var(--muted); margin-top:0.2rem;">UK tax fully offsets US bill</div>
+        </div>
+        <div style="background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">FBAR</div>
+          <div style="font-size:0.85rem; font-weight:700; color:var(--amber);">Required</div>
+          <div style="font-size:0.7rem; color:var(--muted); margin-top:0.2rem;">FinCEN 114 · BSA E-Filing · Oct 15</div>
+        </div>
+        <div style="background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Deadline</div>
+          <div style="font-size:0.85rem; font-weight:700; color:var(--amber);">Jun 15 / Oct 15</div>
+          <div style="font-size:0.7rem; color:var(--muted); margin-top:0.2rem;"><a href="https://www.olttax.com" target="_blank" style="color:var(--cyan); text-decoration:none;">OLT Online Taxes →</a> · Free</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Locked Rules -->
+    <div class="chart-card" style="margin-top:1.4rem;">
+      <h3>Locked Tax Rules</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem;">
+        <div class="tax-rule"><div class="tax-rule-icon">✅</div><div class="tax-rule-text"><strong>Always FTC (Form 1116)</strong>Preserves Social Security credits. UK taxes fully offset US liability. No US tax owed.</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>Never Form 2555 (FEIE)</strong>Eliminates SS contribution years. Destroys cross-continent retirement income. Off the table.</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>No ISAs — ever (while US citizen)</strong>S&amp;S ISAs = PFIC. Only trigger: renouncing US citizenship (CLN). ILR and British citizenship do NOT change this.</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">📋</div><div class="tax-rule-text"><strong>FBAR every year</strong>File FinCEN 114 by Oct 15. Free via <a href="https://bsaefiling.fincen.treas.gov" target="_blank" style="color:var(--cyan); text-decoration:none;">BSA E-Filing →</a> All UK accounts over $10k aggregate.</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">💰</div><div class="tax-rule-text"><strong>Sacrifice rules — know your benefit</strong>Pension + SIP save IT + NI (£133/yr combined NI saving, all at 2% above UEL). GymFlex (from Apr 2026) saves NI only — £97.40/mo gross − £1.95 NI saving (2% above UEL) = <strong>~£95/mo net cost</strong>. Not income-tax deductible (HMRC OpRA).</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">🇬🇧🇺🇸</div><div class="tax-rule-text"><strong>Totalization Agreement</strong>UK NI + US SS credits can combine for SS eligibility. Another reason FTC beats FEIE.</div></div>
+      </div>
+    </div>
+
+    <!-- Filed returns — auto-populated from tax_data.js -->
+    <div class="chart-card" style="margin-top:1.4rem;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem; flex-wrap:wrap; gap:0.5rem;">
+        <h3 style="margin:0;">Filed Returns Archive</h3>
+        <div id="tax-data-badge" style="font-size:0.68rem; padding:0.2rem 0.6rem; border-radius:10px; background:rgba(100,116,139,0.15); color:var(--muted);">static fallback</div>
+      </div>
+      <div style="font-size:0.78rem; color:var(--muted); margin-bottom:1rem;">Folder: <code style="background:var(--card2); padding:0.2rem 0.5rem; border-radius:4px; font-size:0.75rem;">Desktop/Finances/Tax Returns/</code> · Drop PDFs here — dashboard updates automatically via <code style="background:var(--card2); padding:0.2rem 0.4rem; border-radius:4px; font-size:0.72rem;">update_dashboard.py</code></div>
+      <div class="filed-returns" id="filed-returns-grid">
+        <!-- Populated by renderFiledReturns() — reads window.TAX_RETURNS_DATA if available -->
+      </div>
+    </div>
+
+    <!-- Tax calendar -->
+    <div class="chart-card" style="margin-top:1.4rem;">
+      <h3>Annual Tax Calendar</h3>
+      <div class="tax-calendar">
+        <div class="cal-item"><div class="cal-month">Jan–Feb</div><div class="cal-task">Gather P60, payslips, Fidelity 1099s, IRS exchange rate</div></div>
+        <div class="cal-item"><div class="cal-month">Apr 15</div><div class="cal-task">US filing deadline (auto 2-month extension for expats)</div></div>
+        <div class="cal-item"><div class="cal-month">Jun 15</div><div class="cal-task">Expat auto-extension deadline. File or extend to Oct 15</div></div>
+        <div class="cal-item"><div class="cal-month">Oct 15</div><div class="cal-task">Final US filing + FBAR deadline. Hard stop.</div></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FIRE -->
+  <section id="fire">
+    <h2 class="section-title">FIRE <span>Calculator</span></h2>
+    <div class="fire-grid">
+      <div class="fire-controls">
+        <h3>Adjust your assumptions</h3>
+
+        <div class="toggle-row">
+          <label class="toggle"><input type="checkbox" id="bruceToggle" onchange="updateFire()"><span class="toggle-slider"></span></label>
+          <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts</strong>+$20,000/yr from summer 2026 · conservative plan: OFF</div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">Monthly investment <span id="inv-label">£850</span></div>
+          <input type="range" id="inv-slider" min="500" max="3000" step="50" value="850" oninput="updateFire()">
+        </div>
+        <div class="control-group">
+          <div class="control-label">Annual return rate <span id="ret-label">7.0%</span></div>
+          <input type="range" id="ret-slider" min="3" max="12" step="0.5" value="7" oninput="updateFire()">
+        </div>
+        <div class="control-group">
+          <div class="control-label">Annual spending in retirement <span id="exp-label">£30,000</span></div>
+          <input type="range" id="exp-slider" min="15000" max="80000" step="1000" value="30000" oninput="updateFire()">
+        </div>
+        <div class="control-group" style="margin-bottom:0;">
+          <div class="control-label">Withdrawal rate <span id="wr-label">4.00%</span></div>
+          <input type="range" id="wr-slider" min="3" max="6" step="0.25" value="4" oninput="updateFire()">
+        </div>
+      </div>
+
+      <div class="fire-result-card">
+        <h3>Your FIRE projection</h3>
+        <div class="fire-age-big">
+          <div class="fire-age-num" id="fire-age">51</div>
+          <div class="fire-age-label">Projected retirement age · conservative estimate</div>
+        </div>
+        <div class="fire-stat"><span class="fire-stat-label">FIRE number (portfolio needed)</span><span class="fire-stat-value" id="fire-num" style="color:var(--amber)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">State pensions (UK + US at 67)</span><span class="fire-stat-value" style="color:var(--cyan)">~£23k+/yr · not counted above</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVESTMENTS -->
+  <section id="investments">
+    <h2 class="section-title">Investment <span>Engine</span></h2>
+
+    <!-- Overview cards -->
+    <div class="metrics" style="margin-bottom:1.4rem;">
+      <div class="metric-card">
+        <div class="metric-label">Fidelity Brokerage</div>
+        <div class="metric-value" style="color:var(--green)">$5,600</div>
+        <div class="metric-sub">FSKAX · FTIHX · FXNAX</div>
+        <span class="metric-badge badge-green">+$1,100/mo automated</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Roth IRA</div>
+        <div class="metric-value" style="color:var(--amber)">$4,200</div>
+        <div class="metric-sub">Tax-free growth · Never touch</div>
+        <span class="metric-badge badge-amber">$7,000 annual limit</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Annual input</div>
+        <div class="metric-value" style="color:var(--indigo)">£10,200</div>
+        <div class="metric-sub">£850/mo × 12 to brokerage</div>
+        <span class="metric-badge badge-indigo">~$13,200 at ~1.3 rate</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Projected at 67 (7%)</div>
+        <div class="metric-value" style="color:var(--cyan)">£1.9M+</div>
+        <div class="metric-sub">Brokerage alone · 42 yr compound</div>
+        <span class="metric-badge badge-green">excl. pension + Roth</span>
+      </div>
+    </div>
+
+    <!-- Pipeline -->
+    <div class="chart-card" style="margin-bottom:1.4rem;">
+      <h3>Monthly Investment Pipeline — runs on the 25th of every month</h3>
+      <div class="inv-pipeline">
+        <div class="pipe-step">
+          <div class="pipe-icon">🇬🇧</div>
+          <div class="pipe-label">Chase UK</div>
+          <div class="pipe-amount">£850</div>
+          <div class="pipe-note">Salary hub · comfort float £1,300+</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">💸</div>
+          <div class="pipe-label">Wise</div>
+          <div class="pipe-amount">25th</div>
+          <div class="pipe-note">One transfer/mo only. No fragments.</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">🇺🇸</div>
+          <div class="pipe-label">Chase US</div>
+          <div class="pipe-amount">~$1,600</div>
+          <div class="pipe-note">$1,500 min (account fee floor) · funds Amex Blue</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">⚡</div>
+          <div class="pipe-label">Fidelity ACH</div>
+          <div class="pipe-amount">28th–29th</div>
+          <div class="pipe-note">Auto-pull. Settles 1–2 business days.</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step" style="border-color:rgba(52,211,153,0.35); background:rgba(52,211,153,0.05);">
+          <div class="pipe-icon">🛒</div>
+          <div class="pipe-label">Buy funds</div>
+          <div class="pipe-amount">Manual</div>
+          <div class="pipe-note">85% FSKAX · 10% FTIHX · 5% FXNAX</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fund cards -->
+    <div class="charts-3" style="margin-bottom:1.4rem;">
+
+      <div class="fund-card" style="border-color:rgba(129,140,248,0.3);">
+        <div class="fund-header">
+          <div>
+            <div class="fund-ticker">FSKAX</div>
+            <div class="fund-name">Fidelity Total Market Index Fund</div>
+          </div>
+          <div class="fund-alloc" style="background:rgba(129,140,248,0.15); color:var(--indigo);">85%</div>
+        </div>
+        <div class="cost-badge">0.015% expense ratio</div>
+        <div class="fund-amount">$935/month</div>
+        <div class="fund-stats">
+          <div class="fund-stat"><span>Index tracked</span><span>Dow Jones US Total Stock Market</span></div>
+          <div class="fund-stat"><span>Holdings</span><span>~3,500+ US companies</span></div>
+          <div class="fund-stat"><span>What you own</span><span>Apple, Nvidia, Amazon + everything</span></div>
+          <div class="fund-stat"><span>Type</span><span>US total market</span></div>
+        </div>
+        <div class="fund-why">Your core engine. A single fund that owns a proportional slice of every publicly traded US company — mega-caps to micro-caps. Maximum diversification at near-zero cost. The foundation of every serious passive portfolio.</div>
+      </div>
+
+      <div class="fund-card" style="border-color:rgba(34,211,238,0.3);">
+        <div class="fund-header">
+          <div>
+            <div class="fund-ticker" style="color:var(--cyan);">FTIHX</div>
+            <div class="fund-name">Fidelity Total International Index Fund</div>
+          </div>
+          <div class="fund-alloc" style="background:rgba(34,211,238,0.15); color:var(--cyan);">10%</div>
+        </div>
+        <div class="cost-badge">0.06% expense ratio</div>
+        <div class="fund-amount">$110/month</div>
+        <div class="fund-stats">
+          <div class="fund-stat"><span>Index tracked</span><span>MSCI ACWI ex USA IMI</span></div>
+          <div class="fund-stat"><span>Holdings</span><span>~4,700 international stocks</span></div>
+          <div class="fund-stat"><span>Regions</span><span>Europe · Asia · Emerging Markets</span></div>
+          <div class="fund-stat"><span>Type</span><span>Global ex-US diversifier</span></div>
+        </div>
+        <div class="fund-why">The world outside the US. UK, Europe, Japan, China, India, Korea — all of it. Historically, international and US stocks trade leadership over time. This is your insurance that you're not purely US-dependent. Also ironic: you live here.</div>
+      </div>
+
+      <div class="fund-card" style="border-color:rgba(251,191,36,0.3);">
+        <div class="fund-header">
+          <div>
+            <div class="fund-ticker" style="color:var(--amber);">FXNAX</div>
+            <div class="fund-name">Fidelity US Bond Index Fund</div>
+          </div>
+          <div class="fund-alloc" style="background:rgba(251,191,36,0.15); color:var(--amber);">5%</div>
+        </div>
+        <div class="cost-badge">0.025% expense ratio</div>
+        <div class="fund-amount">$55/month</div>
+        <div class="fund-stats">
+          <div class="fund-stat"><span>Index tracked</span><span>Bloomberg US Aggregate Bond</span></div>
+          <div class="fund-stat"><span>Contents</span><span>US govt + investment-grade corp bonds</span></div>
+          <div class="fund-stat"><span>Role</span><span>Volatility dampener</span></div>
+          <div class="fund-stat"><span>At age 25</span><span>Small ballast — correct size</span></div>
+        </div>
+        <div class="fund-why">At 25, you don't need much. This 5% acts as ballast — when equities crash 40%, bonds typically fall far less. It keeps your portfolio from feeling like a rollercoaster. Small enough not to drag returns. Big enough to reduce panic.</div>
+      </div>
+
+    </div>
+
+    <!-- Roth IRA + Actions -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; margin-bottom:1.4rem;">
+      <div class="chart-card">
+        <h3>Roth IRA — Tax-Free Vault</h3>
+        <div class="tax-row"><span class="tax-row-label">Current balance</span><span class="tax-row-value" style="color:var(--amber);">$4,200</span></div>
+        <div class="tax-row"><span class="tax-row-label">2026 contribution limit</span><span class="tax-row-value">$7,000</span></div>
+        <div class="tax-row"><span class="tax-row-label">Tax on growth</span><span class="tax-row-value" style="color:var(--green)">ZERO — ever</span></div>
+        <div class="tax-row"><span class="tax-row-label">Withdraw before 59½</span><span class="tax-row-value" style="color:var(--red)">Never</span></div>
+        <div style="font-size:0.73rem; color:var(--muted); margin-top:0.8rem; line-height:1.5;">Requires US earned income (FTC preserves eligibility). Even $4,200 at 7% for 42 years = ~$84k before additional contributions. Never stop contributing when possible.</div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Monthly Actions</h3>
+        <div style="display:flex; flex-direction:column; gap:0.7rem;">
+          <div class="action-item"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Transfer £850 via Wise (one shot, no fragments)</div></div>
+          <div class="action-item"><span class="action-dot green"></span><div><strong style="color:var(--text)">After ACH settles:</strong> Buy — $935 FSKAX · $110 FTIHX · $55 FXNAX</div></div>
+          <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Annually:</strong> Rebalance if allocation drifts more than 5%</div></div>
+          <div class="action-item"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">At £75k salary:</strong> Increase pension AVCs (the trigger)</div></div>
+          <div class="action-item"><span class="action-dot muted"></span><div><strong style="color:var(--text)">Never:</strong> Sell in a downturn. Never sell Roth. Never pick stocks.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Net Worth Composition -->
+    <div class="chart-card">
+      <h3>Net Worth Composition — Where Your Money Lives</h3>
+      <div style="display:grid; grid-template-columns:200px 1fr; gap:2rem; align-items:center;">
+        <canvas id="nwChart" width="200" height="200"></canvas>
+        <div id="nw-breakdown" style="display:flex; flex-direction:column; gap:0.75rem;"></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Built by Claude Code · Anchored 1 March 2026 · Numbers from your Google Sheet<br>
+  <span style="color:var(--muted)">Conservative planning only. Not financial advice. Update anchor to keep projections accurate.</span>
+</footer>
+
+<script>
+// ── LIVE DATE ────────────────────────────────────────────────────────────────
+const today = new Date();
+document.getElementById('live-date').textContent =
+  today.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+}
+
+// ── CHART DEFAULTS ───────────────────────────────────────────────────────────
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = '#1e2d50';
+Chart.defaults.font.family = 'Inter';
+
+// ── SALARY CHART ─────────────────────────────────────────────────────────────
+new Chart(document.getElementById('salaryChart'), {
+  type: 'line',
+  data: {
+    labels: ['May 2023','Nov 2024','Mar 2025','Apr 2026','Future target'],
+    datasets: [{
+      label: 'Salary',
+      data: [28000, 57500, 58794, 61439, 75000],
+      borderColor: '#818cf8',
+      backgroundColor: 'rgba(129,140,248,0.08)',
+      borderWidth: 3,
+      pointBackgroundColor: ['#64748b','#22d3ee','#22d3ee','#fbbf24','#64748b'],
+      pointRadius: 6,
+      pointHoverRadius: 8,
+      fill: true,
+      tension: 0.3,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>`£${c.raw.toLocaleString()}`}}},
+    scales: {
+      y: { ticks:{callback:v=>`£${(v/1000).toFixed(0)}k`}, grid:{color:'#1e2d50'} },
+      x: { grid:{display:false} }
+    }
+  }
+});
+
+// ── BUDGET CHART ─────────────────────────────────────────────────────────────
+new Chart(document.getElementById('budgetChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Rent','Groceries','Socialising','Shopping','Transport','Subscriptions','Travel','Utilities','Other'],
+    datasets: [{
+      data: [1250, 250, 250, 300, 100, 70, 250, 177, 175],
+      backgroundColor: ['#818cf8','#22d3ee','#fbbf24','#34d399','#f472b6','#a78bfa','#60a5fa','#fb923c','#64748b'],
+      borderWidth: 0,
+      hoverOffset: 8,
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '65%',
+    plugins: {
+      legend: { position:'right', labels:{font:{size:10},boxWidth:12,padding:10} },
+      tooltip: { callbacks: { label: c => `${c.label}: £${c.raw}` }}
+    }
+  }
+});
+
+// ── NET WORTH COMPOSITION ─────────────────────────────────────────────────────
+// Called from liveEstimates() with live-computed values. FX: GBP/USD ~0.77.
+function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, fx = 0.77, mktLabel = 'Estimated · CAGR model') {
+  const segments = [
+    { label: 'UK Savings',     val: atom + monzo + chase,            color: '#22d3ee', note: 'Atom · Monzo · Chase UK — liquid' },
+    { label: 'AbbVie Pension', val: pension,                          color: '#818cf8', note: 'Aviva workplace pension · 5.5% CAGR est.' },
+    { label: 'US Brokerage',   val: Math.round(fidUSD * fx),         color: '#34d399', note: 'Fidelity FSKAX / FTIHX / FXNAX' },
+    { label: 'Roth IRA',       val: Math.round(rothUSD * fx),        color: '#fbbf24', note: 'Tax-free retirement · never touch' },
+    { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * 0.77), color: '#6366f1', note: 'Chase US — pipeline hub · $1,500 min' },
+  ];
+  const total = segments.reduce((s, x) => s + x.val, 0);
+  const nwFmt = `~£${Math.round(total / 1000).toLocaleString()}k`;
+  const heroNw = document.getElementById('hero-nw-value');
+  const spNw   = document.getElementById('sp-nw-value');
+  if (heroNw) heroNw.textContent = nwFmt;
+  if (spNw)   spNw.textContent   = nwFmt;
+
+  const totalUSDCmp = total / fx;
+  const ukRank = total < 15000 ? 'around median' : total < 30000 ? 'top 30%' : total < 60000 ? 'top 20%' : total < 100000 ? 'top 10%' : 'top 5%';
+  const usRank = totalUSDCmp < 39000 ? 'below median' : totalUSDCmp < 80000 ? 'above median' : totalUSDCmp < 150000 ? 'top 30%' : 'top 15%';
+
+  document.getElementById('nw-breakdown').innerHTML =
+    `<div style="font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:2px;">` +
+    `£${total.toLocaleString()} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>` +
+    `<div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.9rem;">FX £${fx.toFixed(3)}/$ · ${mktLabel}</div>` +
+    segments.map(s => {
+      const pct = ((s.val / total) * 100).toFixed(1);
+      return `<div style="padding:0.75rem 1rem;background:var(--card2);border-radius:10px;border-left:3px solid ${s.color};display:flex;justify-content:space-between;align-items:center;">` +
+        `<div><div style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:0.15rem;">${s.label}</div>` +
+        `<div style="font-size:0.7rem;color:var(--muted);">${s.note}</div></div>` +
+        `<div style="text-align:right;"><div style="font-size:1rem;font-weight:700;color:${s.color};">£${s.val.toLocaleString()}</div>` +
+        `<div style="font-size:0.7rem;color:var(--soft);">${pct}%</div></div></div>`;
+    }).join('') +
+    `<div style="margin-top:0.5rem;padding:0.4rem 0.75rem;background:rgba(52,211,153,0.07);border-radius:8px;border:1px solid rgba(52,211,153,0.18);display:flex;gap:1.4rem;font-size:0.67rem;color:var(--muted);">` +
+    `<span>🇬🇧 <span style="color:var(--green);font-weight:600;">${ukRank}</span> · age 25, UK</span>` +
+    `<span>🇺🇸 <span style="color:var(--green);font-weight:600;">${usRank}</span> · ages 25–34, US</span>` +
+    `</div>`;
+
+  new Chart(document.getElementById('nwChart'), {
+    type: 'doughnut',
+    data: {
+      labels: segments.map(s => s.label),
+      datasets: [{
+        data:            segments.map(s => s.val),
+        backgroundColor: segments.map(s => s.color + 'cc'),
+        borderColor:     '#080c18',
+        borderWidth:     3,
+        hoverOffset:     10,
+      }]
+    },
+    options: {
+      responsive: false,
+      cutout: '62%',
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => `£${c.raw.toLocaleString()} · ${((c.raw / total) * 100).toFixed(1)}%` } }
+      }
+    }
+  });
+}
+
+// ── FIRE CALCULATOR ───────────────────────────────────────────────────────────
+function updateFire() {
+  const mo    = +document.getElementById('inv-slider').value;
+  const r     = +document.getElementById('ret-slider').value / 100;
+  const sp    = +document.getElementById('exp-slider').value;
+  const wr    = +document.getElementById('wr-slider').value / 100;
+  const bruce = document.getElementById('bruceToggle').checked;
+  const moTotal = mo + (bruce ? 16000 / 12 : 0); // $20k/yr ≈ £16k/yr
+
+  document.getElementById('inv-label').textContent = '£' + mo.toLocaleString();
+  document.getElementById('ret-label').textContent = (r * 100).toFixed(1) + '%';
+  document.getElementById('exp-label').textContent = '£' + sp.toLocaleString();
+  document.getElementById('wr-label').textContent  = (wr * 100).toFixed(2) + '%';
+
+  const fireNum = sp / wr;
+  const rM = Math.pow(1 + r, 1 / 12) - 1;
+  const currentAge = (today - new Date(2001, 1, 18)) / (365.25 * 24 * 3600 * 1000);
+  const startPort = 7840;
+
+  let port = startPort, months = 0;
+  while (port < fireNum && months < 60 * 12) { port = port * (1 + rM) + moTotal; months++; }
+  const fireAge = Math.min(Math.round(currentAge + months / 12), 90);
+
+  let p67 = startPort;
+  const mTo67 = Math.max(0, (67 - currentAge) * 12);
+  for (let m = 0; m < mTo67; m++) p67 = p67 * (1 + rM) + moTotal;
+
+  const fmtBig = v => v >= 1e6
+    ? '£' + (v / 1e6).toFixed(1) + 'M'
+    : '£' + Math.round(v / 1000).toLocaleString() + ',000';
+
+  document.getElementById('fire-age').textContent   = fireAge;
+  document.getElementById('fire-num').textContent   = fmtBig(fireNum);
+  document.getElementById('fire-67').textContent    = fmtBig(p67);
+  document.getElementById('fire-years').textContent = Math.max(0, fireAge - Math.round(currentAge)) + ' years';
+}
+updateFire();
+
+// ── LIVE BALANCE ESTIMATES ─────────────────────────────────────────────────────
+// Anchored to Feb 24 2026 (last payday). Updates every page load — no user input.
+// Savings: AER daily compound. Investments: 7% CAGR + monthly additions. Pension: 5.5% CAGR.
+// Chase UK: deterministic schedule from known paydays.
+
+async function liveEstimates() {
+  let mkt = null;
+  const liveFX    = mkt?.fx?.usd_to_gbp ?? 0.77;
+  const fskaxDelta = (mkt?.tickers?.FSKAX?.anchor)
+    ? mkt.tickers.FSKAX.current / mkt.tickers.FSKAX.anchor : null;
+  const fskaxPct  = mkt?.tickers?.FSKAX?.pct;
+  const mktLabel  = mkt
+    ? `Live · FSKAX ${fskaxPct >= 0 ? '+' : ''}${fskaxPct?.toFixed(2)}% · FX £${liveFX.toFixed(3)}/$`
+    : 'Estimated · server offline';
+
+  const ANCHOR     = new Date(2026, 1, 24);   // Feb 24 2026 (month is 0-indexed)
+  const daysSince  = d => Math.max(0, (today - d) / 86400000);
+  const monthsSince = d => {
+    const y = today.getFullYear() - d.getFullYear();
+    const m = today.getMonth() - d.getMonth();
+    return Math.max(0, y * 12 + m);
+  };
+
+  // UK SAVINGS (AER daily compound)
+  const daysA = daysSince(ANCHOR);
+  const atomEst  = Math.round(11143.51 * Math.pow(1.0349, daysA / 365));
+  const monzoEst = Math.round(2000.00  * Math.pow(1.0275, daysA / 365));
+
+  // CHASE UK — deterministic monthly schedule
+  // Anchored 3 Mar 2026 at £3,839.90 (user-confirmed).
+  // Feb 25 Wise, Feb 26 flatmate, Mar 1 Octopus £110.51, Mar ~2 Amex all already in anchor.
+  // Octopus actual = £110.51/mo full household; Ella's net ~£55 after Vancsi reimburses.
+  function chaseEstimate() {
+    let bal = 3839.90; // confirmed balance 3 Mar 2026
+
+    // Remaining events in current cycle (Mar 24 payday not yet arrived)
+    const events = [
+      { date: new Date(2026, 2, 12),  amount: -1250           }, // Mar rent
+      { date: new Date(2026, 2, 24),  amount: 5136 - 150      }, // Mar salary (bonus month) − flat pot
+      { date: new Date(2026, 2, 25),  amount: -850             }, // Mar Wise
+      { date: new Date(2026, 2, 26),  amount: -56.22           }, // Mar flatmate
+    ];
+
+    // Generate forward cycles from Apr 2026 onwards
+    let cyclePayday = new Date(2026, 2, 24); // Mar 24 — first upcoming payday
+    for (let i = 0; i < 23; i++) {
+      const m  = cyclePayday.getMonth();
+      const y  = cyclePayday.getFullYear();
+      const nm = m === 11 ? 0 : m + 1;
+      const ny = m === 11 ? y + 1 : y;
+      const nextPaydate = new Date(ny, nm, 24);
+      const nextSalary  = 3441; // Apr+ HMRC formula (incl. BiK + GymFlex £97.40/mo)
+      events.push({ date: new Date(ny, nm, 1),   amount: -110.51         }); // Octopus (actual)
+      events.push({ date: new Date(ny, nm, 2),   amount: -1250           }); // Amex (avg)
+      events.push({ date: new Date(ny, nm, 12),  amount: -1250           }); // Rent
+      events.push({ date: nextPaydate,           amount: nextSalary - 150 }); // Payday − flat pot
+      events.push({ date: new Date(ny, nm, 25),  amount: -850            }); // Wise
+      events.push({ date: new Date(ny, nm, 26),  amount: -56.22          }); // Flatmate
+      cyclePayday = nextPaydate;
+      if (cyclePayday > today) break;
+    }
+
+    const todayMs = today.getTime();
+    events.forEach(ev => { if (ev.date.getTime() <= todayMs) bal += ev.amount; });
+    return Math.round(bal);
+  }
+  const chaseEst = chaseEstimate();
+
+  // US INVESTMENTS — live via FSKAX price delta; fallback to 7% CAGR
+  const mosInvest = Math.max(0, monthsSince(new Date(2026, 2, 1)));
+  const fidelityEst = fskaxDelta
+    ? Math.round(5600 * fskaxDelta + mosInvest * 1100)
+    : Math.round(5600 * Math.pow(1.07, daysA / 365) + mosInvest * 1100);
+  const rothEst = fskaxDelta
+    ? Math.round(4200 * fskaxDelta)
+    : Math.round(4200 * Math.pow(1.07, daysA / 365));
+  const chaseUSEst  = 1600; // static working capital anchor — maintained manually at ~$1,500–1,600
+
+  // UK PENSION — reanchored 3 Mar 2026 at £18,440
+  // SALX £3,186 lands Mar 24 2026. Monthly: £882 until Apr, £922 from Apr.
+  const PENSION_ANCHOR = new Date(2026, 2, 3);   // Mar 3 2026
+  const PENSION_VAL    = 18440;
+  const SALX_DATE      = new Date(2026, 2, 24);  // Mar 24 2026
+  const APR_PAYDAY     = new Date(2026, 3, 24);  // Apr 24 2026 (first April salary)
+  const salxAdded      = today >= SALX_DATE ? 3186 : 0;
+  const daysPension    = daysSince(PENSION_ANCHOR);
+  const mosPension     = monthsSince(PENSION_ANCHOR);
+  // Monthly contributions: use £882 for March month, £922 from April onwards
+  const pensionContribs = mosPension <= 0 ? 0
+    : 881.91 + Math.max(0, mosPension - 1) * 921.58;
+  const pensionEst = Math.round((PENSION_VAL + salxAdded) * Math.pow(1.055, daysPension / 365) + pensionContribs);
+
+  // DYNAMIC HERO NET — switches at April 24 payday
+  const isMarchPayday   = today >= new Date(2026, 2, 24) && today < APR_PAYDAY;
+  const isAprilOnwards  = today >= APR_PAYDAY;
+  const heroNetEl   = document.getElementById('hero-net-value');
+  const heroSubEl   = document.getElementById('hero-net-sub');
+  const heroBadgeEl = document.getElementById('hero-net-badge');
+  if (heroNetEl) {
+    if (isAprilOnwards) {
+      heroNetEl.textContent  = '~£3,441';
+      heroSubEl.textContent  = 'Payday 24th · April 2026 · HMRC formula';
+      heroBadgeEl.textContent = '↑ up from £3,417 · verify vs Apr payslip';
+    } else if (isMarchPayday) {
+      heroNetEl.textContent  = '~£5,136';
+      heroSubEl.textContent  = 'Bonus month · March 24 payday';
+      heroBadgeEl.textContent = 'SALX + regular salary · big month';
+    } else {
+      heroNetEl.textContent  = '£3,417';
+      heroSubEl.textContent  = 'Payday 24th · Chase UK · pre-April';
+      heroBadgeEl.textContent = '→ ~£3,441 from 24 Apr 2026';
+    }
+  }
+
+  // Update DOM
+  const fmt = (v, prefix='£') => prefix + v.toLocaleString('en-GB');
+  document.getElementById('bal-atom').textContent    = fmt(atomEst);
+  document.getElementById('bal-monzo').textContent   = fmt(monzoEst);
+  const chaseEl = document.getElementById('bal-chase');
+  const chaseColor = chaseEst < 1000 ? 'var(--red)' : chaseEst < 1300 ? 'var(--amber)' : 'var(--indigo)';
+  chaseEl.textContent  = '~' + fmt(chaseEst);
+  chaseEl.style.color  = chaseColor;
+  document.getElementById('bal-fid').textContent     = '~$' + fidelityEst.toLocaleString('en-GB');
+  document.getElementById('bal-roth').textContent    = '~$' + rothEst.toLocaleString('en-GB');
+  document.getElementById('bal-pension').textContent = '~' + fmt(pensionEst);
+  const pillarEl = document.getElementById('pillar-pension-val');
+  if (pillarEl) pillarEl.textContent = '~' + fmt(pensionEst);
+  const pensionSubEl = document.getElementById('hero-pension-sub');
+  if (pensionSubEl) pensionSubEl.textContent = 'Liquid ~£23k + pension ~' + fmt(pensionEst);
+  drawNetWorthChart(atomEst, monzoEst, chaseEst, pensionEst, fidelityEst, rothEst, chaseUSEst, liveFX, mktLabel);
+}
+liveEstimates();
+
+// ── FILED RETURNS RENDERER ─────────────────────────────────────────────────────
+// Reads window.TAX_RETURNS_DATA written by update_dashboard.py.
+// Falls back to static defaults if file not present.
+function renderFiledReturns() {
+  const grid  = document.getElementById('filed-returns-grid');
+  const badge = document.getElementById('tax-data-badge');
+  if (!grid) return;
+
+  const defaults = [
+    { year: 2023, status: 'empty',    statusLabel: 'No documents',    note: '1040 · Form 1116 · Schedule B · FBAR',           color: 'var(--muted)',  border: '' },
+    { year: 2024, status: 'empty',    statusLabel: 'No documents',    note: '1040 · Form 1116 · Schedule B · FBAR',           color: 'var(--muted)',  border: '' },
+    { year: 2025, status: 'progress', statusLabel: 'In progress',     note: 'Due Jun 15 or Oct 15 · Gathering docs',          color: 'var(--amber)',  border: 'rgba(251,191,36,0.4)' },
+    { year: 2026, status: 'open',     statusLabel: 'Year in progress', note: 'Includes Mar bonus · File by Jun/Oct 2027',     color: 'var(--green)',  border: 'rgba(52,211,153,0.3)' },
+  ];
+
+  const data = (typeof window.TAX_RETURNS_DATA !== 'undefined') ? window.TAX_RETURNS_DATA : defaults;
+  if (typeof window.TAX_RETURNS_DATA !== 'undefined') {
+    badge.textContent = 'auto-updated · ' + (window.TAX_DATA_UPDATED || 'synced');
+    badge.style.background = 'rgba(52,211,153,0.12)';
+    badge.style.color = 'var(--green)';
+  }
+
+  grid.innerHTML = data.map(d => {
+    const borderStyle = d.border ? `style="border-color:${d.border}"` : '';
+    const fileLinks = d.files && d.files.length
+      ? d.files.map(f => {
+          const url = d.folderPath
+            ? `file://${d.folderPath.replace(/ /g,'%20')}/${f.replace(/ /g,'%20')}`
+            : null;
+          return url
+            ? `<a href="${url}" target="_blank" style="display:block; color:var(--green); font-size:0.67rem; margin-top:0.3rem; text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${f}">${f} →</a>`
+            : `<div style="font-size:0.67rem; color:var(--green); margin-top:0.2rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${f}">${f}</div>`;
+        }).join('')
+      : '';
+    return `<div class="filed-year" ${borderStyle}>
+      <div class="filed-year-num">${d.year}</div>
+      <div class="filed-year-status" style="color:${d.color}">${d.statusLabel}</div>
+      <div class="filed-year-note">${d.note}</div>
+      ${fileLinks}
+    </div>`;
+  }).join('');
+}
+renderFiledReturns();
+
+// ── LIFE GOALS ────────────────────────────────────────────────────────────────
+function updateGoals() {
+  const b = document.getElementById('goalsBruceToggle').checked;
+
+  // CSP progress — clean Amex history since Feb 2026
+  const cspStart    = new Date(2026, 1, 1);
+  const cspMonths   = Math.max(0, (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth()));
+  const cspMonthsLeft = Math.max(0, 9 - cspMonths);
+  document.getElementById('csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
+  document.getElementById('csp-months-lbl').textContent = cspMonths <= 1 ? `${cspMonths} month in` : `${cspMonths} months in`;
+
+  // Flat Move Pot — shared between move goal and purchase goal
+  const marchStart = new Date(2026, 2, 1);
+  const moElapsed  = Math.max(0, (today.getFullYear() - marchStart.getFullYear()) * 12 + (today.getMonth() - marchStart.getMonth()));
+  const flatSaved  = moElapsed * 150;
+
+  // Goal 2: Move to nicer flat (£5,000 move-in target)
+  const moveTarget = 5000;
+  document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100) + '%';
+  document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
+
+  // Goal 4: Buy a flat (£50,000 deposit target)
+  const flatTarget = 50000;
+  document.getElementById('flat-prog').style.width = Math.min(100, flatSaved / flatTarget * 100) + '%';
+  document.getElementById('flat-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
+
+  // Timelines
+  const flatYr = 2026 + Math.ceil((flatTarget - flatSaved) / (b ? 300 + 16000/12 : 300) / 12);
+
+  setPill('csp',    b,
+    b ? "Bruce covers $4k spend → 60k UR bonus immediately on approval" : `Building history · ${cspMonthsLeft} months to go`,
+    "Late 2026");
+  setPill('move',   b,
+    b ? "Dad's gifts cover move-in costs immediately" : "£150/mo pot · redirect some float to top up",
+    b ? "Now" : "Mid-2027");
+  setPill('avios',  b,
+    b ? "CSP bonus + Bruce covers £600 fees → book late 2026" : "Waiting on CSP · book once bonus lands",
+    b ? "~Late 2026" : "~Early 2027");
+  setPill('flat',   b,
+    b ? "With Dad's gifts · £16k/yr accelerates pot" : "Conservative · salary growth to ~£300/mo avg",
+    `~${flatYr}`);
+}
+
+function setPill(id, withBruce, label, value) {
+  const pill = document.getElementById(id + '-pill');
+  if (!pill) return;
+  pill.className = 'goal-pill ' + (withBruce ? 'with-bruce' : 'no-bruce');
+  document.getElementById(id + '-pill-label').textContent = label;
+  document.getElementById(id + '-timeline').textContent   = value;
+}
+updateGoals();
+
+function mdToHtml(raw) {
+  // 1. Extract fenced code blocks before any escaping
+  const blocks = [];
+  raw = raw.replace(/```[\s\S]*?```/g, m => {
+    const inner = m.slice(3, -3).replace(/^\w*\n?/, '');
+    const safe  = inner.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    blocks.push(`<pre><code>${safe}</code></pre>`);
+    return `\x00B${blocks.length-1}\x00`;
+  });
+
+  // 2. Escape remaining HTML
+  raw = raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  // 3. Protect inline code
+  const inlines = [];
+  raw = raw.replace(/`([^`\n]+)`/g, (_,c) => {
+    inlines.push(`<code>${c}</code>`);
+    return `\x00I${inlines.length-1}\x00`;
+  });
+
+  // 4. Process line by line
+  const lines = raw.split('\n');
+  const out   = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+
+    // Table: row followed by separator row
+    if (/\|.+\|/.test(line) && i+1 < lines.length && /^\|[\s\-:|]+\|$/.test(lines[i+1].trim())) {
+      let html = '<table>';
+      let header = true;
+      while (i < lines.length && /\|.+\|/.test(lines[i])) {
+        const row = lines[i]; i++;
+        if (/^[\s|:\-]+$/.test(row.replace(/\|/g,''))) continue;
+        const cells = row.split('|').slice(1,-1);
+        html += '<tr>' + cells.map(c => header ? `<th>${c.trim()}</th>` : `<td>${c.trim()}</td>`).join('') + '</tr>';
+        header = false;
+      }
+      out.push(html + '</table>'); continue;
+    }
+
+    // HR
+    if (/^-{3,}$|^\*{3,}$/.test(line.trim())) { out.push('<hr>'); i++; continue; }
+
+    // Headers
+    const hm = line.match(/^(#{1,3})\s+(.+)/);
+    if (hm) { const lv = Math.min(hm[1].length + 2, 6); out.push(`<h${lv}>${hm[2]}</h${lv}>`); i++; continue; }
+
+    // Bullet list
+    if (/^\s*[-*]\s+/.test(line)) {
+      let html = '<ul>';
+      while (i < lines.length && /^\s*[-*]\s+/.test(lines[i]))
+        html += `<li>${lines[i++].replace(/^\s*[-*]\s+/,'')}</li>`;
+      out.push(html + '</ul>'); continue;
+    }
+
+    // Numbered list
+    if (/^\s*\d+\.\s+/.test(line)) {
+      let html = '<ol>';
+      while (i < lines.length && /^\s*\d+\.\s+/.test(lines[i]))
+        html += `<li>${lines[i++].replace(/^\s*\d+\.\s+/,'')}</li>`;
+      out.push(html + '</ol>'); continue;
+    }
+
+    // Blank line
+    if (line.trim() === '') { out.push('<div class="md-gap"></div>'); i++; continue; }
+
+    // Paragraph
+    out.push(`<p>${line}</p>`); i++;
+  }
+
+  // 5. Inline formatting
+  let html = out.join('');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+  html = html.replace(/_([^_\n]+)_/g, '<em>$1</em>');
+
+  // 6. Restore placeholders
+  html = html.replace(/\x00I(\d+)\x00/g, (_,n) => inlines[n]);
+  html = html.replace(/\x00B(\d+)\x00/g, (_,n) => blocks[n]);
+  return html;
+}
+
+</script>
+</body>
+</html>

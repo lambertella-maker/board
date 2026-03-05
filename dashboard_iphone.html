@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ella Finance">
+<meta name="theme-color" content="#080c18">
+<title>Ella Lambert — Finance</title>
+<style>
+  :root {
+    --bg: #080c18; --card: #0f1629; --card2: #161e35; --border: #1e2d50;
+    --indigo: #818cf8; --cyan: #22d3ee; --amber: #fbbf24; --green: #34d399;
+    --red: #f87171; --pink: #f472b6; --text: #f1f5f9; --muted: #64748b; --soft: #94a3b8;
+    --tab-h: 64px;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-top: env(safe-area-inset-top, 0px);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { height:100%; background:var(--bg); color:var(--text);
+               font-family:-apple-system,'Helvetica Neue',system-ui,sans-serif; overscroll-behavior:none; }
+
+  /* ── LAYOUT ── */
+  #app { display:flex; flex-direction:column; height:100vh; height:100dvh; }
+  #content { flex:1; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch;
+             padding-bottom:calc(var(--tab-h) + var(--safe-bottom) + 12px); }
+
+  /* ── TAB BAR ── */
+  #tabbar { position:fixed; bottom:0; left:0; right:0; z-index:100;
+            background:rgba(8,12,24,0.95); backdrop-filter:blur(20px);
+            border-top:1px solid var(--border);
+            height:calc(var(--tab-h) + var(--safe-bottom));
+            padding-bottom:var(--safe-bottom);
+            display:flex; align-items:flex-start; }
+  .tab { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+         padding:10px 0 4px; cursor:pointer; gap:3px; transition:opacity .15s; }
+  .tab:active { opacity:0.6; }
+  .tab-icon { font-size:1.3rem; line-height:1; }
+  .tab-label { font-size:0.6rem; font-weight:600; text-transform:uppercase; letter-spacing:.05em;
+               color:var(--muted); transition:color .2s; }
+  .tab.active .tab-label { color:var(--indigo); }
+  .tab.active .tab-icon { filter:drop-shadow(0 0 6px rgba(129,140,248,0.6)); }
+
+  /* ── SECTIONS (tabs) ── */
+  .tab-section { display:none; padding:0 0 1rem; }
+  .tab-section.active { display:block; }
+
+  /* ── TOPBAR ── */
+  .topbar { display:flex; justify-content:space-between; align-items:center;
+            padding:calc(var(--safe-top) + 14px) 16px 12px;
+            background:rgba(8,12,24,0.9); backdrop-filter:blur(12px);
+            position:sticky; top:0; z-index:50; border-bottom:1px solid var(--border); }
+  .topbar-logo { font-size:0.9rem; font-weight:700;
+                 background:linear-gradient(135deg,var(--indigo),var(--cyan));
+                 -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .topbar-date { font-size:0.7rem; color:var(--muted);
+                 background:var(--card2); border:1px solid var(--border);
+                 border-radius:12px; padding:0.25rem 0.7rem; }
+  .refresh-btn { background:none; border:none; cursor:pointer; color:var(--muted); font-size:0.8rem; padding:4px 6px; line-height:1; transition:color .2s; -webkit-tap-highlight-color:transparent; }
+
+  /* ── CARDS ── */
+  .px { padding-left:14px; padding-right:14px; }
+  .section-title { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em;
+                   color:var(--muted); padding:18px 14px 8px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:14px;
+          margin:0 14px 10px; padding:14px; }
+  .card-sm { padding:10px 12px; }
+
+  /* ── HERO METRICS ── */
+  .metrics-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:10px 14px 0; }
+  .metric { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 12px; }
+  .metric-label { font-size:0.62rem; font-weight:600; text-transform:uppercase; letter-spacing:.07em;
+                  color:var(--muted); margin-bottom:6px; }
+  .metric-value { font-size:1.55rem; font-weight:800; line-height:1; margin-bottom:4px; }
+  .metric-sub { font-size:0.62rem; color:var(--muted); }
+  .metric-badge { display:inline-block; font-size:0.6rem; font-weight:700; margin-top:5px;
+                  padding:2px 7px; border-radius:10px; }
+  .badge-green  { background:rgba(52,211,153,0.1); color:var(--green); border:1px solid rgba(52,211,153,0.25); }
+  .badge-indigo { background:rgba(129,140,248,0.1); color:var(--indigo); border:1px solid rgba(129,140,248,0.25); }
+  .badge-amber  { background:rgba(251,191,36,0.1); color:var(--amber); border:1px solid rgba(251,191,36,0.25); }
+
+  /* ── ACCOUNTS ── */
+  .accounts-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:0 14px; }
+  .acct { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px; }
+  .acct-flag { font-size:1rem; margin-bottom:4px; }
+  .acct-name { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
+               color:var(--muted); margin-bottom:2px; }
+  .acct-bal { font-size:1.15rem; font-weight:800; }
+  .acct-note { font-size:0.6rem; color:var(--muted); margin-top:2px; }
+
+  /* ── PROGRESS BAR ── */
+  .prog-wrap { background:var(--border); border-radius:6px; height:7px; overflow:hidden; margin:8px 0 4px; }
+  .prog-fill { height:100%; border-radius:6px; background:linear-gradient(90deg,var(--indigo),var(--cyan)); }
+  .prog-labels { display:flex; justify-content:space-between; font-size:0.6rem; color:var(--muted); }
+
+  /* ── PILLARS ── */
+  .pillar-mobile { background:var(--card); border-radius:14px; margin:0 14px 10px;
+                   overflow:hidden; border:1px solid var(--border); }
+  .pillar-header { display:flex; align-items:center; gap:10px; padding:13px 14px;
+                   border-bottom:1px solid var(--border); }
+  .pillar-ico { font-size:1.4rem; }
+  .pillar-label { font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
+  .pillar-name { font-size:0.9rem; font-weight:700; }
+  .pillar-body { padding:10px 14px 13px; }
+  .pillar-stat-row { display:flex; justify-content:space-between; padding:5px 0;
+                     border-bottom:1px solid var(--border); font-size:0.75rem; }
+  .pillar-stat-row:last-child { border-bottom:none; padding-bottom:0; }
+  .pillar-stat-k { color:var(--muted); }
+  .pillar-stat-v { font-weight:700; text-align:right; }
+  .pillar-why-text { font-size:0.72rem; color:var(--soft); line-height:1.55;
+                     margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+
+  /* ── PILLAR ACCENT BARS ── */
+  .pillar-mobile.p-indigo { border-top:3px solid var(--indigo); }
+  .pillar-mobile.p-cyan   { border-top:3px solid var(--cyan);   }
+  .pillar-mobile.p-amber  { border-top:3px solid var(--amber);  }
+  .pillar-mobile.p-green  { border-top:3px solid var(--green);  }
+  .pillar-mobile.p-pink   { border-top:3px solid var(--pink);   }
+
+  /* ── GOALS ── */
+  .goal-row-m { display:flex; justify-content:space-between; padding:6px 0;
+                border-bottom:1px solid var(--border); font-size:0.76rem; }
+  .goal-row-m:last-of-type { border-bottom:none; }
+  .goal-row-k { color:var(--muted); }
+  .goal-pill-m { background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.2);
+                 border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between;
+                 align-items:center; margin-top:10px; font-size:0.75rem; }
+  .goal-pill-m span { color:var(--indigo); font-weight:700; }
+
+  /* ── FIRE ── */
+  .fire-result-big { text-align:center; padding:20px 0 14px; }
+  .fire-age-n { font-size:4.5rem; font-weight:800;
+                background:linear-gradient(135deg,var(--amber),var(--pink));
+                -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .fire-age-lbl { font-size:0.75rem; color:var(--soft); }
+  .fire-stat-row { display:flex; justify-content:space-between; padding:8px 0;
+                   border-bottom:1px solid var(--border); font-size:0.8rem; }
+  .fire-stat-row:last-child { border-bottom:none; }
+  .fire-stat-lbl { color:var(--soft); }
+  .fire-stat-val { font-weight:700; }
+  .ctrl-group { margin-bottom:16px; }
+  .ctrl-label { display:flex; justify-content:space-between; font-size:0.78rem;
+                color:var(--soft); margin-bottom:6px; }
+  .ctrl-label span { color:var(--text); font-weight:700; }
+  input[type=range] { width:100%; accent-color:var(--indigo); height:22px; cursor:pointer; }
+
+  /* ── SUPERPLAN TOTAL ── */
+  .superplan-total { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:0 14px 10px; }
+  .st-box { background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.2);
+            border-radius:12px; padding:12px; text-align:center; }
+  .st-val { font-size:1.4rem; font-weight:800; }
+  .st-lbl { font-size:0.6rem; color:var(--muted); margin-top:3px; text-transform:uppercase; letter-spacing:.05em; }
+  .st-note { font-size:0.62rem; color:var(--soft); margin-top:2px; }
+
+  /* ── SIDEBAR (iPad only, hidden on phone) ── */
+  #sidebar { display:none; }
+  .sb-logo { padding:20px 18px 4px; font-size:0.9rem; font-weight:800; line-height:1.3;
+             background:linear-gradient(135deg,var(--indigo),var(--cyan));
+             -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .sb-date-txt { display:block; padding:4px 18px 20px; font-size:0.66rem; color:var(--muted); }
+  .sb-nav { flex:1; padding:0 10px; }
+  .sb-btn { display:flex; align-items:center; gap:9px; width:100%; background:none; border:none;
+            border-radius:10px; padding:10px 10px; color:var(--soft); font-size:0.84rem;
+            font-weight:500; cursor:pointer; text-align:left; transition:all .15s;
+            margin-bottom:3px; font-family:inherit; letter-spacing:0; }
+  .sb-btn:hover { background:rgba(129,140,248,0.08); color:var(--text); }
+  .sb-btn.active { background:rgba(129,140,248,0.15); color:var(--indigo); font-weight:700; }
+  .sb-btn-icon { font-size:1.1rem; width:22px; text-align:center; flex-shrink:0; }
+  .sb-footer { padding:16px 18px; border-top:1px solid var(--border); margin-top:8px; }
+  .sb-desktop-link { font-size:0.72rem; color:var(--muted); text-decoration:none; display:block;
+                     transition:color .15s; }
+  .sb-desktop-link:hover { color:var(--soft); }
+
+  /* ── iPAD RESPONSIVE (768px+) ── */
+  @media (min-width:768px) {
+    #app { flex-direction:row; height:100vh; height:100dvh; }
+    #sidebar { display:flex; flex-direction:column; width:185px; flex-shrink:0;
+               background:var(--card); border-right:1px solid var(--border); }
+    #tabbar { display:none; }
+    #content { padding-bottom:12px; }
+    /* Wider grids */
+    .metrics-grid { grid-template-columns:repeat(4,1fr); padding:14px 16px 0; }
+    .accounts-grid { grid-template-columns:repeat(3,1fr); padding:0 16px; }
+    .card { margin-left:16px; margin-right:16px; }
+    .accounts-grid .acct { padding:14px; }
+    .superplan-total { grid-template-columns:repeat(4,1fr); padding:0 16px 12px; }
+    /* FIRE: two columns on iPad */
+    #tab-fire .fire-ipad-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:12px 16px 0; }
+    #tab-fire .fire-ipad-grid .card { margin:0; }
+    /* Wider section titles */
+    .section-title { padding:18px 16px 8px; }
+    /* Pillar cards wider */
+    .pillar-mobile { margin-left:16px; margin-right:16px; }
+    /* Goals wider */
+    #tab-goals .card { max-width:none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<!-- ════════════ SIDEBAR (iPad) ════════════ -->
+<aside id="sidebar">
+  <div class="sb-logo">Ella Lambert<br>Finance</div>
+  <span class="sb-date-txt" id="sb-date">—</span>
+  <nav class="sb-nav">
+    <button class="sb-btn active" data-tab="overview" onclick="showTab('overview',this)"><span class="sb-btn-icon">📊</span>Overview</button>
+    <button class="sb-btn" data-tab="superplan" onclick="showTab('superplan',this)"><span class="sb-btn-icon">🏛️</span>Superplan</button>
+    <button class="sb-btn" data-tab="goals" onclick="showTab('goals',this)"><span class="sb-btn-icon">🎯</span>Goals</button>
+    <button class="sb-btn" data-tab="fire" onclick="showTab('fire',this)"><span class="sb-btn-icon">🔥</span>FIRE</button>
+  </nav>
+  <div class="sb-footer">
+    <a href="dashboard.html" class="sb-desktop-link">↗ Desktop Dashboard</a>
+  </div>
+</aside>
+
+<div id="content">
+
+<!-- ════════════ OVERVIEW ════════════ -->
+<div class="tab-section active" id="tab-overview">
+  <div class="topbar">
+    <div class="topbar-logo">Ella Lambert · Finance</div>
+    <div class="topbar-date" id="live-date-m">—</div>
+    <button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric">
+      <div class="metric-label">Monthly Net</div>
+      <div class="metric-value" id="m-net-value" style="color:var(--green)">£3,417</div>
+      <div class="metric-sub" id="m-net-sub">Payday 24th</div>
+      <div class="metric-badge badge-green" id="m-net-badge">→ ~£3,441 from Apr</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Net Worth</div>
+      <div class="metric-value" id="m-nw-hero" style="color:var(--indigo)">~£40k</div>
+      <div class="metric-sub" id="m-pension-sub">Liquid + pension</div>
+      <div class="metric-badge badge-indigo">+£10.2k/yr</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Emergency Fund</div>
+      <div class="metric-value" style="color:var(--cyan)">£13,143</div>
+      <div class="metric-sub">Atom + Monzo</div>
+      <div class="metric-badge badge-green">98% of milestone</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Savings Rate</div>
+      <div class="metric-value" style="color:var(--amber)">74%</div>
+      <div class="metric-sub">Pension + invest</div>
+      <div class="metric-badge badge-amber">£3,799/mo</div>
+    </div>
+  </div>
+
+  <div class="section-title">Emergency Fund</div>
+  <div class="card card-sm">
+    <div class="prog-wrap"><div class="prog-fill" style="width:73%"></div></div>
+    <div class="prog-labels">
+      <span>£0</span><span style="color:var(--indigo)">£13,143</span>
+      <span style="color:var(--amber)">£13,500</span><span>£18k</span>
+    </div>
+  </div>
+
+  <div class="section-title">Accounts — live estimates</div>
+  <div class="accounts-grid">
+    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Atom Bank</div><div class="acct-bal" id="m-bal-atom" style="color:var(--green)">—</div><div class="acct-note">3.49% AER · EF core</div></div>
+    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Monzo</div><div class="acct-bal" id="m-bal-monzo" style="color:var(--cyan)">—</div><div class="acct-note">2.75% AER · liquid</div></div>
+    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">—</div><div class="acct-note">Salary hub</div></div>
+    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
+    <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
+    <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">Tax-free · never touch</div></div>
+  </div>
+
+  <div class="section-title">Net Worth Composition</div>
+  <div class="card">
+    <div style="font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:2px;" id="m-nw-total">—</div>
+    <div style="font-size:0.7rem;color:var(--muted);margin-bottom:14px;">total net worth · USD at £0.77 · updates on load</div>
+    <div id="m-nw-rows" style="display:flex;flex-direction:column;gap:0;"></div>
+    <div id="m-nw-rank" style="margin-top:10px;padding:0.35rem 0.65rem;background:rgba(52,211,153,0.07);border-radius:8px;border:1px solid rgba(52,211,153,0.18);display:flex;gap:1rem;font-size:0.65rem;color:var(--muted);"></div>
+  </div>
+</div>
+
+<!-- ════════════ SUPERPLAN ════════════ -->
+<div class="tab-section" id="tab-superplan">
+  <div class="topbar"><div class="topbar-logo">The Superplan</div><button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button></div>
+
+  <div style="background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border-bottom:1px solid var(--border); padding:16px 14px; text-align:center; margin-bottom:6px;">
+    <div style="font-size:1rem; font-weight:800; background:linear-gradient(135deg,var(--amber),var(--pink),var(--indigo)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px;">You built this without realising.</div>
+    <div style="font-size:0.78rem; color:var(--soft); line-height:1.6;">8 pillars. 2 currencies. 2 countries. Inflation-linked state income on both sides of the Atlantic. Age 25.</div>
+  </div>
+
+  <div class="pillar-mobile p-indigo">
+    <div class="pillar-header"><div class="pillar-ico">🏦</div><div><div class="pillar-label">Pillar 1 · UK Workplace</div><div class="pillar-name">AbbVie Pension</div></div></div>
+    <div class="pillar-body">
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" id="m-pillar-pension" style="color:var(--indigo)">—</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Annual input</span><span class="pillar-stat-v">£11,059 (18% total)</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Match</span><span class="pillar-stat-v">6% you + 12% AbbVie</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">~£2.1M</span></div>
+      <div class="pillar-why-text">AbbVie's 12% match is a 200% return on your 6% before a single penny of growth. Fully utilised.</div>
+    </div>
+  </div>
+
+  <div class="pillar-mobile p-cyan">
+    <div class="pillar-header"><div class="pillar-ico">🇬🇧</div><div><div class="pillar-label">Pillar 2 · UK State</div><div class="pillar-name">UK State Pension</div></div></div>
+    <div class="pillar-body">
+      <div class="pillar-stat-row"><span class="pillar-stat-k">NI years so far</span><span class="pillar-stat-v" style="color:var(--cyan)">~3 years</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Need for full pension</span><span class="pillar-stat-v">35 qualifying years</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Full value</span><span class="pillar-stat-v">£11,502/yr today's money</span></div>
+      <div class="pillar-why-text">Triple-lock protected. Rises with inflation, earnings, or 2.5% — whichever is highest. Inflation-linked for life.</div>
+    </div>
+  </div>
+
+  <div class="pillar-mobile p-amber">
+    <div class="pillar-header"><div class="pillar-ico">🇺🇸</div><div><div class="pillar-label">Pillar 3 · US State</div><div class="pillar-name">US Social Security</div></div></div>
+    <div class="pillar-body">
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Status</span><span class="pillar-stat-v" style="color:var(--amber)">Preserved via FTC</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Why FTC matters</span><span class="pillar-stat-v">FEIE would kill this</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">UK-US Totalization</span><span class="pillar-stat-v">NI years may count</span></div>
+      <div class="pillar-why-text">FTC instead of FEIE keeps US SS credits building. Inflation-linked government income for life on both sides.</div>
+    </div>
+  </div>
+
+  <div class="pillar-mobile p-green">
+    <div class="pillar-header"><div class="pillar-ico">📈</div><div><div class="pillar-label">Pillar 4 · US Investing</div><div class="pillar-name">Fidelity Index Funds</div></div></div>
+    <div class="pillar-body">
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" id="m-pillar-fid" style="color:var(--green)">—</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly input</span><span class="pillar-stat-v">~$1,100 via Wise</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Split</span><span class="pillar-stat-v">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">~£1.9M</span></div>
+      <div class="pillar-why-text">Automated: Wise → Chase US → Fidelity ACH. No decisions, no drift, just compounding.</div>
+    </div>
+  </div>
+
+  <div class="pillar-mobile p-pink">
+    <div class="pillar-header"><div class="pillar-ico">🌱</div><div><div class="pillar-label">Pillar 5 · US Retirement</div><div class="pillar-name">Roth IRA</div></div></div>
+    <div class="pillar-body">
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" style="color:var(--pink)" id="m-pillar-roth">—</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Tax on growth</span><span class="pillar-stat-v" style="color:var(--green)">Zero. Ever.</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--pink)">~£200k+ tax-free</span></div>
+      <div class="pillar-why-text">Every penny of growth comes out completely tax-free in retirement. Never withdraw early.</div>
+    </div>
+  </div>
+
+  <div class="pillar-mobile p-indigo">
+    <div class="pillar-header"><div class="pillar-ico">💼</div><div><div class="pillar-label">Pillar 6 · UK Shares</div><div class="pillar-name">ABBV Share Incentive Plan</div></div></div>
+    <div class="pillar-body">
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Your sacrifice</span><span class="pillar-stat-v">£1,800/yr pre-tax</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">AbbVie match</span><span class="pillar-stat-v">1:1 — £1,800 free</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Instant return</span><span class="pillar-stat-v" style="color:var(--green)">100% before growth</span></div>
+      <div class="pillar-why-text">A 1:1 share match is a 100% return before a day of stock growth. Tax-advantaged salary sacrifice.</div>
+    </div>
+  </div>
+
+  <div class="pillar-mobile p-cyan">
+    <div class="pillar-header"><div class="pillar-ico">🛡️</div><div><div class="pillar-label">Pillar 7 · Foundation</div><div class="pillar-name">Emergency Fund</div></div></div>
+    <div class="pillar-body">
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Total</span><span class="pillar-stat-v" style="color:var(--cyan)">£13,143</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Atom 3.49%</span><span class="pillar-stat-v">£11,143</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Monzo 2.75%</span><span class="pillar-stat-v">£2,000</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">True target</span><span class="pillar-stat-v">£16–18k (no rush)</span></div>
+      <div class="pillar-why-text">6 months of expenses, earning above-inflation interest, FSCS-protected. The foundation that lets every other pillar take risk.</div>
+    </div>
+  </div>
+
+  <div class="pillar-mobile p-amber">
+    <div class="pillar-header"><div class="pillar-ico">✈️</div><div><div class="pillar-label">Pillar 8 · Credit &amp; Travel</div><div class="pillar-name">Cross-Continent Credit</div></div></div>
+    <div class="pillar-body">
+      <div class="pillar-stat-row"><span class="pillar-stat-k">UK: BA Amex</span><span class="pillar-stat-v" style="color:var(--amber)">Avios building</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">US: Amex Blue Cash</span><span class="pillar-stat-v">History building</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Next: Chase Sapphire</span><span class="pillar-stat-v">Late 2026</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">All cards</span><span class="pillar-stat-v" style="color:var(--green)">Zero balance carried</span></div>
+      <div class="pillar-why-text">Simultaneous credit history in two countries. CSP unlocks no-FX travel rewards. Credit as a tool, never debt.</div>
+    </div>
+  </div>
+
+  <div class="pillar-mobile p-green">
+    <div class="pillar-header"><div class="pillar-ico">🌍</div><div><div class="pillar-label">Pillar 9 · Optionality</div><div class="pillar-name">Dual-Continent Architecture</div></div></div>
+    <div class="pillar-body">
+      <div class="pillar-stat-row"><span class="pillar-stat-k">UK assets</span><span class="pillar-stat-v" style="color:var(--green)">~£31k + pension</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">US assets</span><span class="pillar-stat-v">~$9,800</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">ILR target</span><span class="pillar-stat-v">Sep 2029</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Citizenship</span><span class="pillar-stat-v">Sep 2030</span></div>
+      <div class="pillar-why-text">Retire in the UK, the US, or Europe. After 2030 a British passport adds 186 visa-free countries. This is exceptional.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Total picture</div>
+  <div class="superplan-total">
+    <div class="st-box"><div id="m-sp-nw" class="st-val" style="color:var(--amber)">~£40k</div><div class="st-lbl">Wealth today</div><div class="st-note">Age 25</div></div>
+    <div class="st-box"><div class="st-val" style="color:var(--green)">£28k+</div><div class="st-lbl">Annual creation</div><div class="st-note">All pillars</div></div>
+    <div class="st-box"><div class="st-val" style="color:var(--indigo)">£4M+</div><div class="st-lbl">At age 67</div><div class="st-note">7% CAGR</div></div>
+    <div class="st-box"><div class="st-val" style="color:var(--pink)">£23k+</div><div class="st-lbl">State income/yr</div><div class="st-note">UK + US</div></div>
+  </div>
+</div>
+
+<!-- ════════════ GOALS ════════════ -->
+<div class="tab-section" id="tab-goals">
+  <div class="topbar"><div class="topbar-logo">Life Goals</div><button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button></div>
+
+  <div class="card" style="margin-top:10px;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <span style="font-size:1.4rem;">💳</span>
+      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 1 · Most Imminent</div><div style="font-size:0.95rem; font-weight:700;">Chase Sapphire Preferred</div></div>
+    </div>
+    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">6–9 months clean Amex history needed · started Feb 2026</div>
+    <div class="prog-wrap"><div class="prog-fill" style="background:linear-gradient(90deg,var(--indigo),var(--pink)); width:11%"></div></div>
+    <div class="prog-labels"><span>Feb 2026</span><span style="color:var(--indigo)">1mo in</span><span>Aug–Oct 2026</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--green); font-weight:600;">60k UR → ~50k Avios</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">2-4-1 voucher</span><span style="color:var(--amber); font-weight:600;">Already unlocked ✓</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Building clean history</span><span>Late 2026</span></div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <span style="font-size:1.4rem;">🗝️</span>
+      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 2 · 2027</div><div style="font-size:0.95rem; font-weight:700;">Upgrade to a Nicer Flat</div></div>
+    </div>
+    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">£150/mo Flat Move Pot · need ~£5,000 to move</div>
+    <div class="prog-wrap"><div class="prog-fill" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:3%"></div></div>
+    <div class="prog-labels"><span>£0</span><span style="color:var(--green)">£150</span><span style="color:var(--cyan)">£5,000</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Areas</span><span style="font-weight:600;">W. Hampstead · Chiswick</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Apr raise headroom</span><span style="color:var(--green); font-weight:600;">Absorbs £200–300/mo rent rise</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£150/mo · steady build</span><span>Mid-2027</span></div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <span style="font-size:1.4rem;">✈️</span>
+      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 3 · Travel</div><div style="font-size:0.95rem; font-weight:700;">Business Class LHR → ORD</div></div>
+    </div>
+    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">Solved by CSP welcome bonus — 60k UR → 50k Avios</div>
+    <div class="prog-wrap"><div class="prog-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
+    <div class="prog-labels"><span>0 Avios</span><span style="color:var(--amber)">CSP solves it</span><span>50,000</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Taxes + fees</span><span style="font-weight:600;">~£600 cash per trip</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">2-4-1</span><span style="color:var(--amber); font-weight:600;">Second seat free ✓</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Waiting on CSP</span><span>~Early 2027</span></div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <span style="font-size:1.4rem;">🏠</span>
+      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 4 · Longest Horizon</div><div style="font-size:0.95rem; font-weight:700;">Buy a Flat in London</div></div>
+    </div>
+    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">£150/mo pot · builds with salary growth · ILR first</div>
+    <div class="prog-wrap"><div class="prog-fill" style="width:0%"></div></div>
+    <div class="prog-labels"><span>£0</span><span style="color:var(--indigo)">Just started</span><span style="color:var(--amber)">£50k deposit</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Target</span><span style="font-weight:600;">~£500k flat · 10% deposit</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">ILR milestone</span><span style="color:var(--indigo); font-weight:600;">Sep 2029 — then buy</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Conservative · salary growth</span><span>~2033</span></div>
+  </div>
+</div>
+
+<!-- ════════════ FIRE ════════════ -->
+<div class="tab-section" id="tab-fire">
+  <div class="topbar"><div class="topbar-logo">FIRE Calculator</div><button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button></div>
+
+  <div class="fire-ipad-grid">
+  <div class="card" style="margin-top:10px;">
+    <div class="fire-result-big">
+      <div class="fire-age-n" id="m-fire-age">51</div>
+      <div class="fire-age-lbl">Projected retirement age · conservative</div>
+    </div>
+    <div class="fire-stat-row"><span class="fire-stat-lbl">FIRE number needed</span><span class="fire-stat-val" id="m-fire-num" style="color:var(--amber)">—</span></div>
+    <div class="fire-stat-row"><span class="fire-stat-lbl">Portfolio at 67 (work to normal)</span><span class="fire-stat-val" id="m-fire-67" style="color:var(--green)">—</span></div>
+    <div class="fire-stat-row"><span class="fire-stat-lbl">Years to FIRE</span><span class="fire-stat-val" id="m-fire-yrs" style="color:var(--indigo)">—</span></div>
+    <div class="fire-stat-row" style="border-bottom:none;"><span class="fire-stat-lbl">State pensions at 67</span><span class="fire-stat-val" style="color:var(--cyan)">~£23k+/yr</span></div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:0.72rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:14px;">Adjust assumptions</div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Annual return <span id="m-ret-lbl">7.0%</span></div>
+      <input type="range" id="m-ret" min="4" max="12" step="0.5" value="7" oninput="mCalcFire()">
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Monthly investing <span id="m-mo-lbl">£850</span></div>
+      <input type="range" id="m-mo" min="200" max="3000" step="50" value="850" oninput="mCalcFire()">
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label">Retirement spending/yr <span id="m-sp-lbl">£30,000</span></div>
+      <input type="range" id="m-sp" min="15000" max="80000" step="1000" value="30000" oninput="mCalcFire()">
+    </div>
+    <div class="ctrl-group" style="margin-bottom:0;">
+      <div class="ctrl-label">Withdrawal rate <span id="m-wr-lbl">4.00%</span></div>
+      <input type="range" id="m-wr" min="3" max="6" step="0.25" value="4" oninput="mCalcFire()">
+    </div>
+  </div>
+  </div><!-- /fire-ipad-grid -->
+</div>
+
+</div><!-- /content -->
+
+<!-- ════════════ TAB BAR ════════════ -->
+<div id="tabbar">
+  <div class="tab active" data-tab="overview" onclick="showTab('overview',this)">
+    <div class="tab-icon">📊</div><div class="tab-label">Overview</div>
+  </div>
+  <div class="tab" data-tab="superplan" onclick="showTab('superplan',this)">
+    <div class="tab-icon">🏛️</div><div class="tab-label">Superplan</div>
+  </div>
+  <div class="tab" data-tab="goals" onclick="showTab('goals',this)">
+    <div class="tab-icon">🎯</div><div class="tab-label">Goals</div>
+  </div>
+  <div class="tab" data-tab="fire" onclick="showTab('fire',this)">
+    <div class="tab-icon">🔥</div><div class="tab-label">FIRE</div>
+  </div>
+</div>
+</div><!-- /app -->
+
+<script>
+const today = new Date();
+
+// ── TAB NAVIGATION ────────────────────────────────────────────────────────────
+function showTab(name, el) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab, .sb-btn').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  // Activate every nav element (tab bar + sidebar) that maps to this tab
+  document.querySelectorAll('[data-tab="' + name + '"]').forEach(t => t.classList.add('active'));
+  document.getElementById('content').scrollTop = 0;
+}
+
+// ── LIVE DATE ─────────────────────────────────────────────────────────────────
+const dateShort = today.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short'});
+const dateLong  = today.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'short', year:'numeric'});
+document.getElementById('live-date-m').textContent = dateShort;
+document.getElementById('sb-date').textContent = dateLong;
+
+// ── LIVE ESTIMATES (identical logic to desktop) ───────────────────────────────
+async function liveEstimates() {
+  let mkt = null;
+  const liveFX    = mkt?.fx?.usd_to_gbp ?? 0.77;
+  const fskaxDelta = (mkt?.tickers?.FSKAX?.anchor)
+    ? mkt.tickers.FSKAX.current / mkt.tickers.FSKAX.anchor : null;
+
+  const ANCHOR      = new Date(2026, 1, 24);
+  const daysSince   = d => Math.max(0, (today - d) / 86400000);
+  const monthsSince = d => {
+    const y = today.getFullYear() - d.getFullYear();
+    const m = today.getMonth() - d.getMonth();
+    return Math.max(0, y * 12 + m);
+  };
+
+  const daysA    = daysSince(ANCHOR);
+  const atomEst  = Math.round(11143.51 * Math.pow(1.0349, daysA / 365));
+  const monzoEst = Math.round(2000.00  * Math.pow(1.0275, daysA / 365));
+
+  function chaseEstimate() {
+    let bal = 3839.90;
+    const events = [
+      { date: new Date(2026, 2, 12),  amount: -1250      },
+      { date: new Date(2026, 2, 24),  amount: 5136 - 150 },
+      { date: new Date(2026, 2, 25),  amount: -850        },
+      { date: new Date(2026, 2, 26),  amount: -56.22      },
+    ];
+    let cyclePayday = new Date(2026, 2, 24);
+    for (let i = 0; i < 23; i++) {
+      const m = cyclePayday.getMonth(), y = cyclePayday.getFullYear();
+      const nm = m === 11 ? 0 : m + 1, ny = m === 11 ? y + 1 : y;
+      const nextPaydate = new Date(ny, nm, 24);
+      events.push({ date: new Date(ny, nm, 1),  amount: -110.51         });
+      events.push({ date: new Date(ny, nm, 2),  amount: -1250           });
+      events.push({ date: new Date(ny, nm, 12), amount: -1250           });
+      events.push({ date: nextPaydate,          amount: 3441 - 150      });
+      events.push({ date: new Date(ny, nm, 25), amount: -850            });
+      events.push({ date: new Date(ny, nm, 26), amount: -56.22          });
+      cyclePayday = nextPaydate;
+      if (cyclePayday > today) break;
+    }
+    const ms = today.getTime();
+    events.forEach(ev => { if (ev.date.getTime() <= ms) bal += ev.amount; });
+    return Math.round(bal);
+  }
+  const chaseEst = chaseEstimate();
+
+  const mosInvest   = Math.max(0, monthsSince(new Date(2026, 2, 1)));
+  const fidelityEst = fskaxDelta
+    ? Math.round(5600 * fskaxDelta + mosInvest * 1100)
+    : Math.round(5600 * Math.pow(1.07, daysA / 365) + mosInvest * 1100);
+  const rothEst = fskaxDelta
+    ? Math.round(4200 * fskaxDelta)
+    : Math.round(4200 * Math.pow(1.07, daysA / 365));
+  const chaseUSEst = 1600; // static working capital anchor
+
+  const PENSION_ANCHOR = new Date(2026, 2, 3);
+  const PENSION_VAL    = 18440;
+  const SALX_DATE      = new Date(2026, 2, 24);
+  const APR_PAYDAY     = new Date(2026, 3, 24);
+  const salxAdded      = today >= SALX_DATE ? 3186 : 0;
+  const daysPension    = daysSince(PENSION_ANCHOR);
+  const mosPension     = monthsSince(PENSION_ANCHOR);
+  const pensionContribs = mosPension <= 0 ? 0 : 881.91 + Math.max(0, mosPension - 1) * 921.58;
+  const pensionEst = Math.round((PENSION_VAL + salxAdded) * Math.pow(1.055, daysPension / 365) + pensionContribs);
+
+  const fmt = (v, p='£') => p + v.toLocaleString('en-GB');
+  document.getElementById('m-bal-atom').textContent    = fmt(atomEst);
+  document.getElementById('m-bal-monzo').textContent   = fmt(monzoEst);
+  const ce = document.getElementById('m-bal-chase');
+  ce.textContent  = '~' + fmt(chaseEst);
+  ce.style.color  = chaseEst < 1000 ? 'var(--red)' : chaseEst < 1300 ? 'var(--amber)' : 'var(--indigo)';
+  document.getElementById('m-bal-fid').textContent     = '~$' + fidelityEst.toLocaleString('en-GB');
+  document.getElementById('m-bal-roth').textContent    = '~$' + rothEst.toLocaleString('en-GB');
+  document.getElementById('m-bal-pension').textContent = '~' + fmt(pensionEst);
+  const pp = document.getElementById('m-pillar-pension');
+  if (pp) pp.textContent = '~' + fmt(pensionEst);
+  const pf = document.getElementById('m-pillar-fid');
+  if (pf) pf.textContent = '~$' + fidelityEst.toLocaleString('en-GB');
+  const pr = document.getElementById('m-pillar-roth');
+  if (pr) pr.textContent = '~$' + rothEst.toLocaleString('en-GB');
+  document.getElementById('m-pension-sub').textContent = 'Liquid ~£23k + pension ~' + fmt(pensionEst);
+
+  const isMarch = today >= new Date(2026,2,24) && today < APR_PAYDAY;
+  const isApr   = today >= APR_PAYDAY;
+  const nv = document.getElementById('m-net-value');
+  const ns = document.getElementById('m-net-sub');
+  const nb = document.getElementById('m-net-badge');
+  if (isApr)        { nv.textContent='~£3,441'; ns.textContent='Apr raise active'; nb.textContent='HMRC formula'; }
+  else if (isMarch) { nv.textContent='~£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
+  else              { nv.textContent='£3,417';  ns.textContent='Payday 24th';  nb.textContent='→ ~£3,441 Apr'; }
+
+  // Net worth composition
+  const FX_M = liveFX;
+  const mSegs = [
+    { label:'UK Savings',     val: atomEst + monzoEst + chaseEst,  color:'#22d3ee', note:'Atom · Monzo · Chase UK' },
+    { label:'AbbVie Pension', val: pensionEst,                      color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
+    { label:'US Brokerage',   val: Math.round(fidelityEst * FX_M), color:'#34d399', note:'Fidelity — FSKAX/FTIHX/FXNAX' },
+    { label:'Roth IRA',       val: Math.round(rothEst * FX_M),     color:'#fbbf24', note:'Tax-free · never touch' },
+    { label:'US Cash',        val: Math.round(chaseUSEst * 0.77),  color:'#6366f1', note:'Chase US — pipeline hub' },
+  ];
+  const mTotal  = mSegs.reduce((s, x) => s + x.val, 0);
+  const mNwFmt  = `~£${Math.round(mTotal / 1000).toLocaleString()}k`;
+  const mNwHero = document.getElementById('m-nw-hero');
+  const mSpNw   = document.getElementById('m-sp-nw');
+  if (mNwHero) mNwHero.textContent = mNwFmt;
+  if (mSpNw)   mSpNw.textContent   = mNwFmt;
+  const totalUSDCmp = mTotal / FX_M;
+  const ukRank = mTotal < 15000 ? 'around median' : mTotal < 30000 ? 'top 30%' : mTotal < 60000 ? 'top 20%' : mTotal < 100000 ? 'top 10%' : 'top 5%';
+  const usRank = totalUSDCmp < 39000 ? 'below median' : totalUSDCmp < 80000 ? 'above median' : totalUSDCmp < 150000 ? 'top 30%' : 'top 15%';
+  const rankEl = document.getElementById('m-nw-rank');
+  if (rankEl) rankEl.innerHTML =
+    `<span>🇬🇧 <span style="color:var(--green);font-weight:600;">${ukRank}</span> · age 25, UK</span>` +
+    `<span>🇺🇸 <span style="color:var(--green);font-weight:600;">${usRank}</span> · ages 25–34, US</span>`;
+
+  const nwTotalEl = document.getElementById('m-nw-total');
+  const nwRowsEl  = document.getElementById('m-nw-rows');
+  if (nwTotalEl) nwTotalEl.textContent = '£' + mTotal.toLocaleString();
+  if (nwRowsEl) nwRowsEl.innerHTML = mSegs.map((s, i) => {
+    const pct = ((s.val / mTotal) * 100).toFixed(1);
+    const sep = i < mSegs.length - 1 ? `<div style="height:1px;background:var(--border);margin:0;"></div>` : '';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">` +
+      `<div style="display:flex;align-items:center;gap:10px;">` +
+      `<div style="width:3px;height:34px;background:${s.color};border-radius:2px;flex-shrink:0;"></div>` +
+      `<div><div style="font-size:0.8rem;font-weight:600;color:var(--text);">${s.label}</div>` +
+      `<div style="font-size:0.68rem;color:var(--muted);">${s.note} · ${pct}%</div></div></div>` +
+      `<div style="font-size:0.92rem;font-weight:700;color:${s.color};">£${s.val.toLocaleString()}</div></div>${sep}`;
+  }).join('');
+}
+liveEstimates();
+
+// ── FIRE CALCULATOR ───────────────────────────────────────────────────────────
+function mCalcFire() {
+  const r   = parseFloat(document.getElementById('m-ret').value) / 100;
+  const mo  = parseFloat(document.getElementById('m-mo').value);
+  const sp  = parseFloat(document.getElementById('m-sp').value);
+  const wr  = parseFloat(document.getElementById('m-wr').value) / 100;
+  document.getElementById('m-ret-lbl').textContent = (r*100).toFixed(1)+'%';
+  document.getElementById('m-mo-lbl').textContent  = '£'+mo.toLocaleString('en-GB');
+  document.getElementById('m-sp-lbl').textContent  = '£'+sp.toLocaleString('en-GB');
+  document.getElementById('m-wr-lbl').textContent  = (wr*100).toFixed(2)+'%';
+  const fireNum     = sp / wr;
+  const rM          = Math.pow(1+r, 1/12) - 1;
+  const currentAge  = (today - new Date(2001,1,18)) / (365.25*24*3600*1000);
+  let port = 23000, months = 0;
+  while (port < fireNum && months < 60*12) { port = port*(1+rM)+mo; months++; }
+  const fireAge = Math.min(Math.round(currentAge + months/12), 90);
+  let p67 = 23000;
+  const mTo67 = Math.max(0, (67 - currentAge) * 12);
+  for (let m=0; m<mTo67; m++) p67 = p67*(1+rM)+mo;
+  const fmtBig = v => v >= 1e6 ? '£'+(v/1e6).toFixed(1)+'M' : '£'+Math.round(v/1000).toLocaleString('en-GB')+'k';
+  document.getElementById('m-fire-age').textContent = fireAge;
+  document.getElementById('m-fire-num').textContent = fmtBig(fireNum);
+  document.getElementById('m-fire-67').textContent  = fmtBig(p67);
+  document.getElementById('m-fire-yrs').textContent = Math.max(0, fireAge - Math.round(currentAge))+' years';
+}
+mCalcFire();
+
+
+</script>
+</body>
+</html>
