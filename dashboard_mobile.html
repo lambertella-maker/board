@@ -914,7 +914,7 @@
         <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>Never Form 2555 (FEIE)</strong>Eliminates SS contribution years. Destroys cross-continent retirement income. Off the table.</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>No ISAs — ever (while US citizen)</strong>S&amp;S ISAs = PFIC. Only trigger: renouncing US citizenship (CLN). ILR and British citizenship do NOT change this.</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">📋</div><div class="tax-rule-text"><strong>FBAR every year</strong>File FinCEN 114 by Oct 15. Free via <a href="https://bsaefiling.fincen.treas.gov" target="_blank" style="color:var(--cyan); text-decoration:none;">BSA E-Filing →</a> All UK accounts over $10k aggregate.</div></div>
-        <div class="tax-rule"><div class="tax-rule-icon">💰</div><div class="tax-rule-text"><strong>Sacrifice rules — know your benefit</strong>Pension + SIP save IT + NI (£133/yr combined NI saving, all at 2% above UEL). GymFlex (from Apr 2026) saves NI only — £97.40/mo gross − £1.95 NI saving (2% above UEL) = <strong>~£95/mo net cost</strong>. Not income-tax deductible (HMRC OpRA).</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">💰</div><div class="tax-rule-text"><strong>Sacrifice rules — know your benefit</strong>Pension + SIP save IT + NI (£133/yr combined NI saving, all at 2% above UEL). GymFlex (from Apr 2026) saves NI only — £97.40/mo gross − £1.95 NI saving (2% above UEL) = <span style="color:var(--text);font-weight:700;">~£95/mo net cost</span>. Not income-tax deductible (HMRC OpRA).</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">🇬🇧🇺🇸</div><div class="tax-rule-text"><strong>Totalization Agreement</strong>UK NI + US SS credits can combine for SS eligibility. Another reason FTC beats FEIE.</div></div>
       </div>
     </div>
@@ -1007,10 +1007,10 @@
         <span class="metric-badge badge-amber">$7,000 annual limit</span>
       </div>
       <div class="metric-card">
-        <div class="metric-label">Annual input</div>
-        <div class="metric-value" style="color:var(--indigo)">£10,200</div>
-        <div class="metric-sub">£850/mo × 12 to brokerage</div>
-        <span class="metric-badge badge-indigo">~$13,200 at ~1.3 rate</span>
+        <div class="metric-label">Annual investing</div>
+        <div class="metric-value" style="color:var(--indigo)">£13,800</div>
+        <div class="metric-sub">Fidelity £10,200 + SIP effective £3,600</div>
+        <span class="metric-badge badge-indigo">SIP: £1,800 own + £1,800 AbbVie match</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Projected at 67 (7%)</div>
@@ -1057,6 +1057,40 @@
           <div class="pipe-label">Buy funds</div>
           <div class="pipe-amount">Manual</div>
           <div class="pipe-note">85% FSKAX · 10% FTIHX · 5% FXNAX</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIP Channel -->
+    <div class="chart-card" style="margin-bottom:1.4rem; border-color:rgba(129,140,248,0.2); background:rgba(129,140,248,0.02);">
+      <h3>SIP Channel · Automated via AbbVie Payroll — no action required</h3>
+      <div class="inv-pipeline">
+        <div class="pipe-step">
+          <div class="pipe-icon">💷</div>
+          <div class="pipe-label">AbbVie Payroll</div>
+          <div class="pipe-amount">£150/mo</div>
+          <div class="pipe-note">Pre-tax salary sacrifice · already deducted before pay</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">💼</div>
+          <div class="pipe-label">SIP Account</div>
+          <div class="pipe-amount">ABBV shares</div>
+          <div class="pipe-note">Bought monthly at market price</div>
+        </div>
+        <div class="pipe-arrow">+</div>
+        <div class="pipe-step" style="border-color:rgba(52,211,153,0.35); background:rgba(52,211,153,0.05);">
+          <div class="pipe-icon">🎁</div>
+          <div class="pipe-label">AbbVie Match</div>
+          <div class="pipe-amount">+£150/mo</div>
+          <div class="pipe-note">1:1 free shares · 100% instant return before growth</div>
+        </div>
+        <div class="pipe-arrow">=</div>
+        <div class="pipe-step" style="border-color:rgba(251,191,36,0.35); background:rgba(251,191,36,0.05);">
+          <div class="pipe-icon">📈</div>
+          <div class="pipe-label">SIP total</div>
+          <div class="pipe-amount">£300/mo</div>
+          <div class="pipe-note">£3,600/yr effective · 3-year vest then hold or sell</div>
         </div>
       </div>
     </div>
@@ -1334,6 +1368,10 @@ updateFire();
 
 async function liveEstimates() {
   let mkt = null;
+  try {
+    const r = await fetch('http://localhost:5001/market-data', {signal: AbortSignal.timeout(4000)});
+    if (r.ok) mkt = await r.json();
+  } catch {}
   const liveFX    = mkt?.fx?.usd_to_gbp ?? 0.77;
   const fskaxDelta = (mkt?.tickers?.FSKAX?.anchor)
     ? mkt.tickers.FSKAX.current / mkt.tickers.FSKAX.anchor : null;
