@@ -247,9 +247,9 @@
     </div>
     <div class="metric">
       <div class="metric-label">Savings Rate</div>
-      <div class="metric-value" style="color:var(--amber)">74%</div>
-      <div class="metric-sub">Pension + invest</div>
-      <div class="metric-badge badge-amber">£3,799/mo</div>
+      <div class="metric-value" style="color:var(--amber)">48%</div>
+      <div class="metric-sub">vs gross · all pillars</div>
+      <div class="metric-badge badge-amber">£29,367/yr</div>
     </div>
   </div>
 
@@ -388,7 +388,7 @@
   <div class="section-title">Total picture</div>
   <div class="superplan-total">
     <div class="st-box"><div id="m-sp-nw" class="st-val" style="color:var(--amber)">~£40k</div><div class="st-lbl">Wealth today</div><div class="st-note">Age 25</div></div>
-    <div class="st-box"><div class="st-val" style="color:var(--green)">£28k+</div><div class="st-lbl">Annual creation</div><div class="st-note">All pillars</div></div>
+    <div class="st-box"><div class="st-val" style="color:var(--green)">£29k+</div><div class="st-lbl">Annual creation</div><div class="st-note">£29,367/yr total</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--indigo)">£4M+</div><div class="st-lbl">At age 67</div><div class="st-note">7% CAGR</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--pink)">£23k+</div><div class="st-lbl">State income/yr</div><div class="st-note">UK + US</div></div>
   </div>
@@ -416,12 +416,12 @@
       <span style="font-size:1.4rem;">🗝️</span>
       <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 2 · 2027</div><div style="font-size:0.95rem; font-weight:700;">Upgrade to a Nicer Flat</div></div>
     </div>
-    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">£150/mo Flat Move Pot · need ~£5,000 to move</div>
+    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">£124/mo Flat Move Pot · need ~£5,000 to move</div>
     <div class="prog-wrap"><div class="prog-fill" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:3%"></div></div>
-    <div class="prog-labels"><span>£0</span><span style="color:var(--green)">£150</span><span style="color:var(--cyan)">£5,000</span></div>
+    <div class="prog-labels"><span>£0</span><span style="color:var(--green)">£124</span><span style="color:var(--cyan)">£5,000</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Areas</span><span style="font-weight:600;">W. Hampstead · Chiswick</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Apr raise headroom</span><span style="color:var(--green); font-weight:600;">Absorbs £200–300/mo rent rise</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£150/mo · steady build</span><span>Mid-2027</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£124/mo · steady build</span><span>Mid-2027</span></div>
   </div>
 
   <div class="card">
@@ -550,7 +550,7 @@ async function liveEstimates() {
     let bal = 3839.90;
     const events = [
       { date: new Date(2026, 2, 12),  amount: -1250      },
-      { date: new Date(2026, 2, 24),  amount: 5136 - 150 },
+      { date: new Date(2026, 2, 24),  amount: 5136 - 124 },
       { date: new Date(2026, 2, 25),  amount: -850        },
       { date: new Date(2026, 2, 26),  amount: -56.22      },
     ];
@@ -562,7 +562,7 @@ async function liveEstimates() {
       events.push({ date: new Date(ny, nm, 1),  amount: -110.51         });
       events.push({ date: new Date(ny, nm, 2),  amount: -1250           });
       events.push({ date: new Date(ny, nm, 12), amount: -1250           });
-      events.push({ date: nextPaydate,          amount: 3441 - 150      });
+      events.push({ date: nextPaydate,          amount: 3441 - 124      });
       events.push({ date: new Date(ny, nm, 25), amount: -850            });
       events.push({ date: new Date(ny, nm, 26), amount: -56.22          });
       cyclePayday = nextPaydate;
