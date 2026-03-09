@@ -334,7 +334,7 @@
         <div class="metric-label">Net Worth (total)</div>
         <div class="metric-value" id="hero-nw-value" style="color:var(--indigo)">~£40k</div>
         <div class="metric-sub" id="hero-pension-sub">Liquid £23k + pension ~£18,440</div>
-        <span class="metric-badge badge-indigo">+£10,200/yr investing</span>
+        <span class="metric-badge badge-indigo">+£13,800/yr · Fidelity + SIP</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Emergency Fund</div>
@@ -350,12 +350,6 @@
       </div>
     </div>
 
-    <!-- EF Progress -->
-    <div class="chart-card" style="margin-top:0.5rem; text-align:left;">
-      <h3>Emergency Fund Progress</h3>
-      <div class="progress-bar"><div class="progress-fill" style="width:73%"></div></div>
-      <div class="progress-labels"><span>£0</span><span style="color:var(--indigo)">£13,143 now</span><span style="color:var(--amber)">£13,500 milestone</span><span>£18,000 true target</span></div>
-    </div>
   </section>
 
   <!-- ACCOUNTS -->
@@ -672,28 +666,29 @@
         </div>
       </div>
 
-      <!-- Goal 4: London flat deposit -->
+      <!-- Goal 4: Financial Independence — Freedom Number -->
       <div class="goal-card">
         <div class="goal-header">
-          <div class="goal-icon">🏠</div>
+          <div class="goal-icon">🌐</div>
           <div>
-            <div class="goal-name">Goal 4 · Biggest · Longest horizon</div>
-            <div class="goal-title">Buy a flat in London</div>
+            <div class="goal-name">Goal 4 · Long Game</div>
+            <div class="goal-title">Financial Independence — Freedom Number</div>
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Deposit Fund — same £124/mo pot, longer horizon. Rental move first, then this builds.</div>
-          <div class="progress-bar"><div class="progress-fill" id="flat-prog" style="width:0%"></div></div>
-          <div class="progress-labels"><span>£0</span><span id="flat-saved-lbl" style="color:var(--indigo)">£0 saved</span><span style="color:var(--amber)">£50k deposit</span></div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£500k liquid/invested excl. pension — when work becomes genuinely optional</div>
+          <div class="progress-bar"><div class="progress-fill" id="fi-prog" style="width:1.5%"></div></div>
+          <div class="progress-labels"><span>£0</span><span id="fi-current-lbl" style="color:var(--indigo)">~£7,500 now</span><span style="color:var(--amber)">£500,000</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">Deposit target</span><span class="goal-row-value">£50,000 (~10% on ~£500k flat)</span></div>
-        <div class="goal-row"><span class="goal-row-label">Flat Move Pot</span><span class="goal-row-value">£124/mo · earmarked, hands-off</span></div>
-        <div class="goal-row"><span class="goal-row-label">Budget status</span><span class="goal-row-value">£973/mo leftover · fully allocated · increase pot when salary grows</span></div>
-        <div class="goal-row"><span class="goal-row-label">Salary growth boost</span><span class="goal-row-value">Each promotion → redirect more to flat pot</span></div>
+        <div class="goal-row"><span class="goal-row-label">Freedom number</span><span class="goal-row-value" style="color:var(--amber)">£500,000 liquid/invested · excl. pension</span></div>
+        <div class="goal-row"><span class="goal-row-label">At 4% draw</span><span class="goal-row-value" style="color:var(--green)">£20,000/yr passive — covers full spend less rent</span></div>
+        <div class="goal-row"><span class="goal-row-label">Investing rate</span><span class="goal-row-value">£13,800/yr · Fidelity £10,200 + SIP effective £3,600</span></div>
+        <div class="goal-row"><span class="goal-row-label">Conservative path</span><span class="goal-row-value" style="color:var(--indigo)">7% CAGR, flat contributions → ~2044 · each raise shortens this</span></div>
+        <div class="goal-row"><span class="goal-row-label">Pension on top</span><span class="goal-row-value">£18,440 now at 5.5% CAGR → separate pillar, not counted here</span></div>
         <div class="goal-timeline">
-          <div class="goal-pill no-bruce" id="flat-pill">
-            <div class="gp-label" id="flat-pill-label">Conservative · salary growth to ~£300/mo avg</div>
-            <span id="flat-timeline">~2033</span>
+          <div class="goal-pill no-bruce" id="fi-pill">
+            <div class="gp-label" id="fi-pill-label">7% CAGR · flat contributions · no salary growth assumed</div>
+            <span id="fi-timeline">~2044</span>
           </div>
         </div>
       </div>
@@ -1061,40 +1056,6 @@
       </div>
     </div>
 
-    <!-- SIP Channel -->
-    <div class="chart-card" style="margin-bottom:1.4rem; border-color:rgba(129,140,248,0.2); background:rgba(129,140,248,0.02);">
-      <h3>SIP Channel · Automated via AbbVie Payroll — no action required</h3>
-      <div class="inv-pipeline">
-        <div class="pipe-step">
-          <div class="pipe-icon">💷</div>
-          <div class="pipe-label">AbbVie Payroll</div>
-          <div class="pipe-amount">£150/mo</div>
-          <div class="pipe-note">Pre-tax salary sacrifice · already deducted before pay</div>
-        </div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-step">
-          <div class="pipe-icon">💼</div>
-          <div class="pipe-label">SIP Account</div>
-          <div class="pipe-amount">ABBV shares</div>
-          <div class="pipe-note">Bought monthly at market price</div>
-        </div>
-        <div class="pipe-arrow">+</div>
-        <div class="pipe-step" style="border-color:rgba(52,211,153,0.35); background:rgba(52,211,153,0.05);">
-          <div class="pipe-icon">🎁</div>
-          <div class="pipe-label">AbbVie Match</div>
-          <div class="pipe-amount">+£150/mo</div>
-          <div class="pipe-note">1:1 free shares · 100% instant return before growth</div>
-        </div>
-        <div class="pipe-arrow">=</div>
-        <div class="pipe-step" style="border-color:rgba(251,191,36,0.35); background:rgba(251,191,36,0.05);">
-          <div class="pipe-icon">📈</div>
-          <div class="pipe-label">SIP total</div>
-          <div class="pipe-amount">£300/mo</div>
-          <div class="pipe-note">£3,600/yr effective · 3-year vest then hold or sell</div>
-        </div>
-      </div>
-    </div>
-
     <!-- Fund cards -->
     <div class="charts-3" style="margin-bottom:1.4rem;">
 
@@ -1177,6 +1138,37 @@
           <div class="action-item"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">At £75k salary:</strong> Increase pension AVCs (the trigger)</div></div>
           <div class="action-item"><span class="action-dot muted"></span><div><strong style="color:var(--text)">Never:</strong> Sell in a downturn. Never sell Roth. Never pick stocks.</div></div>
         </div>
+      </div>
+    </div>
+
+    <!-- SIP explainer -->
+    <div class="chart-card" style="margin-bottom:1.4rem; border-color:rgba(129,140,248,0.2); background:rgba(129,140,248,0.02);">
+      <h3>ABBV Share Incentive Plan · How it works</h3>
+      <div style="display:flex; flex-direction:column; gap:0.55rem; font-size:0.81rem; color:var(--soft); line-height:1.6;">
+        <div><span style="color:var(--indigo); font-weight:700;">Mechanics · </span>£150/mo is taken pre-tax from payroll and buys ABBV shares. AbbVie adds a 1:1 match — another £150/mo of free shares. Total: £300/mo · £3,600/yr of ABBV equity accumulating automatically with no cash action required.</div>
+        <div><span style="color:var(--amber); font-weight:700;">Vesting · </span>Each monthly batch vests after 3 years from its acquisition date. It's a rolling window — not a single cliff. Shares acquired Nov 2024 vest Nov 2027, Dec 2024 → Dec 2027, and so on. You can't sell or transfer before vesting.</div>
+        <div><span style="color:var(--green); font-weight:700;">When to sell · </span>Sell most or all as soon as each batch vests. You're already paid in AbbVie (salary, bonus, pension) — holding large ABBV equity concentrates risk unnecessarily. Proceeds go to FSKAX via the Wise pipeline.</div>
+      </div>
+      <div style="margin-top:1rem; border-top:1px solid var(--border); padding-top:0.9rem;">
+        <div style="font-size:0.75rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.65rem;">Sell scenario · annual proceeds once vesting begins (Nov 2027+)</div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; font-size:0.78rem; text-align:center; margin-bottom:0.75rem;">
+          <div style="background:rgba(52,211,153,0.07); border:1px solid rgba(52,211,153,0.2); border-radius:10px; padding:0.7rem 0.5rem;">
+            <div style="color:var(--muted); font-size:0.68rem; margin-bottom:0.3rem;">ABBV flat</div>
+            <div style="font-weight:700; color:var(--green);">~£3,600/yr</div>
+            <div style="font-size:0.68rem; color:var(--muted);">100% on your £1,800</div>
+          </div>
+          <div style="background:rgba(129,140,248,0.07); border:1px solid rgba(129,140,248,0.2); border-radius:10px; padding:0.7rem 0.5rem;">
+            <div style="color:var(--muted); font-size:0.68rem; margin-bottom:0.3rem;">ABBV +20%</div>
+            <div style="font-weight:700; color:var(--indigo);">~£4,320/yr</div>
+            <div style="font-size:0.68rem; color:var(--muted);">140% on your £1,800</div>
+          </div>
+          <div style="background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2); border-radius:10px; padding:0.7rem 0.5rem;">
+            <div style="color:var(--muted); font-size:0.68rem; margin-bottom:0.3rem;">ABBV −20%</div>
+            <div style="font-weight:700; color:var(--amber);">~£2,880/yr</div>
+            <div style="font-size:0.68rem; color:var(--muted);">Still 60% on your £1,800</div>
+          </div>
+        </div>
+        <div style="font-size:0.72rem; color:var(--muted); line-height:1.6;"><span style="color:var(--soft); font-weight:600;">Tax: </span>UK — 3+ year hold = SIP protection, no Income Tax or NI on the shares. Price appreciation above acquisition = Capital Gains (£3k annual exempt). US — gains on sale = capital gains; report in annual filing. <span style="color:var(--soft); font-weight:600;">Strategy: </span>sell promptly on vest → FSKAX via Wise pipeline.</div>
       </div>
     </div>
 
@@ -1563,13 +1555,10 @@ function updateGoals() {
   document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100) + '%';
   document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
 
-  // Goal 4: Buy a flat (£50,000 deposit target)
-  const flatTarget = 50000;
-  document.getElementById('flat-prog').style.width = Math.min(100, flatSaved / flatTarget * 100) + '%';
-  document.getElementById('flat-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
-
-  // Timelines
-  const flatYr = 2026 + Math.ceil((flatTarget - flatSaved) / (b ? 300 + 16000/12 : 300) / 12);
+  // Goal 4: Financial Independence (£500k freedom number)
+  const fiCurrent = Math.round(9800 * 0.77); // Fidelity + Roth in GBP · live estimates update liveEstimates()
+  document.getElementById('fi-prog').style.width = Math.min(100, fiCurrent / 500000 * 100).toFixed(2) + '%';
+  document.getElementById('fi-current-lbl').textContent = `~£${fiCurrent.toLocaleString()} now`;
 
   setPill('csp',    b,
     b ? "Bruce covers $4k spend → 60k UR bonus immediately on approval" : `Building history · ${cspMonthsLeft} months to go`,
@@ -1580,9 +1569,9 @@ function updateGoals() {
   setPill('avios',  b,
     b ? "CSP bonus + Bruce covers £600 fees → book late 2026" : "Waiting on CSP · book once bonus lands",
     b ? "~Late 2026" : "~Early 2027");
-  setPill('flat',   b,
-    b ? "With Dad's gifts · £16k/yr accelerates pot" : "Conservative · salary growth to ~£300/mo avg",
-    `~${flatYr}`);
+  setPill('fi',     b,
+    '7% CAGR · flat contributions · no salary growth assumed',
+    '~2044');
 }
 
 function setPill(id, withBruce, label, value) {
