@@ -251,45 +251,55 @@
   #img-lightbox.open{display:flex;}
   #img-lightbox img{max-width:100%;max-height:100%;object-fit:contain;
     border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.6);}
+
+  /* IDEAS TAB */
+  .ideas-header{display:flex;justify-content:space-between;align-items:center;padding:14px 14px 4px;}
+  .ideas-subtitle{font-size:0.65rem;color:var(--muted);font-weight:600;}
+  .btn-regen-ideas{background:var(--card);border:1px solid var(--border);border-radius:20px;
+    padding:6px 14px;font-size:0.65rem;font-weight:700;color:var(--soft);cursor:pointer;
+    font-family:inherit;transition:all .15s;}
+  .btn-regen-ideas:active{opacity:0.7;}
+  .btn-grocery{display:block;width:calc(100% - 28px);margin:4px 14px 16px;
+    background:var(--accent2);border:none;border-radius:14px;padding:14px;color:#fff;
+    font-size:0.88rem;font-weight:700;cursor:pointer;font-family:inherit;
+    transition:transform .15s,opacity .15s;text-align:center;
+    box-shadow:0 2px 12px rgba(44,95,46,0.25);}
+  .btn-grocery:active{transform:scale(0.98);opacity:0.9;}
+
+  /* GROCERY MODAL */
+  #grocery-modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:300;
+    display:none;align-items:flex-end;backdrop-filter:blur(3px);}
+  #grocery-modal.open{display:flex;}
+  .grocery-sheet{background:var(--card);border-radius:20px 20px 0 0;width:100%;
+    max-height:88vh;overflow-y:auto;padding-bottom:calc(var(--safe-bottom) + 20px);}
+  .grocery-topbar{display:flex;justify-content:space-between;align-items:flex-start;
+    padding:16px 16px 12px;border-bottom:1px solid var(--border);
+    position:sticky;top:0;background:var(--card);z-index:10;}
+  .grocery-title{font-size:1rem;font-weight:800;color:var(--text);}
+  .grocery-subtitle{font-size:0.62rem;color:var(--muted);font-weight:600;margin-top:2px;}
+  .grocery-cat-lbl{font-size:0.6rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.1em;color:var(--muted);padding:14px 16px 6px;display:block;}
+  .grocery-item{display:flex;align-items:flex-start;gap:10px;padding:8px 16px;
+    border-bottom:1px solid var(--border);font-size:0.8rem;color:var(--soft);cursor:pointer;}
+  .grocery-item:last-child{border-bottom:none;}
+  .grocery-item.checked{opacity:0.4;text-decoration:line-through;}
+  .grocery-tick{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border);
+    flex-shrink:0;margin-top:1px;background:var(--bg);transition:all .15s;display:flex;
+    align-items:center;justify-content:center;font-size:0.6rem;}
+  .grocery-tick.checked{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+  .btn-copy-grocery{display:block;width:calc(100% - 32px);margin:16px 16px 8px;
+    background:rgba(44,95,46,0.08);border:1px solid rgba(44,95,46,0.2);border-radius:12px;
+    padding:12px;color:var(--accent2);font-size:0.82rem;font-weight:700;cursor:pointer;
+    font-family:inherit;transition:all .15s;}
+  .btn-copy-grocery:active{opacity:0.7;}
 </style>
 </head>
 <body>
 <div id="app">
 <div id="content">
 
-<!-- ════ GENERATE ════ -->
-<div class="tab-section active" id="tab-generate">
-  <div class="topbar">
-    <div class="topbar-logo">Low FODMAP · Meals</div>
-    <div class="topbar-date" id="topbar-date">—</div>
-  </div>
-  <div class="generate-splash">
-    <div class="generate-emoji">🥗</div>
-    <div class="generate-title">Your Week,<br>Sorted.</div>
-    <div class="generate-sub">Lunch + dinner for the full week. Smart leftovers mean Mon/Wed/Fri dinners do double duty as next-day lunch. 79 recipes so it always feels different. Browse Breakfast &amp; Snacks in the Recipes tab.</div>
-    <button class="btn-generate" id="gen-btn" onclick="generateWeek()">Generate My Week</button>
-    <div class="generate-chips">
-      <span class="gen-chip">🇻🇳 Vietnamese</span>
-      <span class="gen-chip">🌮 Mexican</span>
-      <span class="gen-chip">🇹🇭 Thai</span>
-      <span class="gen-chip">🇰🇷 Korean</span>
-      <span class="gen-chip">🍗 Wings</span>
-      <span class="gen-chip">🍳 Everyday</span>
-    </div>
-  </div>
-</div>
-
-<!-- ════ THIS WEEK ════ -->
-<div class="tab-section" id="tab-week">
-  <div class="topbar">
-    <div class="topbar-logo">This Week</div>
-    <div class="topbar-date" id="topbar-date-week">—</div>
-  </div>
-  <div id="week-container"></div>
-</div>
-
 <!-- ════ RECIPES ════ -->
-<div class="tab-section" id="tab-recipes">
+<div class="tab-section active" id="tab-recipes">
   <div class="topbar">
     <div class="topbar-logo">All Recipes</div>
     <div class="topbar-date" id="topbar-date-recipes">—</div>
@@ -308,6 +318,29 @@
     <div class="topbar-date" id="topbar-date-favs">—</div>
   </div>
   <div id="favs-list"></div>
+</div>
+
+<!-- ════ IDEAS ════ -->
+<div class="tab-section" id="tab-ideas">
+  <div class="topbar">
+    <div class="topbar-logo">Meal Ideas</div>
+    <div class="topbar-date" id="topbar-date-ideas">—</div>
+  </div>
+  <div id="ideas-splash" class="generate-splash">
+    <div class="generate-emoji">✨</div>
+    <div class="generate-title">This Week's<br>Ideas.</div>
+    <div class="generate-sub">5 dinners + 5 lunches, balanced across proteins and cuisines. No rigid schedule — just inspiration. Swap anything you don't fancy, then grab the grocery list.</div>
+    <button class="btn-generate" onclick="generateIdeas()">Generate Ideas</button>
+    <div class="generate-chips">
+      <span class="gen-chip">🇻🇳 Vietnamese</span>
+      <span class="gen-chip">🌮 Mexican</span>
+      <span class="gen-chip">🇹🇭 Thai</span>
+      <span class="gen-chip">🇰🇷 Korean</span>
+      <span class="gen-chip">🍗 Wings</span>
+      <span class="gen-chip">🍳 Everyday</span>
+    </div>
+  </div>
+  <div id="ideas-results" style="display:none"></div>
 </div>
 
 <!-- ════ TIPS ════ -->
@@ -387,21 +420,17 @@
 
 <!-- TAB BAR -->
 <nav id="tabbar">
-  <div class="tab active" data-tab="generate" onclick="showTab('generate')">
-    <span class="tab-icon">✨</span>
-    <span class="tab-label">Generate</span>
-  </div>
-  <div class="tab" data-tab="week" onclick="showTab('week')">
-    <span class="tab-icon">📅</span>
-    <span class="tab-label">This Week</span>
-  </div>
-  <div class="tab" data-tab="recipes" onclick="showTab('recipes')">
+  <div class="tab active" data-tab="recipes" onclick="showTab('recipes')">
     <span class="tab-icon">🍽️</span>
     <span class="tab-label">Recipes</span>
   </div>
   <div class="tab" data-tab="favs" onclick="showTab('favs')">
     <span class="tab-icon">⭐</span>
     <span class="tab-label">Saved</span>
+  </div>
+  <div class="tab" data-tab="ideas" onclick="showTab('ideas')">
+    <span class="tab-icon">✨</span>
+    <span class="tab-label">Ideas</span>
   </div>
   <div class="tab" data-tab="tips" onclick="showTab('tips')">
     <span class="tab-icon">💡</span>
@@ -1040,7 +1069,7 @@ const RECIPE_IMGS = {
   'y18':'y18-panang.png',
   // Ottolenghi
   'o1':'https://ottolenghi.co.uk/cdn/shop/files/Roast_chicken_with_dates_olives_and_capers_recipe.jpg?v=1718278547&width=1000',
-  'o3':'https://ottolenghi.co.uk/cdn/shop/files/Smokey_sweetcorn_and_tofu_fritters.jpg?v=1716187456',
+  'o3':'https://ottolenghi.co.uk/cdn/shop/files/Grilled-carrots-and-tofu-with-harissa.jpg?v=1716838523&width=1000',
   // Elly's Plate
   'ep2':'https://choosingchia.com/jessh-jessh/uploads/2019/02/vietnamese-noodle-bowl-with-lemongrass-tofu-5.jpg',
   'ep3':'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhL2hyphenhyphen7jmsQaLrY_ggH2PbEJiujH30z2YrCPKrZpDt8PgWqiFxH1-GcEI0jZ7wxWuDa5c0M3ZUnb9aOc4L3-IVWNthlLxUwEmZERa4JqOtncYpJviUZuK2cPyWvGPQXbyvGK09sSdZlcV0a/s1600/vegan+coconut+milk+ramen.jpg',
@@ -1066,20 +1095,12 @@ function recipeImgEl(r, type) {
 }
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
-let weekPlan = null;
+let ideas = null;
+let groceryChecked = new Set();
 let favourites = JSON.parse(localStorage.getItem('fodmap_favs') || '[]');
 let deleted = new Set(JSON.parse(localStorage.getItem('fodmap_deleted') || '[]'));
 let openRecipeId = null;
 let currentFilter = 'All';
-
-const DAYS  = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const DKEYS = ['mon','tue','wed','thu','fri','sat','sun'];
-
-// Dinners on these day indices become next day's lunch (cook double)
-const LEFTOVER_NIGHTS = [0, 2, 4]; // Mon, Wed, Fri → Tue, Thu, Sat lunch
-
-// Recipes that reheat well and work as next-day leftovers
-const BATCH_IDS = new Set(['v1','v3','v7','m5','m6','m7','t1','t3','t4','t6','k1','k2','k3','k5','e3','e5','e7','e8','x1','x2','x4','x5','x6','y1','y2','y4','y8','y12','y18','ep2','ep3','o1']);
 
 // ─── TABS ────────────────────────────────────────────────────────────────────
 function showTab(id) {
@@ -1089,137 +1110,197 @@ function showTab(id) {
   document.querySelector('.tab[data-tab="' + id + '"]').classList.add('active');
 }
 
-// ─── GENERATE ────────────────────────────────────────────────────────────────
+// ─── IDEAS GENERATION ────────────────────────────────────────────────────────
 function active() { return RECIPES.filter(r => !deleted.has(r.id)); }
 
-function generateWeek() {
-  const a = active();
-  const lpool = a.filter(r => r.meal.includes('lunch'));
-  const dpool = a.filter(r => r.meal.includes('dinner'));
-  const batchPool = dpool.filter(r => BATCH_IDS.has(r.id));
-  weekPlan = {};
-  const usedL = [], usedD = [];
-
-  // Pass 1: pick all dinners (batch recipes on leftover nights)
-  const dinners = {};
-  DKEYS.forEach((day, i) => {
-    const pool = LEFTOVER_NIGHTS.includes(i) && batchPool.length ? batchPool : dpool;
-    const d = pickRandom(pool, usedD);
-    dinners[day] = d;
-    usedD.push(d.id);
-  });
-
-  // Pass 2: lunches (leftover or fresh)
-  DKEYS.forEach((day, i) => {
-    let l, lIsLeftover = false;
-    if (i > 0 && LEFTOVER_NIGHTS.includes(i - 1)) {
-      l = dinners[DKEYS[i - 1]];
-      lIsLeftover = true;
-    } else {
-      l = pickRandom(lpool, [...usedL, dinners[day].id]);
-      usedL.push(l.id);
-    }
-    weekPlan[day] = { l, d: dinners[day], lIsLeftover };
-  });
-
-  renderWeek();
-  showTab('week');
-  document.getElementById('gen-btn').textContent = 'Regenerate Full Week';
+function inferProtein(r) {
+  const t = (r.name + ' ' + (r.ingredients || []).join(' ')).toLowerCase();
+  if (/\bchicken\b/.test(t)) return 'chicken';
+  if (/\bbeef\b|\bsteak\b|\bmince\b|\bbulgogi\b/.test(t)) return 'beef';
+  if (/\bpork\b/.test(t)) return 'pork';
+  if (/\bprawn\b|\bshrimp\b/.test(t)) return 'seafood';
+  if (/\bfish\b|\btuna\b|\bcod\b/.test(t)) return 'fish';
+  if (/\btofu\b/.test(t)) return 'tofu';
+  if (/\begg\b/.test(t)) return 'eggs';
+  if (/\blamb\b/.test(t)) return 'lamb';
+  return 'other';
 }
 
-function regenDay(dayKey) {
-  if (!weekPlan) return;
-  const i = DKEYS.indexOf(dayKey);
-  const a = active();
-  const lpool = a.filter(r => r.meal.includes('lunch'));
-  const dpool = a.filter(r => r.meal.includes('dinner'));
-  const batchPool = dpool.filter(r => BATCH_IDS.has(r.id));
-
-  const other = DKEYS.filter(d => d !== dayKey);
-  const usedD = other.map(d => weekPlan[d].d.id);
-  const usedL = other.filter(d => !weekPlan[d].lIsLeftover).map(d => weekPlan[d].l.id);
-
-  const isLeftoverNight = LEFTOVER_NIGHTS.includes(i);
-  const dPool = isLeftoverNight && batchPool.length ? batchPool : dpool;
-  const d = pickRandom(dPool, usedD);
-  const l = pickRandom(lpool, [...usedL, d.id]);
-  weekPlan[dayKey] = { l, d, lIsLeftover: false };
-
-  // Propagate leftover to next day
-  if (isLeftoverNight && i + 1 < DKEYS.length) {
-    const next = DKEYS[i + 1];
-    weekPlan[next] = { ...weekPlan[next], l: d, lIsLeftover: true };
+function smartPick(pool, count, excludeIds = []) {
+  const shuffled = [...pool].filter(r => !excludeIds.includes(r.id))
+    .sort(() => Math.random() - 0.5);
+  const result = [];
+  const proteinTally = {}, cuisineTally = {};
+  // Pass 1: respect diversity constraints
+  for (const r of shuffled) {
+    if (result.length >= count) break;
+    const p = inferProtein(r), c = r.cuisine;
+    if ((proteinTally[p] || 0) < 2 && (cuisineTally[c] || 0) < 2) {
+      result.push(r);
+      proteinTally[p] = (proteinTally[p] || 0) + 1;
+      cuisineTally[c] = (cuisineTally[c] || 0) + 1;
+    }
   }
-  renderWeek();
+  // Pass 2: fill remaining with anything unused
+  for (const r of shuffled) {
+    if (result.length >= count) break;
+    if (!result.some(x => x.id === r.id)) result.push(r);
+  }
+  return result;
 }
 
-function regenMeal(dayKey, mealType) {
-  if (!weekPlan) return;
-  const i = DKEYS.indexOf(dayKey);
+function generateIdeas() {
   const a = active();
-  if (mealType === 'D') {
-    const dpool = a.filter(r => r.meal.includes('dinner'));
-    const batchPool = dpool.filter(r => BATCH_IDS.has(r.id));
-    const usedD = DKEYS.filter(d => d !== dayKey).map(d => weekPlan[d].d.id);
-    const isLeftoverNight = LEFTOVER_NIGHTS.includes(i);
-    const pool = isLeftoverNight && batchPool.length ? batchPool : dpool;
-    const d = pickRandom(pool, usedD);
-    weekPlan[dayKey] = { ...weekPlan[dayKey], d };
-    // Auto-update next day's lunch if this is a leftover night
-    if (isLeftoverNight && i + 1 < DKEYS.length) {
-      weekPlan[DKEYS[i + 1]] = { ...weekPlan[DKEYS[i + 1]], l: d, lIsLeftover: true };
+  const dPool = a.filter(r => r.meal.includes('dinner'));
+  const lPool = a.filter(r => r.meal.includes('lunch'));
+  const dinners = smartPick(dPool, 5);
+  const usedIds = dinners.map(r => r.id);
+  const lunches = smartPick(lPool, 5, usedIds);
+  ideas = { dinners, lunches };
+  document.getElementById('ideas-splash').style.display = 'none';
+  document.getElementById('ideas-results').style.display = 'block';
+  renderIdeas();
+  document.getElementById('content').scrollTop = 0;
+}
+
+function swapIdea(mealType, index) {
+  if (!ideas) return;
+  const a = active();
+  const pool = a.filter(r => r.meal.includes(mealType));
+  const list = mealType === 'dinner' ? ideas.dinners : ideas.lunches;
+  const allUsed = [
+    ...ideas.dinners.filter((_, i) => !(mealType === 'dinner' && i === index)).map(r => r.id),
+    ...ideas.lunches.filter((_, i) => !(mealType === 'lunch' && i === index)).map(r => r.id)
+  ];
+  const avail = pool.filter(r => !allUsed.includes(r.id));
+  const replacement = avail[Math.floor(Math.random() * avail.length)] || pool[Math.floor(Math.random() * pool.length)];
+  list[index] = replacement;
+  renderIdeas();
+}
+
+function renderIdeas() {
+  const el = document.getElementById('ideas-results');
+  if (!ideas) return;
+  el.innerHTML =
+    `<div class="ideas-header">
+      <div><div style="font-size:0.88rem;font-weight:800;color:var(--text)">This Week's Meals</div>
+      <div class="ideas-subtitle">5 dinners · 5 lunches · varied proteins</div></div>
+      <button class="btn-regen-ideas" onclick="generateIdeas()">↺ Regenerate</button>
+    </div>
+    <div class="section-title">Dinner Ideas</div>
+    ${ideas.dinners.map((r, i) => ideaCard(r, 'dinner', i)).join('')}
+    <div class="section-title">Lunch Ideas</div>
+    ${ideas.lunches.map((r, i) => ideaCard(r, 'lunch', i)).join('')}
+    <button class="btn-grocery" onclick="showGroceryModal()">🛒 Generate Grocery List</button>`;
+}
+
+function ideaCard(r, mealType, index) {
+  const tc = cuisineTop(r.cuisine);
+  const badges = r.flavors.slice(0, 2).map(f => `<span class="meal-tag f-${f}">${flavorEmoji(f)} ${f}</span>`).join('');
+  return `<div class="recipe-card ${tc}" onclick="openModal('${r.id}')">
+    ${recipeImgEl(r, 'banner')}
+    <div class="recipe-card-body">
+      <div class="recipe-header">
+        <div style="flex:1">
+          <div class="recipe-title">${r.name}</div>
+          <div class="recipe-cuisine">${r.cuisine} · ${r.time}</div>
+        </div>
+        <button class="meal-swap" onclick="event.stopPropagation();swapIdea('${mealType}',${index})" title="Swap">✕</button>
+      </div>
+      <div class="recipe-chips"><span class="meal-tag meal-protein">🥩 ${r.protein}</span>${badges}</div>
+    </div>
+  </div>`;
+}
+
+// ─── GROCERY LIST ─────────────────────────────────────────────────────────────
+const GROCERY_CATS = [
+  { label: '🥩 Proteins',         keys: ['chicken','beef','steak','pork','prawn','shrimp','fish','tofu','egg','mince','lamb','tuna','anchovy','turkey'] },
+  { label: '🥦 Fresh Produce',    keys: ['carrot','cucumber','lime','lemon','coriander','basil','ginger','spring onion','tomato','avocado','mango','papaya','bok choy','pak choi','chilli','corn','mushroom','lettuce','spinach','courgette','zucchini','capsicum','bell pepper','mint','thai basil','cabbage','kale','radish','potato','sweet potato','aubergine','eggplant','beetroot','leek','herb','fresh'] },
+  { label: '🥫 Pantry',           keys: ['rice','noodle','pasta','coconut milk','coconut cream','soy sauce','fish sauce','oyster sauce','sesame oil','olive oil','garlic oil','hoisin','vinegar','sugar','maple','honey','miso','tahini','tortilla','sourdough','stock','broth','flour','bread','oil','sauce','paste','tin','can','sesame seed','peanut','dried'] },
+  { label: '🧂 Spices & Sauces',  keys: ['cumin','turmeric','paprika','chilli flake','curry powder','star anise','cinnamon','lemongrass','kaffir lime','salt','pepper','gochujang','sriracha','chilli oil','harissa','spice','powder','seasoning','coriander seed','cardamom','bay leaf','thyme','oregano','rosemary','fennel','five spice'] },
+  { label: '🥛 Dairy & Eggs',     keys: ['butter','feta','yogurt','cheese','cream','milk','egg'] },
+];
+
+function buildGroceryList() {
+  if (!ideas) return {};
+  const allRecipes = [...ideas.dinners, ...ideas.lunches];
+  const grouped = {};
+  GROCERY_CATS.forEach(c => { grouped[c.label] = []; });
+  grouped['📦 Other'] = [];
+  const seen = {};
+  for (const r of allRecipes) {
+    for (const ing of (r.ingredients || [])) {
+      const lower = ing.toLowerCase();
+      // Extract base: strip leading quantities/adjectives
+      const base = lower
+        .replace(/^[\d\s½¼¾⅓⅔.]+/, '')
+        .replace(/^(large|small|medium|fresh|dried|frozen|boneless|skinless|extra|firm|soft|gluten.free|approx|about|bunch|handful|pinch|pack|jar|bottle|tin|can)\s+/i, '')
+        .replace(/^(g|kg|ml|l|tbsp|tsp|cups?|cloves?|slices?|strips?|pieces?)\s+/, '')
+        .replace(/[,;(].*$/, '')
+        .trim();
+      if (!base || seen[base]) continue;
+      seen[base] = true;
+      let placed = false;
+      for (const cat of GROCERY_CATS) {
+        if (cat.keys.some(k => lower.includes(k))) {
+          grouped[cat.label].push(ing);
+          placed = true; break;
+        }
+      }
+      if (!placed) grouped['📦 Other'].push(ing);
     }
-  } else {
-    const lpool = a.filter(r => r.meal.includes('lunch'));
-    const usedL = DKEYS.filter(d => d !== dayKey && !weekPlan[d].lIsLeftover).map(d => weekPlan[d].l.id);
-    const l = pickRandom(lpool, [...usedL, weekPlan[dayKey].d.id]);
-    weekPlan[dayKey] = { ...weekPlan[dayKey], l, lIsLeftover: false };
   }
-  renderWeek();
+  // Remove empty categories
+  for (const key of Object.keys(grouped)) {
+    if (!grouped[key].length) delete grouped[key];
+  }
+  return grouped;
+}
+
+function showGroceryModal() {
+  const list = buildGroceryList();
+  groceryChecked = new Set();
+  const totalItems = Object.values(list).reduce((n, arr) => n + arr.length, 0);
+  const inner = Object.entries(list).map(([cat, items]) =>
+    `<span class="grocery-cat-lbl">${cat}</span>` +
+    `<div>` + items.map((ing, i) => {
+      const key = cat + '|' + i;
+      return `<div class="grocery-item" id="gi-${btoa(key).replace(/[^a-z0-9]/gi,'')}" onclick="toggleGroceryItem(this)">
+        <div class="grocery-tick" id="gt-${btoa(key).replace(/[^a-z0-9]/gi,'')}"></div>
+        <span>${ing}</span>
+      </div>`;
+    }).join('') + `</div>`
+  ).join('');
+  document.getElementById('grocery-body').innerHTML = inner;
+  document.getElementById('grocery-count').textContent = `${totalItems} items · ${ideas.dinners.length + ideas.lunches.length} recipes`;
+  document.getElementById('grocery-modal').classList.add('open');
+}
+
+function toggleGroceryItem(el) {
+  el.classList.toggle('checked');
+  el.querySelector('.grocery-tick').classList.toggle('checked');
+}
+
+function closeGroceryModal() {
+  document.getElementById('grocery-modal').classList.remove('open');
+}
+
+function copyGroceryList() {
+  const list = buildGroceryList();
+  const text = Object.entries(list).map(([cat, items]) =>
+    cat + '\n' + items.map(i => '• ' + i).join('\n')
+  ).join('\n\n');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-grocery-btn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy to Clipboard'; }, 2000);
+  }).catch(() => {});
 }
 
 function pickRandom(pool, used) {
   const avail = pool.filter(r => !used.includes(r.id));
   const src = avail.length > 0 ? avail : pool;
   return src[Math.floor(Math.random() * src.length)];
-}
-
-// ─── RENDER WEEK ─────────────────────────────────────────────────────────────
-function renderWeek() {
-  const el = document.getElementById('week-container');
-  if (!weekPlan) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-state-emoji">✨</div><div class="empty-state-text">Hit Generate to build your week.</div></div>';
-    return;
-  }
-  el.innerHTML = DKEYS.map((day, i) => {
-    const {l, d, lIsLeftover} = weekPlan[day];
-    const dIsBatch = LEFTOVER_NIGHTS.includes(i);
-    return `<div class="week-day">
-      <div class="day-header">
-        <span class="day-name">${DAYS[i]}</span>
-        <button class="day-regen" onclick="regenDay('${day}')" title="Regenerate this day">↺</button>
-      </div>
-      ${mealRow('L', l, false, lIsLeftover, false, day)}
-      ${mealRow('D', d, false, false, dIsBatch, day)}
-    </div>`;
-  }).join('');
-}
-
-function mealRow(type, r, isSnack, isLeftover, isBatch, dayKey) {
-  const cc = cuisineColor(r.cuisine);
-  const badges = r.flavors.slice(0, 2).map(f => `<span class="meal-tag f-${f}">${flavorEmoji(f)} ${f}</span>`).join('');
-  const extra = isLeftover ? '<span class="meal-tag f-preppable">🍱 leftover</span>'
-              : isBatch    ? '<span class="meal-tag f-preppable">📦 batch</span>' : '';
-  const swapBtn = dayKey ? `<button class="meal-swap" onclick="event.stopPropagation();regenMeal('${dayKey}','${type}')" title="Swap">✕</button>` : '';
-  return `<div class="meal-row ${cc}" onclick="openModal('${r.id}')">
-    <span class="meal-type-lbl">${type}</span>
-    ${recipeImgEl(r, 'thumb')}
-    <div class="meal-info">
-      <div class="meal-name">${r.name}</div>
-      <div class="meal-meta"><span class="meal-tag meal-protein">🥩 ${r.protein}</span>${badges}${extra}</div>
-    </div>
-    ${swapBtn}
-  </div>`;
 }
 
 // ─── RECIPES TAB ─────────────────────────────────────────────────────────────
@@ -1397,10 +1478,9 @@ function flavorEmoji(f) {
 // ─── INIT ────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const dateStr = new Date().toLocaleDateString('en-GB', {day:'numeric', month:'short'});
-  ['topbar-date','topbar-date-week','topbar-date-recipes','topbar-date-favs','topbar-date-tips']
+  ['topbar-date-recipes','topbar-date-favs','topbar-date-ideas','topbar-date-tips']
     .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = dateStr; });
 
-  renderWeek();
   renderFavourites();
   updateDeletedCount();
 
@@ -1412,6 +1492,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('recipe-modal').addEventListener('click', e => {
     if (e.target === document.getElementById('recipe-modal')) closeModal();
+  });
+
+  document.getElementById('grocery-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('grocery-modal')) closeGroceryModal();
   });
 
   document.getElementById('img-lightbox').addEventListener('click', () => {
@@ -1428,6 +1512,21 @@ function openLightbox(src, alt) {
 </script>
 
 <div id="img-lightbox"><img src="" alt=""></div>
+
+<!-- GROCERY MODAL -->
+<div id="grocery-modal">
+  <div class="grocery-sheet">
+    <div class="grocery-topbar">
+      <div>
+        <div class="grocery-title">Grocery List</div>
+        <div class="grocery-subtitle" id="grocery-count"></div>
+      </div>
+      <button class="modal-close" onclick="closeGroceryModal()">✕</button>
+    </div>
+    <div id="grocery-body"></div>
+    <button class="btn-copy-grocery" id="copy-grocery-btn" onclick="copyGroceryList()">📋 Copy to Clipboard</button>
+  </div>
+</div>
 
 </body>
 </html>
