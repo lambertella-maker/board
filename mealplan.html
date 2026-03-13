@@ -244,6 +244,25 @@
   .tip-ok{color:var(--accent2);}
   .tip-no{color:#c0392b;}
 
+  /* DESSERT CUISINE */
+  --c-dessert:#b5741b;
+  .c-dessert{border-left:3px solid var(--c-dessert);}
+  .t-dessert{border-top:3px solid var(--c-dessert);}
+  .p-dessert{background:rgba(181,116,27,0.08);}
+
+  /* SERVINGS CONTROL */
+  .serving-row{display:flex;justify-content:space-between;align-items:center;
+    padding:10px 16px;margin-bottom:14px;background:var(--card2);border:1px solid var(--border);
+    border-radius:10px;}
+  .serving-lbl{font-size:0.75rem;font-weight:700;color:var(--text);}
+  .serving-ctrl{display:flex;align-items:center;gap:12px;}
+  .serving-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;
+    width:28px;height:28px;cursor:pointer;color:var(--soft);font-size:1rem;
+    display:flex;align-items:center;justify-content:center;font-family:inherit;
+    transition:all .15s;flex-shrink:0;}
+  .serving-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .serving-num{font-size:0.88rem;font-weight:700;min-width:24px;text-align:center;color:var(--text);}
+
   /* LIGHTBOX */
   #img-lightbox{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.93);
     display:none;align-items:center;justify-content:center;cursor:zoom-out;
@@ -253,18 +272,41 @@
     border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.6);}
 
   /* IDEAS TAB */
-  .ideas-header{display:flex;justify-content:space-between;align-items:center;padding:14px 14px 4px;}
-  .ideas-subtitle{font-size:0.65rem;color:var(--muted);font-weight:600;}
+  .ideas-toolbar{display:flex;justify-content:space-between;align-items:center;
+    padding:14px 14px 8px;gap:8px;}
+  .ideas-subtitle{font-size:0.65rem;color:var(--muted);font-weight:600;margin-top:2px;}
   .btn-regen-ideas{background:var(--card);border:1px solid var(--border);border-radius:20px;
-    padding:6px 14px;font-size:0.65rem;font-weight:700;color:var(--soft);cursor:pointer;
-    font-family:inherit;transition:all .15s;}
+    padding:7px 13px;font-size:0.65rem;font-weight:700;color:var(--soft);cursor:pointer;
+    font-family:inherit;transition:all .15s;flex-shrink:0;}
   .btn-regen-ideas:active{opacity:0.7;}
-  .btn-grocery{display:block;width:calc(100% - 28px);margin:4px 14px 16px;
-    background:var(--accent2);border:none;border-radius:14px;padding:14px;color:#fff;
-    font-size:0.88rem;font-weight:700;cursor:pointer;font-family:inherit;
-    transition:transform .15s,opacity .15s;text-align:center;
-    box-shadow:0 2px 12px rgba(44,95,46,0.25);}
-  .btn-grocery:active{transform:scale(0.98);opacity:0.9;}
+  .btn-grocery{background:var(--accent2);border:none;border-radius:20px;
+    padding:7px 14px;color:#fff;font-size:0.65rem;font-weight:700;cursor:pointer;
+    font-family:inherit;transition:all .15s;flex-shrink:0;
+    box-shadow:0 1px 8px rgba(44,95,46,0.25);}
+  .btn-grocery:active{opacity:0.85;}
+  .ideas-section-hdr{font-size:0.62rem;font-weight:800;color:var(--soft);
+    text-transform:uppercase;letter-spacing:.07em;padding:10px 14px 5px;}
+
+  /* IDEA GRID (ATK-style photo cards) */
+  .idea-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 14px 14px;}
+  .idea-card{cursor:pointer;border-radius:10px;overflow:hidden;
+    background:var(--card);border:1px solid var(--border);transition:opacity .12s;}
+  .idea-card:active{opacity:0.75;}
+  .idea-photo-wrap{position:relative;aspect-ratio:1;overflow:hidden;background:var(--card2);}
+  .idea-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+  .idea-photo-placeholder{width:100%;height:100%;display:flex;
+    align-items:center;justify-content:center;font-size:1.8rem;}
+  .idea-swap{position:absolute;top:5px;right:5px;width:20px;height:20px;
+    border-radius:50%;background:rgba(0,0,0,0.6);border:none;
+    color:#fff;font-size:0.6rem;cursor:pointer;display:flex;
+    align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+  .idea-swap:active{background:rgba(0,0,0,0.9);}
+  .idea-info{padding:6px 7px 8px;}
+  .idea-cuisine{font-size:0.48rem;font-weight:700;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+  .idea-title{font-size:0.65rem;font-weight:800;color:var(--text);line-height:1.25;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .idea-stats{font-size:0.52rem;color:var(--muted);margin-top:3px;}
 
   /* GROCERY MODAL */
   #grocery-modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:300;
@@ -424,10 +466,6 @@
     <span class="tab-icon">🍽️</span>
     <span class="tab-label">Recipes</span>
   </div>
-  <div class="tab" data-tab="favs" onclick="showTab('favs')">
-    <span class="tab-icon">⭐</span>
-    <span class="tab-label">Saved</span>
-  </div>
   <div class="tab" data-tab="ideas" onclick="showTab('ideas')">
     <span class="tab-icon">✨</span>
     <span class="tab-label">Ideas</span>
@@ -435,6 +473,10 @@
   <div class="tab" data-tab="tips" onclick="showTab('tips')">
     <span class="tab-icon">💡</span>
     <span class="tab-label">Tips</span>
+  </div>
+  <div class="tab" data-tab="favs" onclick="showTab('favs')">
+    <span class="tab-icon">⭐</span>
+    <span class="tab-label">Saved</span>
   </div>
 </nav>
 </div><!-- /app -->
@@ -690,11 +732,6 @@ const RECIPES = [
     macros:{cal:540,protein:38,carbs:12}},
 
   // ── EVERYDAY MAINS (8) ───────────────────────────────────────────────────────
-  {id:'e1',name:'Salmon & Citrus Slaw',cuisine:'Everyday',emoji:'🐟',time:'20 min',protein:'34g',
-    flavors:['citrus','herby'],meal:['lunch','dinner'],
-    ingredients:['2 salmon fillets','2 cups shredded red cabbage','1 carrot, grated','2 tbsp orange juice','1 tbsp lime juice','1 tbsp olive oil','Fresh coriander or dill','Salt & pepper'],
-    method:['Combine cabbage and carrot with citrus juices and half the oil. Season.','Season salmon with salt and pepper.','Pan-fry or grill salmon 4 min per side.','Serve salmon over slaw with fresh herbs.'],
-    macros:{cal:420,protein:34,carbs:14}},
 
   {id:'e2',name:'Steak & Herb Oil',cuisine:'Everyday',emoji:'🥩',time:'20 min',protein:'36g',
     flavors:['herby','umami'],meal:['dinner'],
@@ -714,11 +751,6 @@ const RECIPES = [
     method:['Season chicken. Sear skin-side down in infused oil 6–8 min until golden. Flip, cook 2 more min.','Remove chicken. Add stock and cream to pan, scraping up bits.','Stir in sun-dried tomatoes and oregano. Simmer 3 min.','Return chicken to pan. Cook covered 12 min until cooked through.','Scatter basil and parmesan. Serve with rice or crusty sourdough.'],
     macros:{cal:520,protein:38,carbs:10}},
 
-  {id:'e6',name:'Sheet Pan Herb Salmon',cuisine:'Everyday',emoji:'🍋',time:'25 min',protein:'34g',
-    flavors:['citrus','herby'],meal:['lunch','dinner'],
-    ingredients:['2 salmon fillets','1 bunch asparagus (or green beans), trimmed','2 tbsp garlic-infused oil','1 lemon, sliced','1 tbsp capers (rinsed)','1 tsp dried dill or fresh','Salt & pepper'],
-    method:['Preheat oven to 200°C.','Toss asparagus with half the infused oil, salt and pepper on a baking sheet.','Place salmon on top. Drizzle remaining oil over salmon.','Top with lemon slices, capers and dill.','Roast 15–18 min until salmon flakes easily and asparagus is tender.'],
-    macros:{cal:390,protein:34,carbs:8}},
 
   {id:'e7',name:'Chicken Shawarma Bowl',cuisine:'Everyday',emoji:'🫙',time:'30 min',protein:'36g',
     flavors:['herby','umami','citrus'],meal:['lunch','dinner'],
@@ -812,7 +844,7 @@ const RECIPES = [
     method:['Blend or finely mix olive oil, spices, lemon juice and herbs into a rough chermoula paste.','Coat chicken in chermoula. Marinate 15 min (or overnight).','Grill or pan-fry chicken 5–6 min per side until cooked. Rest and slice.','Assemble bowl: grains, sliced chicken, tomatoes, cucumber.','Drizzle tahini sauce over everything.'],
     macros:{cal:480,protein:36,carbs:36}},
 
-  {id:'x5',name:"Ella's Chili",cuisine:'Mexican',emoji:'🌶️',time:'50 min',protein:'24g',
+  {id:'x5',name:"Kate's Chili",cuisine:'Mexican',emoji:'🌶️',time:'50 min',protein:'24g',
     flavors:['heat','umami','herby'],meal:['dinner'],
     ingredients:['4–5 jalapeños, diced','2 tbsp garlic-infused oil','1 tsp cumin seeds','1 tsp dried oregano','2 dried ancho chillies, stems removed, torn','1–2 chilli de árbol or extra chilli flakes','700ml passata','400g canned lentils, well rinsed (or black beans if you tolerate them)','Large bunch coriander, chopped','Juice of 1 lime','4 spring onion greens, sliced','Lactose-free sour cream + aged cheddar to serve','Optional: 400g beef mince (pre-salted, high fat %)'],
     method:['If using beef: salt mince 20 min ahead. Fry in a hot pan until browned and rendering fat. Remove beef, keep fat in pan.','Heat infused oil in pan. Fry jalapeños with a good amount of salt until soft and luscious, 8–10 min.','Add cumin seeds, oregano, and dried chillies plus a knob of butter until aromatic.','Add passata bit by bit — let it caramelise and change colour before adding more.','Stir in a fat handful of coriander. Simmer sauce 10 min.','Taste and adjust spices. Add lentils (and beef if using). Cook 10 min, adding a splash of water if it sticks.','Finish with remaining coriander, spring onion greens and a big lime squeeze.','Serve with sour cream, cheddar and rice or corn tortillas.'],
@@ -974,6 +1006,105 @@ const RECIPES = [
     method:['Mix all satay batter ingredients in a shallow bowl until thick. Add a splash more water if too stiff.','In a separate bowl, lightly crush cornflakes with your hands. Mix in peanuts, curry powder, salt and pepper.','Pat tofu dry. Dust each piece in cornflour. Dip into satay batter, coating all sides. Press firmly into cornflake mix on all sides.','Heat oil in a pan on medium-high. Fry tofu 3 min per side until deeply golden. Drain on kitchen paper. Season with salt immediately.','Mix mayo with chilli flakes. Toast buns.','Assemble: chilli mayo, cucumber ribbons, crispy satay tofu, fresh coriander, pickled cucumber.'],
     macros:{cal:490,protein:18,carbs:40}},
 
+  // ── NEW SAVOURY ──────────────────────────────────────────────────────────────
+  {id:'z1',name:'Matzo Ball Soup',cuisine:'Everyday',emoji:'🥣',time:'3 hrs (hands-off)',protein:'28g',
+    servings:6,flavors:['herby','salty','umami'],meal:['lunch','dinner'],
+    ingredients:['1.5kg whole chicken','2 medium carrots, roughly chopped','4 celery stalks, roughly chopped + leaves to serve','2 large onions, roughly chopped','2 heads garlic, halved (added to broth for flavour, strained out)','Kosher salt','120g (1 cup) matzo meal','5 large eggs, beaten','75ml (⅓ cup) neutral oil or chicken schmaltz','60ml (¼ cup) soda water','1¾ tsp kosher salt','15g fresh chives, finely chopped','15g fresh dill, finely chopped, plus more to serve','Black pepper'],
+    method:['Put chicken, onions, garlic, carrots and celery in a large pot. Cover with ~2.4L water + generous salt. Bring to a gentle simmer. Cook uncovered 1½–2½ hours.','Strain broth through a fine sieve. Pull chicken meat off bones, reserve. Season broth well with salt.','Matzo ball mix: combine matzo meal, salt, chives and dill. Stir in beaten eggs, then oil and soda water. Cover and refrigerate 2+ hours.','Bring a large pot of well-salted water to a boil. With wet hands, roll chilled mixture into golf-ball-sized balls. Lower gently into boiling water.','Cook uncovered 12–15 min until floating and cooked through.','Transfer matzo balls to hot chicken broth with reserved chicken. Serve topped with dill, celery leaves and black pepper.'],
+    macros:{cal:340,protein:28,carbs:18}},
+
+  // ── BREAKFAST ADDITIONS ───────────────────────────────────────────────────────
+  {id:'b12',name:'Fluffy Blueberry Buttermilk Pancakes',cuisine:'Everyday',emoji:'🫐',time:'20 min',protein:'8g',
+    servings:2,flavors:['sweet','citrus'],meal:['breakfast'],
+    ingredients:['150g (1¼ cups) plain flour','1 tbsp sugar','1 tsp baking powder','½ tsp baking soda','¼ tsp salt','240ml (1 cup) buttermilk (or whole milk + 1 tbsp lemon juice, left 5 min)','1 large egg','2 tbsp melted butter','1 tsp vanilla extract','150g fresh or frozen blueberries','Butter + maple syrup to serve'],
+    method:['Whisk flour, sugar, baking powder, baking soda and salt in a large bowl.','In a jug, whisk buttermilk, egg, melted butter and vanilla until combined.','Pour wet into dry and fold gently until just combined — lumps are totally fine. Do not overmix.','Fold in blueberries.','Heat a non-stick pan over medium. Melt a small knob of butter. Pour ~80ml batter per pancake.','Cook until bubbles form and edges look set, ~2 min. Flip and cook 1 min more.','Serve immediately with butter and maple syrup.'],
+    macros:{cal:420,protein:8,carbs:62}},
+
+  {id:'b13',name:'Challah',cuisine:'Everyday',emoji:'🍞',time:'3 hrs (incl. proving)',protein:'6g',
+    servings:16,flavors:['sweet','rich'],meal:['breakfast'],
+    ingredients:['320g lukewarm water (~40°C)','14g dry active yeast (or 30g fresh yeast)','800g strong bread flour, sifted, plus more for dusting','80g caster sugar','12g table salt','2 large eggs','60g neutral oil (canola or light olive)','1 egg, beaten (for egg wash)','Sesame or poppy seeds (optional)'],
+    method:['Activate yeast: combine water and yeast, let stand 5–10 min until foamy.','In a stand mixer with dough hook: combine flour, sugar and salt. Add yeast mixture, eggs and oil. Knead on medium 8–10 min until smooth, elastic and slightly tacky.','First proof: cover and leave in a warm spot 30–45 min until ~1½× its original size.','Divide into 2 equal halves. Divide each half into 3 pieces (~210g each). Roll each into a 60cm rope.','Braid 3 ropes together (alternate outer over centre). Pinch ends. Place on parchment-lined trays.','Second proof: cover loosely and rise 1–1½ hrs until noticeably puffed. Preheat oven to 200°C / 400°F.','Brush generously with beaten egg (2 coats for shine). Sprinkle seeds if using.','Bake 40–50 min, rotating halfway, until deep golden brown. Internal temp 88–93°C. Cool on rack before cutting.'],
+    macros:{cal:180,protein:6,carbs:30}},
+
+  // ── DESSERTS ──────────────────────────────────────────────────────────────────
+  {id:'d1',name:'Peach, Rosemary & Lime Galette',cuisine:'Dessert',emoji:'🍑',time:'1 hr + 40 min macerate',protein:'4g',
+    servings:6,flavors:['citrus','sweet'],meal:['dessert'],
+    ingredients:['2 large firm peaches, stoned and sliced 0.5cm thick (~300g)','80g caster sugar (60g for macerating + 1 tbsp for pastry top)','2 limes: 1 peeled in 7 strips; both juiced (1½ tbsp); 1 grated for 1 tsp zest','2 large rosemary sprigs + ½ tbsp picked rosemary leaves (for finishing)','200g all-butter puff pastry','10g unsalted butter, cut into small pieces','1 egg, beaten (egg wash)','¼ tsp cornflour','Plain flour for dusting','150g crème fraîche + 1 tsp lime zest + 1 tsp sugar (to serve)'],
+    method:['Combine 1½ tbsp lime juice and 60g sugar in a bowl. Add peaches, lime peel strips and rosemary sprigs. Macerate 40 min–2 hrs.','Strain through a sieve over a small saucepan — reserve ~60ml syrup. Discard rosemary and peel.','Mix crème fraîche with zest and 1 tsp sugar. Refrigerate.','Preheat oven to 180°C fan. Roll pastry into a 26cm circle. Transfer to a lined tray. Arrange peaches in centre, leaving a 6cm border. Fold border up over peaches. Dot with butter. Brush pastry with egg wash. Sprinkle remaining sugar over pastry.','Bake 20 min. Whisk cornflour into syrup and simmer 2 min until honey-thick. Pour over peaches.','Scatter rosemary leaves. Return to oven 15 min until deep golden. Cool slightly. Serve with lime crème fraîche.'],
+    macros:{cal:280,protein:4,carbs:32}},
+
+  {id:'d2',name:'Yoghurt Cream, Sticky Apricots & Filo Wafer',cuisine:'Dessert',emoji:'🧡',time:'35 min',protein:'5g',
+    servings:4,flavors:['sweet','citrus'],meal:['dessert'],
+    ingredients:['4 sheets filo pastry','40g unsalted butter, melted','1 tsp ground cinnamon','¾ tsp flaked sea salt','3½ tbsp caster sugar, divided','1 egg white, beaten','200ml double cream','1 tbsp caster sugar','1½ tsp vanilla bean paste','120g thick-set Greek yoghurt','90g soft dried apricots, cut into strips','5 cardamom pods, bashed','Zest of 1 lemon in fine strips + juice of ½ lemon','1½ tsp orange blossom water'],
+    method:['Preheat oven to 180°C. Lay one filo sheet on a parchment-lined tray. Brush with butter, dust with cinnamon, salt and sugar. Repeat with remaining 3 sheets. Brush top with egg white and dust with remaining sugar.','Bake 10–12 min until golden and crisp. Cool, then break into shards.','Sticky apricots: put apricots, cardamom, lemon strips, lemon juice and orange blossom water in a small pan with 60ml water. Simmer 6–8 min until syrupy. Remove cardamom. Cool slightly.','Whip cream with 1 tbsp sugar and vanilla to soft peaks. Fold in Greek yoghurt.','Spoon yoghurt cream onto plates, top with sticky apricots, lean filo shards on top. Serve immediately.'],
+    macros:{cal:380,protein:5,carbs:34}},
+
+  {id:'d3',name:'Summery Apricot Shortcakes',cuisine:'Dessert',emoji:'🧡',time:'36 min',protein:'5g',
+    servings:10,flavors:['sweet','rich'],meal:['dessert'],
+    ingredients:['120g (1 cup) all-purpose flour','120g (1 cup) cake flour','1 tsp baking powder','½ tsp fine salt','2 tbsp granulated sugar','115g (1 stick) cold unsalted butter, cubed','120ml (½ cup) heavy cream','1 large egg','5–6 fresh apricots, halved and stoned','1 egg beaten with 1 tbsp milk (egg wash)','Turbinado sugar for sprinkling','Mascarpone whipped cream and fresh berries to serve'],
+    method:['Preheat oven to 200°C / 400°F. Line a baking sheet with parchment.','Whisk both flours, baking powder, salt and sugar. Cut in cold butter with a pastry cutter or fingertips until the mixture resembles coarse sand.','Whisk cream and egg together. Pour into flour mixture and mix until just combined — do not overwork.','Scoop into 10–12 portions using an ice cream scoop. Press an apricot half cut-side-up into each.','Brush with egg wash. Sprinkle with turbinado sugar.','Bake 16 min until golden. Cool on rack. Serve with mascarpone cream and marinated berries.'],
+    macros:{cal:210,protein:5,carbs:22}},
+
+  {id:'d4',name:'Chewy Double Chocolate Chip Cookies',cuisine:'Dessert',emoji:'🍫',time:'1 hr (incl. chill)',protein:'3g',
+    servings:12,flavors:['sweet','rich'],meal:['dessert'],
+    ingredients:['240g (2 cups) all-purpose flour','155g (1¼ cups) dark cocoa powder','2 tsp fine salt','2 tsp baking soda','225g (2 sticks) unsalted butter, room temperature','200g (1 cup) granulated sugar','200g (1 cup) light brown sugar','2 large eggs','1 tbsp vanilla extract','340g bag chocolate chips','Flaky sea salt for topping'],
+    method:['Preheat oven to 165°C / 325°F. Line two baking trays with parchment.','Sift flour, cocoa powder, salt and baking soda.','Beat butter and both sugars in a stand mixer until light and fluffy, 3–4 min. Add eggs one at a time, then vanilla.','Add dry ingredients on low speed until combined. Fold in chocolate chips.','Scoop into 12 balls. Refrigerate at least 30 min.','Top each with flaky sea salt. Bake 16–18 min until edges are set but centres remain soft.','Cool completely before eating — centres firm up as they cool. Dough balls freeze up to 3 months.'],
+    macros:{cal:480,protein:3,carbs:58}},
+
+  {id:'d5',name:'Brown Butter Oatmeal Chocolate Chip Cookies',cuisine:'Dessert',emoji:'🍪',time:'45 min',protein:'4g',
+    servings:18,flavors:['sweet','rich'],meal:['dessert'],
+    ingredients:['170g (¾ cup) unsalted butter','150g (¾ cup) granulated sugar','150g (¾ cup) dark brown sugar','1 large egg + 1 egg yolk','1 tsp vanilla extract','180g (1½ cups) all-purpose flour','1 tsp fine salt','1 tsp baking powder','½ tsp baking soda','200g (2 cups) rolled oats, lightly toasted','60g (½ cup) toasted pecans, roughly chopped','170g (1 cup) bittersweet chocolate, roughly chopped','60g (⅓ cup) milk chocolate, finely chopped'],
+    method:['Brown the butter: melt in a saucepan over medium heat, stirring, until foamy then deep golden and nutty-smelling, 5–7 min. Pour into a bowl and cool 10 min.','Toast oats in a dry pan over medium heat 4–5 min until golden and fragrant. Cool.','Whisk brown butter with both sugars until combined. Add egg, yolk and vanilla; whisk vigorously 1 min.','Fold in flour, salt, baking powder and baking soda until just combined. Fold in oats, pecans and both chocolates.','Scoop into 18 balls (~45g each). Refrigerate 30 min.','Preheat oven to 175°C / 350°F. Bake 11–13 min until edges are set and centres look just underdone. Cool on tray 10 min.'],
+    macros:{cal:290,protein:4,carbs:36}},
+
+  {id:'d6',name:'Apple Crumb Cake with Cream Cheese Swirl',cuisine:'Dessert',emoji:'🍎',time:'1 hr 30 min',protein:'5g',
+    servings:12,flavors:['sweet','rich'],meal:['dessert'],
+    ingredients:['Crumble: 125g flour · 150g sugar · 1 tsp cinnamon · 70g butter (melted)','Apple filling: 2 large apples, peeled and chopped · 1 tbsp cinnamon','Cream cheese: 225g cream cheese (room temp) · 1 tbsp brown sugar · 1 tbsp cornstarch','375g (3 cups) all-purpose flour','1½ tsp baking powder','1 tsp baking soda','250g (1¼ cups) sugar','113g (½ cup) butter, melted','170g (¾ cup) plain yogurt','180g (⅔ cup) milk or buttermilk','1 tbsp vanilla extract','¼ tsp salt'],
+    method:['Preheat oven to 175°C / 350°F. Grease and line a 9-inch springform pan.','Crumble: whisk flour, cinnamon and sugar. Stir in melted butter until crumbly. Set aside.','Toss chopped apples with cinnamon. Beat cream cheese, brown sugar and cornstarch until smooth.','Cake batter: whisk melted butter, sugar, yogurt, vanilla. Add baking powder, baking soda, salt and flour. Mix in milk until just combined.','Pour half the batter into the pan. Spread cream cheese mixture to edges. Add remaining batter. Scatter apples evenly, then top with crumble.','Bake 75–85 min until a toothpick comes out clean (cover with foil if top browns too fast). Cool in pan 20 min before releasing.'],
+    macros:{cal:420,protein:5,carbs:56}},
+
+  {id:'d7',name:'Brown Butter Pumpkin Chocolate Chip Cookies',cuisine:'Dessert',emoji:'🎃',time:'1 hr (incl. chill)',protein:'4g',
+    servings:10,flavors:['sweet','rich'],meal:['dessert'],
+    ingredients:['220g (1 cup) butter, melted and browned','150g (¾ cup) brown sugar','100g (½ cup) granulated sugar','120g (½ cup) pumpkin puree','3 tbsp plain yogurt','1 tsp vanilla extract','220g (1½ cups) all-purpose flour','150g (1½ cups) rolled oats','1½ tsp pumpkin spice blend','½ tsp baking soda','½ tsp baking powder','½ tsp sea salt','220g (1 cup) chocolate chips, plus more for topping'],
+    method:['Brown the butter: melt over medium heat until golden and nutty. Pour into a bowl and cool 15 min.','Whisk butter, both sugars, pumpkin puree, yogurt and vanilla until smooth.','Add salt, pumpkin spice, baking soda and baking powder; whisk in. Fold in flour and oats until just combined. Fold in chocolate chips.','Refrigerate dough at least 30 min (or overnight for best results).','Preheat oven to 190°C / 375°F. Scoop into 10 balls, space 2 inches apart on lined trays. Press extra chips on top.','Bake 12–15 min until edges are golden but centres remain soft. Cool on tray 10–15 min before serving.'],
+    macros:{cal:380,protein:4,carbs:46}},
+
+  {id:'d8',name:'Blueberry Buckle Coffee Cake',cuisine:'Dessert',emoji:'🫐',time:'55 min',protein:'5g',
+    servings:16,flavors:['sweet','herby'],meal:['dessert'],
+    ingredients:['Streusel: 67g (⅓ cup) sugar · 60g (½ cup) flour · 1 tsp cinnamon · pinch salt · 57g (4 tbsp) butter (room temp)','240g (2 cups) all-purpose flour','2 tsp baking powder','½ tsp salt','149g (¾ cup) granulated sugar','57g (4 tbsp) butter, softened','1 large egg, room temperature','1 tsp vanilla extract','113g (½ cup) milk, room temperature','283g (2 cups) blueberries, fresh or frozen'],
+    method:['Preheat oven to 190°C / 375°F. Grease an 8-inch square or 9-inch round pan.','Streusel: mix sugar, flour, cinnamon and salt. Cut in butter with a fork until crumbly. Set aside.','Whisk flour, baking powder and salt for the cake.','Beat sugar, butter, egg and vanilla together. Alternately add milk and flour mixture, ending with flour. Fold in blueberries gently.','Pour batter into pan. Sprinkle streusel evenly over top.','Bake 40–45 min until a toothpick comes out clean. Cool on rack 10 min before serving.'],
+    macros:{cal:190,protein:5,carbs:28}},
+
+  {id:'d9',name:'Brown Butter Peach Blueberry Crisp',cuisine:'Dessert',emoji:'🍑',time:'1 hr',protein:'3g',
+    servings:8,flavors:['sweet','rich'],meal:['dessert'],
+    ingredients:['115g (8 tbsp) unsalted butter','60g (½ cup) flour','100g (½ cup) brown sugar','1 tsp cinnamon','90g (¾ cup) rolled oats','700g (~5 medium) fresh peaches, peeled and chopped','140g (1 cup) blueberries','60g (¼ cup) white sugar','30g (¼ cup) flour','½ tsp vanilla extract','Pinch of salt','Vanilla ice cream or whipped cream to serve'],
+    method:['Brown the butter: cook in a saucepan over medium heat, stirring, until golden and nutty (~7 min). Pour into a bowl and freeze 20–30 min until solid.','Meanwhile, mix streusel dry ingredients: flour, brown sugar, cinnamon and oats. Refrigerate.','Preheat oven to 175°C / 350°F. Grease a 10-inch ovenproof skillet or 23cm baking dish.','Toss peaches, blueberries, white sugar, flour, vanilla and salt. Spread into the dish.','Scrape hardened brown butter into the cold streusel. Cut in with a fork until crumbly. Sprinkle evenly over fruit.','Bake 45–50 min until topping is golden and fruit juices bubble at edges. Cool briefly and serve warm with ice cream.'],
+    macros:{cal:310,protein:3,carbs:42}},
+
+  {id:'d10',name:'Butter Cake with Peaches',cuisine:'Dessert',emoji:'🍑',time:'55 min',protein:'5g',
+    servings:12,flavors:['sweet','rich'],meal:['dessert'],
+    ingredients:['285g (2½ sticks) unsalted butter, room temp, plus more for greasing','360g (3 cups) all-purpose flour, plus more for pan','350g (1¾ cups) granulated sugar, plus more for sprinkling','3 large eggs, room temperature','240g (1 cup) plain yogurt or buttermilk','1½ tsp baking powder','½ tsp baking soda','½ tsp fine salt','1 tsp vanilla extract','3–4 ripe peaches, halved or quartered and stoned'],
+    method:['Preheat oven to 180°C / 350°F. Grease and flour a 9×13-inch baking pan.','Beat butter and sugar until pale and fluffy, 4–5 min. Add eggs one at a time, then vanilla.','Whisk flour, baking powder, baking soda and salt in a separate bowl.','Alternately fold in flour mixture and yogurt, starting and ending with flour. Do not overmix.','Spread batter into pan. Press peach halves cut-side-up into batter. Sprinkle generously with sugar.','Bake 40–50 min until golden, top is set and a toothpick comes out clean. Cool in pan 15 min before slicing.'],
+    macros:{cal:420,protein:5,carbs:56}},
+
+  {id:'d11',name:'Wild Blueberry Almond Sourdough Scones',cuisine:'Dessert',emoji:'🫐',time:'30 min',protein:'6g',
+    servings:8,flavors:['sweet','rich'],meal:['dessert','breakfast'],
+    ingredients:['300g (2½ cups) all-purpose flour','1 tbsp baking powder','½ tsp baking soda','½ tsp fine salt','50g (¼ cup) granulated sugar','85g (6 tbsp) cold unsalted butter, cubed','120g (½ cup) sourdough discard','120g (½ cup) cold Greek yogurt','1 tsp almond extract','150g frozen wild blueberries (do not thaw)','50g (⅓ cup) sliced almonds','1 egg + 1 tbsp milk (egg wash)','Turbinado sugar for topping'],
+    method:['Preheat oven to 220°C / 425°F. Line a baking sheet with parchment.','Whisk flour, baking powder, baking soda, salt and sugar. Cut in cold butter until mixture is like coarse crumbs.','Mix sourdough discard, yogurt and almond extract. Pour into flour mixture and fold until almost combined.','Gently fold in frozen blueberries and almonds — do not overwork.','Turn onto a floured surface and pat into a 2.5cm-thick circle. Cut into 8 wedges.','Place on tray. Brush with egg wash. Sprinkle with turbinado sugar.','Bake 12–15 min until golden brown. Serve warm.'],
+    macros:{cal:290,protein:6,carbs:40}},
+
+  {id:'d12',name:'Flourless Avocado Brownies',cuisine:'Dessert',emoji:'🍫',time:'45 min',protein:'6g',
+    servings:16,flavors:['sweet','rich'],meal:['dessert'],
+    ingredients:['2 ripe avocados (~300g flesh)','3 large eggs','150g (¾ cup) coconut sugar or brown sugar','60g (¼ cup) almond butter or tahini','80g (¾ cup) cocoa powder','1 tsp baking powder','1 tsp vanilla extract','½ tsp fine salt','100g chocolate chips, plus more for top'],
+    method:['Preheat oven to 165°C / 325°F. Grease and line a 9-inch square baking pan.','In a food processor, blend avocado, eggs, sugar, almond butter, vanilla and salt until completely smooth.','Add cocoa powder and baking powder. Pulse until combined.','Fold in chocolate chips. Pour into pan and spread evenly. Scatter extra chips on top.','Bake 30–35 min until the centre is just set and a toothpick comes out with moist crumbs (not wet batter).','Cool completely in pan before cutting — very fudgy when warm. Refrigerate leftovers up to 5 days.'],
+    macros:{cal:160,protein:6,carbs:18}},
+
+  {id:'d13',name:'Apricot Bars with Almond Crumble',cuisine:'Dessert',emoji:'🧡',time:'55 min',protein:'4g',
+    servings:16,flavors:['sweet','citrus'],meal:['dessert'],
+    ingredients:['150g (1¼ cups) whole wheat or all-purpose flour','75g (¾ cup) rolled oats','100g (½ cup) brown sugar','¼ tsp fine salt','115g (½ cup) cold butter, cubed','60g sliced almonds, plus more for top','350g fresh apricots, stoned and roughly chopped (or 250g dried apricots soaked in hot water 20 min)','2 tbsp granulated sugar','1 tbsp lemon juice','1 tsp cornstarch'],
+    method:['Preheat oven to 175°C / 350°F. Spread almonds in an 8-inch square pan and toast 3–5 min until golden. Remove and set aside.','Make base/crumble: combine flour, oats, brown sugar and salt. Cut in cold butter until crumbly. Mix in toasted almonds.','Press two-thirds of the mixture firmly into the pan as the base. Refrigerate remaining crumble.','Toss apricots with sugar, lemon juice and cornstarch. Spread over the base.','Scatter the chilled crumble evenly over the apricot layer.','Bake 35–40 min until golden and the filling bubbles at the edges. Cool completely before cutting into bars.'],
+    macros:{cal:180,protein:4,carbs:24}},
+
 ]; // end RECIPES
 
 // ─── RECIPE IMAGES ───────────────────────────────────────────────────────────
@@ -1011,11 +1142,9 @@ const RECIPE_IMGS = {
   'w1':'https://www.recipetineats.com/tachyon/2019/01/Baked-Buffalo-Wings_0.jpg',
   'w2':'https://thewoksoflife.com/wp-content/uploads/2020/10/korean-fried-chicken-16.jpg',
   // Everyday
-  'e1':'https://www.recipetineats.com/tachyon/2019/07/Salmon-Salad_1.jpg',
   'e2':'https://www.goodlifeeats.com/wp-content/uploads/2023/07/Gremolata-Sauce-for-Steaks-720x720.jpg',
   'e3':'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/06/Greek-Lemon-Chicken-main.jpg',
   'e5':'https://www.recipetineats.com/tachyon/2015/07/Chicken-with-Creamy-Sun-Dried-Tomato-Sauce_2.jpg',
-  'e6':'https://www.recipetineats.com/tachyon/2024/02/Lemon-garlic-salmon-tray-bake_1.jpg',
   'e7':'https://tastesbetterfromscratch.com/wp-content/uploads/2024/04/Chicken-Shawarma-Bowls24-1.jpg',
   'e8':'https://www.recipetineats.com/tachyon/2023/06/Chili-crisp-noodles_2.jpg',
   // Special
@@ -1097,6 +1226,8 @@ function recipeImgEl(r, type) {
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let ideas = null;
 let groceryChecked = new Set();
+let modalBaseServings = 2;
+let modalCurrentServings = 2;
 let favourites = JSON.parse(localStorage.getItem('fodmap_favs') || '[]');
 let deleted = new Set(JSON.parse(localStorage.getItem('fodmap_deleted') || '[]'));
 let openRecipeId = null;
@@ -1153,9 +1284,9 @@ function generateIdeas() {
   const a = active();
   const dPool = a.filter(r => r.meal.includes('dinner'));
   const lPool = a.filter(r => r.meal.includes('lunch'));
-  const dinners = smartPick(dPool, 5);
+  const dinners = smartPick(dPool, 3);
   const usedIds = dinners.map(r => r.id);
-  const lunches = smartPick(lPool, 5, usedIds);
+  const lunches = smartPick(lPool, 3, usedIds);
   ideas = { dinners, lunches };
   document.getElementById('ideas-splash').style.display = 'none';
   document.getElementById('ideas-results').style.display = 'block';
@@ -1182,32 +1313,35 @@ function renderIdeas() {
   const el = document.getElementById('ideas-results');
   if (!ideas) return;
   el.innerHTML =
-    `<div class="ideas-header">
-      <div><div style="font-size:0.88rem;font-weight:800;color:var(--text)">This Week's Meals</div>
-      <div class="ideas-subtitle">5 dinners · 5 lunches · varied proteins</div></div>
-      <button class="btn-regen-ideas" onclick="generateIdeas()">↺ Regenerate</button>
+    `<div class="ideas-toolbar">
+      <div><div style="font-size:0.88rem;font-weight:800;color:var(--text)">This Week's Ideas</div>
+      <div class="ideas-subtitle">3 dinners · 3 lunches</div></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-grocery" onclick="showGroceryModal()">🛒 Grocery List</button>
+        <button class="btn-regen-ideas" onclick="generateIdeas()">↺</button>
+      </div>
     </div>
-    <div class="section-title">Dinner Ideas</div>
-    ${ideas.dinners.map((r, i) => ideaCard(r, 'dinner', i)).join('')}
-    <div class="section-title">Lunch Ideas</div>
-    ${ideas.lunches.map((r, i) => ideaCard(r, 'lunch', i)).join('')}
-    <button class="btn-grocery" onclick="showGroceryModal()">🛒 Generate Grocery List</button>`;
+    <div class="ideas-section-hdr">Dinners</div>
+    <div class="idea-grid">${ideas.dinners.map((r, i) => ideaCard(r, 'dinner', i)).join('')}</div>
+    <div class="ideas-section-hdr">Lunches</div>
+    <div class="idea-grid">${ideas.lunches.map((r, i) => ideaCard(r, 'lunch', i)).join('')}</div>`;
 }
 
 function ideaCard(r, mealType, index) {
-  const tc = cuisineTop(r.cuisine);
-  const badges = r.flavors.slice(0, 2).map(f => `<span class="meal-tag f-${f}">${flavorEmoji(f)} ${f}</span>`).join('');
-  return `<div class="recipe-card ${tc}" onclick="openModal('${r.id}')">
-    ${recipeImgEl(r, 'banner')}
-    <div class="recipe-card-body">
-      <div class="recipe-header">
-        <div style="flex:1">
-          <div class="recipe-title">${r.name}</div>
-          <div class="recipe-cuisine">${r.cuisine} · ${r.time}</div>
-        </div>
-        <button class="meal-swap" onclick="event.stopPropagation();swapIdea('${mealType}',${index})" title="Swap">✕</button>
-      </div>
-      <div class="recipe-chips"><span class="meal-tag meal-protein">🥩 ${r.protein}</span>${badges}</div>
+  const src = RECIPE_IMGS[r.id];
+  const pc = cuisinePlaceholder(r.cuisine);
+  const img = src
+    ? `<img src="${src}" alt="${r.name}" loading="lazy" onerror="this.outerHTML='<div class=\\'idea-photo-placeholder ${pc}\\'>${r.emoji}</div>'">`
+    : `<div class="idea-photo-placeholder ${pc}">${r.emoji}</div>`;
+  return `<div class="idea-card" onclick="openModal('${r.id}')">
+    <div class="idea-photo-wrap">
+      ${img}
+      <button class="idea-swap" onclick="event.stopPropagation();swapIdea('${mealType}',${index})" title="Swap">↺</button>
+    </div>
+    <div class="idea-info">
+      <div class="idea-cuisine">${r.cuisine}</div>
+      <div class="idea-title">${r.name}</div>
+      <div class="idea-stats">${r.time} · ${r.protein}</div>
     </div>
   </div>`;
 }
@@ -1259,26 +1393,29 @@ function buildGroceryList() {
 
 function showGroceryModal() {
   const list = buildGroceryList();
-  groceryChecked = new Set();
   const totalItems = Object.values(list).reduce((n, arr) => n + arr.length, 0);
+  let idx = 0;
   const inner = Object.entries(list).map(([cat, items]) =>
-    `<span class="grocery-cat-lbl">${cat}</span>` +
-    `<div>` + items.map((ing, i) => {
-      const key = cat + '|' + i;
-      return `<div class="grocery-item" id="gi-${btoa(key).replace(/[^a-z0-9]/gi,'')}" onclick="toggleGroceryItem(this)">
-        <div class="grocery-tick" id="gt-${btoa(key).replace(/[^a-z0-9]/gi,'')}"></div>
+    `<span class="grocery-cat-lbl">${cat}</span><div>` +
+    items.map(ing => {
+      const id = 'gi' + (idx++);
+      return `<div class="grocery-item" id="${id}" onclick="toggleGroceryItem('${id}')">
+        <div class="grocery-tick" id="t${id}"></div>
         <span>${ing}</span>
       </div>`;
     }).join('') + `</div>`
   ).join('');
   document.getElementById('grocery-body').innerHTML = inner;
-  document.getElementById('grocery-count').textContent = `${totalItems} items · ${ideas.dinners.length + ideas.lunches.length} recipes`;
+  document.getElementById('grocery-count').textContent = `${totalItems} items · ${(ideas.dinners.length + ideas.lunches.length)} recipes`;
   document.getElementById('grocery-modal').classList.add('open');
 }
 
-function toggleGroceryItem(el) {
+function toggleGroceryItem(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
   el.classList.toggle('checked');
-  el.querySelector('.grocery-tick').classList.toggle('checked');
+  const tick = document.getElementById('t' + id);
+  if (tick) tick.classList.toggle('checked');
 }
 
 function closeGroceryModal() {
@@ -1336,6 +1473,7 @@ function renderRecipes(filter) {
   else if (filter === 'Breakfast') list = base.filter(r => r.meal.includes('breakfast'));
   else if (filter === 'Lunch')     list = base.filter(r => r.meal.includes('lunch'));
   else if (filter === 'Dinner')    list = base.filter(r => r.meal.includes('dinner'));
+  else if (filter === 'Dessert')   list = base.filter(r => r.meal.includes('dessert'));
   else if (filter === 'Snacks')    list = base.filter(r => r.meal.includes('snack'));
   else list = base;
   if (currentSearch) {
@@ -1367,34 +1505,80 @@ function renderFavourites() {
   el.innerHTML = list.map(recipeCard).join('');
 }
 
+// ─── SCALING ─────────────────────────────────────────────────────────────────
+const FRACS = {'½':0.5,'¼':0.25,'¾':0.75,'⅓':1/3,'⅔':2/3,'⅛':0.125,'⅜':0.375,'⅝':0.625,'⅞':0.875};
+const FRAC_FMT = [[0.125,'⅛'],[0.25,'¼'],[0.333,'⅓'],[0.375,'⅜'],[0.5,'½'],[0.625,'⅝'],[0.667,'⅔'],[0.75,'¾'],[0.875,'⅞']];
+
+function parseFrac(s) {
+  s = String(s).trim();
+  if (FRACS[s] !== undefined) return FRACS[s];
+  if (s.includes('/')) { const [n,d]=s.split('/'); return parseFloat(n)/parseFloat(d); }
+  let v = 0;
+  for (const [k,fv] of Object.entries(FRACS)) {
+    if (s.includes(k)) { v += fv; s = s.replace(k,'').trim(); break; }
+  }
+  v += parseFloat(s) || 0;
+  return v;
+}
+
+function formatFrac(n) {
+  for (const [val, sym] of FRAC_FMT) { if (Math.abs(n - val) < 0.04) return sym; }
+  const whole = Math.floor(n);
+  const frac = n - whole;
+  const fracSym = FRAC_FMT.find(([v]) => Math.abs(frac - v) < 0.04)?.[1] || '';
+  if (whole === 0) return fracSym || String(Math.round(n * 10) / 10);
+  if (!fracSym) return String(whole);
+  return whole + fracSym;
+}
+
+function scaleIng(ing, ratio) {
+  if (ratio === 1) return ing;
+  return ing.replace(/^([½¼¾⅓⅔⅛⅜⅝⅞]|\d+(?:[.,]\d+)?(?:\s*[½¼¾⅓⅔⅛⅜⅝⅞])?)(\s*)/, (m, num) => {
+    const v = parseFrac(num);
+    return v > 0 ? formatFrac(v * ratio) + ' ' : m;
+  });
+}
+
+function renderIngredients(r) {
+  const ratio = modalCurrentServings / modalBaseServings;
+  return r.ingredients.map(i => `<li>${scaleIng(i, ratio)}</li>`).join('');
+}
+
 // ─── MODAL ───────────────────────────────────────────────────────────────────
 function openModal(id) {
   const r = RECIPES.find(x => x.id === id);
   if (!r) return;
   openRecipeId = id;
+  modalBaseServings = r.servings || 2;
+  modalCurrentServings = modalBaseServings;
   const isFav = favourites.includes(id);
   document.getElementById('modal-title').textContent = r.name;
-  const heroHtml = recipeImgEl(r, 'hero');
-  document.getElementById('modal').insertAdjacentHTML('afterbegin', '');
-  // Insert hero before handle
   const existingHero = document.getElementById('modal-hero-wrap');
   if (existingHero) existingHero.remove();
   const heroWrap = document.createElement('div');
   heroWrap.id = 'modal-hero-wrap';
-  heroWrap.innerHTML = heroHtml;
+  heroWrap.innerHTML = recipeImgEl(r, 'hero');
   document.getElementById('modal').insertBefore(heroWrap, document.getElementById('modal').firstChild);
   document.getElementById('modal-body').innerHTML = `
     <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${id}')" id="modal-fav-btn">
       ${isFav ? '⭐ Saved to Favourites' : '☆ Save to Favourites'}
     </button>
     <div class="modal-meta-row">
-      <span class="meal-tag meal-protein">🥩 ${r.protein} protein</span>
+      <span class="meal-tag meal-protein">🥩 ${r.protein}</span>
       <span class="meal-tag f-herby">⏱ ${r.time}</span>
       <span class="meal-tag f-salty">🍽 ${r.cuisine}</span>
       ${r.flavors.map(f => `<span class="meal-tag f-${f}">${flavorEmoji(f)} ${f}</span>`).join('')}
     </div>
+    <div class="serving-row">
+      <span class="serving-lbl">Serves</span>
+      <div class="serving-ctrl">
+        <button class="serving-btn" onclick="changeServings('${id}',-1)">−</button>
+        <span class="serving-num" id="modal-serving-val">${modalBaseServings}</span>
+        <button class="serving-btn" onclick="changeServings('${id}',1)">+</button>
+      </div>
+    </div>
     <div class="modal-section-lbl">Ingredients</div>
-    <ul class="modal-ingredients">${r.ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
+    <ul class="modal-ingredients" id="modal-ings">${renderIngredients(r)}</ul>
     <div class="modal-section-lbl" style="margin-top:16px">Method</div>
     <ol class="modal-method">${r.method.map(s => `<li>${s}</li>`).join('')}</ol>
     <div class="modal-macros">
@@ -1404,6 +1588,14 @@ function openModal(id) {
     </div>
     <button class="delete-recipe-btn" onclick="deleteRecipe('${id}')">Remove this recipe</button>`;
   document.getElementById('recipe-modal').classList.add('open');
+}
+
+function changeServings(id, delta) {
+  const r = RECIPES.find(x => x.id === id);
+  if (!r) return;
+  modalCurrentServings = Math.max(1, modalCurrentServings + delta);
+  document.getElementById('modal-serving-val').textContent = modalCurrentServings;
+  document.getElementById('modal-ings').innerHTML = renderIngredients(r);
 }
 
 function closeModal() {
@@ -1453,6 +1645,7 @@ function cuisineColor(c) {
   if (c === 'Thai')       return 'c-thai';
   if (c === 'Korean')     return 'c-kor';
   if (c === 'Wings')      return 'c-wings';
+  if (c === 'Dessert')    return 'c-dessert';
   return 'c-every';
 }
 function cuisinePlaceholder(c) {
@@ -1461,6 +1654,7 @@ function cuisinePlaceholder(c) {
   if (c === 'Thai')       return 'p-thai';
   if (c === 'Korean')     return 'p-kor';
   if (c === 'Wings')      return 'p-wings';
+  if (c === 'Dessert')    return 'p-dessert';
   return 'p-every';
 }
 function cuisineTop(c) {
@@ -1469,6 +1663,7 @@ function cuisineTop(c) {
   if (c === 'Thai')       return 't-thai';
   if (c === 'Korean')     return 't-kor';
   if (c === 'Wings')      return 't-wings';
+  if (c === 'Dessert')    return 't-dessert';
   return 't-every';
 }
 function flavorEmoji(f) {
@@ -1484,7 +1679,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFavourites();
   updateDeletedCount();
 
-  const filters = ['All','Breakfast','Lunch','Dinner','Snacks'];
+  const filters = ['All','Breakfast','Lunch','Dinner','Dessert','Snacks'];
   document.getElementById('recipe-filters').innerHTML = filters.map(f =>
     `<div class="filter-chip ${f === 'All' ? 'active' : ''}" data-filter="${f}" onclick="setFilter('${f}')">${f}</div>`
   ).join('');
