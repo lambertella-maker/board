@@ -1329,6 +1329,7 @@ function homeGreeting() {
 function jumpToCuisine(name) {
   currentFilter = name;
   showTab('recipes');
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
   renderRecipes(name);
 }
 
@@ -1652,7 +1653,7 @@ function renderRecipes(filter) {
   else if (filter === 'Dinner')    list = base.filter(r => r.meal.includes('dinner'));
   else if (filter === 'Dessert')   list = base.filter(r => r.meal.includes('dessert'));
   else if (filter === 'Snacks')    list = base.filter(r => r.meal.includes('snack'));
-  else list = base;
+  else list = base.filter(r => r.cuisine === filter);
   if (currentSearch) {
     list = list.filter(r =>
       r.name.toLowerCase().includes(currentSearch) ||
