@@ -376,6 +376,17 @@
     background:var(--accent);border:none;border-radius:12px;padding:12px;
     color:#fff;font-size:0.78rem;font-weight:800;cursor:pointer;font-family:inherit;}
 
+  /* PANTRY */
+  .pantry-item{display:flex;align-items:center;gap:10px;padding:10px 0;
+    border-bottom:1px solid var(--border);cursor:pointer;transition:opacity .12s;}
+  .pantry-item:last-child{border-bottom:none;}
+  .pantry-item span{font-size:0.78rem;color:var(--soft);}
+  .pantry-item.on span{color:var(--text);}
+  .pantry-tick{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.55rem;color:transparent;flex-shrink:0;transition:all .15s;}
+  .pantry-tick.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+
   /* IDEA GRID (ATK-style photo cards) */
   .idea-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 14px 14px;}
   .idea-card{cursor:pointer;border-radius:10px;overflow:hidden;
@@ -390,6 +401,12 @@
     color:#fff;font-size:0.6rem;cursor:pointer;display:flex;
     align-items:center;justify-content:center;backdrop-filter:blur(4px);}
   .idea-swap:active{background:rgba(0,0,0,0.9);}
+  .idea-check{position:absolute;bottom:5px;left:5px;width:20px;height:20px;
+    border-radius:50%;border:2px solid rgba(255,255,255,0.4);
+    background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.65rem;color:#fff;cursor:pointer;transition:all .15s;}
+  .idea-check.on{background:var(--accent2);border-color:var(--accent2);}
   .idea-info{padding:6px 7px 8px;}
   .idea-cuisine{font-size:0.48rem;font-weight:700;color:var(--muted);
     text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
@@ -491,13 +508,26 @@
   <div id="recipes-list"></div>
 </div>
 
-<!-- ════ FAVOURITES ════ -->
-<div class="tab-section" id="tab-favs">
+<!-- ════ PANTRY ════ -->
+<div class="tab-section" id="tab-pantry">
   <div class="topbar">
-    <div class="topbar-logo">Favourites</div>
-    <div class="topbar-date" id="topbar-date-favs">—</div>
+    <div class="topbar-logo">My Pantry</div>
+    <div class="topbar-date" id="topbar-date-pantry">—</div>
   </div>
-  <div id="favs-list"></div>
+  <div style="padding:8px 14px 4px">
+    <div style="font-size:0.65rem;color:var(--muted);line-height:1.5">
+      Tick what you always have at home — these will be hidden from your grocery lists.
+    </div>
+  </div>
+  <div id="pantry-list" style="padding:0 14px 16px"></div>
+  <div style="padding:0 14px 8px">
+    <div class="home-section-hdr" style="padding:10px 0 6px">Add your own</div>
+    <div class="fridge-input-row" style="padding:0">
+      <input id="pantry-custom-input" class="fridge-input" type="text" placeholder="e.g. fish sauce" autocomplete="off"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();addPantryCustom()}" />
+      <button class="fridge-add-btn" onclick="addPantryCustom()">Add</button>
+    </div>
+  </div>
 </div>
 
 <!-- ════ IDEAS ════ -->
@@ -637,9 +667,9 @@
     <span class="tab-icon">💡</span>
     <span class="tab-label">Tips</span>
   </div>
-  <div class="tab" data-tab="favs" onclick="showTab('favs')">
-    <span class="tab-icon">⭐</span>
-    <span class="tab-label">Saved</span>
+  <div class="tab" data-tab="pantry" onclick="showTab('pantry')">
+    <span class="tab-icon">🥫</span>
+    <span class="tab-label">Pantry</span>
   </div>
 </nav>
 </div><!-- /app -->
@@ -1438,6 +1468,17 @@ function recipeImgEl(r, type) {
 let ideas = null;
 let fridgeItems = [];
 let dessertIdea = null;
+let checkedIdeas = new Set();
+const PANTRY_DEFAULTS = [
+  'Garlic-infused oil','Olive oil','Neutral oil','Salt','Black pepper',
+  'GF soy sauce','Sesame oil','Rice vinegar','Fish sauce','Chilli flakes',
+  'Smoked paprika','Cumin','Turmeric','Coriander powder','Dried oregano',
+  'Ketchup','Dijon mustard','Wholegrain mustard','Honey','Brown sugar',
+  'Apple cider vinegar','Red wine vinegar','Coconut aminos',
+  'GF Worcestershire sauce','Cornflour','GF plain flour',
+  'Spring onion greens','Lemon','Lime'
+];
+let pantryChecked = new Set(JSON.parse(localStorage.getItem('pantry') || '[]'));
 let groceryChecked = new Set();
 let modalBaseServings = 2;
 let cookRecipe = null;
@@ -1460,6 +1501,7 @@ function showTab(id) {
   document.getElementById('tab-' + id).classList.add('active');
   document.querySelector('.tab[data-tab="' + id + '"]').classList.add('active');
   if (id === 'home') renderHome();
+  if (id === 'pantry') renderPantry();
 }
 
 // ─── HOME ────────────────────────────────────────────────────────────────────
@@ -1627,6 +1669,7 @@ function generateIdeas() {
   const lunches = smartPick(lPool, 3, usedIds);
   ideas = { dinners, lunches };
   dessertIdea = null;
+  checkedIdeas = new Set();
   document.getElementById('ideas-splash').style.display = 'none';
   document.getElementById('ideas-results').style.display = 'block';
   renderIdeas();
@@ -1686,6 +1729,9 @@ function ideaCard(r, mealType, index) {
   return `<div class="idea-card" onclick="openModal('${r.id}')">
     <div class="idea-photo-wrap">
       ${img}
+      <div class="idea-check${checkedIdeas.has(r.id) ? ' on' : ''}" onclick="event.stopPropagation();toggleIdeaCheck('${r.id}')">
+        ${checkedIdeas.has(r.id) ? '✓' : ''}
+      </div>
       <button class="idea-swap" onclick="event.stopPropagation();swapIdea('${mealType}',${index})" title="Swap">↺</button>
     </div>
     <div class="idea-info">
@@ -1694,6 +1740,47 @@ function ideaCard(r, mealType, index) {
       <div class="idea-stats">${r.time} · 🥩 ${r.protein}</div>
     </div>
   </div>`;
+}
+
+function toggleIdeaCheck(id) {
+  if (checkedIdeas.has(id)) checkedIdeas.delete(id);
+  else checkedIdeas.add(id);
+  renderIdeas();
+}
+
+// ─── PANTRY ───────────────────────────────────────────────────────────────────
+function savePantry() {
+  localStorage.setItem('pantry', JSON.stringify([...pantryChecked]));
+}
+
+function togglePantry(item) {
+  if (pantryChecked.has(item)) pantryChecked.delete(item);
+  else pantryChecked.add(item);
+  savePantry();
+  renderPantry();
+}
+
+function addPantryCustom() {
+  const input = document.getElementById('pantry-custom-input');
+  const val = input.value.trim();
+  if (!val) return;
+  if (!PANTRY_DEFAULTS.includes(val)) PANTRY_DEFAULTS.push(val);
+  pantryChecked.add(val);
+  savePantry();
+  input.value = '';
+  renderPantry();
+}
+
+function renderPantry() {
+  const el = document.getElementById('pantry-list');
+  if (!el) return;
+  el.innerHTML = PANTRY_DEFAULTS.map(item => {
+    const on = pantryChecked.has(item);
+    return `<div class="pantry-item${on ? ' on' : ''}" onclick="togglePantry('${item.replace(/'/g,"\\'")}')">
+      <div class="pantry-tick${on ? ' on' : ''}">✓</div>
+      <span>${item}</span>
+    </div>`;
+  }).join('');
 }
 
 function addDessert() {
@@ -1791,7 +1878,9 @@ const GROCERY_CATS = [
 
 function buildGroceryList() {
   if (!ideas) return {};
-  const allRecipes = [...ideas.dinners, ...ideas.lunches];
+  const allRecipes = checkedIdeas.size > 0
+    ? [...ideas.dinners, ...ideas.lunches].filter(r => checkedIdeas.has(r.id))
+    : [...ideas.dinners, ...ideas.lunches];
   const grouped = {};
   GROCERY_CATS.forEach(c => { grouped[c.label] = []; });
   grouped['📦 Other'] = [];
@@ -1808,6 +1897,9 @@ function buildGroceryList() {
         .trim();
       if (!base || seen[base]) continue;
       seen[base] = true;
+      // Filter out pantry staples
+      const pantryLower = [...pantryChecked].map(p => p.toLowerCase());
+      if (pantryLower.some(p => lower.includes(p) || p.includes(lower.split(' ')[0]))) continue;
       let placed = false;
       for (const cat of GROCERY_CATS) {
         if (cat.keys.some(k => lower.includes(k))) {
@@ -1840,7 +1932,11 @@ function showGroceryModal() {
     }).join('') + `</div>`
   ).join('');
   document.getElementById('grocery-body').innerHTML = inner;
-  document.getElementById('grocery-count').textContent = `${totalItems} items · ${(ideas.dinners.length + ideas.lunches.length)} recipes`;
+  const totalRecipes = ideas.dinners.length + ideas.lunches.length;
+  const recipeLabel = checkedIdeas.size > 0
+    ? `${checkedIdeas.size} selected recipes`
+    : `${totalRecipes} recipes`;
+  document.getElementById('grocery-count').textContent = `${totalItems} items · ${recipeLabel}`;
   document.getElementById('grocery-modal').classList.add('open');
 }
 
@@ -1932,6 +2028,7 @@ function setFilter(f) {
 // ─── FAVOURITES ──────────────────────────────────────────────────────────────
 function renderFavourites() {
   const el = document.getElementById('favs-list');
+  if (!el) return;
   const list = RECIPES.filter(r => favourites.includes(r.id) && !deleted.has(r.id));
   if (!list.length) {
     el.innerHTML = '<div class="empty-state"><div class="empty-state-emoji">⭐</div><div class="empty-state-text">No saved recipes yet.<br>Open any recipe and tap Save to Favourites.</div></div>';
@@ -2212,11 +2309,11 @@ function flavorEmoji(f) {
 // ─── INIT ────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const dateStr = new Date().toLocaleDateString('en-GB', {day:'numeric', month:'short'});
-  ['topbar-date-recipes','topbar-date-favs','topbar-date-ideas','topbar-date-tips']
+  ['topbar-date-recipes','topbar-date-pantry','topbar-date-ideas','topbar-date-tips']
     .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = dateStr; });
 
   renderHome();
-  renderFavourites();
+  renderPantry();
   updateDeletedCount();
 
   const filters = ['All','Breakfast','Lunch','Dinner','Dessert','Snacks'];
