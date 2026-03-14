@@ -2495,13 +2495,20 @@ JSON format:
 Source: ${text}`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    // file:// origin can't do CORS — route through a proxy transparently
+    const direct = 'https://api.anthropic.com/v1/messages';
+    const viaProxy = 'https://corsproxy.io/?' + encodeURIComponent(direct);
+    const isFile = window.location.protocol === 'file:';
+    const endpoint = isFile ? viaProxy : direct;
+    const extraHeaders = isFile ? {} : {'anthropic-dangerous-allow-browser': 'true'};
+
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-allow-browser': 'true'
+        ...extraHeaders
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
