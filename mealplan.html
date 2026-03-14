@@ -2492,8 +2492,7 @@ Source: ${text}`;
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-allow-browser': 'true'
+        'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
@@ -2503,10 +2502,9 @@ Source: ${text}`;
     });
 
     const data = await res.json();
-    if (data.error) throw new Error(data.error.message);
+    if (!res.ok) throw new Error((data.error?.message) || `HTTP ${res.status}`);
 
     let raw = data.content[0].text.trim();
-    // Strip markdown code fences if present
     raw = raw.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
     arGeneratedRecipe = JSON.parse(raw);
     arGeneratedRecipe.id = 'c_' + Date.now();
@@ -2516,12 +2514,14 @@ Source: ${text}`;
 
   } catch (err) {
     document.getElementById('ar-loading').style.display = 'none';
+    // Show input + error together so user can fix key and retry without re-opening
+    document.getElementById('ar-step-input').style.display = 'block';
     document.getElementById('ar-error').style.display = 'block';
-    const msg = err.message || '';
-    const friendly = msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('network')
-      ? '⚠ Network error — this feature only works via the GitHub Pages link (not a local file). Open mealplan.html from lambertella-maker.github.io/board/mealplan.html and try again.'
-      : '⚠ ' + (msg || 'Something went wrong. Check your API key and try again.');
-    document.getElementById('ar-error-msg').textContent = friendly;
+    const msg = err.message || 'Unknown error';
+    document.getElementById('ar-error-msg').textContent = '⚠ ' + msg;
+    // Surface the key panel for any error so user can verify/re-enter key
+    document.getElementById('ar-key-panel').style.display = 'block';
+    document.getElementById('ar-key-toggle').textContent = '⚙️ API Key — check & re-save if needed';
   }
 }
 
