@@ -484,6 +484,52 @@
     padding:7px 14px;color:var(--soft);font-size:0.65rem;font-weight:700;cursor:pointer;
     font-family:inherit;white-space:nowrap;}
   .modal-cook-btn:active{opacity:0.7;}
+
+  /* ADD RECIPE SCREEN */
+  #add-recipe-screen{position:fixed;inset:0;background:var(--bg);z-index:500;
+    display:none;flex-direction:column;}
+  #add-recipe-screen.open{display:flex;}
+  .btn-add-recipe{background:var(--accent);border:none;border-radius:50%;
+    width:28px;height:28px;color:#fff;font-size:1.1rem;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    line-height:1;flex-shrink:0;}
+  .ar-header{display:flex;justify-content:space-between;align-items:center;
+    padding:max(16px,env(safe-area-inset-top)) 16px 12px;
+    border-bottom:1px solid var(--border);flex-shrink:0;}
+  .ar-title{font-size:0.82rem;font-weight:800;color:var(--text);}
+  .ar-body{flex:1;overflow-y:auto;padding:16px 14px 40px;}
+  .ar-label{font-size:0.72rem;font-weight:800;color:var(--text);margin-bottom:4px;}
+  .ar-hint{font-size:0.62rem;color:var(--muted);margin-bottom:10px;line-height:1.4;}
+  .ar-hint-inline{font-size:0.62rem;color:var(--muted);font-weight:400;}
+  .ar-textarea{width:100%;min-height:120px;background:var(--card);border:1px solid var(--border);
+    border-radius:10px;padding:10px 12px;color:var(--text);font-size:0.78rem;
+    font-family:inherit;outline:none;resize:vertical;box-sizing:border-box;line-height:1.5;}
+  .ar-textarea:focus{border-color:var(--accent);}
+  .ar-drop-zone{border:1.5px dashed var(--border);border-radius:10px;
+    padding:20px;text-align:center;cursor:pointer;transition:border-color .15s;
+    margin-bottom:8px;}
+  .ar-drop-zone.over{border-color:var(--accent);}
+  .ar-drop-text{font-size:0.65rem;color:var(--muted);font-weight:600;}
+  .ar-photo-preview-img{width:100%;max-height:160px;object-fit:cover;
+    border-radius:10px;display:block;margin-bottom:6px;}
+  .ar-photo-clear{background:none;border:none;color:var(--muted);font-size:0.65rem;
+    font-weight:700;cursor:pointer;font-family:inherit;padding:0;}
+  .ar-generate-btn{width:100%;margin-top:16px;border-radius:12px;padding:13px;}
+  .ar-key-toggle{background:none;border:none;color:var(--muted);font-size:0.65rem;
+    font-weight:700;cursor:pointer;font-family:inherit;padding:6px 0;
+    display:block;margin-top:16px;}
+  .ar-preview-header{display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:14px;}
+  .ar-back-btn{background:var(--card);border:1px solid var(--border);border-radius:20px;
+    padding:7px 14px;color:var(--soft);font-size:0.65rem;font-weight:700;
+    cursor:pointer;font-family:inherit;}
+  .ar-loading-spinner{width:36px;height:36px;border:3px solid var(--border);
+    border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;
+    margin:60px auto 16px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .ar-loading-text{text-align:center;font-size:0.75rem;color:var(--muted);font-weight:600;}
+  .ar-error-text{background:rgba(139,38,53,0.1);border:1px solid rgba(139,38,53,0.3);
+    border-radius:10px;padding:12px;font-size:0.72rem;color:#e07070;line-height:1.5;}
 </style>
 </head>
 <body>
@@ -499,7 +545,10 @@
 <div class="tab-section" id="tab-recipes">
   <div class="topbar">
     <div class="topbar-logo">All Recipes</div>
-    <div class="topbar-date" id="topbar-date-recipes">—</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="topbar-date" id="topbar-date-recipes">—</div>
+      <button class="btn-add-recipe" onclick="showAddRecipe()" title="Add recipe">＋</button>
+    </div>
   </div>
   <div class="search-wrap">
     <input class="search-input" id="recipe-search" type="search" placeholder="Search recipes…" oninput="onSearch(this.value)" autocorrect="off" autocapitalize="off" spellcheck="false">
@@ -1481,6 +1530,9 @@ let favourites = JSON.parse(localStorage.getItem('fodmap_favs') || '[]');
 let deleted = new Set(JSON.parse(localStorage.getItem('fodmap_deleted') || '[]'));
 let openRecipeId = null;
 let currentFilter = 'All';
+let customRecipes = JSON.parse(localStorage.getItem('custom_recipes') || '[]');
+let arPhotoData = null; // base64 or URL string for the recipe being added
+let arGeneratedRecipe = null;
 
 // ─── TABS ────────────────────────────────────────────────────────────────────
 function showTab(id) {
@@ -2291,11 +2343,210 @@ function flavorEmoji(f) {
   return {heat:'🌶️',citrus:'🍋',umami:'🥜',herby:'🌿',salty:'🧂',sweet:'🍯',preppable:'📦',rich:'✨'}[f] || '';
 }
 
+// ─── ADD RECIPE ───────────────────────────────────────────────────────────────
+function showAddRecipe() {
+  document.getElementById('add-recipe-screen').classList.add('open');
+  // Show/hide key section based on whether key exists
+  const hasKey = !!localStorage.getItem('ar_api_key');
+  document.getElementById('ar-key-toggle').textContent = hasKey ? '⚙️ API Key (saved)' : '⚙️ Set API Key (required)';
+  if (!hasKey) {
+    document.getElementById('ar-key-panel').style.display = 'block';
+  }
+  backToInput();
+}
+
+function hideAddRecipe() {
+  document.getElementById('add-recipe-screen').classList.remove('open');
+}
+
+function toggleKeySection() {
+  const panel = document.getElementById('ar-key-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+function saveApiKey() {
+  const key = document.getElementById('ar-key-input').value.trim();
+  if (!key.startsWith('sk-ant-')) {
+    document.getElementById('ar-key-status').textContent = '⚠ Key should start with sk-ant-';
+    return;
+  }
+  localStorage.setItem('ar_api_key', key);
+  document.getElementById('ar-key-status').textContent = '✓ Saved';
+  document.getElementById('ar-key-toggle').textContent = '⚙️ API Key (saved)';
+  document.getElementById('ar-key-input').value = '';
+  setTimeout(() => { document.getElementById('ar-key-panel').style.display = 'none'; }, 800);
+}
+
+function handlePhotoFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    arPhotoData = e.target.result;
+    showPhotoPreview(arPhotoData);
+  };
+  reader.readAsDataURL(file);
+}
+
+function showPhotoPreview(src) {
+  document.getElementById('ar-photo-img').src = src;
+  document.getElementById('ar-photo-preview').style.display = 'block';
+  document.getElementById('ar-drop-zone').style.display = 'none';
+}
+
+function clearPhoto() {
+  arPhotoData = null;
+  document.getElementById('ar-photo-url').value = '';
+  document.getElementById('ar-photo-preview').style.display = 'none';
+  document.getElementById('ar-drop-zone').style.display = 'block';
+  document.getElementById('ar-file-input').value = '';
+}
+
+function backToInput() {
+  document.getElementById('ar-step-input').style.display = 'block';
+  document.getElementById('ar-step-preview').style.display = 'none';
+  document.getElementById('ar-loading').style.display = 'none';
+  document.getElementById('ar-error').style.display = 'none';
+}
+
+async function generateRecipe() {
+  const text = document.getElementById('ar-text-input').value.trim();
+  if (!text) { alert('Paste something first — a dish name, URL, or recipe text.'); return; }
+
+  const apiKey = localStorage.getItem('ar_api_key');
+  if (!apiKey) {
+    document.getElementById('ar-key-panel').style.display = 'block';
+    document.getElementById('ar-key-status').textContent = '⚠ Please enter your API key first';
+    return;
+  }
+
+  // Get photo
+  const photoUrl = document.getElementById('ar-photo-url').value.trim();
+  if (photoUrl && !arPhotoData) arPhotoData = photoUrl;
+
+  // Show loading
+  document.getElementById('ar-step-input').style.display = 'none';
+  document.getElementById('ar-loading').style.display = 'block';
+
+  const prompt = `You are a recipe assistant for a personal low-FODMAP meal planning app. Generate a recipe from the source below.
+
+Rules:
+- Low FODMAP: use garlic-infused oil (not raw garlic/onion), spring onion greens OK, lactose-free dairy, no wheat (use GF alternatives)
+- Use intuitive UK measurements for savoury: handfuls, cans (400g), pieces (e.g. "2 chicken thighs") not grams — EXCEPT keep grams for baking/desserts
+- Cuisine must be ONE of: Vietnamese, Mexican, Thai, Korean, Everyday, American, Wings, Dessert
+- meal array must include relevant values from: breakfast, lunch, dinner, dessert, snack
+- flavors array (pick 2-4): heat, citrus, umami, herby, salty, sweet, rich
+- Return ONLY valid JSON, no markdown, no explanation
+
+JSON format:
+{"id":"c_PLACEHOLDER","name":"...","cuisine":"...","emoji":"...","time":"... min","protein":"...g","flavors":["..."],"meal":["..."],"servings":2,"ingredients":["..."],"method":["..."],"macros":{"cal":0,"protein":0,"carbs":0}}
+
+Source: ${text}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-allow-browser': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+
+    let raw = data.content[0].text.trim();
+    // Strip markdown code fences if present
+    raw = raw.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
+    arGeneratedRecipe = JSON.parse(raw);
+    arGeneratedRecipe.id = 'c_' + Date.now();
+
+    document.getElementById('ar-loading').style.display = 'none';
+    showRecipePreview(arGeneratedRecipe);
+
+  } catch (err) {
+    document.getElementById('ar-loading').style.display = 'none';
+    document.getElementById('ar-error').style.display = 'block';
+    document.getElementById('ar-error-msg').textContent = '⚠ ' + (err.message || 'Something went wrong. Check your API key and try again.');
+  }
+}
+
+function showRecipePreview(r) {
+  const tc = cuisineTop(r.cuisine);
+  const photoSrc = arPhotoData;
+  const photoHtml = photoSrc
+    ? `<img src="${photoSrc}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px 10px 0 0;display:block" alt="${r.name}">`
+    : '';
+  document.getElementById('ar-preview-card').innerHTML = `
+    <div class="recipe-card ${tc}" style="margin-top:0;cursor:default">
+      ${photoHtml}
+      <div class="recipe-card-body">
+        <div class="recipe-title" style="font-size:1rem;margin-bottom:4px">${r.name}</div>
+        <div class="recipe-cuisine">${r.cuisine} · ${r.time} · 🥩 ${r.protein}</div>
+        <div style="margin-top:10px">
+          <div class="ar-label">Ingredients</div>
+          <ul style="margin:4px 0 10px;padding-left:16px">
+            ${(r.ingredients||[]).map(i => `<li style="font-size:0.72rem;color:var(--soft);margin-bottom:3px">${i}</li>`).join('')}
+          </ul>
+          <div class="ar-label">Method</div>
+          <ol style="margin:4px 0;padding-left:16px">
+            ${(r.method||[]).map(s => `<li style="font-size:0.72rem;color:var(--soft);margin-bottom:4px;line-height:1.4">${s}</li>`).join('')}
+          </ol>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('ar-step-preview').style.display = 'block';
+}
+
+function confirmAddRecipe() {
+  if (!arGeneratedRecipe) return;
+  const r = { ...arGeneratedRecipe };
+  if (arPhotoData) r._photoData = arPhotoData;
+
+  // Add to runtime RECIPES array
+  RECIPES.push(r);
+  if (arPhotoData) RECIPE_IMGS[r.id] = arPhotoData;
+
+  // Persist to localStorage
+  customRecipes.push(r);
+  localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+
+  // Reset and close
+  arGeneratedRecipe = null;
+  arPhotoData = null;
+  document.getElementById('ar-text-input').value = '';
+  document.getElementById('ar-photo-url').value = '';
+  clearPhoto();
+  hideAddRecipe();
+
+  // Refresh recipes view
+  renderRecipes(currentFilter);
+  showTab('recipes');
+  // Brief flash confirmation
+  const topbar = document.querySelector('#tab-recipes .topbar-logo');
+  if (topbar) { topbar.textContent = '✓ Recipe added!'; setTimeout(() => topbar.textContent = 'All Recipes', 2000); }
+}
+
 // ─── INIT ────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const dateStr = new Date().toLocaleDateString('en-GB', {day:'numeric', month:'short'});
   ['topbar-date-recipes','topbar-date-pantry','topbar-date-ideas','topbar-date-tips']
     .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = dateStr; });
+
+  // Merge custom recipes saved to localStorage
+  customRecipes.forEach(r => {
+    if (!RECIPES.find(x => x.id === r.id)) RECIPES.push(r);
+  });
+  customRecipes.forEach(r => {
+    if (r._photoData && !RECIPE_IMGS[r.id]) RECIPE_IMGS[r.id] = r._photoData;
+  });
 
   renderHome();
   renderPantry();
@@ -2318,6 +2569,24 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('img-lightbox').addEventListener('click', () => {
     document.getElementById('img-lightbox').classList.remove('open');
   });
+
+  // Add Recipe drag-and-drop
+  const dz = document.getElementById('ar-drop-zone');
+  if (dz) {
+    dz.addEventListener('click', () => document.getElementById('ar-file-input').click());
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+    dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+    dz.addEventListener('drop', e => {
+      e.preventDefault();
+      dz.classList.remove('over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = ev => { arPhotoData = ev.target.result; showPhotoPreview(arPhotoData); };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
 });
 
 function openLightbox(src, alt) {
@@ -2366,6 +2635,74 @@ function openLightbox(src, alt) {
     <button class="cook-nav-btn" id="cook-prev" onclick="cookNav(-1)">← Prev</button>
     <div class="cook-dots" id="cook-dots"></div>
     <button class="cook-nav-btn" id="cook-next" onclick="cookNav(1)">Next →</button>
+  </div>
+</div>
+
+<!-- ADD RECIPE -->
+<div id="add-recipe-screen" style="display:none">
+  <div class="ar-header">
+    <button class="cook-exit" onclick="hideAddRecipe()">✕ Close</button>
+    <div class="ar-title">Add a Recipe</div>
+    <div style="width:70px"></div>
+  </div>
+
+  <div class="ar-body" id="ar-body">
+
+    <!-- STEP 1: INPUT -->
+    <div id="ar-step-input">
+      <div class="ar-label">Paste anything</div>
+      <div class="ar-hint">A URL, recipe text, dish name, Instagram caption — Claude will figure it out</div>
+      <textarea id="ar-text-input" class="ar-textarea" placeholder="e.g. "Ottolenghi's roast aubergine with pomegranate" or paste a full recipe…"></textarea>
+
+      <div class="ar-label" style="margin-top:14px">Photo <span class="ar-hint-inline">(optional)</span></div>
+      <input id="ar-photo-url" class="fridge-input" type="url" placeholder="Paste image URL…" style="margin-bottom:8px" />
+      <div class="ar-drop-zone" id="ar-drop-zone">
+        <div class="ar-drop-text">or drag & drop a photo here</div>
+        <input type="file" id="ar-file-input" accept="image/*" style="display:none" onchange="handlePhotoFile(this)">
+      </div>
+      <div id="ar-photo-preview" style="display:none">
+        <img id="ar-photo-img" class="ar-photo-preview-img" alt="preview">
+        <button class="ar-photo-clear" onclick="clearPhoto()">✕ Remove</button>
+      </div>
+
+      <button class="btn-generate ar-generate-btn" id="ar-generate-btn" onclick="generateRecipe()">✨ Generate Recipe</button>
+
+      <!-- API key setup (collapsed by default if key exists) -->
+      <div id="ar-key-section">
+        <button class="ar-key-toggle" onclick="toggleKeySection()" id="ar-key-toggle">⚙️ API Key</button>
+        <div id="ar-key-panel" style="display:none">
+          <div class="ar-hint" style="margin-bottom:6px">Your Anthropic API key — saved to this browser only, never shared</div>
+          <div class="fridge-input-row" style="padding:0">
+            <input id="ar-key-input" class="fridge-input" type="password" placeholder="sk-ant-…" />
+            <button class="fridge-add-btn" onclick="saveApiKey()">Save</button>
+          </div>
+          <div id="ar-key-status" class="ar-hint" style="margin-top:4px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: PREVIEW -->
+    <div id="ar-step-preview" style="display:none">
+      <div class="ar-preview-header">
+        <button class="ar-back-btn" onclick="backToInput()">← Edit</button>
+        <div class="ar-label">Preview</div>
+        <button class="btn-fridge-match" style="margin:0;width:auto;padding:10px 20px" onclick="confirmAddRecipe()">✓ Add to App</button>
+      </div>
+      <div id="ar-preview-card"></div>
+    </div>
+
+    <!-- LOADING -->
+    <div id="ar-loading" style="display:none">
+      <div class="ar-loading-spinner"></div>
+      <div class="ar-loading-text">Claude is reading your recipe…</div>
+    </div>
+
+    <!-- ERROR -->
+    <div id="ar-error" style="display:none">
+      <div class="ar-error-text" id="ar-error-msg"></div>
+      <button class="ar-back-btn" onclick="backToInput()" style="margin-top:12px">← Try again</button>
+    </div>
+
   </div>
 </div>
 
