@@ -14,7 +14,7 @@
     --accent:#b5451b; --accent2:#2c5f2e;
     --text:#1a1916; --muted:#8a8178; --soft:#5c5650;
     --c-viet:#0f7b6c; --c-mex:#c45c1a; --c-thai:#3d6b45;
-    --c-kor:#894f6e; --c-every:#3d5a80; --c-wings:#8b2635; --c-amer:#7b4f2e;
+    --c-kor:#894f6e; --c-every:#3d5a80; --c-wings:#8b2635; --c-amer:#7b4f2e; --c-shab:#b8962e;
     --tab-h:60px; --safe-bottom:env(safe-area-inset-bottom,0px); --safe-top:env(safe-area-inset-top,0px);
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -119,6 +119,7 @@
   .c-every {border-left:3px solid var(--c-every);}
   .c-wings {border-left:3px solid var(--c-wings);}
   .c-amer  {border-left:3px solid var(--c-amer);}
+  .c-shab  {border-left:3px solid var(--c-shab);}
   /* top border on recipe cards */
   .t-viet  {border-top:3px solid var(--c-viet);}
   .t-mex   {border-top:3px solid var(--c-mex);}
@@ -127,6 +128,7 @@
   .t-every {border-top:3px solid var(--c-every);}
   .t-wings {border-top:3px solid var(--c-wings);}
   .t-amer  {border-top:3px solid var(--c-amer);}
+  .t-shab  {border-top:3px solid var(--c-shab);}
   /* image placeholder bg on recipe card / meal thumb */
   .p-viet  {background:rgba(15,123,108,0.08);}
   .p-mex   {background:rgba(196,92,26,0.08);}
@@ -135,6 +137,7 @@
   .p-every {background:rgba(61,90,128,0.08);}
   .p-wings {background:rgba(139,38,53,0.08);}
   .p-amer  {background:rgba(123,79,46,0.08);}
+  .p-shab  {background:rgba(184,150,46,0.08);}
 
   /* FLAVOR BADGES */
   .f-heat     {background:rgba(181,69,27,0.08);color:#a33810;border:1px solid rgba(181,69,27,0.18);}
@@ -1364,6 +1367,37 @@ const RECIPES = [
     method:['Preheat oven to 175°C / 350°F. Spread almonds in an 8-inch square pan and toast 3–5 min until golden. Remove and set aside.','Make base/crumble: combine flour, oats, brown sugar and salt. Cut in cold butter until crumbly. Mix in toasted almonds.','Press two-thirds of the mixture firmly into the pan as the base. Refrigerate remaining crumble.','Toss apricots with sugar, lemon juice and cornstarch. Spread over the base.','Scatter the chilled crumble evenly over the apricot layer.','Bake 35–40 min until golden and the filling bubbles at the edges. Cool completely before cutting into bars.'],
     macros:{cal:180,protein:4,carbs:24}},
 
+  // ── Shabbat ─────────────────────────────────────────────────────────────────
+  {id:'sh1',name:'Sheet-Pan Chicken Schnitzel & Herb Yogurt',cuisine:'Shabbat',emoji:'🍗',time:'40 min',protein:'42g',
+    servings:4,flavors:['citrus','herby','salty'],meal:['lunch','dinner'],
+    ingredients:['2 chicken breasts (about 700g), each sliced into 2 thin cutlets, then each diagonally into 3 pieces','2 eggs','1 tbsp garlic-infused olive oil','1 tbsp hot sauce (optional)','Salt and black pepper','120g (1½ cups) panko breadcrumbs (use GF if needed)','3 tbsp sesame seeds','3 tbsp extra-virgin olive oil, plus 6 tbsp for the pan','For the sauce: 1 large handful fresh dill','1 large handful fresh parsley','Juice of 1 lemon','¼ tsp chilli flakes (or ½ small serrano, optional)','160g (⅔ cup) plain lactose-free yogurt','4 tbsp water','Salt'],
+    method:['Heat oven to 215°C / 425°F. Place rack close to the heat source. Line a large sheet pan with parchment, then put the empty pan in the oven to preheat.','Whisk eggs with garlic-infused oil, hot sauce if using, and a big pinch of salt and pepper. Add chicken pieces and toss to coat.','In a shallow tray, mix breadcrumbs, sesame seeds and 3 tbsp olive oil until combined.','Press each piece of chicken into the breadcrumbs on both sides, pressing firmly. Gently shake off excess. Set aside.','Remove the hot pan from the oven. Drizzle with 3 tbsp oil. Arrange schnitzels in a single layer — no overlapping. Drizzle remaining 3 tbsp oil over the top.','Bake 10 min, then flip each schnitzel with tongs. Return to oven 8–10 min until evenly golden. Broil 2–3 min for extra crunch.','Sauce: blend dill, parsley, lemon juice, chilli, yogurt, water and a pinch of salt until smooth. Taste and season.'],
+    macros:{cal:420,protein:42,carbs:22}},
+
+  {id:'sh2',name:'My Best Challah',cuisine:'Shabbat',emoji:'🍞',time:'3 hrs (incl. proofing)',protein:'6g',
+    servings:12,flavors:['sweet','salty'],meal:['dinner'],
+    ingredients:['7g (1 sachet) fast-action dried yeast','5 tbsp caster sugar, divided','240ml (1 cup) warm water','480g (4 cups) strong white bread flour, plus extra for kneading','2 tsp fine salt','2 large eggs, plus 1 extra yolk for egg wash','75ml (5 tbsp) neutral oil (sunflower or vegetable)','2 tbsp honey','Sesame seeds or poppy seeds, for the top'],
+    method:['Mix yeast with 1 tbsp sugar and the warm water. Leave 5–10 min until foamy.','In a large bowl, whisk flour, remaining 4 tbsp sugar and salt. Make a well and add the yeast mixture, 2 whole eggs, oil and honey. Mix to a shaggy dough.','Turn out and knead 8–10 min until the dough is smooth, elastic and slightly tacky. Transfer to an oiled bowl, cover and leave to rise 1–1.5 hrs until doubled.','Punch down the dough. Divide into 3 equal pieces. Roll each into a rope about 50cm long. Braid tightly and pinch the ends to seal. Place on a parchment-lined baking tray.','Cover loosely and leave to proof 45 min–1 hr until noticeably puffed.','Preheat oven to 190°C / 375°F. Mix egg yolk with 1 tbsp water and brush generously over the loaf. Sprinkle with seeds.','Bake 30–35 min until deep golden brown. Cool on a rack before slicing. Note: 1–2 slices is a low-FODMAP portion.'],
+    macros:{cal:220,protein:6,carbs:38}},
+
+  {id:'sh3',name:'Slow-Braised Beef Brisket',cuisine:'Shabbat',emoji:'🥩',time:'3.5 hrs (hands-off)',protein:'40g',
+    servings:6,flavors:['umami','salty','rich'],meal:['dinner'],
+    ingredients:['1.5kg beef brisket, fat trimmed to ~5mm','Salt and black pepper','3 tbsp garlic-infused olive oil, divided','2 medium carrots, roughly chopped','2 celery stalks, roughly chopped','A small handful spring onion greens, chopped','2 tbsp tomato paste','1 can (400g) crushed tomatoes','240ml (1 cup) low-FODMAP beef stock (check label — no onion/garlic)','1 tbsp GF Worcestershire sauce','2 sprigs fresh thyme','2 bay leaves','1 tbsp brown sugar'],
+    method:['Preheat oven to 160°C / 325°F. Season brisket generously all over with salt and pepper.','Heat 2 tbsp oil in a large oven-safe casserole over high heat. Sear brisket 4–5 min per side until deeply browned. Remove and set aside.','Reduce to medium heat. Add remaining 1 tbsp oil, then carrots, celery and spring onion greens. Cook 3–4 min until softened.','Add tomato paste and stir 1–2 min. Pour in crushed tomatoes, stock, Worcestershire sauce and brown sugar. Stir to combine.','Return brisket fat-side up. Tuck in thyme and bay leaves. Liquid should come halfway up the meat.','Cover tightly and braise in the oven 2.5–3 hrs until very tender — a fork should slide in with almost no resistance.','Rest 20 min before slicing against the grain. Skim fat from the braising liquid and serve as the sauce.'],
+    macros:{cal:480,protein:40,carbs:10}},
+
+  {id:'sh4',name:'Classic Potato Kugel',cuisine:'Shabbat',emoji:'🥔',time:'1 hr 10 min',protein:'8g',
+    servings:8,flavors:['salty','umami'],meal:['lunch','dinner'],
+    ingredients:['1kg starchy potatoes (Maris Piper or Russet), peeled','3 large eggs','3 tbsp garlic-infused olive oil, plus extra for the dish','1 tsp fine salt','½ tsp black pepper','2 tbsp spring onion greens, finely chopped (optional)'],
+    method:['Preheat oven to 200°C / 400°F. Generously oil a 20×30cm baking dish and put it in the oven to preheat while you prepare the mixture.','Coarsely grate the potatoes using a box grater or food processor. Transfer to a clean tea towel and wring out as much liquid as possible — this is the key to crispiness.','In a large bowl, beat eggs with oil, salt, pepper and spring onion greens.','Add the wrung-out potatoes and mix well to combine.','Carefully pour the mixture into the very hot oiled dish and smooth the top with a spatula.','Bake 50–60 min until deep golden-brown on top and crispy at the edges. Leave to stand 10 min before cutting into squares.'],
+    macros:{cal:200,protein:8,carbs:28}},
+
+  {id:'sh5',name:'Crispy Potato Latkes',cuisine:'Shabbat',emoji:'🥞',time:'35 min',protein:'6g',
+    servings:4,flavors:['salty','umami'],meal:['lunch','dinner'],
+    ingredients:['700g starchy potatoes (Maris Piper or Russet), peeled','3 tbsp GF plain flour (or potato starch)','2 large eggs, beaten','1 tsp fine salt','¼ tsp black pepper','Neutral oil (sunflower or vegetable), for frying','To serve: plain lactose-free yogurt or unsweetened apple sauce'],
+    method:['Coarsely grate the potatoes. Transfer to a clean tea towel and wring out as much liquid as you possibly can — the drier the better.','In a bowl, combine potato, flour, eggs, salt and pepper. Mix well.','Heat about 5mm of oil in a large frying pan over medium-high heat until shimmering.','Drop heaped tablespoons of batter into the hot oil and flatten gently with a spatula. Fry in batches — do not crowd the pan.','Cook 3–4 min per side until deep golden and very crispy. Transfer to a paper towel-lined plate and season with salt immediately.','Serve straight away — latkes lose their crunch if they sit. Accompany with yogurt or apple sauce.'],
+    macros:{cal:220,protein:6,carbs:32}},
+
 ]; // end RECIPES
 
 // ─── RECIPE IMAGES ───────────────────────────────────────────────────────────
@@ -1481,6 +1515,12 @@ const RECIPE_IMGS = {
   'd11':'https://images.squarespace-cdn.com/content/v1/65c3e29954a54703b46fe0ae/1721729462276-4XZ8VSTNK7LK6C9NFWQY/IMG_8690+2.jpg',
   'd12':'https://detoxinista.com/wp-content/uploads/2024/02/avocado-brownies-stacked-with-black.jpg',
   'd13':'https://wickedkitchen.com/wp-content/uploads/2021/02/Untitled-1.jpg',
+  // Shabbat
+  'sh1':'https://substack-post-media.s3.amazonaws.com/public/images/5c15c5c5-3e0f-4e23-b8cb-29d9eec1e1f0_1600x1067.jpeg',
+  'sh2':'https://static01.nyt.com/images/2012/09/26/dining/26challah/26challah-jumbo.jpg',
+  'sh3':'https://static01.nyt.com/images/2015/09/30/dining/30braisedbrisket/30braisedbrisket-jumbo.jpg',
+  'sh4':'https://static01.nyt.com/images/2021/09/15/dining/15kugel/15kugel-jumbo.jpg',
+  'sh5':'https://static01.nyt.com/images/2023/12/07/multimedia/OS-latkes-toptips-bmqf/OS-latkes-toptips-bmqf-jumbo.jpg',
 };
 
 function recipeImgEl(r, type) {
@@ -1599,7 +1639,7 @@ function renderHome() {
     {name:'Vietnamese',emoji:'🇻🇳'},{name:'Mexican',emoji:'🌮'},
     {name:'Thai',emoji:'🇹🇭'},{name:'Korean',emoji:'🇰🇷'},
     {name:'Everyday',emoji:'✦'},{name:'Wings',emoji:'🔥'},
-    {name:'American',emoji:'🇺🇸'},{name:'Dessert',emoji:'🍑'}
+    {name:'American',emoji:'🇺🇸'},{name:'Shabbat',emoji:'🕯️'},{name:'Dessert',emoji:'🍑'}
   ];
 
   document.getElementById('home-content').innerHTML = `
@@ -2317,6 +2357,7 @@ function cuisineColor(c) {
   if (c === 'Wings')      return 'c-wings';
   if (c === 'Dessert')    return 'c-dessert';
   if (c === 'American')   return 'c-amer';
+  if (c === 'Shabbat')    return 'c-shab';
   return 'c-every';
 }
 function cuisinePlaceholder(c) {
@@ -2327,6 +2368,7 @@ function cuisinePlaceholder(c) {
   if (c === 'Wings')      return 'p-wings';
   if (c === 'Dessert')    return 'p-dessert';
   if (c === 'American')   return 'p-amer';
+  if (c === 'Shabbat')    return 'p-shab';
   return 'p-every';
 }
 function cuisineTop(c) {
@@ -2337,6 +2379,7 @@ function cuisineTop(c) {
   if (c === 'Wings')      return 't-wings';
   if (c === 'Dessert')    return 't-dessert';
   if (c === 'American')   return 't-amer';
+  if (c === 'Shabbat')    return 't-shab';
   return 't-every';
 }
 function flavorEmoji(f) {
@@ -2433,7 +2476,7 @@ async function generateRecipe() {
 Rules:
 - Low FODMAP: use garlic-infused oil (not raw garlic/onion), spring onion greens OK, lactose-free dairy, no wheat (use GF alternatives)
 - Use intuitive UK measurements for savoury: handfuls, cans (400g), pieces (e.g. "2 chicken thighs") not grams — EXCEPT keep grams for baking/desserts
-- Cuisine must be ONE of: Vietnamese, Mexican, Thai, Korean, Everyday, American, Wings, Dessert
+- Cuisine must be ONE of: Vietnamese, Mexican, Thai, Korean, Everyday, American, Wings, Shabbat, Dessert
 - meal array must include relevant values from: breakfast, lunch, dinner, dessert, snack
 - flavors array (pick 2-4): heat, citrus, umami, herby, salty, sweet, rich
 - Return ONLY valid JSON, no markdown, no explanation
@@ -2639,7 +2682,7 @@ function openLightbox(src, alt) {
 </div>
 
 <!-- ADD RECIPE -->
-<div id="add-recipe-screen" style="display:none">
+<div id="add-recipe-screen">
   <div class="ar-header">
     <button class="cook-exit" onclick="hideAddRecipe()">✕ Close</button>
     <div class="ar-title">Add a Recipe</div>
