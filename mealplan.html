@@ -1470,7 +1470,7 @@ const RECIPE_IMGS = {
   's9':'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/11/chocolate-chia-pudding-mousse-5.jpg',
   's10':'https://cravinghomecooked.com/wp-content/uploads/2025/10/frozen-chocolate-banana-bites-1-13.jpg',
   // New recipes (y-series)
-  'y1':'https://thewoksoflife.com/wp-content/uploads/2020/03/khao-soi-9.jpg',
+  'y1':'https://images.immediate.co.uk/production/volatile/sites/2/2021/01/Spicy-Coconut-Chicken-Noodle-Soup-48b7983.jpg',
   'y2':'https://substackcdn.com/image/fetch/$s_!rA3a!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F94ad8fcf-10f0-4ccb-ada1-7330b3d0b51a_3024x4032.heic',
   'y3':'https://www.recipetineats.com/tachyon/2020/11/Vietnamese-Chicken-Salad_2.jpg',
   'y4':'https://res.cloudinary.com/hksqkdlah/image/upload/c_fill,dpr_2.0,f_auto,fl_lossy.progressive.strip_profile,g_faces:auto,q_auto:low/19991_sfs-one-panroastedchickenandpotatoes-14',
@@ -2461,18 +2461,6 @@ function backToInput() {
 }
 
 async function generateRecipe() {
-  // file:// has null CORS origin — browsers block all cross-origin requests regardless of proxy
-  if (window.location.protocol === 'file:') {
-    document.getElementById('ar-step-input').style.display = 'none';
-    document.getElementById('ar-error').style.display = 'block';
-    document.getElementById('ar-error-msg').innerHTML =
-      '⚠ AI import can\'t run from a local file — browsers block API calls from file://.<br><br>' +
-      '<a href="http://localhost:8765/mealplan.html" style="color:var(--accent);font-weight:700;font-size:0.9rem">' +
-      '→ Open at localhost:8765 (same app, AI works there)</a><br><br>' +
-      '<span style="font-size:0.72rem;color:var(--muted)">Bookmark that URL instead of the file. Server starts automatically.</span>';
-    return;
-  }
-
   const text = document.getElementById('ar-text-input').value.trim();
   if (!text) { alert('Paste something first — a dish name, URL, or recipe text.'); return; }
 
@@ -2507,13 +2495,14 @@ JSON format:
 Source: ${text}`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    // All API calls go via local CORS proxy (Anthropic blocks direct browser calls)
+    const proxyUrl = localStorage.getItem('ar_proxy_url') || 'http://localhost:8766';
+    const res = await fetch(proxyUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-allow-browser': 'true'
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
