@@ -1573,6 +1573,7 @@ let modalCurrentServings = 2;
 let favourites = JSON.parse(localStorage.getItem('fodmap_favs') || '[]');
 let deleted = new Set(JSON.parse(localStorage.getItem('fodmap_deleted') || '[]'));
 let photoOverrides = JSON.parse(localStorage.getItem('photo_overrides') || '{}');
+let BASE_RECIPE_IMGS = {}; // set in DOMContentLoaded before overrides — device-independent pool
 let openRecipeId = null;
 let currentFilter = 'All';
 let customRecipes = JSON.parse(localStorage.getItem('custom_recipes') || '[]');
@@ -1634,7 +1635,8 @@ function seededRand(seed) {
 }
 
 function renderHome() {
-  const pool = RECIPES.filter(r => RECIPE_IMGS[r.id] && !r.meal.includes('dessert'));
+  // Use only built-in recipes with built-in photos — makes pool identical on all devices
+  const pool = RECIPES.filter(r => !r.id.startsWith('c_') && BASE_RECIPE_IMGS[r.id] && !r.meal.includes('dessert'));
   // Seed from date so all devices show same picks on same day
   const today = new Date().toISOString().slice(0, 10);
   const seed = today.split('-').reduce((a, b) => a * 100 + parseInt(b), 0);
@@ -2743,6 +2745,8 @@ document.addEventListener('DOMContentLoaded', () => {
   customRecipes.forEach(r => {
     if (r._photoData && !RECIPE_IMGS[r.id]) RECIPE_IMGS[r.id] = r._photoData;
   });
+  // Snapshot built-in images before overrides — used for home page pool (device-independent)
+  BASE_RECIPE_IMGS = { ...RECIPE_IMGS };
   // Apply photo overrides on top of everything (drag-and-drop replacements)
   Object.assign(RECIPE_IMGS, photoOverrides);
 
