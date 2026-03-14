@@ -1628,22 +1628,20 @@ function jumpToVibe(vibe) {
   renderRecipes(vibe);
 }
 
+function seededRand(seed) {
+  let s = seed % 2147483647; if (s <= 0) s += 2147483646;
+  return () => { s = s * 16807 % 2147483647; return (s - 1) / 2147483646; };
+}
+
 function renderHome() {
   const pool = RECIPES.filter(r => RECIPE_IMGS[r.id] && !r.meal.includes('dessert'));
+  // Seed from date so all devices show same picks on same day
   const today = new Date().toISOString().slice(0, 10);
-  let heroId, pickIds;
-  const stored = JSON.parse(localStorage.getItem('home_daily_picks') || '{}');
-  if (stored.date === today && stored.heroId && stored.pickIds) {
-    heroId = stored.heroId;
-    pickIds = stored.pickIds;
-  } else {
-    const shuffled = [...pool].sort(() => Math.random() - 0.5);
-    heroId = shuffled[0]?.id;
-    pickIds = shuffled.slice(1, 4).map(r => r.id);
-    localStorage.setItem('home_daily_picks', JSON.stringify({ date: today, heroId, pickIds }));
-  }
-  const hero = pool.find(r => r.id === heroId) || pool[0];
-  const picks = pickIds.map(id => pool.find(r => r.id === id)).filter(Boolean);
+  const seed = today.split('-').reduce((a, b) => a * 100 + parseInt(b), 0);
+  const rand = seededRand(seed);
+  const shuffled = [...pool].sort(() => rand() - 0.5);
+  const hero = shuffled[0];
+  const picks = shuffled.slice(1, 4);
   const dateStr = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
   const src = RECIPE_IMGS[hero.id];
   const pc = cuisinePlaceholder(hero.cuisine);
@@ -2187,13 +2185,7 @@ function openModal(id) {
   heroWrap.id = 'modal-hero-wrap';
   heroWrap.style.cssText = 'position:relative';
   heroWrap.innerHTML = recipeImgEl(r, 'hero') +
-    `<label title="Replace photo" style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.55);
-      border-radius:20px;padding:5px 10px;font-size:0.65rem;font-weight:700;color:#fff;cursor:pointer;
-      display:flex;align-items:center;gap:4px;backdrop-filter:blur(4px)">
-      📷 Replace photo
-      <input type="file" accept="image/*" style="display:none" id="modal-photo-input">
-    </label>`;
-  // Insert into DOM first so getElementById can find the input
+    `<input type="file" accept="image/*" style="display:none" id="modal-photo-input">`;
   document.getElementById('modal').insertBefore(heroWrap, document.getElementById('modal').firstChild);
   document.getElementById('modal-photo-input').onchange = function() { if (this.files[0]) readAndSavePhoto(id, this.files[0]); };
   heroWrap.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); heroWrap.style.opacity='0.8'; });
@@ -2472,6 +2464,20 @@ function clearApiKey() {
   document.getElementById('ar-key-toggle').textContent = '⚙️ Set API Key (required)';
 }
 
+function saveProxyUrl() {
+  const url = document.getElementById('ar-proxy-input').value.trim();
+  if (!url) return;
+  localStorage.setItem('ar_proxy_url', url);
+  document.getElementById('ar-proxy-status').textContent = '✓ Proxy URL saved';
+  document.getElementById('ar-proxy-input').value = '';
+  setTimeout(() => document.getElementById('ar-proxy-status').textContent = '', 2000);
+}
+
+function clearProxyUrl() {
+  localStorage.removeItem('ar_proxy_url');
+  document.getElementById('ar-proxy-status').textContent = 'Proxy URL cleared';
+}
+
 function saveApiKey() {
   const key = document.getElementById('ar-key-input').value.trim();
   if (!key.startsWith('sk-ant-')) {
@@ -2537,7 +2543,16 @@ async function generateRecipe() {
   document.getElementById('ar-step-input').style.display = 'none';
   document.getElementById('ar-loading').style.display = 'block';
 
-  const proxyUrl = localStorage.getItem('ar_proxy_url') || 'http://localhost:8766';
+  const isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const proxyUrl = localStorage.getItem('ar_proxy_url') || (isLocal ? 'http://localhost:8766' : null);
+  if (!proxyUrl) {
+    document.getElementById('ar-step-input').style.display = 'block';
+    document.getElementById('ar-loading').style.display = 'none';
+    document.getElementById('ar-key-panel').style.display = 'block';
+    document.getElementById('ar-key-toggle').textContent = '⚙️ Setup required';
+    document.getElementById('ar-proxy-status').textContent = '⚠ Paste your Cloudflare Worker URL above to use AI import on this device';
+    return;
+  }
 
   // URL mode: fetch page content first so Claude reads the real recipe
   let sourceText = text;
@@ -2700,6 +2715,9 @@ function confirmAddRecipe() {
   clearPhoto();
   hideAddRecipe();
 
+  // Preload photo into browser cache before rendering cards
+  if (arPhotoData && !arPhotoData.startsWith('data:')) new Image().src = arPhotoData;
+
   // Switch to recipes tab showing the new recipe (reset filter so it's always visible)
   showTab('recipes');
   setFilter('All');
@@ -2857,6 +2875,14 @@ function openLightbox(src, alt) {
           </div>
           <button onclick="clearApiKey()" style="background:none;border:none;color:var(--muted);font-size:0.7rem;padding:4px 0;cursor:pointer;text-decoration:underline">Clear saved key</button>
           <div id="ar-key-status" class="ar-hint" style="margin-top:2px"></div>
+          <div class="ar-hint" style="margin:10px 0 4px">Cloud proxy URL <span style="color:var(--muted)">(required on iPhone/iPad & GitHub Pages)</span></div>
+          <div class="ar-hint" style="margin-bottom:6px">Deploy <code style="font-size:0.7rem;background:var(--border);padding:2px 4px;border-radius:3px">~/.claude/scripts/mealplan-worker.js</code> as a Cloudflare Worker, paste URL here.</div>
+          <div class="fridge-input-row" style="padding:0">
+            <input id="ar-proxy-input" class="fridge-input" type="url" placeholder="https://your-worker.workers.dev" />
+            <button class="fridge-add-btn" onclick="saveProxyUrl()">Save</button>
+          </div>
+          <button onclick="clearProxyUrl()" style="background:none;border:none;color:var(--muted);font-size:0.7rem;padding:4px 0;cursor:pointer;text-decoration:underline">Clear proxy URL</button>
+          <div id="ar-proxy-status" class="ar-hint" style="margin-top:2px"></div>
         </div>
       </div>
     </div>
