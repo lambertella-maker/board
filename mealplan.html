@@ -1338,10 +1338,10 @@ function renderIdeas() {
         <button class="btn-regen-ideas" onclick="generateIdeas()">↺</button>
       </div>
     </div>
-    <div class="ideas-section-hdr">Dinners</div>
-    <div class="idea-grid">${ideas.dinners.map((r, i) => ideaCard(r, 'dinner', i)).join('')}</div>
-    <div class="ideas-section-hdr">Lunches</div>
-    <div class="idea-grid">${ideas.lunches.map((r, i) => ideaCard(r, 'lunch', i)).join('')}</div>
+    <div class="idea-grid">${[
+        ...ideas.dinners.map((r,i) => ideaCard(r,'dinner',i)),
+        ...ideas.lunches.map((r,i) => ideaCard(r,'lunch',i))
+      ].join('')}</div>
     ${dessertIdea
       ? `<div class="ideas-section-hdr">Dessert</div>
          <div class="idea-grid">${ideaCard(dessertIdea, 'dessert', 0)}</div>`
