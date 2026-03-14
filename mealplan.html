@@ -343,6 +343,35 @@
   .ideas-section-hdr{font-size:0.62rem;font-weight:800;color:var(--soft);
     text-transform:uppercase;letter-spacing:.07em;padding:10px 14px 5px;}
 
+  /* FRIDGE RAID */
+  .fridge-or{font-size:0.62rem;color:var(--muted);font-weight:600;margin:10px 0;}
+  .btn-fridge-open{background:transparent;border:1px solid var(--border);border-radius:20px;
+    padding:9px 22px;color:var(--soft);font-size:0.72rem;font-weight:700;cursor:pointer;
+    font-family:inherit;transition:all .15s;}
+  .btn-fridge-open:active{background:var(--card);}
+  .fridge-header{display:flex;justify-content:space-between;align-items:center;
+    padding:14px 14px 4px;}
+  .fridge-title{font-size:0.95rem;font-weight:800;color:var(--text);}
+  .fridge-back{background:none;border:none;color:var(--accent);font-size:0.7rem;
+    font-weight:700;cursor:pointer;font-family:inherit;padding:0;}
+  .fridge-sub{font-size:0.65rem;color:var(--muted);padding:0 14px 10px;}
+  .fridge-input-row{display:flex;gap:8px;padding:0 14px 10px;}
+  .fridge-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;
+    padding:9px 12px;color:var(--text);font-size:0.78rem;font-family:inherit;outline:none;}
+  .fridge-input:focus{border-color:var(--accent);}
+  .fridge-add-btn{background:var(--accent);border:none;border-radius:10px;
+    padding:9px 14px;color:#fff;font-size:0.7rem;font-weight:700;cursor:pointer;
+    font-family:inherit;flex-shrink:0;}
+  .fridge-tags{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 12px;min-height:10px;}
+  .fridge-tag{display:flex;align-items:center;gap:5px;background:var(--card2);
+    border:1px solid var(--border);border-radius:20px;padding:5px 10px;
+    font-size:0.65rem;font-weight:700;color:var(--text);}
+  .fridge-tag-x{background:none;border:none;color:var(--muted);cursor:pointer;
+    font-size:0.7rem;padding:0;line-height:1;}
+  .btn-fridge-match{display:block;margin:0 14px 20px;width:calc(100% - 28px);
+    background:var(--accent);border:none;border-radius:12px;padding:12px;
+    color:#fff;font-size:0.78rem;font-weight:800;cursor:pointer;font-family:inherit;}
+
   /* IDEA GRID (ATK-style photo cards) */
   .idea-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 14px 14px;}
   .idea-card{cursor:pointer;border-radius:10px;overflow:hidden;
@@ -390,6 +419,50 @@
     padding:12px;color:var(--accent2);font-size:0.82rem;font-weight:700;cursor:pointer;
     font-family:inherit;transition:all .15s;}
   .btn-copy-grocery:active{opacity:0.7;}
+
+  /* COOK MODE */
+  #cook-mode{position:fixed;inset:0;background:var(--bg);z-index:500;
+    display:none;flex-direction:column;}
+  #cook-mode.open{display:flex;}
+  .cook-header{display:flex;justify-content:space-between;align-items:center;
+    padding:max(16px,env(safe-area-inset-top)) 16px 12px;
+    border-bottom:1px solid var(--border);flex-shrink:0;}
+  .cook-exit{background:none;border:1px solid var(--border);border-radius:20px;
+    padding:6px 12px;color:var(--muted);font-size:0.62rem;font-weight:700;
+    cursor:pointer;font-family:inherit;}
+  .cook-recipe-name{font-size:0.72rem;font-weight:800;color:var(--soft);
+    text-align:center;flex:1;padding:0 8px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cook-step-num{font-size:0.62rem;font-weight:700;color:var(--muted);
+    flex-shrink:0;white-space:nowrap;}
+  .cook-body{flex:1;display:flex;flex-direction:column;justify-content:center;
+    align-items:center;padding:28px 24px;overflow-y:auto;}
+  .cook-step-text{font-size:1.25rem;font-weight:700;color:var(--text);
+    line-height:1.55;text-align:center;max-width:360px;}
+  .cook-timer-area{margin-top:32px;text-align:center;}
+  .cook-timer-display{font-size:3rem;font-weight:900;color:var(--accent);
+    font-variant-numeric:tabular-nums;letter-spacing:-0.02em;}
+  .cook-timer-btn{background:var(--card);border:1px solid var(--border);
+    border-radius:20px;padding:9px 20px;color:var(--text);font-size:0.72rem;
+    font-weight:700;cursor:pointer;font-family:inherit;}
+  .cook-timer-reset{color:var(--muted);}
+  .cook-nav{display:flex;justify-content:space-between;align-items:center;
+    padding:16px 20px max(20px,env(safe-area-inset-bottom)) 20px;
+    border-top:1px solid var(--border);flex-shrink:0;}
+  .cook-nav-btn{background:var(--card);border:1px solid var(--border);
+    border-radius:20px;padding:10px 20px;color:var(--text);font-size:0.72rem;
+    font-weight:700;cursor:pointer;font-family:inherit;min-width:90px;}
+  .cook-nav-btn:disabled{opacity:0.3;cursor:default;}
+  .cook-dots{display:flex;gap:6px;align-items:center;}
+  .cook-dot{width:7px;height:7px;border-radius:50%;background:var(--border);
+    transition:background .2s;}
+  .cook-dot.active{background:var(--accent);}
+
+  /* MODAL COOK BUTTON */
+  .modal-cook-btn{background:var(--card2);border:1px solid var(--border);border-radius:20px;
+    padding:7px 14px;color:var(--soft);font-size:0.65rem;font-weight:700;cursor:pointer;
+    font-family:inherit;white-space:nowrap;}
+  .modal-cook-btn:active{opacity:0.7;}
 </style>
 </head>
 <body>
@@ -430,19 +503,39 @@
     <div class="topbar-date" id="topbar-date-ideas">—</div>
   </div>
   <div id="ideas-splash" class="generate-splash">
-    <div class="generate-emoji">✨</div>
-    <div class="generate-title">This Week's<br>Ideas.</div>
+    <div class="generate-title">What to cook?</div>
     <div class="generate-sub">3 dinners + 3 lunches, balanced across proteins and cuisines. No rigid schedule — just inspiration. Swap anything you don't fancy, then grab the grocery list.</div>
-    <button class="btn-generate" onclick="generateIdeas()">Generate Ideas</button>
-    <div class="generate-chips">
-      <span class="gen-chip">🇻🇳 Vietnamese</span>
-      <span class="gen-chip">🌮 Mexican</span>
-      <span class="gen-chip">🇹🇭 Thai</span>
-      <span class="gen-chip">🇰🇷 Korean</span>
-      <span class="gen-chip">🍗 Wings</span>
-      <span class="gen-chip">🍳 Everyday</span>
-    </div>
+    <button class="btn-generate" onclick="generateIdeas()">✨ Generate Ideas</button>
+    <div class="fridge-or">— or —</div>
+    <button class="btn-fridge-open" onclick="showFridgePanel()">🧊 Use what I have</button>
   </div>
+
+  <div id="fridge-panel" style="display:none">
+    <div class="fridge-header">
+      <div class="fridge-title">Fridge Raid</div>
+      <button class="fridge-back" onclick="hideFridgePanel()">← Back</button>
+    </div>
+    <div class="fridge-sub">Add ingredients you need to use up</div>
+    <div class="fridge-input-row">
+      <input id="fridge-input" class="fridge-input" type="text" placeholder="e.g. chicken, spinach, coconut milk" autocomplete="off"
+        onkeydown="if(event.key==='Enter'||event.key===','){event.preventDefault();addFridgeItem()}" />
+      <button class="fridge-add-btn" onclick="addFridgeItem()">Add</button>
+    </div>
+    <div id="fridge-tags" class="fridge-tags"></div>
+    <button class="btn-fridge-match" id="fridge-match-btn" onclick="runFridgeRaid()" style="display:none">Find Recipes →</button>
+  </div>
+
+  <div id="fridge-results" style="display:none">
+    <div class="ideas-toolbar">
+      <div>
+        <div style="font-size:0.88rem;font-weight:800;color:var(--text)">Fridge Raid</div>
+        <div class="ideas-subtitle" id="fridge-subtitle"></div>
+      </div>
+      <button class="btn-regen-ideas" onclick="showFridgePanel()">✎ Edit</button>
+    </div>
+    <div class="idea-grid" id="fridge-grid"></div>
+  </div>
+
   <div id="ideas-results" style="display:none"></div>
 </div>
 
@@ -552,6 +645,7 @@
     <div class="modal-handle"></div>
     <div class="modal-header">
       <div class="modal-title" id="modal-title"></div>
+      <button class="modal-cook-btn" onclick="startCookMode(openRecipeId)">👨‍🍳 Cook Mode</button>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body" id="modal-body"></div>
@@ -1294,9 +1388,17 @@ function recipeImgEl(r, type) {
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let ideas = null;
+let fridgeItems = [];
 let dessertIdea = null;
 let groceryChecked = new Set();
 let modalBaseServings = 2;
+let cookRecipe = null;
+let cookStep = 0;
+let cookTimerSecs = 0;
+let cookTimerRemaining = 0;
+let cookTimerInterval = null;
+let cookTimerRunning = false;
+let wakeLock = null;
 let modalCurrentServings = 2;
 let favourites = JSON.parse(localStorage.getItem('fodmap_favs') || '[]');
 let deleted = new Set(JSON.parse(localStorage.getItem('fodmap_deleted') || '[]'));
@@ -1325,6 +1427,30 @@ function jumpToCuisine(name) {
   showTab('recipes');
   document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
   renderRecipes(name);
+}
+
+const VIBES = ['Quick','Fresh','Cosy','Spicy','Comfort','Light','Impressive'];
+
+function getVibes(r) {
+  const vibes = new Set();
+  const t = [r.name, ...(r.ingredients || []), r.cuisine].join(' ').toLowerCase();
+  const mins = parseInt(r.time) || 999;
+  if (mins <= 20) vibes.add('Quick');
+  if (r.flavors && r.flavors.includes('heat')) vibes.add('Spicy');
+  if ((r.flavors && r.flavors.some(f => ['citrus','herby'].includes(f))) ||
+      ['Vietnamese','Mexican'].includes(r.cuisine)) vibes.add('Fresh');
+  if (/soup|stew|broth|roast|tagine/.test(t) || mins >= 45) vibes.add('Cosy');
+  if (/salad|slaw|bowl/.test(t) && (r.macros?.cal || 999) < 450) vibes.add('Light');
+  if (r.cuisine === 'Ottolenghi' || /marinate|overnight|1–2 day/.test(t)) vibes.add('Impressive');
+  if (/noodle|pasta|cream|potato|rice|cheese|coconut/.test(t)) vibes.add('Comfort');
+  return [...vibes];
+}
+
+function jumpToVibe(vibe) {
+  currentFilter = vibe;
+  showTab('recipes');
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  renderRecipes(vibe);
 }
 
 function renderHome() {
@@ -1387,6 +1513,16 @@ function renderHome() {
       ${cuisines.map(c =>
         `<button class="home-cuisine-chip" onclick="jumpToCuisine('${c.name}')">${c.emoji} ${c.name}</button>`
       ).join('')}
+    </div>
+    <div class="home-section-hdr">What are you feeling?</div>
+    <div class="home-cuisines">
+      <button class="home-cuisine-chip" onclick="jumpToVibe('Quick')">⚡ Quick</button>
+      <button class="home-cuisine-chip" onclick="jumpToVibe('Fresh')">🌿 Fresh</button>
+      <button class="home-cuisine-chip" onclick="jumpToVibe('Cosy')">🍲 Cosy</button>
+      <button class="home-cuisine-chip" onclick="jumpToVibe('Spicy')">🌶️ Spicy</button>
+      <button class="home-cuisine-chip" onclick="jumpToVibe('Comfort')">🧸 Comfort</button>
+      <button class="home-cuisine-chip" onclick="jumpToVibe('Light')">🥗 Light</button>
+      <button class="home-cuisine-chip" onclick="jumpToVibe('Impressive')">✨ Impressive</button>
     </div>
     <div class="home-cta">
       <div class="home-cta-title">Plan your week</div>
@@ -1518,6 +1654,76 @@ function addDessert() {
   renderIdeas();
 }
 
+// ─── FRIDGE RAID ──────────────────────────────────────────────────────────────
+function showFridgePanel() {
+  document.getElementById('ideas-splash').style.display = 'none';
+  document.getElementById('ideas-results').style.display = 'none';
+  document.getElementById('fridge-results').style.display = 'none';
+  document.getElementById('fridge-panel').style.display = 'block';
+  document.getElementById('fridge-input').focus();
+}
+
+function hideFridgePanel() {
+  document.getElementById('fridge-panel').style.display = 'none';
+  const hasFridgeResults = fridgeItems.length > 0 && document.getElementById('fridge-grid').innerHTML;
+  if (hasFridgeResults) {
+    document.getElementById('fridge-results').style.display = 'block';
+  } else {
+    document.getElementById('ideas-splash').style.display = 'flex';
+  }
+}
+
+function addFridgeItem() {
+  const input = document.getElementById('fridge-input');
+  const val = input.value.trim().replace(/,$/, '').trim();
+  if (!val || fridgeItems.includes(val.toLowerCase())) { input.value = ''; return; }
+  fridgeItems.push(val.toLowerCase());
+  input.value = '';
+  renderFridgeTags();
+}
+
+function removeFridgeItem(i) {
+  fridgeItems.splice(i, 1);
+  renderFridgeTags();
+}
+
+function renderFridgeTags() {
+  document.getElementById('fridge-tags').innerHTML = fridgeItems.map((item, i) =>
+    `<div class="fridge-tag">${item}<button class="fridge-tag-x" onclick="removeFridgeItem(${i})">✕</button></div>`
+  ).join('');
+  document.getElementById('fridge-match-btn').style.display = fridgeItems.length ? 'block' : 'none';
+}
+
+function runFridgeRaid() {
+  const results = RECIPES
+    .filter(r => !r.meal.includes('dessert'))
+    .map(r => {
+      const text = (r.name + ' ' + (r.ingredients || []).join(' ')).toLowerCase();
+      const score = fridgeItems.filter(i => text.includes(i)).length;
+      return { r, score };
+    })
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6)
+    .map(x => x.r);
+
+  document.getElementById('fridge-panel').style.display = 'none';
+  document.getElementById('ideas-results').style.display = 'none';
+  document.getElementById('ideas-splash').style.display = 'none';
+
+  if (!results.length) {
+    document.getElementById('fridge-results').style.display = 'block';
+    document.getElementById('fridge-subtitle').textContent = 'No matches found — try different ingredients';
+    document.getElementById('fridge-grid').innerHTML = '';
+    return;
+  }
+
+  document.getElementById('fridge-subtitle').textContent = `${results.length} match${results.length > 1 ? 'es' : ''} · ${fridgeItems.join(', ')}`;
+  document.getElementById('fridge-grid').innerHTML = results.map((r, i) => ideaCard(r, r.meal.includes('dinner') ? 'dinner' : 'lunch', i)).join('');
+  document.getElementById('fridge-results').style.display = 'block';
+  document.getElementById('content').scrollTop = 0;
+}
+
 // ─── GROCERY LIST ─────────────────────────────────────────────────────────────
 const GROCERY_CATS = [
   { label: '🥩 Proteins',         keys: ['chicken','beef','steak','pork','prawn','shrimp','fish','tofu','egg','mince','lamb','tuna','anchovy','turkey'] },
@@ -1647,6 +1853,7 @@ function renderRecipes(filter) {
   else if (filter === 'Dinner')    list = base.filter(r => r.meal.includes('dinner'));
   else if (filter === 'Dessert')   list = base.filter(r => r.meal.includes('dessert'));
   else if (filter === 'Snacks')    list = base.filter(r => r.meal.includes('snack'));
+  else if (VIBES.includes(filter)) list = base.filter(r => getVibes(r).includes(filter));
   else list = base.filter(r => r.cuisine === filter);
   if (currentSearch) {
     list = list.filter(r =>
@@ -1797,6 +2004,107 @@ function updateDeletedCount() {
   if (el) el.textContent = deleted.size === 0 ? 'No recipes hidden' : `${deleted.size} recipe${deleted.size > 1 ? 's' : ''} hidden`;
 }
 
+// ─── COOK MODE ────────────────────────────────────────────────────────────────
+function startCookMode(id) {
+  cookRecipe = RECIPES.find(r => r.id === id);
+  if (!cookRecipe || !cookRecipe.method?.length) return;
+  cookStep = 0;
+  clearCookTimer();
+  document.getElementById('cook-name').textContent = cookRecipe.name;
+  document.getElementById('cook-mode').classList.add('open');
+  renderCookStep();
+  if (navigator.wakeLock) {
+    navigator.wakeLock.request('screen').then(wl => { wakeLock = wl; }).catch(() => {});
+  }
+}
+
+function exitCookMode() {
+  document.getElementById('cook-mode').classList.remove('open');
+  clearCookTimer();
+  if (wakeLock) { wakeLock.release().catch(() => {}); wakeLock = null; }
+}
+
+function renderCookStep() {
+  const steps = cookRecipe.method;
+  const step = steps[cookStep];
+  document.getElementById('cook-step-num').textContent = `${cookStep + 1} / ${steps.length}`;
+  document.getElementById('cook-step-text').textContent = step;
+  document.getElementById('cook-prev').disabled = cookStep === 0;
+  document.getElementById('cook-next').textContent = cookStep === steps.length - 1 ? 'Done ✓' : 'Next →';
+
+  // Dots
+  document.getElementById('cook-dots').innerHTML = steps.map((_, i) =>
+    `<div class="cook-dot${i === cookStep ? ' active' : ''}"></div>`
+  ).join('');
+
+  // Timer detection
+  clearCookTimer();
+  const match = step.match(/(\d+)\s*(hr|hour|min|minute|sec|second)/i);
+  if (match) {
+    let secs = parseInt(match[1]);
+    const unit = match[2].toLowerCase();
+    if (unit.startsWith('min')) secs *= 60;
+    else if (unit.startsWith('h')) secs *= 3600;
+    cookTimerSecs = secs;
+    cookTimerRemaining = secs;
+    updateTimerDisplay();
+    document.getElementById('cook-timer-area').style.display = 'block';
+    document.getElementById('cook-timer-toggle').textContent = '▶ Start';
+  } else {
+    document.getElementById('cook-timer-area').style.display = 'none';
+  }
+}
+
+function cookNav(dir) {
+  const steps = cookRecipe.method;
+  if (dir === 1 && cookStep === steps.length - 1) { exitCookMode(); return; }
+  cookStep = Math.max(0, Math.min(steps.length - 1, cookStep + dir));
+  renderCookStep();
+}
+
+function toggleCookTimer() {
+  if (cookTimerRunning) {
+    clearInterval(cookTimerInterval);
+    cookTimerRunning = false;
+    document.getElementById('cook-timer-toggle').textContent = '▶ Resume';
+  } else {
+    cookTimerRunning = true;
+    document.getElementById('cook-timer-toggle').textContent = '⏸ Pause';
+    cookTimerInterval = setInterval(() => {
+      cookTimerRemaining--;
+      updateTimerDisplay();
+      if (cookTimerRemaining <= 0) {
+        clearInterval(cookTimerInterval);
+        cookTimerRunning = false;
+        document.getElementById('cook-timer-toggle').textContent = '✓ Done';
+        document.getElementById('cook-timer-display').style.color = 'var(--accent2)';
+      }
+    }, 1000);
+  }
+}
+
+function resetCookTimer() {
+  clearInterval(cookTimerInterval);
+  cookTimerRunning = false;
+  cookTimerRemaining = cookTimerSecs;
+  updateTimerDisplay();
+  document.getElementById('cook-timer-toggle').textContent = '▶ Start';
+  document.getElementById('cook-timer-display').style.color = 'var(--accent)';
+}
+
+function clearCookTimer() {
+  clearInterval(cookTimerInterval);
+  cookTimerRunning = false;
+  cookTimerSecs = 0;
+  cookTimerRemaining = 0;
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(cookTimerRemaining / 60);
+  const s = cookTimerRemaining % 60;
+  document.getElementById('cook-timer-display').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+}
+
 function toggleFav(id) {
   if (favourites.includes(id)) {
     favourites = favourites.filter(f => f !== id);
@@ -1893,6 +2201,30 @@ function openLightbox(src, alt) {
     </div>
     <div id="grocery-body"></div>
     <button class="btn-copy-grocery" id="copy-grocery-btn" onclick="copyGroceryList()">📋 Copy to Clipboard</button>
+  </div>
+</div>
+
+<!-- COOK MODE -->
+<div id="cook-mode">
+  <div class="cook-header">
+    <button class="cook-exit" onclick="exitCookMode()">✕ Exit</button>
+    <div class="cook-recipe-name" id="cook-name"></div>
+    <div class="cook-step-num" id="cook-step-num"></div>
+  </div>
+  <div class="cook-body">
+    <div class="cook-step-text" id="cook-step-text"></div>
+    <div id="cook-timer-area" class="cook-timer-area" style="display:none">
+      <div class="cook-timer-display" id="cook-timer-display">0:00</div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:10px">
+        <button class="cook-timer-btn" id="cook-timer-toggle" onclick="toggleCookTimer()">▶ Start</button>
+        <button class="cook-timer-btn cook-timer-reset" onclick="resetCookTimer()">↺ Reset</button>
+      </div>
+    </div>
+  </div>
+  <div class="cook-nav">
+    <button class="cook-nav-btn" id="cook-prev" onclick="cookNav(-1)">← Prev</button>
+    <div class="cook-dots" id="cook-dots"></div>
+    <button class="cook-nav-btn" id="cook-next" onclick="cookNav(1)">Next →</button>
   </div>
 </div>
 
