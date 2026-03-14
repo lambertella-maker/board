@@ -352,8 +352,9 @@
   .fridge-header{display:flex;justify-content:space-between;align-items:center;
     padding:14px 14px 4px;}
   .fridge-title{font-size:0.95rem;font-weight:800;color:var(--text);}
-  .fridge-back{background:none;border:none;color:var(--accent);font-size:0.7rem;
-    font-weight:700;cursor:pointer;font-family:inherit;padding:0;}
+  .fridge-back{background:var(--card);border:1px solid var(--border);border-radius:20px;
+    color:var(--soft);font-size:0.65rem;font-weight:700;cursor:pointer;
+    font-family:inherit;padding:6px 13px;}
   .fridge-sub{font-size:0.65rem;color:var(--muted);padding:0 14px 10px;}
   .fridge-input-row{display:flex;gap:8px;padding:0 14px 10px;}
   .fridge-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;
@@ -1665,12 +1666,9 @@ function showFridgePanel() {
 
 function hideFridgePanel() {
   document.getElementById('fridge-panel').style.display = 'none';
-  const hasFridgeResults = fridgeItems.length > 0 && document.getElementById('fridge-grid').innerHTML;
-  if (hasFridgeResults) {
-    document.getElementById('fridge-results').style.display = 'block';
-  } else {
-    document.getElementById('ideas-splash').style.display = 'flex';
-  }
+  document.getElementById('fridge-results').style.display = 'none';
+  document.getElementById('ideas-results').style.display = 'none';
+  document.getElementById('ideas-splash').style.display = 'flex';
 }
 
 function addFridgeItem() {
