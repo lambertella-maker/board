@@ -2461,6 +2461,18 @@ function backToInput() {
 }
 
 async function generateRecipe() {
+  // file:// has null CORS origin — browsers block all cross-origin requests regardless of proxy
+  if (window.location.protocol === 'file:') {
+    document.getElementById('ar-step-input').style.display = 'none';
+    document.getElementById('ar-error').style.display = 'block';
+    document.getElementById('ar-error-msg').innerHTML =
+      '⚠ AI import can\'t run from a local file — browsers block API calls from file://.<br><br>' +
+      '<a href="http://localhost:8765/mealplan.html" style="color:var(--accent);font-weight:700;font-size:0.9rem">' +
+      '→ Open at localhost:8765 (same app, AI works there)</a><br><br>' +
+      '<span style="font-size:0.72rem;color:var(--muted)">Bookmark that URL instead of the file. Server starts automatically.</span>';
+    return;
+  }
+
   const text = document.getElementById('ar-text-input').value.trim();
   if (!text) { alert('Paste something first — a dish name, URL, or recipe text.'); return; }
 
@@ -2495,20 +2507,13 @@ JSON format:
 Source: ${text}`;
 
   try {
-    // file:// origin can't do CORS — route through a proxy transparently
-    const direct = 'https://api.anthropic.com/v1/messages';
-    const viaProxy = 'https://corsproxy.io/?' + encodeURIComponent(direct);
-    const isFile = window.location.protocol === 'file:';
-    const endpoint = isFile ? viaProxy : direct;
-    const extraHeaders = isFile ? {} : {'anthropic-dangerous-allow-browser': 'true'};
-
-    const res = await fetch(endpoint, {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01',
-        ...extraHeaders
+        'anthropic-dangerous-allow-browser': 'true'
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
