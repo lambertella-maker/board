@@ -1524,7 +1524,7 @@ const RECIPE_IMGS = {
 };
 
 function recipeImgEl(r, type) {
-  const src = RECIPE_IMGS[r.id];
+  const src = photoOverrides[r.id] || RECIPE_IMGS[r.id];
   const pc = cuisinePlaceholder(r.cuisine);
   if (type === 'banner') {
     if (src) return `<img src="${src}" class="recipe-card-img" alt="${r.name}" loading="lazy" onclick="event.stopPropagation();openLightbox(this.src,this.alt)" style="cursor:zoom-in" onerror="this.outerHTML='<div class=\\'recipe-card-img-placeholder ${pc}\\'>${r.emoji}</div>'">`;
@@ -1568,6 +1568,7 @@ let wakeLock = null;
 let modalCurrentServings = 2;
 let favourites = JSON.parse(localStorage.getItem('fodmap_favs') || '[]');
 let deleted = new Set(JSON.parse(localStorage.getItem('fodmap_deleted') || '[]'));
+let photoOverrides = JSON.parse(localStorage.getItem('photo_overrides') || '{}');
 let openRecipeId = null;
 let currentFilter = 'All';
 let customRecipes = JSON.parse(localStorage.getItem('custom_recipes') || '[]');
@@ -2169,7 +2170,18 @@ function openModal(id) {
   if (existingHero) existingHero.remove();
   const heroWrap = document.createElement('div');
   heroWrap.id = 'modal-hero-wrap';
-  heroWrap.innerHTML = recipeImgEl(r, 'hero');
+  heroWrap.style.cssText = 'position:relative';
+  heroWrap.innerHTML = recipeImgEl(r, 'hero') +
+    `<label title="Replace photo" style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.55);
+      border-radius:20px;padding:5px 10px;font-size:0.65rem;font-weight:700;color:#fff;cursor:pointer;
+      display:flex;align-items:center;gap:4px;backdrop-filter:blur(4px)">
+      📷 Replace photo
+      <input type="file" accept="image/*" style="display:none" id="modal-photo-input">
+    </label>`;
+  document.getElementById('modal-photo-input').onchange = function() { if (this.files[0]) readAndSavePhoto(id, this.files[0]); };
+  heroWrap.addEventListener('dragover', e => { e.preventDefault(); heroWrap.style.opacity='0.8'; });
+  heroWrap.addEventListener('dragleave', () => { heroWrap.style.opacity=''; });
+  heroWrap.addEventListener('drop', e => { e.preventDefault(); heroWrap.style.opacity=''; const f = e.dataTransfer.files[0]; if (f) readAndSavePhoto(id, f); });
   document.getElementById('modal').insertBefore(heroWrap, document.getElementById('modal').firstChild);
   document.getElementById('modal-body').innerHTML = `
     <div class="modal-meta-row">
@@ -2197,6 +2209,22 @@ function openModal(id) {
     </div>
     <button class="delete-recipe-btn" onclick="deleteRecipe('${id}')">Remove this recipe</button>`;
   document.getElementById('recipe-modal').classList.add('open');
+}
+
+function readAndSavePhoto(id, file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    photoOverrides[id] = e.target.result;
+    localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+    RECIPE_IMGS[id] = e.target.result;
+    // Refresh hero in modal
+    const wrap = document.getElementById('modal-hero-wrap');
+    if (wrap) {
+      const existing = wrap.querySelector('img, .modal-hero-placeholder');
+      if (existing) { const img = new Image(); img.src = e.target.result; img.className = 'modal-hero'; img.alt = id; existing.replaceWith(img); }
+    }
+  };
+  reader.readAsDataURL(file);
 }
 
 function changeServings(id, delta) {
@@ -2608,6 +2636,8 @@ document.addEventListener('DOMContentLoaded', () => {
   customRecipes.forEach(r => {
     if (r._photoData && !RECIPE_IMGS[r.id]) RECIPE_IMGS[r.id] = r._photoData;
   });
+  // Apply photo overrides on top of everything (drag-and-drop replacements)
+  Object.assign(RECIPE_IMGS, photoOverrides);
 
   renderHome();
   renderPantry();
