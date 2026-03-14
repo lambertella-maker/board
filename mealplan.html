@@ -284,6 +284,10 @@
     font-family:inherit;transition:all .15s;flex-shrink:0;
     box-shadow:0 1px 8px rgba(44,95,46,0.25);}
   .btn-grocery:active{opacity:0.85;}
+  .btn-want-dessert{background:transparent;border:1px dashed var(--border);border-radius:20px;
+    padding:8px 18px;color:var(--muted);font-size:0.68rem;font-weight:700;cursor:pointer;
+    font-family:inherit;width:100%;transition:all .15s;}
+  .btn-want-dessert:active{background:var(--card);color:var(--text);}
   .ideas-section-hdr{font-size:0.62rem;font-weight:800;color:var(--soft);
     text-transform:uppercase;letter-spacing:.07em;padding:10px 14px 5px;}
 
@@ -371,7 +375,7 @@
   <div id="ideas-splash" class="generate-splash">
     <div class="generate-emoji">✨</div>
     <div class="generate-title">This Week's<br>Ideas.</div>
-    <div class="generate-sub">5 dinners + 5 lunches, balanced across proteins and cuisines. No rigid schedule — just inspiration. Swap anything you don't fancy, then grab the grocery list.</div>
+    <div class="generate-sub">3 dinners + 3 lunches, balanced across proteins and cuisines. No rigid schedule — just inspiration. Swap anything you don't fancy, then grab the grocery list.</div>
     <button class="btn-generate" onclick="generateIdeas()">Generate Ideas</button>
     <div class="generate-chips">
       <span class="gen-chip">🇻🇳 Vietnamese</span>
@@ -1203,6 +1207,8 @@ const RECIPE_IMGS = {
   'ep2':'https://choosingchia.com/jessh-jessh/uploads/2019/02/vietnamese-noodle-bowl-with-lemongrass-tofu-5.jpg',
   'ep3':'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhL2hyphenhyphen7jmsQaLrY_ggH2PbEJiujH30z2YrCPKrZpDt8PgWqiFxH1-GcEI0jZ7wxWuDa5c0M3ZUnb9aOc4L3-IVWNthlLxUwEmZERa4JqOtncYpJviUZuK2cPyWvGPQXbyvGK09sSdZlcV0a/s1600/vegan+coconut+milk+ramen.jpg',
   'ep6':'ep6-burger.png',
+  // Everyday specials
+  'z1':'https://static01.nyt.com/images/2025/10/21/multimedia/JN-Joan-Nathans-Matzo-Ball-Soup-cvkq/JN-Joan-Nathans-Matzo-Ball-Soup-cvkq-facebookJumbo.jpg',
   // Desserts
   'd1':'https://fifi.com.au/wp-content/uploads/2020/01/peach-rosemary-lime-tart.jpg',
   'd2':'https://ottolenghi.co.uk/cdn/shop/files/Yoghurt-cream-with-sticky-apricots-and-filo-wafer.jpg?v=1715244794',
@@ -1239,6 +1245,7 @@ function recipeImgEl(r, type) {
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let ideas = null;
+let dessertIdea = null;
 let groceryChecked = new Set();
 let modalBaseServings = 2;
 let modalCurrentServings = 2;
@@ -1302,6 +1309,7 @@ function generateIdeas() {
   const usedIds = dinners.map(r => r.id);
   const lunches = smartPick(lPool, 3, usedIds);
   ideas = { dinners, lunches };
+  dessertIdea = null;
   document.getElementById('ideas-splash').style.display = 'none';
   document.getElementById('ideas-results').style.display = 'block';
   renderIdeas();
@@ -1309,6 +1317,7 @@ function generateIdeas() {
 }
 
 function swapIdea(mealType, index) {
+  if (mealType === 'dessert') { addDessert(); return; }
   if (!ideas) return;
   const a = active();
   const pool = a.filter(r => r.meal.includes(mealType));
@@ -1338,7 +1347,14 @@ function renderIdeas() {
     <div class="ideas-section-hdr">Dinners</div>
     <div class="idea-grid">${ideas.dinners.map((r, i) => ideaCard(r, 'dinner', i)).join('')}</div>
     <div class="ideas-section-hdr">Lunches</div>
-    <div class="idea-grid">${ideas.lunches.map((r, i) => ideaCard(r, 'lunch', i)).join('')}</div>`;
+    <div class="idea-grid">${ideas.lunches.map((r, i) => ideaCard(r, 'lunch', i)).join('')}</div>
+    ${dessertIdea
+      ? `<div class="ideas-section-hdr">Dessert</div>
+         <div class="idea-grid">${ideaCard(dessertIdea, 'dessert', 0)}</div>`
+      : `<div style="padding:4px 14px 16px">
+           <button class="btn-want-dessert" onclick="addDessert()">🍑 Want a dessert?</button>
+         </div>`
+    }`;
 }
 
 function ideaCard(r, mealType, index) {
@@ -1358,6 +1374,15 @@ function ideaCard(r, mealType, index) {
       <div class="idea-stats">${r.time} · ${r.protein}</div>
     </div>
   </div>`;
+}
+
+function addDessert() {
+  const pool = active().filter(r => r.meal.includes('dessert'));
+  if (!pool.length) return;
+  const exclude = dessertIdea ? [dessertIdea.id] : [];
+  const avail = pool.filter(r => !exclude.includes(r.id));
+  dessertIdea = (avail.length ? avail : pool)[Math.floor(Math.random() * (avail.length || pool.length))];
+  renderIdeas();
 }
 
 // ─── GROCERY LIST ─────────────────────────────────────────────────────────────
