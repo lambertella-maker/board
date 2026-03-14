@@ -2043,6 +2043,7 @@ function showGroceryModal() {
     : `${totalRecipes} recipes`;
   document.getElementById('grocery-count').textContent = `${totalItems} items · ${recipeLabel}`;
   document.getElementById('grocery-modal').classList.add('open');
+  document.querySelector('.grocery-sheet').scrollTop = 0;
 }
 
 function toggleGroceryItem(id) {
