@@ -2407,6 +2407,13 @@ function toggleKeySection() {
   panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
 }
 
+function clearApiKey() {
+  localStorage.removeItem('ar_api_key');
+  document.getElementById('ar-key-input').value = '';
+  document.getElementById('ar-key-status').textContent = 'Key cleared — paste a fresh one from console.anthropic.com';
+  document.getElementById('ar-key-toggle').textContent = '⚙️ Set API Key (required)';
+}
+
 function saveApiKey() {
   const key = document.getElementById('ar-key-input').value.trim();
   if (!key.startsWith('sk-ant-')) {
@@ -2414,9 +2421,10 @@ function saveApiKey() {
     return;
   }
   localStorage.setItem('ar_api_key', key);
-  document.getElementById('ar-key-status').textContent = '✓ Saved';
+  document.getElementById('ar-key-status').textContent = '✓ Saved — ready to generate';
   document.getElementById('ar-key-toggle').textContent = '⚙️ API Key (saved)';
   document.getElementById('ar-key-input').value = '';
+  document.getElementById('ar-error').style.display = 'none';
   setTimeout(() => { document.getElementById('ar-key-panel').style.display = 'none'; }, 800);
 }
 
@@ -2492,7 +2500,8 @@ Source: ${text}`;
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-allow-browser': 'true'
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
@@ -2501,8 +2510,11 @@ Source: ${text}`;
       })
     });
 
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `HTTP ${res.status}`);
+    }
     const data = await res.json();
-    if (!res.ok) throw new Error((data.error?.message) || `HTTP ${res.status}`);
 
     let raw = data.content[0].text.trim();
     raw = raw.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
@@ -2514,14 +2526,15 @@ Source: ${text}`;
 
   } catch (err) {
     document.getElementById('ar-loading').style.display = 'none';
-    // Show input + error together so user can fix key and retry without re-opening
     document.getElementById('ar-step-input').style.display = 'block';
     document.getElementById('ar-error').style.display = 'block';
-    const msg = err.message || 'Unknown error';
-    document.getElementById('ar-error-msg').textContent = '⚠ ' + msg;
-    // Surface the key panel for any error so user can verify/re-enter key
+    const msg = (err.message || '').toLowerCase();
+    const isFetch = msg.includes('failed to fetch') || msg.includes('networkerror') || msg.includes('network request failed');
+    document.getElementById('ar-error-msg').textContent = isFetch
+      ? '⚠ Request blocked — almost always means the saved API key is wrong or expired. Clear it below and paste a fresh one from console.anthropic.com'
+      : '⚠ ' + (err.message || 'Unknown error');
     document.getElementById('ar-key-panel').style.display = 'block';
-    document.getElementById('ar-key-toggle').textContent = '⚙️ API Key — check & re-save if needed';
+    document.getElementById('ar-key-toggle').textContent = '⚙️ API Key';
   }
 }
 
@@ -2718,12 +2731,13 @@ function openLightbox(src, alt) {
       <div id="ar-key-section">
         <button class="ar-key-toggle" onclick="toggleKeySection()" id="ar-key-toggle">⚙️ API Key</button>
         <div id="ar-key-panel" style="display:none">
-          <div class="ar-hint" style="margin-bottom:6px">Your Anthropic API key — saved to this browser only, never shared</div>
+          <div class="ar-hint" style="margin-bottom:6px">Get your key at console.anthropic.com → API Keys. Saved to this browser only.</div>
           <div class="fridge-input-row" style="padding:0">
             <input id="ar-key-input" class="fridge-input" type="password" placeholder="sk-ant-…" />
             <button class="fridge-add-btn" onclick="saveApiKey()">Save</button>
           </div>
-          <div id="ar-key-status" class="ar-hint" style="margin-top:4px"></div>
+          <button onclick="clearApiKey()" style="background:none;border:none;color:var(--muted);font-size:0.7rem;padding:4px 0;cursor:pointer;text-decoration:underline">Clear saved key</button>
+          <div id="ar-key-status" class="ar-hint" style="margin-top:2px"></div>
         </div>
       </div>
     </div>
