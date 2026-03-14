@@ -2517,7 +2517,11 @@ Source: ${text}`;
   } catch (err) {
     document.getElementById('ar-loading').style.display = 'none';
     document.getElementById('ar-error').style.display = 'block';
-    document.getElementById('ar-error-msg').textContent = '⚠ ' + (err.message || 'Something went wrong. Check your API key and try again.');
+    const msg = err.message || '';
+    const friendly = msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('network')
+      ? '⚠ Network error — this feature only works via the GitHub Pages link (not a local file). Open mealplan.html from lambertella-maker.github.io/board/mealplan.html and try again.'
+      : '⚠ ' + (msg || 'Something went wrong. Check your API key and try again.');
+    document.getElementById('ar-error-msg').textContent = friendly;
   }
 }
 
