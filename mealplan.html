@@ -2178,11 +2178,12 @@ function openModal(id) {
       📷 Replace photo
       <input type="file" accept="image/*" style="display:none" id="modal-photo-input">
     </label>`;
+  // Insert into DOM first so getElementById can find the input
+  document.getElementById('modal').insertBefore(heroWrap, document.getElementById('modal').firstChild);
   document.getElementById('modal-photo-input').onchange = function() { if (this.files[0]) readAndSavePhoto(id, this.files[0]); };
   heroWrap.addEventListener('dragover', e => { e.preventDefault(); heroWrap.style.opacity='0.8'; });
   heroWrap.addEventListener('dragleave', () => { heroWrap.style.opacity=''; });
   heroWrap.addEventListener('drop', e => { e.preventDefault(); heroWrap.style.opacity=''; const f = e.dataTransfer.files[0]; if (f) readAndSavePhoto(id, f); });
-  document.getElementById('modal').insertBefore(heroWrap, document.getElementById('modal').firstChild);
   document.getElementById('modal-body').innerHTML = `
     <div class="modal-meta-row">
       <span class="meal-tag meal-protein">🥩 ${r.protein}</span>
