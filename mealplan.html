@@ -14,7 +14,7 @@
     --accent:#b5451b; --accent2:#2c5f2e;
     --text:#1a1916; --muted:#8a8178; --soft:#5c5650;
     --c-viet:#0f7b6c; --c-mex:#c45c1a; --c-thai:#3d6b45;
-    --c-kor:#894f6e; --c-every:#3d5a80; --c-wings:#8b2635;
+    --c-kor:#894f6e; --c-every:#3d5a80; --c-wings:#8b2635; --c-amer:#7b4f2e;
     --tab-h:60px; --safe-bottom:env(safe-area-inset-bottom,0px); --safe-top:env(safe-area-inset-top,0px);
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -118,6 +118,7 @@
   .c-kor   {border-left:3px solid var(--c-kor);}
   .c-every {border-left:3px solid var(--c-every);}
   .c-wings {border-left:3px solid var(--c-wings);}
+  .c-amer  {border-left:3px solid var(--c-amer);}
   /* top border on recipe cards */
   .t-viet  {border-top:3px solid var(--c-viet);}
   .t-mex   {border-top:3px solid var(--c-mex);}
@@ -125,6 +126,7 @@
   .t-kor   {border-top:3px solid var(--c-kor);}
   .t-every {border-top:3px solid var(--c-every);}
   .t-wings {border-top:3px solid var(--c-wings);}
+  .t-amer  {border-top:3px solid var(--c-amer);}
   /* image placeholder bg on recipe card / meal thumb */
   .p-viet  {background:rgba(15,123,108,0.08);}
   .p-mex   {background:rgba(196,92,26,0.08);}
@@ -132,6 +134,7 @@
   .p-kor   {background:rgba(137,79,110,0.08);}
   .p-every {background:rgba(61,90,128,0.08);}
   .p-wings {background:rgba(139,38,53,0.08);}
+  .p-amer  {background:rgba(123,79,46,0.08);}
 
   /* FLAVOR BADGES */
   .f-heat     {background:rgba(181,69,27,0.08);color:#a33810;border:1px solid rgba(181,69,27,0.18);}
@@ -528,7 +531,8 @@
 
   <div id="fridge-results" style="display:none">
     <div class="ideas-toolbar">
-      <div>
+      <button class="btn-regen-ideas" onclick="backToSplash()">← Back</button>
+      <div style="flex:1;padding:0 8px">
         <div style="font-size:0.88rem;font-weight:800;color:var(--text)">Fridge Raid</div>
         <div class="ideas-subtitle" id="fridge-subtitle"></div>
       </div>
@@ -918,6 +922,49 @@ const RECIPES = [
     ingredients:['200g rice noodles','3 tbsp garlic-infused oil','1 tbsp chilli crisp or chilli oil','2 tbsp gluten-free soy sauce','1 tbsp rice vinegar','1 tsp sesame oil','Spring onion greens','Sesame seeds','Optional: fried egg or leftover protein on top'],
     method:['Cook noodles per packet. Drain well.','Heat infused oil until shimmering. Pour over noodles immediately.','Add chilli crisp, soy, rice vinegar and sesame oil. Toss thoroughly.','Top with spring onion greens, sesame seeds and a fried egg if using.'],
     macros:{cal:380,protein:10,carbs:56}},
+
+  // ── AMERICAN CLASSICS (7) ────────────────────────────────────────────────────
+  {id:'a1',name:'Classic Smash Burger',cuisine:'American',emoji:'🍔',time:'20 min',protein:'32g',
+    flavors:['umami','rich','salty'],meal:['lunch','dinner'],servings:2,
+    ingredients:['400g beef mince (20% fat)','2 GF brioche buns','2 slices cheddar','Pickles','2 tsp garlic-infused oil','Salt & pepper','Sauce: 3 tbsp plain yogurt · 1 tbsp ketchup · 1 tsp mustard · ½ tsp smoked paprika · splash of pickle brine','Shredded iceberg lettuce, sliced tomato'],
+    method:['Mix sauce ingredients. Refrigerate.','Divide mince into 4 loose balls (don\'t overwork). Season.','Heat a heavy pan or griddle over highest heat until smoking.','Add a ball of mince. Immediately smash flat with a spatula and press hard for 10 seconds. Season the top.','Cook 2 min until edges are deeply crispy and browned. Flip once, add cheese, cook 30 sec.','Stack 2 patties per bun. Add sauce, lettuce, tomato, pickles.'],
+    macros:{cal:580,protein:32,carbs:34}},
+
+  {id:'a2',name:'Bratwurst & Warm Potato Salad',cuisine:'American',emoji:'🌭',time:'30 min',protein:'24g',
+    flavors:['salty','herby','umami'],meal:['lunch','dinner'],servings:2,
+    ingredients:['4 bratwurst sausages (check label — no onion/garlic filler)','500g baby potatoes, halved','2 tbsp garlic-infused oil','2 tbsp wholegrain mustard','1 tbsp apple cider vinegar','Small bunch fresh chives, chopped','1 tsp smoked paprika','Salt & pepper'],
+    method:['Boil potatoes in salted water 12–15 min until tender. Drain.','While potatoes cook, fry or grill bratwurst on medium heat 10–12 min, turning until golden and cooked through.','Whisk garlic oil, mustard, vinegar, paprika, salt and pepper into dressing.','Toss warm potatoes in dressing. Scatter chives generously.','Serve bratwurst alongside. Add a GF bun if you like.'],
+    macros:{cal:520,protein:24,carbs:38}},
+
+  {id:'a3',name:'BBQ Pulled Chicken',cuisine:'American',emoji:'🫙',time:'50 min',protein:'40g',
+    flavors:['sweet','umami','rich'],meal:['lunch','dinner'],servings:4,
+    ingredients:['8 chicken thighs, bone-in skin-on','1 can (400g) chopped tomatoes','3 tbsp ketchup','2 tbsp GF soy sauce','2 tbsp brown sugar or maple syrup','1 tbsp apple cider vinegar','1 tsp smoked paprika','1 tsp cumin','½ tsp chilli flakes','2 tbsp garlic-infused oil','GF buns or steamed rice to serve','Pickles and spring onion greens to serve'],
+    method:['Mix tomatoes, ketchup, soy, sugar, vinegar, paprika, cumin and chilli flakes into a sauce.','Season chicken. Sear skin-side down in garlic oil 4 min until golden. Flip and cook 2 more min.','Pour sauce over chicken. Simmer covered on low heat 25–30 min until very tender.','Remove chicken and pull meat from bones using two forks.','Return pulled meat to sauce. Simmer uncovered 5 min until thick and glossy.','Pile onto GF buns or rice. Top with pickles and spring onion greens.'],
+    macros:{cal:490,protein:40,carbs:22}},
+
+  {id:'a4',name:'Hot Honey Fried Chicken Sandwich',cuisine:'American',emoji:'🍯',time:'35 min',protein:'38g',
+    flavors:['heat','sweet','umami'],meal:['lunch','dinner'],servings:2,
+    ingredients:['2 chicken thighs, boneless skinless','50g GF flour or cornflour','1 egg, beaten','50g GF breadcrumbs or panko','1 tsp smoked paprika','1 tsp cayenne pepper','Salt & pepper','Neutral oil for shallow frying','Hot honey: 2 tbsp honey + ½ tsp chilli flakes + pinch cayenne','2 GF burger buns','Pickles, shredded lettuce, sliced tomato'],
+    method:['Flatten chicken to even thickness with a rolling pin.','Set up 3 bowls: seasoned GF flour, beaten egg, panko mixed with paprika and cayenne.','Coat chicken: flour → egg → panko. Press firmly.','Shallow fry in 1cm of oil over medium-high heat 4–5 min per side until deeply golden and cooked through.','Warm honey with chilli flakes and cayenne in a small pan until fragrant.','Assemble: bun, lettuce, fried chicken, drizzle hot honey generously, pickles, tomato.'],
+    macros:{cal:560,protein:38,carbs:44}},
+
+  {id:'a5',name:'Sloppy Joes',cuisine:'American',emoji:'🥫',time:'25 min',protein:'34g',
+    flavors:['umami','sweet','rich'],meal:['lunch','dinner'],servings:4,
+    ingredients:['500g beef mince','1 can (400g) chopped tomatoes','3 tbsp ketchup','1 tbsp GF Worcestershire sauce','1 tbsp GF soy sauce','1 tbsp brown sugar','1 tsp smoked paprika','1 tsp cumin','½ tsp chilli flakes','2 tbsp garlic-infused oil','Salt & pepper','4 GF burger buns, toasted','Pickles and spring onion greens to serve'],
+    method:['Brown mince in garlic oil over high heat, breaking it up, 5–6 min until deeply browned.','Add tomatoes, ketchup, Worcestershire, soy, sugar, paprika, cumin and chilli flakes.','Simmer uncovered 12–15 min, stirring, until thick and saucy. Season well.','Pile generously into toasted buns. Top with pickles and spring onion greens.'],
+    macros:{cal:470,protein:34,carbs:38}},
+
+  {id:'a6',name:'Caesar Salad',cuisine:'American',emoji:'🥗',time:'20 min',protein:'28g',
+    flavors:['umami','salty','herby'],meal:['lunch'],servings:2,
+    ingredients:['2 romaine or cos lettuce hearts, leaves separated','4 anchovy fillets, finely chopped','2 tbsp garlic-infused oil','1 tbsp lemon juice','1 tsp Dijon mustard','2 tbsp finely grated Parmesan','1 tsp GF Worcestershire sauce','Salt & black pepper','GF croutons: 2 thick slices GF sourdough torn and tossed in garlic oil, baked 200°C 10 min','2 soft-boiled eggs (optional)','Extra Parmesan to serve'],
+    method:['Make croutons: toss torn GF bread in garlic oil. Bake at 200°C for 10 min until golden. Cool.','Whisk anchovy, garlic oil, lemon, mustard, Parmesan and Worcestershire. Season very generously.','Toss lettuce leaves in dressing until every leaf is coated.','Top with croutons, soft egg and extra Parmesan shavings.'],
+    macros:{cal:360,protein:28,carbs:18}},
+
+  {id:'a7',name:'Philly Cheesesteak',cuisine:'American',emoji:'🥩',time:'20 min',protein:'38g',
+    flavors:['umami','rich','salty'],meal:['lunch','dinner'],servings:2,
+    ingredients:['1 good steak (300g ribeye or sirloin), very thinly sliced (freeze 30 min for easier slicing)','1 green pepper, thinly sliced','2 tbsp garlic-infused oil','Salt & pepper','4 slices provolone or cheddar (or lactose-free)','Spring onion greens, sliced','2 GF hoagie rolls or GF baguette portions'],
+    method:['Heat garlic oil in a large heavy pan over high heat until smoking.','Add green pepper. Cook 3–4 min until softened and slightly charred. Push to one side.','Add sliced steak in a single layer. Season. Cook 1 min undisturbed, then stir 1 more min.','Mix steak and peppers together. Lay cheese slices over. Cover pan 1 min until melted.','Fill warm rolls with the cheesy steak mixture. Top with spring onion greens.'],
+    macros:{cal:540,protein:38,carbs:36}},
 
   // ── SNACKS (10) ──────────────────────────────────────────────────────────────
   {id:'s1',name:'Smashed Cucumber Salad',cuisine:'Korean',emoji:'🥒',time:'10 min',protein:'3g',
@@ -1470,7 +1517,7 @@ function renderHome() {
     {name:'Vietnamese',emoji:'🇻🇳'},{name:'Mexican',emoji:'🌮'},
     {name:'Thai',emoji:'🇹🇭'},{name:'Korean',emoji:'🇰🇷'},
     {name:'Everyday',emoji:'✦'},{name:'Wings',emoji:'🔥'},
-    {name:'Dessert',emoji:'🍑'}
+    {name:'American',emoji:'🇺🇸'},{name:'Dessert',emoji:'🍑'}
   ];
 
   document.getElementById('home-content').innerHTML = `
@@ -1607,8 +1654,11 @@ function renderIdeas() {
   if (!ideas) return;
   el.innerHTML =
     `<div class="ideas-toolbar">
-      <div><div style="font-size:0.88rem;font-weight:800;color:var(--text)">This Week's Ideas</div>
-      <div class="ideas-subtitle">3 dinners · 3 lunches</div></div>
+      <button class="btn-regen-ideas" onclick="backToSplash()">← Back</button>
+      <div style="flex:1;padding:0 8px">
+        <div style="font-size:0.88rem;font-weight:800;color:var(--text)">This Week's Ideas</div>
+        <div class="ideas-subtitle">3 dinners · 3 lunches</div>
+      </div>
       <div style="display:flex;gap:8px">
         <button class="btn-grocery" onclick="showGroceryModal()">🛒 Grocery List</button>
         <button class="btn-regen-ideas" onclick="generateIdeas()">↺</button>
@@ -1653,6 +1703,14 @@ function addDessert() {
   const avail = pool.filter(r => !exclude.includes(r.id));
   dessertIdea = (avail.length ? avail : pool)[Math.floor(Math.random() * (avail.length || pool.length))];
   renderIdeas();
+}
+
+function backToSplash() {
+  document.getElementById('ideas-results').style.display = 'none';
+  document.getElementById('fridge-results').style.display = 'none';
+  document.getElementById('fridge-panel').style.display = 'none';
+  document.getElementById('ideas-splash').style.display = 'flex';
+  ideas = null;
 }
 
 // ─── FRIDGE RAID ──────────────────────────────────────────────────────────────
@@ -2124,6 +2182,7 @@ function cuisineColor(c) {
   if (c === 'Korean')     return 'c-kor';
   if (c === 'Wings')      return 'c-wings';
   if (c === 'Dessert')    return 'c-dessert';
+  if (c === 'American')   return 'c-amer';
   return 'c-every';
 }
 function cuisinePlaceholder(c) {
@@ -2133,6 +2192,7 @@ function cuisinePlaceholder(c) {
   if (c === 'Korean')     return 'p-kor';
   if (c === 'Wings')      return 'p-wings';
   if (c === 'Dessert')    return 'p-dessert';
+  if (c === 'American')   return 'p-amer';
   return 'p-every';
 }
 function cuisineTop(c) {
@@ -2142,6 +2202,7 @@ function cuisineTop(c) {
   if (c === 'Korean')     return 't-kor';
   if (c === 'Wings')      return 't-wings';
   if (c === 'Dessert')    return 't-dessert';
+  if (c === 'American')   return 't-amer';
   return 't-every';
 }
 function flavorEmoji(f) {
