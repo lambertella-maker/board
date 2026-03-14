@@ -2080,9 +2080,6 @@ function openModal(id) {
   heroWrap.innerHTML = recipeImgEl(r, 'hero');
   document.getElementById('modal').insertBefore(heroWrap, document.getElementById('modal').firstChild);
   document.getElementById('modal-body').innerHTML = `
-    <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${id}')" id="modal-fav-btn">
-      ${isFav ? '⭐ Saved to Favourites' : '☆ Save to Favourites'}
-    </button>
     <div class="modal-meta-row">
       <span class="meal-tag meal-protein">🥩 ${r.protein}</span>
       <span class="meal-tag f-herby">⏱ ${r.time}</span>
