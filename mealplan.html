@@ -237,6 +237,14 @@
     color:#c0392b;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;
     transition:all .15s;}
   .delete-recipe-btn:hover{background:rgba(192,57,43,0.1);}
+  .edit-recipe-btn{display:block;width:100%;margin-top:10px;padding:10px;
+    background:rgba(44,95,46,0.06);border:1px solid rgba(44,95,46,0.2);border-radius:10px;
+    color:var(--accent2);font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;
+    transition:all .15s;}
+  .edit-recipe-btn:hover{background:rgba(44,95,46,0.12);}
+  #edit-recipe-screen{position:fixed;inset:0;background:var(--bg);z-index:500;
+    display:none;flex-direction:column;}
+  #edit-recipe-screen.open{display:flex;}
   .restore-btn{background:rgba(44,95,46,0.08);border:1px solid rgba(44,95,46,0.2);
     border-radius:8px;padding:5px 12px;font-size:0.7rem;font-weight:700;
     color:var(--accent2);cursor:pointer;font-family:inherit;white-space:nowrap;}
@@ -2142,6 +2150,7 @@ function openModal(id) {
       <div class="macro-box"><div class="macro-val" style="color:var(--accent2)">${r.macros.protein}g</div><div class="macro-lbl">protein</div></div>
       <div class="macro-box"><div class="macro-val" style="color:var(--c-every)">${r.macros.carbs}g</div><div class="macro-lbl">carbs</div></div>
     </div>
+    ${id.startsWith('c_') ? `<button class="edit-recipe-btn" onclick="showEditRecipe('${id}')">Edit recipe</button>` : ''}
     <button class="delete-recipe-btn" onclick="deleteRecipe('${id}')">Remove this recipe</button>`;
   document.getElementById('recipe-modal').classList.add('open');
 }
@@ -2195,6 +2204,56 @@ function restoreAll() {
   renderRecipes(currentFilter);
   renderFavourites();
   updateDeletedCount();
+}
+
+function showEditRecipe(id) {
+  const r = RECIPES.find(x => x.id === id);
+  if (!r) return;
+  closeModal();
+  document.getElementById('er-name').value = r.name || '';
+  document.getElementById('er-time').value = r.time || '';
+  document.getElementById('er-cuisine').value = r.cuisine || '';
+  document.getElementById('er-ingredients').value = (r.ingredients || []).join('\n');
+  document.getElementById('er-method').value = (r.method || []).join('\n');
+  document.getElementById('er-cal').value = r.macros?.cal || '';
+  document.getElementById('er-protein').value = r.macros?.protein || '';
+  document.getElementById('er-carbs').value = r.macros?.carbs || '';
+  document.getElementById('edit-recipe-screen')._editId = id;
+  document.getElementById('edit-recipe-screen').classList.add('open');
+}
+
+function closeEditRecipe() {
+  document.getElementById('edit-recipe-screen').classList.remove('open');
+}
+
+function saveEditRecipe() {
+  const screen = document.getElementById('edit-recipe-screen');
+  const id = screen._editId;
+  if (!id) return;
+  const updated = {
+    name: document.getElementById('er-name').value.trim(),
+    time: document.getElementById('er-time').value.trim(),
+    cuisine: document.getElementById('er-cuisine').value.trim(),
+    ingredients: document.getElementById('er-ingredients').value.split('\n').map(s => s.trim()).filter(Boolean),
+    method: document.getElementById('er-method').value.split('\n').map(s => s.trim()).filter(Boolean),
+    macros: {
+      cal: parseInt(document.getElementById('er-cal').value) || 0,
+      protein: parseInt(document.getElementById('er-protein').value) || 0,
+      carbs: parseInt(document.getElementById('er-carbs').value) || 0,
+    }
+  };
+  if (!updated.name) { showToast('Name is required'); return; }
+  const idx = RECIPES.findIndex(x => x.id === id);
+  if (idx !== -1) Object.assign(RECIPES[idx], updated);
+  const ci = customRecipes.findIndex(x => x.id === id);
+  if (ci !== -1) {
+    Object.assign(customRecipes[ci], updated);
+    localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+  }
+  closeEditRecipe();
+  renderRecipes(currentFilter);
+  openModal(id);
+  showToast('Recipe updated');
 }
 
 function updateDeletedCount() {
@@ -2838,6 +2897,51 @@ function openLightbox(src, alt) {
       <button class="ar-back-btn" onclick="backToInput()" style="margin-top:12px">← Try again</button>
     </div>
 
+  </div>
+</div>
+
+<div id="edit-recipe-screen">
+  <div class="ar-header">
+    <button class="cook-exit" onclick="closeEditRecipe()">✕ Cancel</button>
+    <div class="ar-title">Edit Recipe</div>
+    <button class="fridge-add-btn" onclick="saveEditRecipe()">Save</button>
+  </div>
+  <div class="ar-body">
+    <div class="ar-label">Name</div>
+    <input id="er-name" class="fridge-input" type="text" style="width:100%;margin-bottom:14px">
+
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <div style="flex:1">
+        <div class="ar-label">Time</div>
+        <input id="er-time" class="fridge-input" type="text" placeholder="e.g. 25 min" style="width:100%">
+      </div>
+      <div style="flex:1">
+        <div class="ar-label">Cuisine</div>
+        <input id="er-cuisine" class="fridge-input" type="text" placeholder="e.g. Thai" style="width:100%">
+      </div>
+    </div>
+
+    <div class="ar-label">Ingredients <span class="ar-hint-inline">one per line</span></div>
+    <textarea id="er-ingredients" class="ar-textarea" style="min-height:140px;margin-bottom:14px"></textarea>
+
+    <div class="ar-label">Method <span class="ar-hint-inline">one step per line</span></div>
+    <textarea id="er-method" class="ar-textarea" style="min-height:140px;margin-bottom:14px"></textarea>
+
+    <div class="ar-label">Macros <span class="ar-hint-inline">per serving</span></div>
+    <div style="display:flex;gap:8px;margin-bottom:24px">
+      <div style="flex:1;text-align:center">
+        <input id="er-cal" class="fridge-input" type="number" style="width:100%;text-align:center">
+        <div class="ar-hint" style="text-align:center;margin-top:3px;margin-bottom:0">kcal</div>
+      </div>
+      <div style="flex:1;text-align:center">
+        <input id="er-protein" class="fridge-input" type="number" style="width:100%;text-align:center">
+        <div class="ar-hint" style="text-align:center;margin-top:3px;margin-bottom:0">protein g</div>
+      </div>
+      <div style="flex:1;text-align:center">
+        <input id="er-carbs" class="fridge-input" type="number" style="width:100%;text-align:center">
+        <div class="ar-hint" style="text-align:center;margin-top:3px;margin-bottom:0">carbs g</div>
+      </div>
+    </div>
   </div>
 </div>
 
