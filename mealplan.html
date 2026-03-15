@@ -383,17 +383,6 @@
     background:var(--accent);border:none;border-radius:12px;padding:12px;
     color:#fff;font-size:0.78rem;font-weight:800;cursor:pointer;font-family:inherit;}
 
-  /* PANTRY */
-  .pantry-item{display:flex;align-items:center;gap:10px;padding:10px 0;
-    border-bottom:1px solid var(--border);cursor:pointer;transition:opacity .12s;}
-  .pantry-item:last-child{border-bottom:none;}
-  .pantry-item span{font-size:0.78rem;color:var(--soft);}
-  .pantry-item.on span{color:var(--text);}
-  .pantry-tick{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);
-    display:flex;align-items:center;justify-content:center;
-    font-size:0.55rem;color:transparent;flex-shrink:0;transition:all .15s;}
-  .pantry-tick.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
-
   /* IDEA GRID (ATK-style photo cards) */
   .idea-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 14px 14px;}
   .idea-card{cursor:pointer;border-radius:10px;overflow:hidden;
@@ -564,28 +553,6 @@
   <div id="recipes-list"></div>
 </div>
 
-<!-- ════ PANTRY ════ -->
-<div class="tab-section" id="tab-pantry">
-  <div class="topbar">
-    <div class="topbar-logo">My Pantry</div>
-    <div class="topbar-date" id="topbar-date-pantry">—</div>
-  </div>
-  <div style="padding:8px 14px 4px">
-    <div style="font-size:0.65rem;color:var(--muted);line-height:1.5">
-      Tick what you always have at home — these will be hidden from your grocery lists.
-    </div>
-  </div>
-  <div id="pantry-list" style="padding:0 14px 16px"></div>
-  <div style="padding:0 14px 8px">
-    <div class="home-section-hdr" style="padding:10px 0 6px">Add your own</div>
-    <div class="fridge-input-row" style="padding:0">
-      <input id="pantry-custom-input" class="fridge-input" type="text" placeholder="e.g. fish sauce" autocomplete="off"
-        onkeydown="if(event.key==='Enter'){event.preventDefault();addPantryCustom()}" />
-      <button class="fridge-add-btn" onclick="addPantryCustom()">Add</button>
-    </div>
-  </div>
-</div>
-
 <!-- ════ IDEAS ════ -->
 <div class="tab-section" id="tab-ideas">
   <div class="topbar">
@@ -722,10 +689,6 @@
   <div class="tab" data-tab="tips" onclick="showTab('tips');document.getElementById('content').scrollTop=0">
     <span class="tab-icon">💡</span>
     <span class="tab-label">Tips</span>
-  </div>
-  <div class="tab" data-tab="pantry" onclick="showTab('pantry');document.getElementById('content').scrollTop=0">
-    <span class="tab-icon">🥫</span>
-    <span class="tab-label">Pantry</span>
   </div>
 </nav>
 </div><!-- /app -->
@@ -1550,16 +1513,6 @@ let ideas = null;
 let fridgeItems = [];
 let dessertIdea = null;
 let checkedIdeas = new Set();
-const PANTRY_DEFAULTS = [
-  'Garlic-infused oil','Olive oil','Neutral oil','Salt','Black pepper',
-  'GF soy sauce','Sesame oil','Rice vinegar','Fish sauce','Chilli flakes',
-  'Smoked paprika','Cumin','Turmeric','Coriander powder','Dried oregano',
-  'Ketchup','Dijon mustard','Wholegrain mustard','Honey','Brown sugar',
-  'Apple cider vinegar','Red wine vinegar','Coconut aminos',
-  'GF Worcestershire sauce','Cornflour','GF plain flour',
-  'Spring onion greens','Lemon','Lime'
-];
-let pantryChecked = new Set(JSON.parse(localStorage.getItem('pantry') || '[]'));
 let groceryChecked = new Set();
 let modalBaseServings = 2;
 let cookRecipe = null;
@@ -1587,7 +1540,6 @@ function showTab(id) {
   document.getElementById('tab-' + id).classList.add('active');
   document.querySelector('.tab[data-tab="' + id + '"]').classList.add('active');
   if (id === 'home') renderHome();
-  if (id === 'pantry') renderPantry();
 }
 
 // ─── HOME ────────────────────────────────────────────────────────────────────
@@ -1853,40 +1805,6 @@ function toggleIdeaCheck(id) {
   renderIdeas();
 }
 
-// ─── PANTRY ───────────────────────────────────────────────────────────────────
-function savePantry() {
-  localStorage.setItem('pantry', JSON.stringify([...pantryChecked]));
-}
-
-function togglePantry(item) {
-  if (pantryChecked.has(item)) pantryChecked.delete(item);
-  else pantryChecked.add(item);
-  savePantry();
-  renderPantry();
-}
-
-function addPantryCustom() {
-  const input = document.getElementById('pantry-custom-input');
-  const val = input.value.trim();
-  if (!val) return;
-  if (!PANTRY_DEFAULTS.includes(val)) PANTRY_DEFAULTS.push(val);
-  pantryChecked.add(val);
-  savePantry();
-  input.value = '';
-  renderPantry();
-}
-
-function renderPantry() {
-  const el = document.getElementById('pantry-list');
-  if (!el) return;
-  el.innerHTML = PANTRY_DEFAULTS.map(item => {
-    const on = pantryChecked.has(item);
-    return `<div class="pantry-item${on ? ' on' : ''}" onclick="togglePantry('${item.replace(/'/g,"\\'")}')">
-      <div class="pantry-tick${on ? ' on' : ''}">✓</div>
-      <span>${item}</span>
-    </div>`;
-  }).join('');
-}
 
 function addDessert() {
   const pool = active().filter(r => r.meal.includes('dessert'));
@@ -2002,9 +1920,6 @@ function buildGroceryList() {
         .trim();
       if (!base || seen[base]) continue;
       seen[base] = true;
-      // Filter out pantry staples
-      const pantryLower = [...pantryChecked].map(p => p.toLowerCase());
-      if (pantryLower.some(p => lower.includes(p) || p.includes(lower.split(' ')[0]))) continue;
       let placed = false;
       for (const cat of GROCERY_CATS) {
         if (cat.keys.some(k => lower.includes(k))) {
@@ -2745,7 +2660,7 @@ function confirmAddRecipe() {
 // ─── INIT ────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const dateStr = new Date().toLocaleDateString('en-GB', {day:'numeric', month:'short'});
-  ['topbar-date-recipes','topbar-date-pantry','topbar-date-ideas','topbar-date-tips']
+  ['topbar-date-recipes','topbar-date-ideas','topbar-date-tips']
     .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = dateStr; });
 
   // Merge custom recipes saved to localStorage
@@ -2761,7 +2676,6 @@ document.addEventListener('DOMContentLoaded', () => {
   Object.assign(RECIPE_IMGS, photoOverrides);
 
   renderHome();
-  renderPantry();
   updateDeletedCount();
 
   const filters = ['All','Breakfast','Lunch','Dinner','Dessert','Snacks'];
