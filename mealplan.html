@@ -1598,7 +1598,7 @@ function fisherYates(arr, rand) {
 
 function renderHome() {
   // Use only built-in recipes with built-in photos — makes pool identical on all devices
-  const pool = seasonalFilter(RECIPES.filter(r => !r.id.startsWith('c_') && BASE_RECIPE_IMGS[r.id] && !r.meal.includes('dessert')));
+  const pool = RECIPES.filter(r => !r.id.startsWith('c_') && BASE_RECIPE_IMGS[r.id] && !r.meal.includes('dessert'));
   // Seed from date — Fisher-Yates gives identical order on every JS engine (V8, JSC, etc.)
   const today = new Date().toISOString().slice(0, 10);
   const seed = today.split('-').reduce((a, b) => a * 100 + parseInt(b), 0);
