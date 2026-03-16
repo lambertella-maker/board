@@ -545,30 +545,34 @@ async function liveEstimates() {
   const atomEst  = Math.round(11143.51 * Math.pow(1.0349, daysA / 365));
   const monzoEst = Math.round(2000.00  * Math.pow(1.0275, daysA / 365));
 
+  // To reanchor: change ANCHOR_DATE + ANCHOR_BAL only. Everything else self-updates.
+  // Monthly: 1 Octopus -110.51 | 2 Amex -1250 | 12 Rent -1250 | 24 Salary | 25 Wise -850 | 26 Vancsi -56.22
   function chaseEstimate() {
-    let bal = 3839.90;
-    const events = [
-      { date: new Date(2026, 2, 12),  amount: -1250      },
-      { date: new Date(2026, 2, 24),  amount: 5136 - 124 },
-      { date: new Date(2026, 2, 25),  amount: -850        },
-      { date: new Date(2026, 2, 26),  amount: -56.22      },
-    ];
-    let cyclePayday = new Date(2026, 2, 24);
-    for (let i = 0; i < 23; i++) {
-      const m = cyclePayday.getMonth(), y = cyclePayday.getFullYear();
-      const nm = m === 11 ? 0 : m + 1, ny = m === 11 ? y + 1 : y;
-      const nextPaydate = new Date(ny, nm, 24);
-      events.push({ date: new Date(ny, nm, 1),  amount: -110.51         });
-      events.push({ date: new Date(ny, nm, 2),  amount: -1250           });
-      events.push({ date: new Date(ny, nm, 12), amount: -1250           });
-      events.push({ date: nextPaydate,          amount: 3441 - 124      });
-      events.push({ date: new Date(ny, nm, 25), amount: -850            });
-      events.push({ date: new Date(ny, nm, 26), amount: -56.22          });
-      cyclePayday = nextPaydate;
-      if (cyclePayday > today) break;
+    const ANCHOR_DATE = new Date(2026, 2, 3); // Mar 3 2026
+    const ANCHOR_BAL  = 3839.90;
+    let bal = ANCHOR_BAL;
+    const anchorMs = ANCHOR_DATE.getTime();
+    const todayMs  = today.getTime();
+    function monthSchedule(y, m) {
+      const salary = (y === 2026 && m === 2) ? 5012 : 3317;
+      return [
+        { date: new Date(y, m,  1), amount: -110.51 },
+        { date: new Date(y, m,  2), amount: -1250   },
+        { date: new Date(y, m, 12), amount: -1250   },
+        { date: new Date(y, m, 24), amount: salary  },
+        { date: new Date(y, m, 25), amount:  -850   },
+        { date: new Date(y, m, 26), amount:  -56.22 }, // Ella pays Vancsi (council tax/water vs electricity diff)
+      ];
     }
-    const ms = today.getTime();
-    events.forEach(ev => { if (ev.date.getTime() <= ms) bal += ev.amount; });
+    let y = ANCHOR_DATE.getFullYear(), m = ANCHOR_DATE.getMonth();
+    const ey = today.getFullYear(), em = today.getMonth();
+    while (y < ey || (y === ey && m <= em)) {
+      for (const ev of monthSchedule(y, m)) {
+        const t = ev.date.getTime();
+        if (t > anchorMs && t <= todayMs) bal += ev.amount;
+      }
+      if (m === 11) { y++; m = 0; } else { m++; }
+    }
     return Math.round(bal);
   }
   const chaseEst = chaseEstimate();

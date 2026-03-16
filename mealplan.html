@@ -2595,28 +2595,40 @@ Source: ${sourceText}`;
     arGeneratedRecipe = JSON.parse(raw);
     arGeneratedRecipe.id = 'c_' + Date.now();
 
-    // Photo fallback chain (Claude no longer responsible for URLs):
-    // 1. User-provided photo already in arPhotoData → keep it
-    // 2. URL mode → use first scraped image (og:image is most reliable)
-    // 3. Manual mode → search Allrecipes by recipe name
+    // Photo fallback chain:
+    // 1. User-provided photo → keep it
+    // 2. URL mode → use first scraped image from the source URL
+    // 3. Manual mode → 2-step HD search (Serious Eats → Epicurious → Food52 → BBC → AllRecipes)
+    // 4. Wikipedia thumbnail as last resort
     if (!arPhotoData) {
       if (fetchedImages.length > 0) {
         arPhotoData = fetchedImages[0];
       } else {
-        // 1. Try Wikipedia REST API — reliable, free, good food photos for known dishes
+        // HD 2-step search via worker
         try {
-          const wikiRes = await fetch(proxyUrl, {
+          const hdRes = await fetch(proxyUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fetch_url: `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(arGeneratedRecipe.name)}` })
+            body: JSON.stringify({ recipe_photo: arGeneratedRecipe.name })
           });
-          const wikiRaw = await wikiRes.json();
-          const wikiJson = JSON.parse(wikiRaw.text);
-          if (wikiJson.thumbnail?.source) {
-            // Upscale the thumbnail (replace e.g. /320px- with /800px-)
-            arPhotoData = wikiJson.thumbnail.source.replace(/\/\d+px-/, '/800px-');
-          }
+          const hdData = await hdRes.json();
+          if (hdData.image) arPhotoData = hdData.image;
         } catch(e) {}
+        // Wikipedia fallback if HD search found nothing
+        if (!arPhotoData) {
+          try {
+            const wikiRes = await fetch(proxyUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ fetch_url: `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(arGeneratedRecipe.name)}` })
+            });
+            const wikiRaw = await wikiRes.json();
+            const wikiJson = JSON.parse(wikiRaw.text);
+            if (wikiJson.thumbnail?.source) {
+              arPhotoData = wikiJson.thumbnail.source.replace(/\/\d+px-/, '/800px-');
+            }
+          } catch(e) {}
+        }
       }
     }
 

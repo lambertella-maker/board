@@ -1225,7 +1225,10 @@ document.getElementById('live-date').textContent =
   today.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 
 function scrollToSection(id) {
-  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  const el = document.getElementById(id);
+  if (!el) return;
+  const navH = document.querySelector('nav')?.offsetHeight || 80;
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - navH - 16, behavior: 'smooth' });
 }
 
 // ── CHART DEFAULTS ───────────────────────────────────────────────────────────
@@ -1414,42 +1417,38 @@ async function liveEstimates() {
   const atomEst  = Math.round(11143.51 * Math.pow(1.0349, daysA / 365));
   const monzoEst = Math.round(2000.00  * Math.pow(1.0275, daysA / 365));
 
-  // CHASE UK — deterministic monthly schedule
-  // Anchored 3 Mar 2026 at £3,839.90 (user-confirmed).
-  // Feb 25 Wise, Feb 26 flatmate, Mar 1 Octopus £110.51, Mar ~2 Amex all already in anchor.
-  // Octopus actual = £110.51/mo full household; Ella's net ~£55 after Vancsi reimburses.
+  // CHASE UK — deterministic schedule from anchor date. To reanchor: change ANCHOR_DATE + ANCHOR_BAL only.
+  // Anchor reflects post-Octopus, post-Amex balance (Mar 1 + ~2 already baked in).
+  // Monthly: 1 Octopus -110.51 | 2 Amex -1250 | 12 Rent -1250 | 24 Salary | 25 Wise -850 | 26 Vancsi -56.22
   function chaseEstimate() {
-    let bal = 3839.90; // confirmed balance 3 Mar 2026
+    const ANCHOR_DATE = new Date(2026, 2, 3); // Mar 3 2026 — update date+bal together if reanchoring
+    const ANCHOR_BAL  = 3839.90;
+    let bal = ANCHOR_BAL;
+    const anchorMs = ANCHOR_DATE.getTime();
+    const todayMs  = today.getTime();
 
-    // Remaining events in current cycle (Mar 24 payday not yet arrived)
-    const events = [
-      { date: new Date(2026, 2, 12),  amount: -1250           }, // Mar rent
-      { date: new Date(2026, 2, 24),  amount: 5136 - 124      }, // Mar salary (bonus month) − flat pot
-      { date: new Date(2026, 2, 25),  amount: -850             }, // Mar Wise
-      { date: new Date(2026, 2, 26),  amount: -56.22           }, // Mar flatmate
-    ];
-
-    // Generate forward cycles from Apr 2026 onwards
-    let cyclePayday = new Date(2026, 2, 24); // Mar 24 — first upcoming payday
-    for (let i = 0; i < 23; i++) {
-      const m  = cyclePayday.getMonth();
-      const y  = cyclePayday.getFullYear();
-      const nm = m === 11 ? 0 : m + 1;
-      const ny = m === 11 ? y + 1 : y;
-      const nextPaydate = new Date(ny, nm, 24);
-      const nextSalary  = 3441; // Apr+ HMRC formula (incl. BiK + GymFlex £97.40/mo)
-      events.push({ date: new Date(ny, nm, 1),   amount: -110.51         }); // Octopus (actual)
-      events.push({ date: new Date(ny, nm, 2),   amount: -1250           }); // Amex (avg)
-      events.push({ date: new Date(ny, nm, 12),  amount: -1250           }); // Rent
-      events.push({ date: nextPaydate,           amount: nextSalary - 124 }); // Payday − flat pot
-      events.push({ date: new Date(ny, nm, 25),  amount: -850            }); // Wise
-      events.push({ date: new Date(ny, nm, 26),  amount: -56.22          }); // Flatmate
-      cyclePayday = nextPaydate;
-      if (cyclePayday > today) break;
+    function monthSchedule(y, m) {
+      // Mar 2026: bonus month net; Apr 2026+: normal net £3,441 − £124 flat pot = £3,317
+      const salary = (y === 2026 && m === 2) ? 5012 : 3317;
+      return [
+        { date: new Date(y, m,  1), amount: -110.51 }, // Octopus full household
+        { date: new Date(y, m,  2), amount: -1250   }, // Amex autopay (avg)
+        { date: new Date(y, m, 12), amount: -1250   }, // Rent
+        { date: new Date(y, m, 24), amount: salary  }, // Salary net − flat pot
+        { date: new Date(y, m, 25), amount:  -850   }, // Wise to US
+        { date: new Date(y, m, 26), amount:  -56.22 }, // Ella pays Vancsi (council tax/water vs electricity diff)
+      ];
     }
 
-    const todayMs = today.getTime();
-    events.forEach(ev => { if (ev.date.getTime() <= todayMs) bal += ev.amount; });
+    let y = ANCHOR_DATE.getFullYear(), m = ANCHOR_DATE.getMonth();
+    const ey = today.getFullYear(), em = today.getMonth();
+    while (y < ey || (y === ey && m <= em)) {
+      for (const ev of monthSchedule(y, m)) {
+        const t = ev.date.getTime();
+        if (t > anchorMs && t <= todayMs) bal += ev.amount;
+      }
+      if (m === 11) { y++; m = 0; } else { m++; }
+    }
     return Math.round(bal);
   }
   const chaseEst = chaseEstimate();
