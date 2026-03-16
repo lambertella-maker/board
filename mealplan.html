@@ -2521,6 +2521,7 @@ function clearPhoto() {
 }
 
 function backToInput() {
+  arPhotoData = null;
   document.getElementById('ar-step-input').style.display = 'block';
   document.getElementById('ar-step-preview').style.display = 'none';
   document.getElementById('ar-loading').style.display = 'none';
@@ -2538,9 +2539,12 @@ async function generateRecipe() {
     return;
   }
 
-  // Get photo
+  // Reset any photo from a previous generation
+  arPhotoData = null;
+
+  // Get photo if user explicitly provided a URL
   const photoUrl = document.getElementById('ar-photo-url').value.trim();
-  if (photoUrl && !arPhotoData) arPhotoData = photoUrl;
+  if (photoUrl) arPhotoData = photoUrl;
 
   // Show loading
   document.getElementById('ar-step-input').style.display = 'none';
