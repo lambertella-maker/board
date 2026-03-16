@@ -212,6 +212,7 @@
     <button class="sb-btn" data-tab="superplan" onclick="showTab('superplan',this)"><span class="sb-btn-icon">🏛️</span>Superplan</button>
     <button class="sb-btn" data-tab="goals" onclick="showTab('goals',this)"><span class="sb-btn-icon">🎯</span>Goals</button>
     <button class="sb-btn" data-tab="fire" onclick="showTab('fire',this)"><span class="sb-btn-icon">🔥</span>FIRE</button>
+    <button class="sb-btn" data-tab="invest" onclick="showTab('invest',this)"><span class="sb-btn-icon">📈</span>Invest</button>
   </nav>
   <div class="sb-footer">
     <a href="dashboard.html" class="sb-desktop-link">↗ Desktop Dashboard</a>
@@ -489,6 +490,67 @@
   </div><!-- /fire-ipad-grid -->
 </div>
 
+<div class="tab-section" id="tab-invest">
+  <div class="topbar"><div class="topbar-logo">Investments</div><button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button></div>
+
+  <div class="metrics-grid">
+    <div class="metric">
+      <div class="metric-label">Total Portfolio</div>
+      <div class="metric-value" id="m-invest-total" style="color:var(--green)">—</div>
+      <div class="metric-sub">All pillars · GBP equiv.</div>
+      <div class="metric-badge badge-green">£850/mo flowing in</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Monthly Flow</div>
+      <div class="metric-value" style="color:var(--indigo)">£850</div>
+      <div class="metric-sub">Wise → Chase US → Fidelity</div>
+      <div class="metric-badge badge-indigo">~$1,100/mo ACH</div>
+    </div>
+  </div>
+
+  <div class="section-title">Investment Accounts</div>
+  <div class="card">
+    <div class="fire-stat-row">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">AbbVie Pension · Aviva</div><div style="font-size:0.64rem;color:var(--muted);">18% total in · 5.5% CAGR · SALX top-ups</div></div>
+      <span class="fire-stat-val" id="m-inv-pension" style="color:var(--pink)">—</span>
+    </div>
+    <div class="fire-stat-row">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Fidelity Brokerage</div><div style="font-size:0.64rem;color:var(--muted);">FSKAX · FTIHX · FXNAX · Zero fees</div></div>
+      <span class="fire-stat-val" id="m-inv-fid" style="color:var(--green)">—</span>
+    </div>
+    <div class="fire-stat-row" style="border-bottom:none;">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Roth IRA</div><div style="font-size:0.64rem;color:var(--muted);">Tax-free growth · never touch</div></div>
+      <span class="fire-stat-val" id="m-inv-roth" style="color:var(--amber)">—</span>
+    </div>
+  </div>
+
+  <div class="section-title">Fund Allocation (Fidelity)</div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">FSKAX</div><div style="font-size:0.64rem;color:var(--muted);">US Total Market Index</div></div>
+      <div style="font-size:0.68rem;color:var(--green);font-weight:600;">Core</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">FTIHX</div><div style="font-size:0.64rem;color:var(--muted);">International Ex-US Index</div></div>
+      <div style="font-size:0.68rem;color:var(--cyan);font-weight:600;">Diversifier</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">FXNAX</div><div style="font-size:0.64rem;color:var(--muted);">US Bond Index</div></div>
+      <div style="font-size:0.68rem;color:var(--amber);font-weight:600;">Ballast</div>
+    </div>
+  </div>
+
+  <div class="section-title">Key Rules</div>
+  <div class="card">
+    <div style="font-size:0.75rem;color:var(--muted);line-height:1.8;">
+      🚫 No ISAs while US citizen · trigger = CLN, not ILR<br>
+      ✅ Always FTC (Form 1116) · never FEIE<br>
+      💸 SALX = 50% of bonus pre-tax into pension<br>
+      🎯 Next: Chase Sapphire Preferred · late 2026
+    </div>
+  </div>
+</div>
+
 </div><!-- /content -->
 
 <!-- ════════════ TAB BAR ════════════ -->
@@ -504,6 +566,9 @@
   </div>
   <div class="tab" data-tab="fire" onclick="showTab('fire',this)">
     <div class="tab-icon">🔥</div><div class="tab-label">FIRE</div>
+  </div>
+  <div class="tab" data-tab="invest" onclick="showTab('invest',this)">
+    <div class="tab-icon">📈</div><div class="tab-label">Invest</div>
   </div>
 </div>
 </div><!-- /app -->
@@ -614,6 +679,19 @@ async function liveEstimates() {
   const pr = document.getElementById('m-pillar-roth');
   if (pr) pr.textContent = '~$' + rothEst.toLocaleString('en-GB');
   document.getElementById('m-pension-sub').textContent = 'Liquid ~£23k + pension ~' + fmt(pensionEst);
+
+  // Invest tab
+  const invPension = document.getElementById('m-inv-pension');
+  const invFid     = document.getElementById('m-inv-fid');
+  const invRoth    = document.getElementById('m-inv-roth');
+  const invTotal   = document.getElementById('m-invest-total');
+  if (invPension) invPension.textContent = '~' + fmt(pensionEst);
+  if (invFid)     invFid.textContent     = '~$' + fidelityEst.toLocaleString('en-GB');
+  if (invRoth)    invRoth.textContent    = '~$' + rothEst.toLocaleString('en-GB');
+  if (invTotal) {
+    const totalInvest = pensionEst + Math.round(fidelityEst * FX_M) + Math.round(rothEst * FX_M);
+    invTotal.textContent = '~£' + Math.round(totalInvest / 1000) + 'k';
+  }
 
   const isMarch = today >= new Date(2026,2,24) && today < APR_PAYDAY;
   const isApr   = today >= APR_PAYDAY;
