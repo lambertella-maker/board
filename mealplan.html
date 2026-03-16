@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Low FODMAP">
 <meta name="theme-color" content="#f7f4ef">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" type="image/png" href="./icon-512.png">
 <title>Low FODMAP Meal Planner</title>
 <style>
   :root {
@@ -2605,16 +2607,11 @@ Source: ${sourceText}`;
     arGeneratedRecipe = JSON.parse(raw);
     arGeneratedRecipe.id = 'c_' + Date.now();
 
-    // Photo fallback chain:
-    // 1. User-provided photo → keep it
-    // 2. URL mode → use first scraped image from the source URL
-    // 3. Manual mode → 2-step HD search (Serious Eats → Epicurious → Food52 → BBC → AllRecipes)
-    // 4. Wikipedia thumbnail as last resort
+    // Photo: user-provided → scraped from URL → worker HD search (Wikipedia-first, then recipe sites)
     if (!arPhotoData) {
       if (fetchedImages.length > 0) {
         arPhotoData = fetchedImages[0];
       } else {
-        // HD search: get image URL, then proxy raw bytes → base64 on client
         try {
           const hdRes = await fetch(proxyUrl, {
             method: 'POST',
@@ -2622,25 +2619,8 @@ Source: ${sourceText}`;
             body: JSON.stringify({ recipe_photo: arGeneratedRecipe.name })
           });
           const hdData = await hdRes.json();
-          if (hdData.image) {
-            arPhotoData = hdData.image;
-          }
+          if (hdData.image) arPhotoData = hdData.image;
         } catch(e) {}
-        // Wikipedia fallback if HD search found nothing
-        if (!arPhotoData) {
-          try {
-            const wikiRes = await fetch(proxyUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ fetch_url: `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(arGeneratedRecipe.name)}` })
-            });
-            const wikiRaw = await wikiRes.json();
-            const wikiJson = JSON.parse(wikiRaw.text);
-            if (wikiJson.thumbnail?.source) {
-              arPhotoData = wikiJson.thumbnail.source.replace(/\/\d+px-/, '/800px-');
-            }
-          } catch(e) {}
-        }
       }
     }
 

@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Ella Finance">
 <meta name="theme-color" content="#080c18">
+<link rel="apple-touch-icon" href="./finance-apple-touch-icon.png">
+<link rel="icon" type="image/png" href="./finance-icon-512.png">
 <title>Ella Lambert — Finance</title>
 <style>
   :root {
@@ -341,13 +343,12 @@
       <div class="pillar-stat-row"><span class="pillar-stat-k">AbbVie match</span><span class="pillar-stat-v">1:1 — +£150/mo = £1,800 free</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Effective total</span><span class="pillar-stat-v" style="color:var(--green)">£300/mo · £3,600/yr</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">First payday</span><span class="pillar-stat-v" style="color:var(--amber)">November 2027</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Then monthly</span><span class="pillar-stat-v">1 batch unlocks/month</span></div>
-      <div style="margin:8px 0 6px; border-top:1px solid rgba(255,255,255,0.06); padding-top:8px; font-size:0.65rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.04em;">Per sell event (one batch = £300 at acquisition)</div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV flat → account</span><span class="pillar-stat-v" style="color:var(--green)">£300 · £0 tax</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV +20% → account</span><span class="pillar-stat-v" style="color:var(--indigo)">~£360 · ~£0 tax</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV −20% → account</span><span class="pillar-stat-v" style="color:var(--amber)">£240 · £0 tax</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Full year rolling</span><span class="pillar-stat-v">~£2,880–£4,320 net</span></div>
-      <div class="pillar-why-text">Your £150/mo is pre-tax salary sacrifice — at your rate, you pay ~£87 in take-home for £150 of shares. AbbVie matches 1:1 for free. Hold each batch 3 years, then log in and sell in one transaction. No income tax, no NI. CGT on price gains only — annual exempt covers it. US: each sell = long-term capital gain, report in annual filing. What you sell ≈ what you bank. Combined with Fidelity: £13,800/yr total investing.</div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Sell strategy</span><span class="pillar-stat-v">Annual sweep · every April</span></div>
+      <div style="margin:8px 0 6px; border-top:1px solid rgba(255,255,255,0.06); padding-top:8px; font-size:0.65rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.04em;">Annual sweep (12 batches = £3,600 at acquisition)</div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV flat → account</span><span class="pillar-stat-v" style="color:var(--green)">£3,600 · £0 tax</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV +20% → account</span><span class="pillar-stat-v" style="color:var(--indigo)">~£4,212 (after ~£108 US CGT)</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV −20% → account</span><span class="pillar-stat-v" style="color:var(--amber)">£2,880 · £0 tax</span></div>
+      <div class="pillar-why-text">Your £150/mo costs ~£117 in take-home (save ~22% IT + NI via salary sacrifice) = ~£1,404/yr actual cash. AbbVie matches 1:1 free. Don't sell each batch as it unlocks. Instead: every April, log in and sell everything that's cleared 3 years — ~10 min, one transaction. UK: no income tax or NI after 3 years, CGT exempt at this scale. US: report long-term capital gain on Schedule D in your normal filing. Even with US CGT, every scenario returns 2–3× your real cash. Check now that your SIP platform stores purchase prices for every batch since Nov 2024 — you'll need them in 2027.</div>
     </div>
   </div>
 
@@ -558,7 +559,7 @@ async function liveEstimates() {
       const salary = (y === 2026 && m === 2) ? 5012 : 3317;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus
-        { date: new Date(y, m,  4), amount: -1250   }, // Amex autopay (varies; 4th used as safe estimate post-anchor)
+        { date: new Date(y, m,  4), amount: -1300   }, // Amex autopay (~4th; avg £1,300, varies £1,100–1,400)
         { date: new Date(y, m, 12), amount: -1250   }, // Rent
         { date: new Date(y, m, 24), amount: salary  }, // Salary net − move pot
         { date: new Date(y, m, 24), amount:  -850   }, // Wise (same day as salary)
