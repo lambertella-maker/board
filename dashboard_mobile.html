@@ -1418,8 +1418,8 @@ async function liveEstimates() {
   const monzoEst = Math.round(2000.00  * Math.pow(1.0275, daysA / 365));
 
   // CHASE UK — deterministic schedule from anchor date. To reanchor: change ANCHOR_DATE + ANCHOR_BAL only.
-  // Anchor reflects post-Octopus, post-Amex balance (Mar 1 + ~2 already baked in).
-  // Monthly: 1 Octopus -110.51 | 2 Amex -1250 | 12 Rent -1250 | 24 Salary | 25 Wise -850 | 26 Vancsi -56.22
+  // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 25 Vancsi, Feb 26 Amex, Mar 1 Octopus.
+  // Monthly: 1 Octopus | 12 Rent | 24 Salary+Wise | 25 Vancsi -53.48 | 26 Amex
   function chaseEstimate() {
     const ANCHOR_DATE = new Date(2026, 2, 3); // Mar 3 2026 — update date+bal together if reanchoring
     const ANCHOR_BAL  = 3839.90;
@@ -1428,15 +1428,15 @@ async function liveEstimates() {
     const todayMs  = today.getTime();
 
     function monthSchedule(y, m) {
-      // Mar 2026: bonus month net; Apr 2026+: normal net £3,441 − £124 flat pot = £3,317
+      // Mar 2026: bonus month net £5,136 − £124 move pot = £5,012; Apr 2026+: £3,441 − £124 = £3,317
       const salary = (y === 2026 && m === 2) ? 5012 : 3317;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus full household
-        { date: new Date(y, m,  2), amount: -1250   }, // Amex autopay (avg)
         { date: new Date(y, m, 12), amount: -1250   }, // Rent
-        { date: new Date(y, m, 24), amount: salary  }, // Salary net − flat pot
-        { date: new Date(y, m, 25), amount:  -850   }, // Wise to US
-        { date: new Date(y, m, 26), amount:  -56.22 }, // Ella pays Vancsi (council tax/water vs electricity diff)
+        { date: new Date(y, m, 24), amount: salary  }, // Salary net − move pot
+        { date: new Date(y, m, 24), amount:  -850   }, // Wise to US (same day as salary)
+        { date: new Date(y, m, 25), amount:  -53.48 }, // Vancsi bills (council tax/water diff)
+        { date: new Date(y, m, 26), amount: -1250   }, // Amex autopay (avg ~£1,200–1,400)
       ];
     }
 

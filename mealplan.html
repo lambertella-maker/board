@@ -2604,7 +2604,7 @@ Source: ${sourceText}`;
       if (fetchedImages.length > 0) {
         arPhotoData = fetchedImages[0];
       } else {
-        // HD 2-step search via worker
+        // HD search: get image URL, then proxy raw bytes → base64 on client
         try {
           const hdRes = await fetch(proxyUrl, {
             method: 'POST',
@@ -2612,7 +2612,21 @@ Source: ${sourceText}`;
             body: JSON.stringify({ recipe_photo: arGeneratedRecipe.name })
           });
           const hdData = await hdRes.json();
-          if (hdData.dataUrl || hdData.image) arPhotoData = hdData.dataUrl || hdData.image;
+          if (hdData.image) {
+            const imgRes = await fetch(proxyUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ fetch_image: hdData.image })
+            });
+            if (imgRes.ok) {
+              const blob = await imgRes.blob();
+              arPhotoData = await new Promise(res => {
+                const reader = new FileReader();
+                reader.onload = e => res(e.target.result);
+                reader.readAsDataURL(blob);
+              });
+            }
+          }
         } catch(e) {}
         // Wikipedia fallback if HD search found nothing
         if (!arPhotoData) {
