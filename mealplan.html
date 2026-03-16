@@ -2956,5 +2956,11 @@ function openLightbox(src, alt) {
 
 <div id="toast"></div>
 
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
+</script>
+
 </body>
 </html>
