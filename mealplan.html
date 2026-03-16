@@ -2525,7 +2525,7 @@ async function generateRecipe() {
   document.getElementById('ar-loading').style.display = 'block';
 
   const isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  const proxyUrl = localStorage.getItem('ar_proxy_url') || (isLocal ? 'http://localhost:8766' : null);
+  const proxyUrl = localStorage.getItem('ar_proxy_url') || 'https://mealplan-proxy.lambert-ella.workers.dev/' || (isLocal ? 'http://localhost:8766' : null);
   if (!proxyUrl) {
     document.getElementById('ar-step-input').style.display = 'block';
     document.getElementById('ar-loading').style.display = 'none';
