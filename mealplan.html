@@ -1597,14 +1597,24 @@ function fisherYates(arr, rand) {
 }
 
 function renderHome() {
-  // Use only built-in recipes with built-in photos — makes pool identical on all devices
-  const pool = RECIPES.filter(r => !r.id.startsWith('c_') && BASE_RECIPE_IMGS[r.id] && !r.meal.includes('dessert'));
-  // Seed from date — Fisher-Yates gives identical order on every JS engine (V8, JSC, etc.)
   const today = new Date().toISOString().slice(0, 10);
-  const seed = today.split('-').reduce((a, b) => a * 100 + parseInt(b), 0);
-  const shuffled = fisherYates(pool, seededRand(seed));
-  const hero = shuffled[0];
-  const picks = shuffled.slice(1, 4);
+
+  // Cache today's picks in localStorage so they're stable across code updates/pool changes
+  let hero, picks;
+  const cached = (() => { try { return JSON.parse(localStorage.getItem('home_picks_v2') || 'null'); } catch(e) { return null; } })();
+  if (cached?.date === today) {
+    hero = RECIPES.find(r => r.id === cached.heroId);
+    picks = (cached.pickIds || []).map(id => RECIPES.find(r => r.id === id)).filter(Boolean);
+  }
+  if (!hero || picks.length < 3) {
+    // Generate fresh picks — only built-in recipes with photos, no desserts
+    const pool = RECIPES.filter(r => !r.id.startsWith('c_') && BASE_RECIPE_IMGS[r.id] && !r.meal.includes('dessert'));
+    const seed = today.split('-').reduce((a, b) => a * 100 + parseInt(b), 0);
+    const shuffled = fisherYates(pool, seededRand(seed));
+    hero = shuffled[0];
+    picks = shuffled.slice(1, 4);
+    try { localStorage.setItem('home_picks_v2', JSON.stringify({ date: today, heroId: hero.id, pickIds: picks.map(r => r.id) })); } catch(e) {}
+  }
   const dateStr = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
   const src = RECIPE_IMGS[hero.id];
   const pc = cuisinePlaceholder(hero.cuisine);
