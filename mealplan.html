@@ -2612,7 +2612,7 @@ Source: ${sourceText}`;
             body: JSON.stringify({ recipe_photo: arGeneratedRecipe.name })
           });
           const hdData = await hdRes.json();
-          if (hdData.image) arPhotoData = hdData.image;
+          if (hdData.dataUrl || hdData.image) arPhotoData = hdData.dataUrl || hdData.image;
         } catch(e) {}
         // Wikipedia fallback if HD search found nothing
         if (!arPhotoData) {
