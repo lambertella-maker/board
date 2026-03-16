@@ -2617,18 +2617,6 @@ Source: ${sourceText}`;
             arPhotoData = wikiJson.thumbnail.source.replace(/\/\d+px-/, '/800px-');
           }
         } catch(e) {}
-        // 2. Fallback: search BBC Good Food (well server-rendered)
-        if (!arPhotoData) {
-          try {
-            const searchRes = await fetch(proxyUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ fetch_url: `https://www.bbcgoodfood.com/search?q=${encodeURIComponent(arGeneratedRecipe.name)}` })
-            });
-            const searchData = await searchRes.json();
-            if (searchData.images?.length > 0) arPhotoData = searchData.images[0];
-          } catch(e) {}
-        }
       }
     }
 
