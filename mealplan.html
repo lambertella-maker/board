@@ -816,11 +816,6 @@ const RECIPES = [
     method:['Combine mango, carrot and prawns in a bowl.','Whisk lime juice, fish sauce and chilli for dressing.','Toss salad with dressing.','Top with herbs and crushed peanuts.'],
     macros:{cal:260,protein:22,carbs:28}},
 
-  {id:'v6',name:'Caramelised Ginger Prawns',cuisine:'Vietnamese',emoji:'🦐',time:'15 min',protein:'26g',
-    flavors:['umami','citrus','heat'],meal:['lunch','dinner'],
-    ingredients:['400g raw king prawns, peeled and deveined','2 tbsp fish sauce','2 tbsp brown sugar','4cm ginger, julienned','1 bird\'s eye chilli, sliced','2 tbsp garlic-infused oil','Spring onion greens','Steamed rice and bok choy'],
-    method:['Mix fish sauce and sugar until dissolved.','Heat infused oil in a wok over high heat.','Add ginger and chilli, fry 30 seconds.','Add prawns in a single layer — cook 1 min per side until pink.','Pour sauce in — it will caramelise fast. Toss prawns to coat.','Serve immediately over rice with bok choy. Top with spring onion greens.'],
-    macros:{cal:310,protein:26,carbs:28}},
 
   {id:'v7',name:'Bun Cha Pork Bowl',cuisine:'Vietnamese',emoji:'🍖',time:'30 min',protein:'28g',
     flavors:['citrus','umami','herby'],meal:['lunch','dinner'],
@@ -1601,7 +1596,7 @@ function fisherYates(arr, rand) {
 
 function renderHome() {
   // Use only built-in recipes with built-in photos — makes pool identical on all devices
-  const pool = RECIPES.filter(r => !r.id.startsWith('c_') && BASE_RECIPE_IMGS[r.id] && !r.meal.includes('dessert'));
+  const pool = seasonalFilter(RECIPES.filter(r => !r.id.startsWith('c_') && BASE_RECIPE_IMGS[r.id] && !r.meal.includes('dessert')));
   // Seed from date — Fisher-Yates gives identical order on every JS engine (V8, JSC, etc.)
   const today = new Date().toISOString().slice(0, 10);
   const seed = today.split('-').reduce((a, b) => a * 100 + parseInt(b), 0);
@@ -1697,6 +1692,21 @@ function inferProtein(r) {
   return 'other';
 }
 
+function seasonalFilter(pool) {
+  const now = new Date();
+  const month = now.getMonth(); // 0-indexed; 11 = December
+  const day = now.getDay();     // 0=Sun, 5=Fri, 6=Sat
+  const isDecember = month === 11;
+  const isFriOrSat = day === 5 || day === 6;
+  const rules = {
+    'sh5': () => isDecember,  // Crispy Potato Latkes
+    'b13': () => isFriOrSat,  // Challah (Everyday)
+    'sh2': () => isFriOrSat,  // My Best Challah
+    'sh4': () => isFriOrSat,  // Classic Potato Kugel
+  };
+  return pool.filter(r => { const fn = rules[r.id]; return !fn || fn(); });
+}
+
 function smartPick(pool, count, excludeIds = []) {
   const shuffled = [...pool].filter(r => !excludeIds.includes(r.id))
     .sort(() => Math.random() - 0.5);
@@ -1722,8 +1732,8 @@ function smartPick(pool, count, excludeIds = []) {
 
 function generateIdeas() {
   const a = active();
-  const dPool = a.filter(r => r.meal.includes('dinner'));
-  const lPool = a.filter(r => r.meal.includes('lunch'));
+  const dPool = seasonalFilter(a.filter(r => r.meal.includes('dinner')));
+  const lPool = seasonalFilter(a.filter(r => r.meal.includes('lunch')));
   const dinners = smartPick(dPool, 3);
   const usedIds = dinners.map(r => r.id);
   const lunches = smartPick(lPool, 3, usedIds);
@@ -2613,19 +2623,7 @@ Source: ${sourceText}`;
           });
           const hdData = await hdRes.json();
           if (hdData.image) {
-            const imgRes = await fetch(proxyUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ fetch_image: hdData.image })
-            });
-            if (imgRes.ok) {
-              const blob = await imgRes.blob();
-              arPhotoData = await new Promise(res => {
-                const reader = new FileReader();
-                reader.onload = e => res(e.target.result);
-                reader.readAsDataURL(blob);
-              });
-            }
+            arPhotoData = hdData.image;
           }
         } catch(e) {}
         // Wikipedia fallback if HD search found nothing

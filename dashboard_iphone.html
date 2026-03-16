@@ -546,8 +546,8 @@ async function liveEstimates() {
   const monzoEst = Math.round(2000.00  * Math.pow(1.0275, daysA / 365));
 
   // To reanchor: change ANCHOR_DATE + ANCHOR_BAL only. Everything else self-updates.
-  // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus, Mar ~2 Amex.
-  // Monthly: 1 Octopus | ~2 Amex | 12 Rent | 24 Salary+Wise | 26 Vancsi -53.48
+  // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus. Amex (~4th) is AFTER anchor.
+  // Monthly: 1 Octopus | ~4 Amex | 12 Rent | 24 Salary+Wise | 26 Vancsi -53.48
   function chaseEstimate() {
     const ANCHOR_DATE = new Date(2026, 2, 3); // Mar 3 2026
     const ANCHOR_BAL  = 3839.90;
@@ -558,7 +558,7 @@ async function liveEstimates() {
       const salary = (y === 2026 && m === 2) ? 5012 : 3317;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus
-        { date: new Date(y, m,  2), amount: -1250   }, // Amex autopay (~31st–1st, estimated as 2nd)
+        { date: new Date(y, m,  4), amount: -1250   }, // Amex autopay (varies; 4th used as safe estimate post-anchor)
         { date: new Date(y, m, 12), amount: -1250   }, // Rent
         { date: new Date(y, m, 24), amount: salary  }, // Salary net − move pot
         { date: new Date(y, m, 24), amount:  -850   }, // Wise (same day as salary)
