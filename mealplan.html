@@ -2533,6 +2533,7 @@ function clearPhoto() {
 
 function backToInput() {
   arPhotoData = null;
+  document.getElementById('ar-photo-url').value = '';
   document.getElementById('ar-step-input').style.display = 'block';
   document.getElementById('ar-step-preview').style.display = 'none';
   document.getElementById('ar-loading').style.display = 'none';
@@ -2854,7 +2855,7 @@ function openLightbox(src, alt) {
       <textarea id="ar-text-input" class="ar-textarea" placeholder="e.g. "Ottolenghi's roast aubergine with pomegranate" or paste a full recipe…"></textarea>
 
       <div class="ar-label" style="margin-top:14px">Photo <span class="ar-hint-inline">(optional)</span></div>
-      <input id="ar-photo-url" class="fridge-input" type="url" placeholder="Paste image URL…" style="margin-bottom:8px" />
+      <input id="ar-photo-url" class="fridge-input" type="url" placeholder="Paste image URL…" style="margin-bottom:8px" autocomplete="off" />
       <div class="ar-drop-zone" id="ar-drop-zone">
         <div class="ar-drop-text">or drag & drop a photo here</div>
         <input type="file" id="ar-file-input" accept="image/*" style="display:none" onchange="handlePhotoFile(this)">
