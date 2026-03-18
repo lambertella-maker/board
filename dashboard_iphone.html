@@ -349,7 +349,7 @@
       <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV flat → account</span><span class="pillar-stat-v" style="color:var(--green)">£3,600 · £0 tax</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV +20% → account</span><span class="pillar-stat-v" style="color:var(--indigo)">~£4,212 (after ~£108 US CGT)</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV −20% → account</span><span class="pillar-stat-v" style="color:var(--amber)">£2,880 · £0 tax</span></div>
-      <div class="pillar-why-text">Your £150/mo costs ~£117 in take-home (save ~22% IT + NI via salary sacrifice) = ~£1,404/yr actual cash. AbbVie matches 1:1 free. Don't sell each batch as it unlocks. Instead: every April, log in and sell everything that's cleared 3 years — ~10 min, one transaction. UK: no income tax or NI after 3 years, CGT exempt at this scale. US: report long-term capital gain on Schedule D in your normal filing. Even with US CGT, every scenario returns 2–3× your real cash. Check now that your SIP platform stores purchase prices for every batch since Nov 2024 — you'll need them in 2027.</div>
+      <div class="pillar-why-text">Your £150/mo costs ~£87 in take-home (save ~42% via 40% higher-rate IT + 2% NI salary sacrifice) = ~£1,044/yr actual cash. AbbVie matches 1:1 free. Don't sell each batch as it unlocks. Instead: every April, log in and sell everything that's cleared 3 years — ~10 min, one transaction. UK: no income tax or NI after 3 years, CGT exempt at this scale. US: report long-term capital gain on Schedule D in your normal filing. Even with US CGT, every scenario returns 2.8–4× your real cash. Check now that your SIP platform stores purchase prices for every batch since Nov 2024 — you'll need them in 2027.</div>
     </div>
   </div>
 
@@ -704,9 +704,12 @@ async function liveEstimates() {
 
   // Net worth composition
   const FX_M = liveFX;
+  const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
+  const sipEst = Math.max(0, sipCompleted) * 300; // acquisition cost · £300/month (employee + AbbVie match)
   const mSegs = [
     { label:'UK Savings',     val: atomEst + monzoEst + chaseEst,  color:'#22d3ee', note:'Atom · Monzo · Chase UK' },
     { label:'AbbVie Pension', val: pensionEst,                      color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
+    { label:'ABBV SIP Shares',val: sipEst,                          color:'#f472b6', note:'Locked 3yr · acquisition cost' },
     { label:'US Brokerage',   val: Math.round(fidelityEst * FX_M), color:'#34d399', note:'Fidelity — FSKAX/FTIHX/FXNAX' },
     { label:'Roth IRA',       val: Math.round(rothEst * FX_M),     color:'#fbbf24', note:'Tax-free · never touch' },
     { label:'US Cash',        val: Math.round(chaseUSEst * 0.77),  color:'#6366f1', note:'Chase US — pipeline hub' },

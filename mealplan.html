@@ -2442,10 +2442,7 @@ function showAddRecipe() {
   document.getElementById('add-recipe-screen').classList.add('open');
   // Show/hide key section based on whether key exists
   const hasKey = !!localStorage.getItem('ar_api_key');
-  document.getElementById('ar-key-toggle').textContent = hasKey ? '⚙️ API Key (saved)' : '⚙️ Set API Key (required)';
-  if (!hasKey) {
-    document.getElementById('ar-key-panel').style.display = 'block';
-  }
+  document.getElementById('ar-key-toggle').textContent = hasKey ? '⚙️ API Key (saved)' : '⚙️ Settings';
   backToInput();
 }
 
@@ -2545,11 +2542,7 @@ async function generateRecipe() {
   if (!text) { alert('Paste something first — a dish name, URL, or recipe text.'); return; }
 
   const apiKey = localStorage.getItem('ar_api_key');
-  if (!apiKey) {
-    document.getElementById('ar-key-panel').style.display = 'block';
-    document.getElementById('ar-key-status').textContent = '⚠ Please enter your API key first';
-    return;
-  }
+  // Cloud worker handles auth via its own API key — no need to enter one in the browser
 
   // Reset any photo from a previous generation
   arPhotoData = null;
@@ -2612,7 +2605,7 @@ Source: ${sourceText}`;
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
+        ...(apiKey ? { 'x-api-key': apiKey } : {}),
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
@@ -2867,25 +2860,21 @@ function openLightbox(src, alt) {
 
       <button class="btn-generate ar-generate-btn" id="ar-generate-btn" onclick="generateRecipe()">✨ Generate Recipe</button>
 
-      <!-- API key setup (collapsed by default if key exists) -->
+      <!-- Settings (collapsed by default) -->
       <div id="ar-key-section">
-        <button class="ar-key-toggle" onclick="toggleKeySection()" id="ar-key-toggle">⚙️ API Key</button>
+        <button class="ar-key-toggle" onclick="toggleKeySection()" id="ar-key-toggle">⚙️ Settings</button>
         <div id="ar-key-panel" style="display:none">
-          <div class="ar-hint" style="margin-bottom:6px">Get your key at console.anthropic.com → API Keys. Saved to this browser only.</div>
+          <div class="ar-hint" style="margin-bottom:10px;color:var(--accent2)">☁️ Cloud worker connected — no API key required.</div>
+          <div class="ar-hint" style="margin-bottom:6px;margin-top:4px">Optional: override with your own key from console.anthropic.com → API Keys.</div>
           <div class="fridge-input-row" style="padding:0">
-            <input id="ar-key-input" class="fridge-input" type="password" placeholder="sk-ant-…" />
+            <input id="ar-key-input" class="fridge-input" type="password" placeholder="sk-ant-… (optional override)" />
             <button class="fridge-add-btn" onclick="saveApiKey()">Save</button>
           </div>
           <button onclick="clearApiKey()" style="background:none;border:none;color:var(--muted);font-size:0.7rem;padding:4px 0;cursor:pointer;text-decoration:underline">Clear saved key</button>
           <div id="ar-key-status" class="ar-hint" style="margin-top:2px"></div>
-          <div class="ar-hint" style="margin:10px 0 4px">Cloud proxy URL <span style="color:var(--muted)">(required on iPhone/iPad & GitHub Pages)</span></div>
-          <div class="ar-hint" style="margin-bottom:6px">Deploy <code style="font-size:0.7rem;background:var(--border);padding:2px 4px;border-radius:3px">~/.claude/scripts/mealplan-worker.js</code> as a Cloudflare Worker, paste URL here.</div>
-          <div class="fridge-input-row" style="padding:0">
-            <input id="ar-proxy-input" class="fridge-input" type="url" placeholder="https://your-worker.workers.dev" />
-            <button class="fridge-add-btn" onclick="saveProxyUrl()">Save</button>
-          </div>
-          <button onclick="clearProxyUrl()" style="background:none;border:none;color:var(--muted);font-size:0.7rem;padding:4px 0;cursor:pointer;text-decoration:underline">Clear proxy URL</button>
           <div id="ar-proxy-status" class="ar-hint" style="margin-top:2px"></div>
+          <!-- Hidden proxy inputs kept for JS compatibility -->
+          <input id="ar-proxy-input" type="hidden" />
         </div>
       </div>
     </div>
