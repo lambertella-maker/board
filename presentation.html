@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I built an AI app with Claude Code</title>
+<style>
+  :root {
+    --bg:#f7f4ef; --card:#ffffff; --card2:#faf8f5; --border:#e6e0d8;
+    --accent:#b5451b; --accent2:#2c5f2e; --accent3:#3d5a80;
+    --text:#1a1916; --muted:#8a8178; --soft:#5c5650;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,'Helvetica Neue',system-ui,sans-serif;line-height:1.6;}
+
+  /* ── HERO ── */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    align-items:center;text-align:center;padding:5rem 2rem;position:relative;}
+  .hero::before{content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% 40%,rgba(181,69,27,0.07) 0%,transparent 65%);pointer-events:none;}
+  .hero-tag{display:inline-block;background:rgba(181,69,27,.1);border:1px solid rgba(181,69,27,.25);
+    border-radius:20px;padding:.4rem 1.2rem;font-size:.72rem;color:var(--accent);
+    font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2rem;}
+  .hero h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:900;line-height:1.05;
+    letter-spacing:-.03em;margin-bottom:1.4rem;max-width:800px;}
+  .hero h1 em{font-style:normal;color:var(--accent);}
+  .hero p{font-size:1.05rem;color:var(--soft);max-width:520px;line-height:1.85;margin-bottom:3rem;}
+  .hero-meta{display:flex;align-items:center;gap:.75rem;}
+  .avatar{width:44px;height:44px;border-radius:50%;background:var(--accent);color:white;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0;}
+  .author-name{font-weight:700;font-size:.9rem;text-align:left;}
+  .author-sub{font-size:.72rem;color:var(--muted);}
+  .scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+    font-size:.72rem;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:.3rem;}
+  .scroll-arrow{font-size:1.1rem;color:var(--accent);animation:bob 1.8s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* ── LAYOUT ── */
+  .section{max-width:880px;margin:0 auto;padding:5rem 2rem;}
+  .section-tag{display:inline-block;font-size:.63rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.12em;padding:.25rem .85rem;border-radius:12px;margin-bottom:1.2rem;}
+  .tag-rust{background:rgba(181,69,27,.1);color:var(--accent);border:1px solid rgba(181,69,27,.2);}
+  .tag-green{background:rgba(44,95,46,.1);color:var(--accent2);border:1px solid rgba(44,95,46,.2);}
+  .tag-blue{background:rgba(61,90,128,.1);color:var(--accent3);border:1px solid rgba(61,90,128,.2);}
+  .section h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;line-height:1.15;
+    letter-spacing:-.02em;margin-bottom:1rem;}
+  .section>.lead{font-size:1rem;color:var(--soft);line-height:1.85;margin-bottom:1.5rem;max-width:700px;}
+  hr.div{border:none;border-top:1px solid var(--border);max-width:880px;margin:0 auto;}
+
+  /* ── CARDS ── */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;}
+  .card-icon{font-size:1.7rem;margin-bottom:.7rem;}
+  .card-title{font-size:.88rem;font-weight:700;margin-bottom:.35rem;}
+  .card-body{font-size:.78rem;color:var(--soft);line-height:1.65;}
+
+  /* ── SPOTLIGHTS ── */
+  .spotlight{background:var(--card);border:1px solid var(--border);border-radius:18px;
+    padding:1.8rem 2rem;margin-top:1.2rem;display:grid;grid-template-columns:auto 1fr;
+    gap:1.4rem;align-items:start;}
+  .spotlight-icon{font-size:2.6rem;line-height:1;}
+  .spotlight h3{font-size:1rem;font-weight:800;margin-bottom:.45rem;}
+  .spotlight p{font-size:.83rem;color:var(--soft);line-height:1.75;}
+  .badge{display:inline-block;margin-top:.75rem;font-size:.62rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:.08em;padding:.2rem .7rem;border-radius:8px;
+    background:rgba(181,69,27,.08);color:var(--accent);border:1px solid rgba(181,69,27,.15);}
+  .badge.green{background:rgba(44,95,46,.08);color:var(--accent2);border-color:rgba(44,95,46,.15);}
+  .badge.blue{background:rgba(61,90,128,.08);color:var(--accent3);border-color:rgba(61,90,128,.15);}
+
+  /* ── CONVERSATION ── */
+  .convo{margin:2rem 0;display:flex;flex-direction:column;gap:.65rem;}
+  .msg{max-width:82%;padding:.75rem 1rem;border-radius:14px;font-size:.84rem;line-height:1.65;}
+  .msg.user{align-self:flex-end;background:var(--accent);color:white;border-bottom-right-radius:3px;}
+  .msg.claude{align-self:flex-start;background:var(--card);border:1px solid var(--border);
+    color:var(--soft);border-bottom-left-radius:3px;}
+  .msg.claude strong{color:var(--text);}
+  .msg-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--muted);margin-bottom:.25rem;}
+  .msg-label.r{text-align:right;}
+
+  /* ── STEPS ── */
+  .steps{margin:2rem 0;}
+  .step{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.6rem;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--accent);color:white;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;flex-shrink:0;}
+  .step-body h3{font-size:.92rem;font-weight:700;margin-bottom:.3rem;}
+  .step-body p{font-size:.82rem;color:var(--soft);line-height:1.7;}
+
+  /* ── FRIENDS ── */
+  .friend-header{background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:1.3rem 1.5rem;margin-bottom:1rem;}
+  .friend-name{font-size:1.15rem;font-weight:800;margin-bottom:.15rem;}
+  .friend-role{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);}
+  .friend-desc{font-size:.84rem;color:var(--soft);line-height:1.65;margin-top:.5rem;}
+  .friend-apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.85rem;margin-bottom:3rem;}
+  .app-idea{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;}
+  .app-idea strong{display:block;font-size:.84rem;margin-bottom:.3rem;}
+  .app-idea p{font-size:.75rem;color:var(--soft);line-height:1.6;}
+
+  /* ── CODE ── */
+  .code-block{background:var(--text);color:var(--bg);border-radius:12px;
+    padding:1.2rem 1.5rem;font-family:'SF Mono','Menlo',monospace;font-size:.76rem;
+    line-height:1.75;margin:1rem 0;overflow-x:auto;}
+  .c-cmt{color:var(--muted);}
+  .c-str{color:#f5a623;}
+
+  /* ── FINAL ── */
+  .final{min-height:80vh;display:flex;flex-direction:column;justify-content:center;
+    align-items:center;text-align:center;padding:5rem 2rem;}
+  .final h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:-.03em;
+    line-height:1.1;margin-bottom:1.4rem;max-width:640px;}
+  .final h2 em{font-style:normal;color:var(--accent);}
+  .final p{font-size:1rem;color:var(--soft);max-width:500px;line-height:1.85;margin-bottom:1.2rem;}
+  .links{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-top:2rem;}
+  .link-chip{display:inline-flex;align-items:center;gap:.5rem;background:var(--card);
+    border:1px solid var(--border);border-radius:10px;padding:.55rem 1rem;
+    font-size:.77rem;font-family:'SF Mono','Menlo',monospace;color:var(--text);}
+
+  @media(max-width:600px){
+    .spotlight{grid-template-columns:1fr;}
+    .section{padding:3.5rem 1.2rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">Claude Code — a real story</div>
+  <h1>How I built a<br><em>real app</em><br>with AI</h1>
+  <p>No developer. No agency. Just a conversation with Claude Code — and a frustration I wanted to fix.</p>
+  <div class="hero-meta">
+    <div class="avatar">E</div>
+    <div>
+      <div class="author-name">Ella Lambert</div>
+      <div class="author-sub">Health Literacy Coordinator · AbbVie UK</div>
+    </div>
+  </div>
+  <div class="scroll-cue">scroll<div class="scroll-arrow">↓</div></div>
+</div>
+
+<div class="section">
+  <div class="section-tag tag-rust">The problem</div>
+  <h2>I follow a low-FODMAP diet.<br>My recipe system was a mess.</h2>
+  <p class="lead">Low-FODMAP means no garlic, no onion, no lactose, and a lot of reading labels. Every week I was switching between a spreadsheet of safe recipes, a list of bookmarks, and a mental inventory of what I could actually eat. It was exhausting — and it didn't need to be.</p>
+  <div class="cards">
+    <div class="card"><div class="card-icon">📋</div><div class="card-title">Before</div><div class="card-body">Spreadsheet + bookmarks + mental notes + weekly "what do I even eat" anxiety.</div></div>
+    <div class="card"><div class="card-icon">✨</div><div class="card-title">What I wanted</div><div class="card-body">One app. Dietary rules built in. AI that could add any recipe I found. Works like a native phone app.</div></div>
+    <div class="card"><div class="card-icon">🤖</div><div class="card-title">How I got it</div><div class="card-body">I described it to Claude Code in plain English. It wrote every line of code. I just kept asking for changes.</div></div>
+  </div>
+</div>
+<hr class="div">
+
+<div class="section">
+  <div class="section-tag tag-rust">How it works</div>
+  <h2>A real conversation</h2>
+  <p class="lead">You describe what you want. Claude builds it. You react in plain English. It updates. No code knowledge needed.</p>
+  <div class="convo">
+    <div class="msg-label r">Me</div>
+    <div class="msg user">I want a meal planning app for low-FODMAP eating. Tab bar layout, like a real phone app. I want to browse recipes by cuisine, match them to what's in my fridge, and use AI to generate new recipes from anything I find online.</div>
+    <div class="msg-label">Claude</div>
+    <div class="msg claude"><strong>On it.</strong> I'll build a mobile-first PWA with four tabs — Home, Recipes, Fridge Match, and AI Generate. Recipes tagged by cuisine and meal type. FODMAP rules hardcoded in: garlic-infused oil, spring onion greens only, sourdough bread. The fridge matcher cross-references your ingredient list against every recipe. I'll make it installable to your home screen so it looks and feels native…</div>
+    <div class="msg-label r">Me (next session)</div>
+    <div class="msg user">Can it automatically find a photo for each recipe? And I want the daily picks on the home tab to change every day but stay stable if I refresh.</div>
+    <div class="msg claude"><strong>Done.</strong> Added automatic photo lookup — checks Wikipedia first for canonical dish names, then falls back to recipe sites. Home picks are seeded from today's date so they're stable across refreshes, and change every morning at midnight.</div>
+  </div>
+</div>
+<hr class="div">
+
+<div class="section">
+  <div class="section-tag tag-rust">What makes it cool</div>
+  <h2>Features worth showing off</h2>
+
+  <div class="spotlight">
+    <div class="spotlight-icon">✨</div>
+    <div>
+      <h3>AI Recipe Generator — paste anything, get a recipe card</h3>
+      <p>Paste a dish name, URL, photo, or description. Claude reads it, adapts it for low-FODMAP, converts measurements to UK handfuls, and returns a formatted card. One tap to add it to your collection.</p>
+      <span class="badge">The most-used feature</span>
+    </div>
+  </div>
+
+  <div class="spotlight">
+    <div class="spotlight-icon">🧊</div>
+    <div>
+      <h3>Fridge Match — cook what you already have</h3>
+      <p>Type the ingredients you have. The app cross-references every recipe in your collection and shows exactly what you can cook right now, ranked by ingredient overlap. Zero waste, zero thinking.</p>
+      <span class="badge green">Works offline on phone</span>
+    </div>
+  </div>
+
+  <div class="spotlight">
+    <div class="spotlight-icon">📸</div>
+    <div>
+      <h3>Automatic recipe photos — every dish looks beautiful</h3>
+      <p>The app automatically finds a high-quality photo for every recipe — Wikipedia for canonical dishes, then BBC Good Food, Serious Eats, and other sites as fallbacks. No manual uploads ever needed.</p>
+      <span class="badge blue">Fetched live, cached locally</span>
+    </div>
+  </div>
+
+  <div class="spotlight">
+    <div class="spotlight-icon">📱</div>
+    <div>
+      <h3>Installs to your home screen — no App Store</h3>
+      <p>Open in Safari → Share → Add to Home Screen. Installs like a native app, with a custom icon, no browser chrome, and works offline. The service worker caches everything so it loads instantly even without Wi-Fi.</p>
+      <span class="badge">iPhone, iPad, Mac</span>
+    </div>
+  </div>
+
+  <div class="spotlight">
+    <div class="spotlight-icon">🌍</div>
+    <div>
+      <h3>Lives on the internet — accessible from anywhere</h3>
+      <p>Deployed to GitHub Pages (free). Has a real URL. No backend, no server bill, no login. A Cloudflare Worker handles AI calls so it works on any device — not just my Mac.</p>
+      <span class="badge green">Free to host forever</span>
+    </div>
+  </div>
+</div>
+<hr class="div">
+
+<div class="section">
+  <div class="section-tag tag-green">What you could build</div>
+  <h2>Personalised for each of you</h2>
+  <p class="lead">Same process — describe it, iterate, deploy — works for anything.</p>
+
+  <div class="friend-header">
+    <div class="friend-name">Grachi</div>
+    <div class="friend-role">Channel Partner Manager · S&P Global</div>
+    <p class="friend-desc">Pipelines, KPIs, partner relationships — and a dad who loves sailing and takes finance seriously.</p>
+  </div>
+  <div class="friend-apps">
+    <div class="app-idea"><strong>🧭 Dad's Sailing Log</strong><p>Track voyages, log maintenance, note costs. "What did I fix last summer?" — one search.</p></div>
+    <div class="app-idea"><strong>📊 Partner CRM</strong><p>Deal stages, last contact, key notes. Lighter than Salesforce, faster than a spreadsheet.</p></div>
+    <div class="app-idea"><strong>💰 Portfolio Dashboard</strong><p>Holdings, dividend calendar, net worth. Designed exactly for how dad thinks about money.</p></div>
+    <div class="app-idea"><strong>📋 Meeting Prep</strong><p>Paste a partner brief → tailored talking points + follow-up template. 20 minutes saved per call.</p></div>
+  </div>
+
+  <div class="friend-header">
+    <div class="friend-name">Niki</div>
+    <div class="friend-role">Clinical Trial Coordination · AbbVie UK</div>
+    <p class="friend-desc">Complex trial timelines, protocol requirements, patient scheduling, cross-team coordination.</p>
+  </div>
+  <div class="friend-apps">
+    <div class="app-idea"><strong>📅 Visit Tracker</strong><p>Patient visit windows, protocol date maths. "Who needs a call this week?" — one glance.</p></div>
+    <div class="app-idea"><strong>📝 Protocol Checklist</strong><p>Upload criteria → Claude turns it into a searchable, tickable checklist. No more 200-page PDF.</p></div>
+    <div class="app-idea"><strong>🔔 Deviation Log</strong><p>Log deviations with date and type. Auto-generates a TMF summary. Every entry timestamped.</p></div>
+    <div class="app-idea"><strong>🤝 Delegation Tracker</strong><p>Who's delegated for what, with dates. Cleaner than a spreadsheet, shareable with the monitor.</p></div>
+  </div>
+
+  <div class="friend-header">
+    <div class="friend-name">Agus</div>
+    <div class="friend-role">PhD Researcher · ICR · Passionate cook</div>
+    <p class="friend-desc">Would love this exact app — but with her own recipes, no dietary restrictions, and full import from anywhere.</p>
+  </div>
+  <div class="friend-apps">
+    <div class="app-idea"><strong>🍳 Start from this app</strong><p>Remove FODMAP rules in one message: "Remove all dietary restrictions — full garlic, onion, everything."</p></div>
+    <div class="app-idea"><strong>📖 Import anything</strong><p>Ottolenghi URL, Instagram photo, WhatsApp message from mum. Claude structures it into a card.</p></div>
+    <div class="app-idea"><strong>🌍 Her cuisine tags</strong><p>Argentine, Italian, Japanese — whatever she actually cooks. Change the list in one sentence.</p></div>
+    <div class="app-idea"><strong>📐 Lab-brain mode</strong><p>Tag by technique: fermentation, braising, quick. Filter by active vs. total time. Real recipe knowledge base.</p></div>
+  </div>
+</div>
+<hr class="div">
+
+<div class="section">
+  <div class="section-tag tag-blue">Getting started</div>
+  <h2>How to do this yourself</h2>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><div class="step-body"><h3>Get Claude Code</h3><p>Download from <strong>claude.ai/download</strong>. Free tier is enough to start.</p></div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-body"><h3>Describe the problem, not the solution</h3><p>Don't say "build a React app." Say "I want something that solves X for Y people. The annoying part is Z." Claude figures out the rest.</p></div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-body"><h3>Iterate in plain English</h3><p>"Make the buttons bigger." "Add a search." "I want it to work offline." Each request is one message.</p></div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-body"><h3>Share it</h3><p>GitHub Pages is free. Claude walks you through publishing to a real URL in about 10 minutes.</p></div></div>
+  </div>
+  <div class="code-block">
+    <span class="c-cmt"># A good first prompt</span><br>
+    <span class="c-str">"I want an app that [does X].</span><br>
+    <span class="c-str">&nbsp;It's for [me / my team / my dad].</span><br>
+    <span class="c-str">&nbsp;Right now I solve this with [spreadsheet / bookmarks / my brain].</span><br>
+    <span class="c-str">&nbsp;The most annoying part is [Y].</span><br>
+    <span class="c-str">&nbsp;Make it feel like [simple / slick / a real phone app]."</span>
+  </div>
+</div>
+
+<div class="final">
+  <h2>You don't need to know how to code.<br>You need to know <em>what you want.</em></h2>
+  <p>Every app I built started with a frustration. Claude Code didn't give me a career in software — it gave me an answer to a specific problem, faster than any other route.</p>
+  <p style="font-size:.85rem;color:var(--muted);">The real skill is noticing the problem. The spreadsheet you dread every Monday. The thing you search for every week. That's your app.</p>
+  <div class="links">
+    <span class="link-chip">📱 lambertella-maker.github.io/board/mealplan.html</span>
+    <span class="link-chip">🤖 claude.ai/download</span>
+  </div>
+</div>
+
+</body>
+</html>
