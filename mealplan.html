@@ -2437,12 +2437,22 @@ function flavorEmoji(f) {
   return {heat:'🌶️',citrus:'🍋',umami:'🥜',herby:'🌿',salty:'🧂',sweet:'🍯',preppable:'📦',rich:'✨'}[f] || '';
 }
 
+// ─── API KEY HELPERS (localStorage + cookie fallback for iOS PWA persistence) ─
+function getApiKey() {
+  let key = localStorage.getItem('ar_api_key');
+  if (!key) {
+    const m = document.cookie.match(/(?:^|;\s*)ar_ak=([^;]+)/);
+    if (m) { key = decodeURIComponent(m[1]); localStorage.setItem('ar_api_key', key); }
+  }
+  return key || '';
+}
+
 // ─── ADD RECIPE ───────────────────────────────────────────────────────────────
 function showAddRecipe() {
   document.getElementById('add-recipe-screen').classList.add('open');
-  // Show/hide key section based on whether key exists
-  const hasKey = !!localStorage.getItem('ar_api_key');
-  document.getElementById('ar-key-toggle').textContent = hasKey ? '⚙️ API Key (saved)' : '⚙️ Settings';
+  const hasKey = !!getApiKey();
+  document.getElementById('ar-key-toggle').textContent = hasKey ? '⚙️ API Key (saved)' : '⚙️ Set API Key';
+  if (!hasKey) { document.getElementById('ar-key-panel').style.display = 'block'; }
   backToInput();
 }
 
@@ -2466,9 +2476,10 @@ function toggleKeySection() {
 
 function clearApiKey() {
   localStorage.removeItem('ar_api_key');
+  document.cookie = 'ar_ak=;max-age=0;path=/;SameSite=Strict';
   document.getElementById('ar-key-input').value = '';
   document.getElementById('ar-key-status').textContent = 'Key cleared — paste a fresh one from console.anthropic.com';
-  document.getElementById('ar-key-toggle').textContent = '⚙️ Set API Key (required)';
+  document.getElementById('ar-key-toggle').textContent = '⚙️ Set API Key';
 }
 
 function saveProxyUrl() {
@@ -2492,6 +2503,8 @@ function saveApiKey() {
     return;
   }
   localStorage.setItem('ar_api_key', key);
+  // Cookie backup: survives iOS PWA localStorage clearing (1 year expiry)
+  document.cookie = `ar_ak=${encodeURIComponent(key)};max-age=31536000;path=/;SameSite=Strict`;
   document.getElementById('ar-key-status').textContent = '✓ Saved — ready to generate';
   document.getElementById('ar-key-toggle').textContent = '⚙️ API Key (saved)';
   document.getElementById('ar-key-input').value = '';
@@ -2541,8 +2554,12 @@ async function generateRecipe() {
   const text = document.getElementById('ar-text-input').value.trim();
   if (!text) { alert('Paste something first — a dish name, URL, or recipe text.'); return; }
 
-  const apiKey = localStorage.getItem('ar_api_key');
-  // Cloud worker handles auth via its own API key — no need to enter one in the browser
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    document.getElementById('ar-key-panel').style.display = 'block';
+    document.getElementById('ar-key-status').textContent = '⚠ Please enter your API key first';
+    return;
+  }
 
   // Reset any photo from a previous generation
   arPhotoData = null;
@@ -2860,20 +2877,19 @@ function openLightbox(src, alt) {
 
       <button class="btn-generate ar-generate-btn" id="ar-generate-btn" onclick="generateRecipe()">✨ Generate Recipe</button>
 
-      <!-- Settings (collapsed by default) -->
+      <!-- API key setup -->
       <div id="ar-key-section">
-        <button class="ar-key-toggle" onclick="toggleKeySection()" id="ar-key-toggle">⚙️ Settings</button>
+        <button class="ar-key-toggle" onclick="toggleKeySection()" id="ar-key-toggle">⚙️ Set API Key</button>
         <div id="ar-key-panel" style="display:none">
-          <div class="ar-hint" style="margin-bottom:10px;color:var(--accent2)">☁️ Cloud worker connected — no API key required.</div>
-          <div class="ar-hint" style="margin-bottom:6px;margin-top:4px">Optional: override with your own key from console.anthropic.com → API Keys.</div>
+          <div class="ar-hint" style="margin-bottom:6px">Get your key at <strong>console.anthropic.com</strong> → API Keys. Saved to this device permanently.</div>
           <div class="fridge-input-row" style="padding:0">
-            <input id="ar-key-input" class="fridge-input" type="password" placeholder="sk-ant-… (optional override)" />
+            <input id="ar-key-input" class="fridge-input" type="password" placeholder="sk-ant-…" />
             <button class="fridge-add-btn" onclick="saveApiKey()">Save</button>
           </div>
           <button onclick="clearApiKey()" style="background:none;border:none;color:var(--muted);font-size:0.7rem;padding:4px 0;cursor:pointer;text-decoration:underline">Clear saved key</button>
           <div id="ar-key-status" class="ar-hint" style="margin-top:2px"></div>
           <div id="ar-proxy-status" class="ar-hint" style="margin-top:2px"></div>
-          <!-- Hidden proxy inputs kept for JS compatibility -->
+          <!-- Hidden proxy input kept for JS compatibility -->
           <input id="ar-proxy-input" type="hidden" />
         </div>
       </div>
