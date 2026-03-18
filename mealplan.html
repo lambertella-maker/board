@@ -378,7 +378,7 @@
   .fridge-sub{font-size:0.65rem;color:var(--muted);padding:0 14px 10px;}
   .fridge-input-row{display:flex;gap:8px;padding:0 14px 10px;}
   .fridge-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;
-    padding:9px 12px;color:var(--text);font-size:0.78rem;font-family:inherit;outline:none;}
+    padding:9px 12px;color:var(--text);font-size:16px;font-family:inherit;outline:none;}
   .fridge-input:focus{border-color:var(--accent);}
   .fridge-add-btn{background:var(--accent);border:none;border-radius:10px;
     padding:9px 14px;color:#fff;font-size:0.7rem;font-weight:700;cursor:pointer;
@@ -503,12 +503,15 @@
     padding:max(16px,env(safe-area-inset-top)) 16px 12px;
     border-bottom:1px solid var(--border);flex-shrink:0;}
   .ar-title{font-size:0.82rem;font-weight:800;color:var(--text);}
-  .ar-body{flex:1;overflow-y:auto;padding:16px 14px 40px;}
+  .ar-body{flex:1;overflow-y:auto;padding:16px 14px 0;display:flex;flex-direction:column;}
+  .ar-body-content{flex:1;padding-bottom:12px;}
+  .ar-generate-footer{position:sticky;bottom:0;background:linear-gradient(to bottom,transparent 0%,var(--bg) 30%);
+    padding:12px 0 calc(16px + env(safe-area-inset-bottom,0px));flex-shrink:0;}
   .ar-label{font-size:0.72rem;font-weight:800;color:var(--text);margin-bottom:4px;}
   .ar-hint{font-size:0.62rem;color:var(--muted);margin-bottom:10px;line-height:1.4;}
   .ar-hint-inline{font-size:0.62rem;color:var(--muted);font-weight:400;}
   .ar-textarea{width:100%;min-height:120px;background:var(--card);border:1px solid var(--border);
-    border-radius:10px;padding:10px 12px;color:var(--text);font-size:0.78rem;
+    border-radius:10px;padding:10px 12px;color:var(--text);font-size:16px;
     font-family:inherit;outline:none;resize:vertical;box-sizing:border-box;line-height:1.5;}
   .ar-textarea:focus{border-color:var(--accent);}
   .ar-drop-zone{border:1.5px dashed var(--border);border-radius:10px;
@@ -2780,6 +2783,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('img-lightbox').classList.remove('open');
   });
 
+  // Enter key submits recipe (Shift+Enter for newline)
+  const ta = document.getElementById('ar-text-input');
+  if (ta) {
+    ta.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        generateRecipe();
+      }
+    });
+  }
+
   // Add Recipe drag-and-drop
   const dz = document.getElementById('ar-drop-zone');
   if (dz) {
@@ -2859,23 +2873,22 @@ function openLightbox(src, alt) {
   <div class="ar-body" id="ar-body">
 
     <!-- STEP 1: INPUT -->
-    <div id="ar-step-input">
-      <div class="ar-label">Paste anything</div>
-      <div class="ar-hint">A URL, recipe text, dish name, Instagram caption — Claude will figure it out</div>
-      <textarea id="ar-text-input" class="ar-textarea" placeholder="e.g. "Ottolenghi's roast aubergine with pomegranate" or paste a full recipe…"></textarea>
+    <div id="ar-step-input" style="display:flex;flex-direction:column;flex:1;">
+      <div class="ar-body-content">
+        <div class="ar-label">Paste anything</div>
+        <div class="ar-hint">A URL, recipe text, dish name, Instagram caption — Claude will figure it out</div>
+        <textarea id="ar-text-input" class="ar-textarea" placeholder="e.g. "Ottolenghi's roast aubergine with pomegranate" or paste a full recipe…"></textarea>
 
-      <div class="ar-label" style="margin-top:14px">Photo <span class="ar-hint-inline">(optional)</span></div>
-      <input id="ar-photo-url" class="fridge-input" type="url" placeholder="Paste image URL…" style="margin-bottom:8px" autocomplete="off" />
-      <div class="ar-drop-zone" id="ar-drop-zone">
-        <div class="ar-drop-text">or drag & drop a photo here</div>
-        <input type="file" id="ar-file-input" accept="image/*" style="display:none" onchange="handlePhotoFile(this)">
-      </div>
-      <div id="ar-photo-preview" style="display:none">
-        <img id="ar-photo-img" class="ar-photo-preview-img" alt="preview">
-        <button class="ar-photo-clear" onclick="clearPhoto()">✕ Remove</button>
-      </div>
-
-      <button class="btn-generate ar-generate-btn" id="ar-generate-btn" onclick="generateRecipe()">✨ Generate Recipe</button>
+        <div class="ar-label" style="margin-top:14px">Photo <span class="ar-hint-inline">(optional)</span></div>
+        <input id="ar-photo-url" class="fridge-input" type="url" placeholder="Paste image URL…" style="margin-bottom:8px" autocomplete="off" />
+        <div class="ar-drop-zone" id="ar-drop-zone">
+          <div class="ar-drop-text">or drag & drop a photo here</div>
+          <input type="file" id="ar-file-input" accept="image/*" style="display:none" onchange="handlePhotoFile(this)">
+        </div>
+        <div id="ar-photo-preview" style="display:none">
+          <img id="ar-photo-img" class="ar-photo-preview-img" alt="preview">
+          <button class="ar-photo-clear" onclick="clearPhoto()">✕ Remove</button>
+        </div>
 
       <!-- API key setup -->
       <div id="ar-key-section">
@@ -2893,7 +2906,12 @@ function openLightbox(src, alt) {
           <input id="ar-proxy-input" type="hidden" />
         </div>
       </div>
-    </div>
+      </div><!-- /ar-body-content -->
+
+      <div class="ar-generate-footer">
+        <button class="btn-generate ar-generate-btn" id="ar-generate-btn" onclick="generateRecipe()">✨ Generate Recipe</button>
+      </div>
+    </div><!-- /ar-step-input -->
 
     <!-- STEP 2: PREVIEW -->
     <div id="ar-step-preview" style="display:none">

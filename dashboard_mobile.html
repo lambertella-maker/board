@@ -300,9 +300,32 @@
   .paye-warn  { color:var(--amber); font-weight:700; }
   .paye-error { color:var(--red);   font-weight:700; }
   .paye-section-label { font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin:0.8rem 0 0.3rem; }
+
+/* ── BIOMETRIC LOCK ── */
+#lock{position:fixed;inset:0;z-index:9999;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;text-align:center;padding:2rem;}
+#lock.gone{display:none;}
+#lock-icon{font-size:3rem;margin-bottom:1rem;}
+#lock-title{font-size:1.3rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-.02em;}
+#lock-sub{font-size:.8rem;color:var(--muted);margin-bottom:2rem;line-height:1.6;max-width:240px;}
+#lock-btn{background:var(--indigo);color:white;border:none;border-radius:14px;
+  padding:.85rem 2.2rem;font-size:.95rem;font-weight:700;cursor:pointer;
+  font-family:inherit;letter-spacing:-.01em;transition:opacity .15s;}
+#lock-btn:active{opacity:.7;}
+#lock-msg{margin-top:1rem;font-size:.75rem;color:var(--muted);min-height:1.2em;}
 </style>
 </head>
 <body>
+
+<!-- ── Biometric lock overlay ── -->
+<div id="lock">
+  <div id="lock-icon">💰</div>
+  <div id="lock-title">Finance Dashboard</div>
+  <div id="lock-sub">Authenticate to continue</div>
+  <button id="lock-btn" onclick="window._lockAuth()">🔓 Unlock with Face ID</button>
+  <div id="lock-msg"></div>
+</div>
 
 <nav>
   <div class="logo">Ella Lambert — Finance Hub</div>
@@ -1693,6 +1716,90 @@ function mdToHtml(raw) {
   html = html.replace(/\x00B(\d+)\x00/g, (_,n) => blocks[n]);
   return html;
 }
+
+// ── BIOMETRIC LOCK ────────────────────────────────────────────────────────────
+(async () => {
+  const CRED_KEY = 'dash_biometric_cred';
+  const RP_ID   = 'lambertella-maker.github.io';
+  const lock    = document.getElementById('lock');
+  const msg     = document.getElementById('lock-msg');
+  const btn     = document.getElementById('lock-btn');
+
+  function showDash() { lock.classList.add('gone'); }
+
+  // Skip on non-HTTPS (local file / localhost on Mac — WebAuthn requires HTTPS)
+  if (!window.PublicKeyCredential || location.protocol !== 'https:') { showDash(); return; }
+
+  // Already unlocked this browser session
+  if (sessionStorage.getItem('dash_unlocked')) { showDash(); return; }
+
+  async function authenticate() {
+    const stored = localStorage.getItem(CRED_KEY);
+    if (!stored) return false;
+    try {
+      const credIdBytes = Uint8Array.from(atob(stored), c => c.charCodeAt(0));
+      await navigator.credentials.get({
+        publicKey: {
+          challenge: crypto.getRandomValues(new Uint8Array(32)),
+          rpId: RP_ID,
+          allowCredentials: [{ type: 'public-key', id: credIdBytes, transports: ['internal'] }],
+          userVerification: 'required',
+          timeout: 60000
+        }
+      });
+      return true;
+    } catch(e) {
+      if (e.name !== 'NotAllowedError') console.warn('biometric:', e);
+      return false;
+    }
+  }
+
+  async function setup() {
+    try {
+      const cred = await navigator.credentials.create({
+        publicKey: {
+          challenge: crypto.getRandomValues(new Uint8Array(32)),
+          rp: { name: 'Finance Dashboard', id: RP_ID },
+          user: { id: crypto.getRandomValues(new Uint8Array(16)), name: 'ella', displayName: 'Ella' },
+          pubKeyCredParams: [
+            { type: 'public-key', alg: -7 },
+            { type: 'public-key', alg: -257 }
+          ],
+          authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
+          timeout: 60000
+        }
+      });
+      localStorage.setItem(CRED_KEY, btoa(String.fromCharCode(...new Uint8Array(cred.rawId))));
+      return true;
+    } catch(e) {
+      msg.textContent = 'Setup failed — make sure Face ID is enabled in Settings.';
+      return false;
+    }
+  }
+
+  window._lockAuth = async function() {
+    msg.textContent = '';
+    btn.disabled = true;
+    const ok = localStorage.getItem(CRED_KEY) ? await authenticate() : await setup();
+    if (ok) {
+      sessionStorage.setItem('dash_unlocked', '1');
+      showDash();
+    } else {
+      msg.textContent = 'Authentication failed — tap to try again.';
+      btn.textContent = '🔓 Try again';
+      btn.disabled = false;
+    }
+  };
+
+  const credId = localStorage.getItem(CRED_KEY);
+  if (!credId) {
+    document.getElementById('lock-sub').textContent = 'Set up Face ID to protect this app.';
+    btn.textContent = '⚙️ Set up Face ID';
+  } else {
+    // Auto-trigger on open
+    await window._lockAuth();
+  }
+})();
 
 </script>
 </body>
