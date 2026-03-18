@@ -2988,6 +2988,8 @@ function openLightbox(src, alt) {
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
+  // Auto-reload when a new SW takes over — ensures updated HTML is served immediately
+  navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
 }
 </script>
 
