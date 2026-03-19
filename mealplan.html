@@ -206,6 +206,12 @@
     color:var(--soft);display:flex;align-items:flex-start;gap:8px;}
   .modal-ingredients li:last-child{border-bottom:none;}
   .modal-ingredients li::before{content:'·';color:var(--accent);font-weight:800;flex-shrink:0;margin-top:1px;}
+  .modal-tips{list-style:none;padding:0;margin:0 0 4px;}
+  .modal-tips li{font-size:0.78rem;padding:7px 0 7px 22px;position:relative;
+    border-bottom:1px solid var(--border);color:var(--soft);line-height:1.45;}
+  .modal-tips li:last-child{border-bottom:none;}
+  .modal-tips li::before{content:'→';position:absolute;left:0;top:7px;
+    font-size:0.7rem;color:var(--accent);font-weight:700;}
   .modal-method{list-style:none;counter-reset:step;}
   .modal-method li{font-size:0.8rem;padding:8px 0 8px 32px;position:relative;
     border-bottom:1px solid var(--border);color:var(--soft);line-height:1.55;
@@ -2225,6 +2231,7 @@ function openModal(id) {
     <ul class="modal-ingredients" id="modal-ings">${renderIngredients(r)}</ul>
     <div class="modal-section-lbl" style="margin-top:16px">Method</div>
     <ol class="modal-method">${r.method.map(s => `<li>${s}</li>`).join('')}</ol>
+    ${r.tips?.length ? `<div class="modal-section-lbl" style="margin-top:16px">Tips</div><ul class="modal-tips">${r.tips.map(t => `<li>${t}</li>`).join('')}</ul>` : ''}
     <div class="modal-macros">
       <div class="macro-box"><div class="macro-val" style="color:var(--accent)">${r.macros.cal}</div><div class="macro-lbl">kcal</div></div>
       <div class="macro-box"><div class="macro-val" style="color:var(--accent2)">${r.macros.protein}g</div><div class="macro-lbl">protein</div></div>
@@ -2658,10 +2665,11 @@ Rules:
 - meal array must include relevant values from: breakfast, lunch, dinner, dessert, snack
 - flavors array (pick 2-4): heat, citrus, umami, herby, salty, sweet, rich
 - If the source is from a named publication (Milk Street, ATK, America's Test Kitchen, NYT Cooking, NYT, Serious Eats, BBC Good Food, Ottolenghi, etc.), include it in the name e.g. "Milk Street: Dish Name" or "ATK: Dish Name"
+- If the source includes chef's tips, notes, make-ahead advice, or variations, capture them verbatim (or lightly paraphrased) in the "tips" array. Leave tips as [] if none exist in the source.
 - Return ONLY valid JSON, no markdown, no explanation
 
 JSON format:
-{"id":"c_PLACEHOLDER","name":"...","cuisine":"...","emoji":"...","time":"... min","protein":"...g","flavors":["..."],"meal":["..."],"servings":2,"ingredients":["..."],"method":["..."],"macros":{"cal":0,"protein":0,"carbs":0}}
+{"id":"c_PLACEHOLDER","name":"...","cuisine":"...","emoji":"...","time":"... min","protein":"...g","flavors":["..."],"meal":["..."],"servings":2,"ingredients":["..."],"method":["..."],"tips":["..."],"macros":{"cal":0,"protein":0,"carbs":0}}
 
 Source: ${sourceText}`;
 
