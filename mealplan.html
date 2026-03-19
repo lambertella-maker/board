@@ -546,6 +546,48 @@
   .ar-loading-text{text-align:center;font-size:0.75rem;color:var(--muted);font-weight:600;}
   .ar-error-text{background:rgba(139,38,53,0.1);border:1px solid rgba(139,38,53,0.3);
     border-radius:10px;padding:12px;font-size:0.72rem;color:#e07070;line-height:1.5;}
+
+  /* Fridge generate button */
+  .btn-fridge-gen{display:block;margin:0 14px 20px;width:calc(100% - 28px);
+    background:var(--card);border:1.5px solid var(--accent);border-radius:12px;padding:12px;
+    color:var(--accent);font-size:0.78rem;font-weight:800;cursor:pointer;font-family:inherit;}
+  .btn-fridge-gen:active{opacity:0.75;}
+
+  /* ── Desktop layout (≥900px) ───────────────────────────────────────────── */
+  @media(min-width:900px){
+    /* Sidebar nav */
+    #tabbar{position:fixed;top:0;left:0;bottom:0;right:auto;width:220px;
+      flex-direction:column;align-items:stretch;height:100vh;
+      border-right:1px solid var(--border);border-top:none;
+      padding:0;box-shadow:none;background:var(--bg);}
+    #tabbar::before{content:'🌿 Meal Planner';display:block;
+      font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;
+      letter-spacing:.08em;padding:28px 20px 14px;}
+    .tab{flex:0 0 auto;flex-direction:row;gap:10px;padding:11px 16px;
+      justify-content:flex-start;border-radius:8px;margin:2px 8px;}
+    .tab-icon{font-size:1.05rem;}
+    .tab-label{font-size:0.78rem;font-weight:600;letter-spacing:0;text-transform:none;}
+    .tab.active{background:rgba(181,69,27,0.09);border-radius:8px;}
+    .tab.active .tab-icon{filter:none;}
+
+    /* Shift content right */
+    #content{margin-left:220px;padding-bottom:40px;}
+
+    /* Recipe cards → 3-column grid */
+    #recipes-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:0 20px 20px;}
+    .recipe-card{margin:0;}
+
+    /* Add Recipe → centered dialog */
+    #add-recipe-screen{background:rgba(0,0,0,0.42);align-items:center;justify-content:center;padding:40px;}
+    .ar-header{max-width:520px;width:100%;background:var(--bg);
+      border-radius:16px 16px 0 0;border:1px solid var(--border);border-bottom:none;}
+    .ar-body{flex:0 1 auto;max-width:520px;width:100%;max-height:70vh;
+      background:var(--bg);border-radius:0 0 16px 16px;
+      border:1px solid var(--border);border-top:none;overflow-y:auto;}
+
+    /* Wider topbar padding */
+    .topbar{padding:22px 20px 12px;}
+  }
 </style>
 </head>
 <body>
@@ -599,7 +641,8 @@
       <button class="fridge-add-btn" onclick="addFridgeItem()">Add</button>
     </div>
     <div id="fridge-tags" class="fridge-tags"></div>
-    <button class="btn-fridge-match" id="fridge-match-btn" onclick="runFridgeRaid()" style="display:none">Find Recipes →</button>
+    <button class="btn-fridge-match" id="fridge-match-btn" onclick="runFridgeRaid()" style="display:none">Find Matches →</button>
+    <button class="btn-fridge-gen" id="fridge-gen-btn" onclick="generateFridgeRecipe()" style="display:none">✨ Generate new recipe from these</button>
   </div>
 
   <div id="fridge-results" style="display:none">
@@ -1550,6 +1593,7 @@ function showTab(id) {
   document.getElementById('tab-' + id).classList.add('active');
   document.querySelector('.tab[data-tab="' + id + '"]').classList.add('active');
   if (id === 'home') renderHome();
+  localStorage.setItem('lastTab', id);
 }
 
 // ─── HOME ────────────────────────────────────────────────────────────────────
@@ -1893,6 +1937,7 @@ function renderFridgeTags() {
     `<div class="fridge-tag">${item}<button class="fridge-tag-x" onclick="removeFridgeItem(${i})">✕</button></div>`
   ).join('');
   document.getElementById('fridge-match-btn').style.display = fridgeItems.length ? 'block' : 'none';
+  document.getElementById('fridge-gen-btn').style.display = fridgeItems.length ? 'block' : 'none';
 }
 
 function runFridgeRaid() {
@@ -1923,6 +1968,14 @@ function runFridgeRaid() {
   document.getElementById('fridge-grid').innerHTML = results.map((r, i) => ideaCard(r, r.meal.includes('dinner') ? 'dinner' : 'lunch', i)).join('');
   document.getElementById('fridge-results').style.display = 'block';
   document.getElementById('content').scrollTop = 0;
+}
+
+function generateFridgeRecipe() {
+  if (!fridgeItems.length) return;
+  document.getElementById('ar-text-input').value =
+    `Create a recipe using these ingredients I have on hand: ${fridgeItems.join(', ')}`;
+  showAddRecipe();
+  generateRecipe();
 }
 
 // ─── GROCERY LIST ─────────────────────────────────────────────────────────────
@@ -2764,6 +2817,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // Purge any API key that was previously stored in browser — key now lives only in Cloudflare Worker secret
   localStorage.removeItem('ar_api_key');
   document.cookie = 'ar_ak=;max-age=0;path=/;SameSite=Strict';
+
+  // Restore last active tab (prevents iOS PWA reload jumping to home)
+  const lastTab = localStorage.getItem('lastTab');
+  if (lastTab && ['home','recipes','ideas','tips'].includes(lastTab) && lastTab !== 'home') {
+    showTab(lastTab);
+  }
+
+  // Desktop: click backdrop to close Add Recipe dialog
+  document.getElementById('add-recipe-screen').addEventListener('click', e => {
+    if (e.target === document.getElementById('add-recipe-screen')) hideAddRecipe();
+  });
 
   document.getElementById('recipe-modal').addEventListener('click', e => {
     if (e.target === document.getElementById('recipe-modal')) closeModal();
