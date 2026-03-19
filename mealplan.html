@@ -192,6 +192,7 @@
   .modal-close{background:var(--card2);border:1px solid var(--border);border-radius:50%;
     width:28px;height:28px;cursor:pointer;color:var(--soft);font-size:0.85rem;
     display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:inherit;}
+  .modal-expand{display:none;}
   .modal-body{padding:14px 16px;}
   .fav-btn{display:flex;align-items:center;gap:8px;background:rgba(181,69,27,0.06);
     border:1px solid rgba(181,69,27,0.2);border-radius:10px;padding:10px 16px;
@@ -624,10 +625,18 @@
     .modal-backdrop{align-items:center;justify-content:center;}
     .modal{width:580px;max-width:580px;border-radius:20px;
       border:1px solid var(--border);border-bottom:1px solid var(--border);
-      max-height:84vh;padding-bottom:0;}
+      max-height:84vh;padding-bottom:0;transition:width .2s,max-width .2s,height .2s,max-height .2s,border-radius .2s;}
     .modal-handle{display:none;}
     .modal-hero{height:280px;border-radius:20px 20px 0 0;}
     .modal-body{padding:20px 24px;}
+    .modal-expand{display:flex;align-items:center;justify-content:center;
+      background:var(--card2);border:1px solid var(--border);border-radius:50%;
+      width:28px;height:28px;cursor:pointer;color:var(--soft);font-size:0.8rem;
+      font-family:inherit;flex-shrink:0;margin-right:4px;}
+    .modal-expand:hover{background:var(--border);}
+    .modal.expanded{width:94vw!important;max-width:94vw!important;
+      height:92vh!important;max-height:92vh!important;border-radius:16px!important;}
+    .modal.expanded .modal-hero{height:420px;}
 
     /* ── Add Recipe → centered dialog ── */
     #add-recipe-screen{background:rgba(0,0,0,0.42);align-items:center;
@@ -637,6 +646,16 @@
     .ar-body{flex:0 1 auto;max-width:540px;width:100%;max-height:70vh;
       background:var(--bg);border-radius:0 0 16px 16px;
       border:1px solid var(--border);border-top:none;overflow-y:auto;}
+    .ar-generate-footer{position:static;background:transparent;padding:12px 0 20px;}
+
+    /* ── Home tab two-column layout ── */
+    .home-body{display:grid;grid-template-columns:1fr 320px;gap:0;align-items:start;}
+    .home-left .home-hero{margin:0 0 0 24px;height:460px;}
+    .home-right .home-section-hdr{padding:20px 24px 8px;}
+    .home-right .home-picks{grid-template-columns:1fr;padding:0 24px;gap:10px;}
+    .home-right .home-pick-photo{height:80px;aspect-ratio:unset;}
+    .home-section-hdr.home-browse-hdr{padding:20px 24px 8px;}
+    .home-cuisines.home-browse{padding:0 24px 4px;}
   }
 </style>
 </head>
@@ -813,6 +832,7 @@
     <div class="modal-header">
       <div class="modal-title" id="modal-title"></div>
       <button class="modal-cook-btn" onclick="startCookMode(openRecipeId)">👨‍🍳 Cook Mode</button>
+      <button class="modal-expand" id="modal-expand-btn" onclick="toggleModalExpand()" title="Full screen">⛶</button>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body" id="modal-body"></div>
@@ -1732,39 +1752,45 @@ function renderHome() {
       <span class="home-date">${dateStr}</span>
       <span class="home-time">${homeGreeting()}</span>
     </div>
-    <div class="home-hero" onclick="openModal('${hero.id}')">
-      ${heroImg}
-      <div class="home-hero-overlay">
-        <div class="home-eyebrow">${hero.cuisine} · Featured</div>
-        <div class="home-hero-title">${hero.name}</div>
-        <div class="home-hero-footer">
-          <div class="home-hero-meta">
-            <span>⏱ ${hero.time}</span>
-            <span>🥩 ${hero.protein}</span>
+    <div class="home-body">
+      <div class="home-left">
+        <div class="home-hero" onclick="openModal('${hero.id}')">
+          ${heroImg}
+          <div class="home-hero-overlay">
+            <div class="home-eyebrow">${hero.cuisine} · Featured</div>
+            <div class="home-hero-title">${hero.name}</div>
+            <div class="home-hero-footer">
+              <div class="home-hero-meta">
+                <span>⏱ ${hero.time}</span>
+                <span>🥩 ${hero.protein}</span>
+              </div>
+              <button class="home-hero-btn" onclick="event.stopPropagation();openModal('${hero.id}')">View recipe →</button>
+            </div>
           </div>
-          <button class="home-hero-btn" onclick="event.stopPropagation();openModal('${hero.id}')">View recipe →</button>
+        </div>
+      </div>
+      <div class="home-right">
+        <div class="home-section-hdr">Try these</div>
+        <div class="home-picks">
+          ${picks.map(r => {
+            const s = RECIPE_IMGS[r.id];
+            const p = cuisinePlaceholder(r.cuisine);
+            const img = s
+              ? `<img src="${s}" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="this.outerHTML='<div class=\\'home-pick-placeholder ${p}\\'>${r.emoji}</div>'">`
+              : `<div class="home-pick-placeholder ${p}">${r.emoji}</div>`;
+            return `<div class="home-pick-card" onclick="openModal('${r.id}')">
+              <div class="home-pick-photo">${img}</div>
+              <div class="home-pick-info">
+                <div class="home-pick-cuisine">${r.cuisine}</div>
+                <div class="home-pick-name">${r.name}</div>
+              </div>
+            </div>`;
+          }).join('')}
         </div>
       </div>
     </div>
-    <div class="home-section-hdr">Try these</div>
-    <div class="home-picks">
-      ${picks.map(r => {
-        const s = RECIPE_IMGS[r.id];
-        const p = cuisinePlaceholder(r.cuisine);
-        const img = s
-          ? `<img src="${s}" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="this.outerHTML='<div class=\\'home-pick-placeholder ${p}\\'>${r.emoji}</div>'">`
-          : `<div class="home-pick-placeholder ${p}">${r.emoji}</div>`;
-        return `<div class="home-pick-card" onclick="openModal('${r.id}')">
-          <div class="home-pick-photo">${img}</div>
-          <div class="home-pick-info">
-            <div class="home-pick-cuisine">${r.cuisine}</div>
-            <div class="home-pick-name">${r.name}</div>
-          </div>
-        </div>`;
-      }).join('')}
-    </div>
-    <div class="home-section-hdr">Browse</div>
-    <div class="home-cuisines">
+    <div class="home-section-hdr home-browse-hdr">Browse</div>
+    <div class="home-cuisines home-browse">
       ${cuisines.map(c =>
         `<button class="home-cuisine-chip" onclick="jumpToCuisine('${c.name}')">${c.emoji} ${c.name}</button>`
       ).join('')}
@@ -2311,7 +2337,18 @@ function changeServings(id, delta) {
 
 function closeModal() {
   document.getElementById('recipe-modal').classList.remove('open');
+  const m = document.getElementById('modal');
+  m.classList.remove('expanded');
+  const btn = document.getElementById('modal-expand-btn');
+  if (btn) btn.textContent = '⛶';
   openRecipeId = null;
+}
+
+function toggleModalExpand() {
+  const m = document.getElementById('modal');
+  const btn = document.getElementById('modal-expand-btn');
+  m.classList.toggle('expanded');
+  btn.textContent = m.classList.contains('expanded') ? '⊡' : '⛶';
 }
 
 function deleteRecipe(id) {
