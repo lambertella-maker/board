@@ -261,7 +261,7 @@
     </div>
     <div class="metric">
       <div class="metric-label">Net Worth</div>
-      <div class="metric-value" id="m-nw-hero" style="color:var(--indigo)">~£40k</div>
+      <div class="metric-value" id="m-nw-hero" style="color:var(--indigo)">—</div>
       <div class="metric-sub" id="m-pension-sub">Liquid + pension</div>
       <div class="metric-badge badge-indigo">+£13.8k/yr · all channels</div>
     </div>
@@ -411,7 +411,7 @@
 
   <div class="section-title">Total picture</div>
   <div class="superplan-total">
-    <div class="st-box"><div id="m-sp-nw" class="st-val" style="color:var(--amber)">~£40k</div><div class="st-lbl">Wealth today</div><div class="st-note">Age 25</div></div>
+    <div class="st-box"><div id="m-sp-nw" class="st-val" style="color:var(--amber)">—</div><div class="st-lbl">Wealth today</div><div class="st-note">Age 25</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--green)">£29k+</div><div class="st-lbl">Annual creation</div><div class="st-note">£29,367/yr total</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--indigo)">£4M+</div><div class="st-lbl">At age 67</div><div class="st-note">7% CAGR</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--pink)">£23k+</div><div class="st-lbl">State income/yr</div><div class="st-note">UK + US</div></div>
@@ -547,21 +547,8 @@
     </div>
   </div>
 
-  <div class="section-title">Fund Allocation (Fidelity)</div>
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">FSKAX</div><div style="font-size:0.64rem;color:var(--muted);">US Total Market Index</div></div>
-      <div style="font-size:0.68rem;color:var(--green);font-weight:600;">Core</div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">FTIHX</div><div style="font-size:0.64rem;color:var(--muted);">International Ex-US Index</div></div>
-      <div style="font-size:0.68rem;color:var(--cyan);font-weight:600;">Diversifier</div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">FXNAX</div><div style="font-size:0.64rem;color:var(--muted);">US Bond Index</div></div>
-      <div style="font-size:0.68rem;color:var(--amber);font-weight:600;">Ballast</div>
-    </div>
-  </div>
+  <div class="section-title">Fund Allocation (Fidelity · ~$1,100/mo)</div>
+  <div class="card"><div id="m-fund-rows"><div style="color:var(--muted);font-size:0.75rem;">Loading…</div></div></div>
 
   <div class="section-title">Key Rules</div>
   <div class="card">
@@ -615,12 +602,11 @@ const dateLong  = today.toLocaleDateString('en-GB', {weekday:'long', day:'numeri
 document.getElementById('live-date-m').textContent = dateShort;
 document.getElementById('sb-date').textContent = dateLong;
 
-// ── LIVE ESTIMATES (identical logic to desktop) ───────────────────────────────
-async function liveEstimates() {
-  let mkt = null;
-  const liveFX    = mkt?.fx?.usd_to_gbp ?? 0.77;
-  const fskaxDelta = (mkt?.tickers?.FSKAX?.anchor)
-    ? mkt.tickers.FSKAX.current / mkt.tickers.FSKAX.anchor : null;
+// ── LIVE ESTIMATES — pure CAGR model, no server dependency ───────────────────
+function liveEstimates() {
+  const liveFX     = 0.77;
+  const FX_M       = 0.77;
+  const fskaxDelta = null;
 
   const ANCHOR      = new Date(2026, 1, 24);
   const daysSince   = d => Math.max(0, (today - d) / 86400000);
@@ -716,6 +702,26 @@ async function liveEstimates() {
     invTotal.textContent = '~£' + Math.round(totalInvest / 1000) + 'k';
   }
 
+  // Fund allocation breakdown
+  const fundRowsEl = document.getElementById('m-fund-rows');
+  if (fundRowsEl) {
+    const funds = [
+      { name:'FSKAX', desc:'US Total Market Index', pct:85, color:'var(--green)',  role:'Core' },
+      { name:'FTIHX', desc:'International Ex-US',   pct:10, color:'var(--cyan)',   role:'Diversifier' },
+      { name:'FXNAX', desc:'US Bond Index',          pct:5,  color:'var(--amber)', role:'Ballast' },
+    ];
+    const moUSD = 1100;
+    fundRowsEl.innerHTML = funds.map((f, i) => {
+      const holdingUSD = Math.round(fidelityEst * f.pct / 100);
+      const moContrib  = Math.round(moUSD * f.pct / 100);
+      const border = i < funds.length - 1 ? 'border-bottom:1px solid var(--border);' : '';
+      return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;${border}">` +
+        `<div><div style="font-size:0.8rem;font-weight:600;color:var(--text);">${f.name} <span style="font-size:0.68rem;font-weight:500;color:${f.color};">${f.pct}% · ${f.role}</span></div>` +
+        `<div style="font-size:0.64rem;color:var(--muted);">${f.desc} · +$${moContrib}/mo</div></div>` +
+        `<div style="text-align:right;"><div style="font-size:0.92rem;font-weight:700;color:${f.color};">~$${holdingUSD.toLocaleString('en-GB')}</div></div></div>`;
+    }).join('');
+  }
+
   const isMarch = today >= new Date(2026,2,24) && today < APR_PAYDAY;
   const isApr   = today >= APR_PAYDAY;
   const nv = document.getElementById('m-net-value');
@@ -726,7 +732,6 @@ async function liveEstimates() {
   else              { nv.textContent='£3,417';  ns.textContent='Payday 24th';  nb.textContent='→ ~£3,441 Apr'; }
 
   // Net worth composition
-  const FX_M = liveFX;
   const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
   const sipEst = Math.max(0, sipCompleted) * 300; // acquisition cost · £300/month (employee + AbbVie match)
   const mSegs = [
@@ -735,7 +740,7 @@ async function liveEstimates() {
     { label:'ABBV SIP Shares',val: sipEst,                          color:'#f472b6', note:'Locked 3yr · acquisition cost' },
     { label:'US Brokerage',   val: Math.round(fidelityEst * FX_M), color:'#34d399', note:'Fidelity — FSKAX/FTIHX/FXNAX' },
     { label:'Roth IRA',       val: Math.round(rothEst * FX_M),     color:'#fbbf24', note:'Tax-free · never touch' },
-    { label:'US Cash',        val: Math.round(chaseUSEst * 0.77),  color:'#6366f1', note:'Chase US — pipeline hub' },
+    { label:'US Cash',        val: Math.round(chaseUSEst * FX_M),  color:'#6366f1', note:'Chase US — pipeline hub' },
   ];
   const mTotal  = mSegs.reduce((s, x) => s + x.val, 0);
   const mNwFmt  = `~£${Math.round(mTotal / 1000).toLocaleString()}k`;

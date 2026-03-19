@@ -361,7 +361,7 @@
       </div>
       <div class="metric-card">
         <div class="metric-label">Net Worth (total)</div>
-        <div class="metric-value" id="hero-nw-value" style="color:var(--indigo)">~£40k</div>
+        <div class="metric-value" id="hero-nw-value" style="color:var(--indigo)">—</div>
         <div class="metric-sub" id="hero-pension-sub">Liquid £23k + pension ~£18,440</div>
         <span class="metric-badge badge-indigo">+£13,800/yr · Fidelity + SIP</span>
       </div>
@@ -522,7 +522,7 @@
     </div>
 
     <div class="superplan-total">
-      <div><div class="st-label">Total wealth today</div><div id="sp-nw-value" class="st-value" style="color:var(--amber)">~£40k</div><div class="st-note">Liquid + pension · Age 25</div></div>
+      <div><div class="st-label">Total wealth today</div><div id="sp-nw-value" class="st-value" style="color:var(--amber)">—</div><div class="st-note">Liquid + pension · Age 25</div></div>
       <div><div class="st-label">Annual wealth creation</div><div class="st-value" style="color:var(--green)">£29k+</div><div class="st-note">£29,367/yr · all pillars</div></div>
       <div><div class="st-label">Projected at 67</div><div class="st-value" style="color:var(--indigo)">£4M+</div><div class="st-note">Conservative 7% return</div></div>
       <div><div class="st-label">State income at 67</div><div class="st-value" style="color:var(--pink)">£23k+</div><div class="st-note">UK + US state pensions/yr</div></div>
@@ -1313,7 +1313,7 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
     { label: 'ABBV SIP Shares',val: sip,                             color: '#f472b6', note: 'Locked 3yr · acquisition cost est.' },
     { label: 'US Brokerage',   val: Math.round(fidUSD * fx),         color: '#34d399', note: 'Fidelity FSKAX / FTIHX / FXNAX' },
     { label: 'Roth IRA',       val: Math.round(rothUSD * fx),        color: '#fbbf24', note: 'Tax-free retirement · never touch' },
-    { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * 0.77), color: '#6366f1', note: 'Chase US — pipeline hub · $1,500 min' },
+    { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * fx),   color: '#6366f1', note: 'Chase US — pipeline hub · $1,500 min' },
   ];
   const total = segments.reduce((s, x) => s + x.val, 0);
   const nwFmt = `~£${Math.round(total / 1000).toLocaleString()}k`;
@@ -1409,19 +1409,10 @@ updateFire();
 // Savings: AER daily compound. Investments: 7% CAGR + monthly additions. Pension: 5.5% CAGR.
 // Chase UK: deterministic schedule from known paydays.
 
-async function liveEstimates() {
-  let mkt = null;
-  try {
-    const r = await fetch('http://localhost:5001/market-data', {signal: AbortSignal.timeout(4000)});
-    if (r.ok) mkt = await r.json();
-  } catch {}
-  const liveFX    = mkt?.fx?.usd_to_gbp ?? 0.77;
-  const fskaxDelta = (mkt?.tickers?.FSKAX?.anchor)
-    ? mkt.tickers.FSKAX.current / mkt.tickers.FSKAX.anchor : null;
-  const fskaxPct  = mkt?.tickers?.FSKAX?.pct;
-  const mktLabel  = mkt
-    ? `Live · FSKAX ${fskaxPct >= 0 ? '+' : ''}${fskaxPct?.toFixed(2)}% · FX £${liveFX.toFixed(3)}/$`
-    : 'Estimated · server offline';
+function liveEstimates() {
+  const liveFX     = 0.77;                    // no server dependency — pure CAGR model
+  const fskaxDelta = null;
+  const mktLabel   = 'Estimated · CAGR model';
 
   const ANCHOR     = new Date(2026, 1, 24);   // Feb 24 2026 (month is 0-indexed)
   const daysSince  = d => Math.max(0, (today - d) / 86400000);
