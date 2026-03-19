@@ -2617,7 +2617,6 @@ Source: ${sourceText}`;
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...(apiKey ? { 'x-api-key': apiKey } : {}),
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
@@ -2760,6 +2759,10 @@ document.addEventListener('DOMContentLoaded', () => {
     `<div class="filter-chip ${f === 'All' ? 'active' : ''}" data-filter="${f}" onclick="setFilter('${f}')">${f}</div>`
   ).join('');
   renderRecipes('All');
+
+  // Purge any API key that was previously stored in browser — key now lives only in Cloudflare Worker secret
+  localStorage.removeItem('ar_api_key');
+  document.cookie = 'ar_ak=;max-age=0;path=/;SameSite=Strict';
 
   document.getElementById('recipe-modal').addEventListener('click', e => {
     if (e.target === document.getElementById('recipe-modal')) closeModal();
