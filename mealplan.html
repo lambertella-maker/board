@@ -2453,9 +2453,6 @@ function getApiKey() {
 // ─── ADD RECIPE ───────────────────────────────────────────────────────────────
 function showAddRecipe() {
   document.getElementById('add-recipe-screen').classList.add('open');
-  const hasKey = !!getApiKey();
-  document.getElementById('ar-key-toggle').textContent = hasKey ? '⚙️ API Key (saved)' : '⚙️ Set API Key';
-  if (!hasKey) { document.getElementById('ar-key-panel').style.display = 'block'; }
   backToInput();
 }
 
@@ -2558,11 +2555,6 @@ async function generateRecipe() {
   if (!text) { alert('Paste something first — a dish name, URL, or recipe text.'); return; }
 
   const apiKey = getApiKey();
-  if (!apiKey) {
-    document.getElementById('ar-key-panel').style.display = 'block';
-    document.getElementById('ar-key-status').textContent = '⚠ Please enter your API key first';
-    return;
-  }
 
   // Reset any photo from a previous generation
   arPhotoData = null;
@@ -2625,7 +2617,6 @@ Source: ${sourceText}`;
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...(apiKey ? { 'x-api-key': apiKey } : {}),
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
@@ -2673,10 +2664,8 @@ Source: ${sourceText}`;
     const msg = (err.message || '').toLowerCase();
     const isFetch = msg.includes('failed to fetch') || msg.includes('networkerror') || msg.includes('network request failed');
     document.getElementById('ar-error-msg').textContent = isFetch
-      ? '⚠ Request blocked — almost always means the saved API key is wrong or expired. Clear it below and paste a fresh one from console.anthropic.com'
+      ? '⚠ Network error — check your connection and try again'
       : '⚠ ' + (err.message || 'Unknown error');
-    document.getElementById('ar-key-panel').style.display = 'block';
-    document.getElementById('ar-key-toggle').textContent = '⚙️ API Key';
   }
 }
 
@@ -2890,8 +2879,8 @@ function openLightbox(src, alt) {
           <button class="ar-photo-clear" onclick="clearPhoto()">✕ Remove</button>
         </div>
 
-      <!-- API key setup -->
-      <div id="ar-key-section">
+      <!-- API key setup (hidden — key is stored in Cloudflare Worker) -->
+      <div id="ar-key-section" style="display:none">
         <button class="ar-key-toggle" onclick="toggleKeySection()" id="ar-key-toggle">⚙️ Set API Key</button>
         <div id="ar-key-panel" style="display:none">
           <div class="ar-hint" style="margin-bottom:6px">Get your key at <strong>console.anthropic.com</strong> → API Keys. Saved to this device permanently.</div>
