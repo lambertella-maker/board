@@ -1,9 +1,10 @@
-const CACHE = 'mealplan-v1773917617';
+const CACHE = 'mealplan-v1773917677';
 const ASSETS = ['./ep6-burger.png', './y18-panang.png'];
 
 self.addEventListener('install', e => {
-  // Cache static assets only — no skipWaiting, so new SW never interrupts a live session
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+  // skipWaiting: new SW activates immediately so next page load/refresh gets fresh HTML
+  // (clients.claim removed — so existing live sessions are never interrupted)
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
