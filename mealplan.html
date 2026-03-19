@@ -3089,7 +3089,10 @@ function openLightbox(src, alt) {
 
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js');
+  // Unregister any stale SW first, then register fresh — guarantees old cached HTML is never served
+  navigator.serviceWorker.getRegistrations()
+    .then(regs => Promise.all(regs.map(r => r.unregister())))
+    .then(() => navigator.serviceWorker.register('./sw.js'));
 }
 </script>
 
