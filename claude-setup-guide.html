@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code on your Mac — Beginner's Guide</title>
+<style>
+  :root {
+    --bg: #f8f6f2;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --soft: #9ca3af;
+    --border: #e5e7eb;
+    --accent: #7c3aed;
+    --accent-light: #ede9fe;
+    --green: #059669;
+    --green-light: #d1fae5;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --term-bg: #1e1e2e;
+    --term-bar: #2a2a3d;
+    --term-text: #cdd6f4;
+    --term-prompt: #a6e3a1;
+    --term-cmd: #89dceb;
+    --term-dim: #6c7086;
+    --term-out: #bac2de;
+    --term-err: #f38ba8;
+    --term-highlight: #f9e2af;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'Helvetica Neue', Georgia, sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 40%, #0f172a 100%);
+    color: white;
+    padding: 64px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.4) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    position: relative;
+    letter-spacing: -0.02em;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    color: rgba(255,255,255,0.72);
+    max-width: 520px;
+    margin: 0 auto 32px;
+    position: relative;
+    line-height: 1.65;
+  }
+  .hero-steps {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .hero-steps span {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    padding: 4px 14px;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── STEP ── */
+  .step {
+    padding: 56px 0 0;
+  }
+  .step:last-of-type { padding-bottom: 80px; }
+  .step-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .step-num {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(124,58,237,0.3);
+  }
+  .step-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .step p {
+    color: #374151;
+    margin-bottom: 16px;
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-size: 0.93rem;
+    line-height: 1.6;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+  .callout-body strong { display: block; font-weight: 700; margin-bottom: 3px; }
+  .callout.tip   { background: var(--green-light);  border: 1px solid #6ee7b7; color: #064e3b; }
+  .callout.warn  { background: var(--amber-light); border: 1px solid #fcd34d; color: #78350f; }
+  .callout.info  { background: var(--blue-light);  border: 1px solid #93c5fd; color: #1e3a5f; }
+  .callout.note  { background: var(--accent-light); border: 1px solid #c4b5fd; color: #3b0764; }
+
+  /* ── DIVIDER ── */
+  hr.soft {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0 0;
+  }
+
+  /* ── macOS TERMINAL MOCKUP ── */
+  .terminal-wrap {
+    margin: 24px 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.14);
+  }
+  .term-bar {
+    background: var(--term-bar);
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .traffic { width: 13px; height: 13px; border-radius: 50%; }
+  .t-red    { background: #ff5f57; }
+  .t-yellow { background: #ffbd2e; }
+  .t-green  { background: #28c940; }
+  .term-title {
+    flex: 1;
+    text-align: center;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.45);
+    font-family: -apple-system, sans-serif;
+    letter-spacing: 0.01em;
+    margin-left: -37px; /* visually centre past the traffic lights */
+  }
+  .term-body {
+    background: var(--term-bg);
+    padding: 20px 20px 22px;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    color: var(--term-text);
+    min-height: 60px;
+  }
+  .term-line { display: block; }
+  .t-prompt { color: var(--term-prompt); }
+  .t-user   { color: var(--term-prompt); font-weight: 600; }
+  .t-at     { color: var(--term-dim); }
+  .t-dir    { color: #89b4fa; }
+  .t-pct    { color: var(--term-dim); }
+  .t-cmd    { color: var(--term-cmd); }
+  .t-out    { color: var(--term-out); }
+  .t-dim    { color: var(--term-dim); }
+  .t-hi     { color: var(--term-highlight); }
+  .t-err    { color: var(--term-err); }
+  .t-green-t{ color: #a6e3a1; }
+  .t-purple { color: #cba6f7; }
+  .t-cursor { display: inline-block; width: 8px; height: 1.1em; background: var(--term-text); vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ── COMMAND COPY BOX ── */
+  .cmd-box {
+    background: #1e1e2e;
+    border: 1px solid #363653;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+  .cmd-box code {
+    font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 0.88rem;
+    color: #89dceb;
+    flex: 1;
+    word-break: break-all;
+  }
+  .cmd-copy-hint {
+    font-size: 0.68rem;
+    color: #6c7086;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .cmd-prefix { color: #a6e3a1; margin-right: 6px; }
+
+  /* ── SPOTLIGHT MOCKUP ── */
+  .spotlight-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+  }
+  .spotlight {
+    background: rgba(40,40,50,0.92);
+    backdrop-filter: blur(40px);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+  .spot-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .spot-icon { font-size: 1.1rem; color: rgba(255,255,255,0.5); }
+  .spot-input {
+    font-family: -apple-system, sans-serif;
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.9);
+    flex: 1;
+    letter-spacing: -0.01em;
+  }
+  .spot-result {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 18px;
+    background: rgba(124,58,237,0.3);
+  }
+  .spot-app-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+  .spot-app-name { font-size: 0.9rem; color: white; font-weight: 600; font-family: -apple-system, sans-serif; }
+  .spot-app-sub  { font-size: 0.72rem; color: rgba(255,255,255,0.5); font-family: -apple-system, sans-serif; }
+  .spot-other {
+    padding: 8px 18px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .spot-other-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 0;
+  }
+  .spot-other-ico { font-size: 0.8rem; color: rgba(255,255,255,0.3); width: 18px; text-align: center; }
+  .spot-other-lbl { font-size: 0.8rem; color: rgba(255,255,255,0.35); font-family: -apple-system, sans-serif; }
+
+  /* ── DOWNLOAD BUTTON ── */
+  .download-mock {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin: 22px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .dl-site-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dl-favicon { width: 18px; height: 18px; background: #5fa04e; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: white; font-weight: 800; flex-shrink: 0; }
+  .dl-url { font-size: 0.78rem; color: var(--muted); font-family: monospace; }
+  .dl-title { font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+  .dl-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; }
+  .dl-btn {
+    display: inline-block;
+    background: #5fa04e;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: -apple-system, sans-serif;
+    text-decoration: none;
+    cursor: default;
+  }
+  .dl-arrow { margin-left: 4px; }
+
+  /* ── KEY SHORTCUT ── */
+  .kbd {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  /* ── NUMBERED LIST ── */
+  ol.guide-list { padding-left: 22px; }
+  ol.guide-list li { color: #374151; margin-bottom: 10px; font-size: 1.02rem; line-height: 1.65; }
+  ol.guide-list li strong { color: var(--text); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-sep {
+    text-align: center;
+    padding: 40px 0 10px;
+    color: var(--soft);
+    font-size: 1.4rem;
+  }
+
+  /* ── TIPS GRID ── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .tip-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .tip-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .tip-card-icon { font-size: 1.1rem; }
+  .tip-card-title { font-weight: 700; font-size: 0.95rem; }
+  .tip-card p { font-size: 0.87rem; color: #4b5563; margin: 0; line-height: 1.55; }
+  .tip-card code { font-family: 'Menlo', monospace; background: #f3f4f6; padding: 1px 5px; border-radius: 4px; font-size: 0.82rem; color: #7c3aed; }
+
+  /* ── DONE BANNER ── */
+  .done-banner {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: white;
+    border-radius: 16px;
+    padding: 32px 28px;
+    text-align: center;
+    margin: 48px 0 0;
+    box-shadow: 0 8px 30px rgba(5,150,105,0.3);
+  }
+  .done-banner h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.02em; }
+  .done-banner p { color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.6; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1e1e2e;
+    color: #6c7086;
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 0.78rem;
+    margin-top: 48px;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 48px 20px 56px; }
+    .step { padding-top: 44px; }
+    .term-body { font-size: 0.76rem; padding: 16px; }
+    .cmd-box code { font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-badge">🤖 Your complete beginner's guide</div>
+  <h1>Claude Code<br>on your Mac</h1>
+  <p class="hero-sub">No experience needed. If you can follow a recipe, you can do this. Every step is explained in plain English.</p>
+  <div class="hero-steps">
+    <span>Step 1 · Open Terminal</span>
+    <span>Step 2 · Install Node</span>
+    <span>Step 3 · Install Claude</span>
+    <span>Step 4 · Log in</span>
+    <span>Step 5 · Start chatting</span>
+  </div>
+</div>
+
+<!-- ══ MAIN CONTENT ══════════════════════════════════════════════════════════ -->
+<div class="container">
+
+<!-- ─────────────── WHAT IS THE TERMINAL ─────────────── -->
+<div class="step">
+  <div class="step-label">
+    <div class="step-num">?</div>
+    <div class="step-title">First — what even is the Terminal?</div>
+  </div>
+  <p>Your Mac has a secret text-based way to give it instructions — called the <strong>Terminal</strong>. Instead of clicking buttons, you type commands. That's all it is. Think of it like texting your computer instead of tapping on icons.</p>
+  <p>It sounds scary but it's not. Every command you'll type in this guide is shown exactly as you need to type it. You literally just copy and paste.</p>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body">
+      <strong>The golden rule of Terminal</strong>
+      If something goes wrong, nothing explodes. You can always close the window and start fresh. You cannot break your Mac by typing the wrong thing in this guide.
+    </div>
+  </div>
+</div>
+
+<hr class="soft">
+
+<!-- ─────────────── STEP 1: OPEN TERMINAL ─────────────── -->
+<div class="step">
+  <div class="step-label">
+    <div class="step-num">1</div>
+    <div class="step-title">Open Terminal</div>
+  </div>
+  <p>The easiest way is to use Spotlight Search — the little magnifying glass built into every Mac. Press <span class="kbd">⌘ Cmd</span> <span style="color:var(--muted);font-size:0.9rem;">+</span> <span class="kbd">Space</span> at the same time, then type "terminal" and press Enter.</p>
+
+  <!-- Spotlight mockup -->
+  <div class="spotlight-wrap">
+    <div class="spotlight">
+      <div class="spot-search">
+        <div class="spot-icon">🔍</div>
+        <div class="spot-input">terminal</div>
+      </div>
+      <div class="spot-result">
+        <div class="spot-app-icon">⬛</div>
+        <div>
+          <div class="spot-app-name">Terminal</div>
+          <div class="spot-app-sub">Application · Press ↵ to open</div>
+        </div>
+      </div>
+      <div class="spot-other">
+        <div class="spot-other-row">
+          <div class="spot-other-ico">🌐</div>
+          <div class="spot-other-lbl">Search the web for "terminal"</div>
+        </div>
+        <div class="spot-other-row">
+          <div class="spot-other-ico">📄</div>
+          <div class="spot-other-lbl">terminal — Wikipedia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>You'll see a black (or dark) window appear. This is your Terminal. There will be a line of text with a <code style="background:#f3f4f6;padding:1px 6px;border-radius:4px;font-family:monospace;font-size:0.88rem;">$</code> at the end — that's just the Terminal saying "I'm ready, what do you want me to do?"</p>
+
+  <!-- Terminal window mockup -->
+  <div class="terminal-wrap">
+    <div class="term-bar">
+      <div class="traffic t-red"></div>
+      <div class="traffic t-yellow"></div>
+      <div class="traffic t-green"></div>
+      <div class="term-title">yourname — zsh — 80×24</div>
+    </div>
+    <div class="term-body">
+      <span class="term-line t-dim">Last login: Thu Mar 19 09:42:11 on ttys001</span>
+      <span class="term-line">
+        <span class="t-user">yourname</span><span class="t-at">@</span><span class="t-user">MacBook</span><span class="t-dir"> ~ </span><span class="t-pct">%</span><span class="t-cursor"></span>
+      </span>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">ℹ️</div>
+    <div class="callout-body">
+      <strong>Your Terminal might look different</strong>
+      The colours, font, and exact text will vary. That's fine. The important bit is the <code style="font-family:monospace;background:rgba(0,0,0,0.08);padding:1px 4px;border-radius:3px;">%</code> or <code style="font-family:monospace;background:rgba(0,0,0,0.08);padding:1px 4px;border-radius:3px;">$</code> at the end of the line — that means it's ready for you.
+    </div>
+  </div>
+</div>
+
+<hr class="soft">
+
+<!-- ─────────────── STEP 2: CHECK / INSTALL NODE ─────────────── -->
+<div class="step">
+  <div class="step-label">
+    <div class="step-num">2</div>
+    <div class="step-title">Check if Node.js is installed</div>
+  </div>
+  <p>Claude Code runs on something called <strong>Node.js</strong> — think of it as the engine that makes it go. Your Mac might already have it. Let's check.</p>
+  <p>Click inside the Terminal window, then type this exactly and press <span class="kbd">↵ Return</span>:</p>
+
+  <div class="cmd-box">
+    <code><span class="cmd-prefix">$</span> node --version</code>
+    <div class="cmd-copy-hint">← type this</div>
+  </div>
+
+  <p><strong>If you see a version number</strong> (like <code style="font-family:monospace;background:#f3f4f6;padding:1px 6px;border-radius:4px;">v20.11.0</code>) — great, Node is installed! Skip straight to Step 3.</p>
+
+  <div class="terminal-wrap">
+    <div class="term-bar">
+      <div class="traffic t-red"></div><div class="traffic t-yellow"></div><div class="traffic t-green"></div>
+      <div class="term-title">Terminal</div>
+    </div>
+    <div class="term-body">
+      <span class="term-line"><span class="t-user">yourname</span><span class="t-at">@</span><span class="t-user">MacBook</span><span class="t-dir"> ~ </span><span class="t-pct">%</span> <span class="t-cmd">node --version</span></span>
+      <span class="term-line t-green-t">v20.11.0</span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line"><span class="t-user">yourname</span><span class="t-at">@</span><span class="t-user">MacBook</span><span class="t-dir"> ~ </span><span class="t-pct">%</span><span class="t-cursor"></span></span>
+    </div>
+  </div>
+
+  <p><strong>If you see an error</strong> (like "command not found") — you need to install Node.js. It's free and easy, no Terminal needed for this bit:</p>
+
+  <div class="download-mock">
+    <div class="dl-site-bar">
+      <div class="dl-favicon">N</div>
+      <div class="dl-url">nodejs.org/en/download</div>
+    </div>
+    <div class="dl-title">Download Node.js</div>
+    <div class="dl-sub">Free, open-source JavaScript runtime. Click the macOS installer button and run the .pkg file that downloads — it's just like installing any other app.</div>
+    <div class="dl-btn">⬇️ Download for macOS <span class="dl-arrow">→</span></div>
+  </div>
+
+  <ol class="guide-list">
+    <li>Go to <strong>nodejs.org</strong> and click the big green download button</li>
+    <li>Open the downloaded file (it'll be in your Downloads folder — looks like a box icon)</li>
+    <li>Click through the installer — just keep pressing "Continue" and "Install"</li>
+    <li>Once it's done, go back to Terminal and try <code style="font-family:monospace;background:#f3f4f6;padding:1px 5px;border-radius:4px;">node --version</code> again</li>
+  </ol>
+
+  <div class="callout warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <strong>Still says "command not found" after installing?</strong>
+      Close your Terminal window completely, re-open it (Cmd+Space → terminal), and try again. The installer sometimes needs a fresh window to take effect.
+    </div>
+  </div>
+</div>
+
+<hr class="soft">
+
+<!-- ─────────────── STEP 3: INSTALL CLAUDE CODE ─────────────── -->
+<div class="step">
+  <div class="step-label">
+    <div class="step-num">3</div>
+    <div class="step-title">Install Claude Code</div>
+  </div>
+  <p>Now for the main event. This one command downloads and installs Claude Code on your Mac. Copy and paste it into your Terminal, then press <span class="kbd">↵ Return</span>:</p>
+
+  <div class="cmd-box">
+    <code><span class="cmd-prefix">$</span> npm install -g @anthropic-ai/claude-code</code>
+    <div class="cmd-copy-hint">← copy this exactly</div>
+  </div>
+
+  <p>You'll see a lot of text scroll past — that's normal, it's just telling you what it's doing. Wait until it stops and you see the <code style="font-family:monospace;background:#f3f4f6;padding:1px 6px;border-radius:4px;">%</code> prompt again.</p>
+
+  <div class="terminal-wrap">
+    <div class="term-bar">
+      <div class="traffic t-red"></div><div class="traffic t-yellow"></div><div class="traffic t-green"></div>
+      <div class="term-title">Terminal</div>
+    </div>
+    <div class="term-body">
+      <span class="term-line"><span class="t-user">yourname</span><span class="t-at">@</span><span class="t-user">MacBook</span><span class="t-dir"> ~ </span><span class="t-pct">%</span> <span class="t-cmd">npm install -g @anthropic-ai/claude-code</span></span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-out">added 47 packages in 4s</span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-out">13 packages are looking for funding</span>
+      <span class="term-line t-out">  run `npm fund` for details</span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line"><span class="t-user">yourname</span><span class="t-at">@</span><span class="t-user">MacBook</span><span class="t-dir"> ~ </span><span class="t-pct">%</span><span class="t-cursor"></span></span>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-icon">🔐</div>
+    <div class="callout-body">
+      <strong>If it asks for your password</strong>
+      It might say something like <code style="font-family:monospace;background:rgba(0,0,0,0.08);padding:1px 4px;border-radius:3px;">sudo npm install...</code> if the first one fails. Type your Mac login password — it won't show dots or anything as you type, that's normal — then press Return. This is your Mac asking for permission to install software, the same as any other installer.
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">✅</div>
+    <div class="callout-body">
+      <strong>How to know it worked</strong>
+      When you see the <code style="font-family:monospace;background:rgba(0,0,0,0.08);padding:1px 4px;border-radius:3px;">%</code> prompt return and no big red error messages, it worked. A few warning messages in amber/yellow are fine — those aren't errors.
+    </div>
+  </div>
+</div>
+
+<hr class="soft">
+
+<!-- ─────────────── STEP 4: NAVIGATE TO A FOLDER ─────────────── -->
+<div class="step">
+  <div class="step-label">
+    <div class="step-num">4</div>
+    <div class="step-title">Tell Claude where to work</div>
+  </div>
+  <p>Claude Code works inside folders on your Mac — like a project folder. Before you start it, you navigate Terminal to the folder you want Claude to help you with.</p>
+  <p>The command for this is <strong><code style="font-family:monospace;background:#f3f4f6;padding:1px 6px;border-radius:4px;">cd</code></strong> which stands for "change directory" (directory is just tech-speak for folder).</p>
+
+  <p>The easiest way: open <strong>Finder</strong>, find the folder you want to use, then <strong>drag that folder directly into the Terminal window</strong>. It'll automatically fill in the path for you. Then press Return.</p>
+
+  <div class="terminal-wrap">
+    <div class="term-bar">
+      <div class="traffic t-red"></div><div class="traffic t-yellow"></div><div class="traffic t-green"></div>
+      <div class="term-title">Terminal</div>
+    </div>
+    <div class="term-body">
+      <span class="term-line t-dim"># Example: you dragged your "My Project" folder in</span>
+      <span class="term-line"><span class="t-user">yourname</span><span class="t-at">@</span><span class="t-user">MacBook</span><span class="t-dir"> ~ </span><span class="t-pct">%</span> <span class="t-cmd">cd /Users/yourname/Desktop/My\ Project</span></span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-dim"># Notice the folder name appears in the prompt now:</span>
+      <span class="term-line"><span class="t-user">yourname</span><span class="t-at">@</span><span class="t-user">MacBook</span><span class="t-dir"> My Project </span><span class="t-pct">%</span><span class="t-cursor"></span></span>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">📁</div>
+    <div class="callout-body">
+      <strong>Just starting out? Use your Desktop.</strong>
+      If you don't have a specific project folder yet, just navigate to your Desktop: type <code style="font-family:monospace;background:rgba(0,0,0,0.08);padding:1px 4px;border-radius:3px;">cd ~/Desktop</code> and press Return. Claude will be able to create and read files there.
+    </div>
+  </div>
+</div>
+
+<hr class="soft">
+
+<!-- ─────────────── STEP 5: RUN CLAUDE ─────────────── -->
+<div class="step">
+  <div class="step-label">
+    <div class="step-num">5</div>
+    <div class="step-title">Start Claude</div>
+  </div>
+  <p>This is the moment. Type this and press <span class="kbd">↵ Return</span>:</p>
+
+  <div class="cmd-box">
+    <code><span class="cmd-prefix">$</span> claude</code>
+    <div class="cmd-copy-hint">← just "claude"</div>
+  </div>
+
+  <p>The first time you run it, Claude will ask you to log in. It'll show you some options — usually it'll open a browser window for you to sign in with your Anthropic account. Follow whatever it says on screen.</p>
+
+  <div class="terminal-wrap">
+    <div class="term-bar">
+      <div class="traffic t-red"></div><div class="traffic t-yellow"></div><div class="traffic t-green"></div>
+      <div class="term-title">Claude Code</div>
+    </div>
+    <div class="term-body">
+      <span class="term-line"><span class="t-user">yourname</span><span class="t-at">@</span><span class="t-user">MacBook</span><span class="t-dir"> Desktop </span><span class="t-pct">%</span> <span class="t-cmd">claude</span></span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-hi">   ╔═══════════════════════════════╗</span>
+      <span class="term-line t-hi">   ║    Claude Code  v1.x.x       ║</span>
+      <span class="term-line t-hi">   ╚═══════════════════════════════╝</span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-purple">  ✦ Welcome! Let's get you set up.</span>
+      <span class="term-line t-out">    Opening browser for authentication...</span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-out">    Waiting for login</span><span class="t-cursor"></span>
+    </div>
+  </div>
+
+  <p>Once you're logged in, the browser will close and Terminal will come alive with Claude's interface. You'll see a message prompt — just like a chat window, but in your Terminal.</p>
+
+  <div class="terminal-wrap">
+    <div class="term-bar">
+      <div class="traffic t-red"></div><div class="traffic t-yellow"></div><div class="traffic t-green"></div>
+      <div class="term-title">Claude Code — Desktop</div>
+    </div>
+    <div class="term-body">
+      <span class="term-line t-green-t">  ✓ Logged in successfully!</span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-out">  Working directory: /Users/yourname/Desktop</span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-purple">  ┌────────────────────────────────────────────────────────────────┐</span>
+      <span class="term-line t-purple">  │  What would you like to do?                                    │</span>
+      <span class="term-line t-purple">  └────────────────────────────────────────────────────────────────┘</span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-hi">  &gt;<span class="t-cursor"></span></span>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">🎉</div>
+    <div class="callout-body">
+      <strong>You're in!</strong>
+      That <code style="font-family:monospace;background:rgba(0,0,0,0.08);padding:1px 4px;border-radius:3px;">&gt;</code> is Claude waiting for you. Just type your question or task in plain English — exactly how you'd ask a person. "Write me a short poem about my cat", "Can you help me write an email to my landlord", whatever you need.
+    </div>
+  </div>
+</div>
+
+<hr class="soft">
+
+<!-- ─────────────── STEP 6: WHAT TO ACTUALLY TYPE ─────────────── -->
+<div class="step">
+  <div class="step-label">
+    <div class="step-num">6</div>
+    <div class="step-title">What to actually say to Claude</div>
+  </div>
+  <p>Claude Code is a lot like Claude on the web — just talk to it normally. You don't need special commands. Here are some examples of things you can type straight in:</p>
+
+  <div class="terminal-wrap">
+    <div class="term-bar">
+      <div class="traffic t-red"></div><div class="traffic t-yellow"></div><div class="traffic t-green"></div>
+      <div class="term-title">Claude Code — examples</div>
+    </div>
+    <div class="term-body">
+      <span class="term-line t-dim"># Asking for help with writing:</span>
+      <span class="term-line"><span class="t-hi">&gt;</span> <span class="t-cmd">Can you proofread this email draft for me?</span></span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-dim"># Asking about code:</span>
+      <span class="term-line"><span class="t-hi">&gt;</span> <span class="t-cmd">I have a Python file on my Desktop called app.py, can you explain what it does?</span></span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-dim"># Just chatting:</span>
+      <span class="term-line"><span class="t-hi">&gt;</span> <span class="t-cmd">What's the best way to learn JavaScript as a complete beginner?</span></span>
+      <span class="term-line t-dim">&nbsp;</span>
+      <span class="term-line t-dim"># Creating files:</span>
+      <span class="term-line"><span class="t-hi">&gt;</span> <span class="t-cmd">Create a simple to-do list as an HTML file on my Desktop</span></span>
+    </div>
+  </div>
+
+  <p>When Claude is done with its response, it'll show the <code style="font-family:monospace;background:#f3f4f6;padding:1px 6px;border-radius:4px;">&gt;</code> prompt again so you can ask something else. It's a conversation — you can follow up, ask it to change things, or start a completely new topic.</p>
+</div>
+
+<hr class="soft">
+
+<!-- ─────────────── STEP 7: ESSENTIAL SHORTCUTS ─────────────── -->
+<div class="step">
+  <div class="step-label">
+    <div class="step-num">7</div>
+    <div class="step-title">The 4 things you actually need to know</div>
+  </div>
+
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-card-head">
+        <div class="tip-card-icon">🚪</div>
+        <div class="tip-card-title">How to exit Claude</div>
+      </div>
+      <p>Type <code>/exit</code> and press Return, or press <span style="font-family:-apple-system;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:1px 6px;font-size:0.82rem;font-weight:600;">Ctrl</span>+<span style="font-family:-apple-system;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:1px 6px;font-size:0.82rem;font-weight:600;">C</span> twice. This takes you back to the regular Terminal prompt.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-head">
+        <div class="tip-card-icon">🛑</div>
+        <div class="tip-card-title">Stop Claude mid-response</div>
+      </div>
+      <p>If Claude is typing a really long answer and you want it to stop, press <span style="font-family:-apple-system;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:1px 6px;font-size:0.82rem;font-weight:600;">Ctrl</span>+<span style="font-family:-apple-system;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:1px 6px;font-size:0.82rem;font-weight:600;">C</span> once.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-head">
+        <div class="tip-card-icon">⬆️</div>
+        <div class="tip-card-title">Re-run a previous command</div>
+      </div>
+      <p>In the regular Terminal (not inside Claude), press the <span style="font-family:-apple-system;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:1px 6px;font-size:0.82rem;font-weight:600;">↑ Up arrow</span> to scroll through commands you've used before.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-head">
+        <div class="tip-card-icon">🔄</div>
+        <div class="tip-card-title">Start a fresh conversation</div>
+      </div>
+      <p>Each time you type <code>claude</code> in a new Terminal session, you start a brand new conversation. Claude won't remember the previous chat.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-head">
+        <div class="tip-card-icon">📂</div>
+        <div class="tip-card-title">Change which folder you're in</div>
+      </div>
+      <p>Exit Claude first (<code>/exit</code>), then type <code>cd ~/Desktop</code> or drag a folder into Terminal, then type <code>claude</code> again.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-head">
+        <div class="tip-card-icon">✏️</div>
+        <div class="tip-card-title">Multi-line messages</div>
+      </div>
+      <p>To write a longer message across multiple lines, press <span style="font-family:-apple-system;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:1px 6px;font-size:0.82rem;font-weight:600;">Shift</span>+<span style="font-family:-apple-system;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:1px 6px;font-size:0.82rem;font-weight:600;">↵ Return</span> to go to a new line without sending.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="soft">
+
+<!-- ─────────────── TROUBLESHOOTING ─────────────── -->
+<div class="step">
+  <div class="step-label">
+    <div class="step-num">!</div>
+    <div class="step-title">If something goes wrong</div>
+  </div>
+
+  <div class="callout warn" style="margin-bottom:16px;">
+    <div class="callout-icon">❌</div>
+    <div class="callout-body">
+      <strong>"command not found: claude"</strong>
+      The installation didn't complete fully, or the Terminal needs to be refreshed. Close the window, open a new Terminal, and try the <code style="font-family:monospace;background:rgba(0,0,0,0.08);padding:1px 4px;border-radius:3px;">npm install -g @anthropic-ai/claude-code</code> command again.
+    </div>
+  </div>
+
+  <div class="callout warn" style="margin-bottom:16px;">
+    <div class="callout-icon">❌</div>
+    <div class="callout-body">
+      <strong>"EACCES: permission denied"</strong>
+      Try adding <code style="font-family:monospace;background:rgba(0,0,0,0.08);padding:1px 4px;border-radius:3px;">sudo</code> in front: <code style="font-family:monospace;background:rgba(0,0,0,0.08);padding:1px 4px;border-radius:3px;">sudo npm install -g @anthropic-ai/claude-code</code>. It'll ask for your Mac password.
+    </div>
+  </div>
+
+  <div class="callout warn" style="margin-bottom:16px;">
+    <div class="callout-icon">❌</div>
+    <div class="callout-body">
+      <strong>"node: command not found" after installing Node.js</strong>
+      Close Terminal completely, reopen it, and try again. If it's still not found, try restarting your Mac — Node updates your PATH settings and sometimes needs a restart.
+    </div>
+  </div>
+
+  <div class="callout note">
+    <div class="callout-icon">💬</div>
+    <div class="callout-body">
+      <strong>Still stuck?</strong>
+      Copy the exact error message from your Terminal and paste it into Claude at claude.ai (the normal web version). Ask "what does this error mean and how do I fix it?" — Claude is very good at diagnosing its own installation problems.
+    </div>
+  </div>
+</div>
+
+<!-- ── DONE ── -->
+<div class="done-banner">
+  <h2>🎉 You're all set!</h2>
+  <p>That's genuinely everything. Type <strong>claude</strong> in any Terminal window, point it at a folder, and start talking to it. It reads your files, writes code, explains things, drafts emails — just ask.</p>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <p>Guide written for a friend by Ella · March 2026</p>
+  <p style="margin-top:6px;">Made with Claude Code · For questions, just ask Claude 😊</p>
+</footer>
+
+</body>
+</html>
