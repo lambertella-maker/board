@@ -526,8 +526,8 @@
   .ar-generate-btn{width:100%;margin-top:16px;border-radius:12px;padding:13px;}
   .ar-preview-photo-wrap{position:relative;cursor:pointer;}
   .ar-preview-photo-wrap .ar-tap-hint{position:absolute;bottom:8px;right:8px;
-    background:rgba(0,0,0,0.5);color:#fff;font-size:0.6rem;font-weight:700;
-    border-radius:20px;padding:3px 8px;backdrop-filter:blur(4px);pointer-events:none;}
+    background:rgba(0,0,0,0.28);color:rgba(255,255,255,0.85);font-size:0.5rem;font-weight:500;
+    letter-spacing:0.03em;border-radius:20px;padding:2px 7px;backdrop-filter:blur(6px);pointer-events:none;}
   .ar-preview-emoji-placeholder{width:100%;aspect-ratio:16/9;display:flex;align-items:center;
     justify-content:center;font-size:3.5rem;background:var(--card2);
     border-radius:10px 10px 0 0;cursor:pointer;}
@@ -2599,11 +2599,12 @@ async function generateRecipe() {
 
 Rules:
 - Low FODMAP: use garlic-infused oil (not raw garlic/onion), spring onion greens OK, lactose-free dairy
-- Bread: sourdough only (2-slice limit). Pasta: regular rigatoni is fine occasionally. For other wheat, suggest a brief GF note only if essential — don't overload with GF alternatives
+- Bread: sourdough only (2-slice limit). Pasta: regular rigatoni is fine. Never suggest GF alternatives unless the dish is traditionally GF (e.g. rice noodles in pho). Do not add GF notes.
 - Use intuitive UK measurements for savoury: handfuls, cans (400g), pieces (e.g. "2 chicken thighs") not grams — EXCEPT keep grams for baking/desserts
 - Cuisine must be ONE of: Vietnamese, Mexican, Thai, Korean, Everyday, American, Wings, Shabbat, Dessert
 - meal array must include relevant values from: breakfast, lunch, dinner, dessert, snack
 - flavors array (pick 2-4): heat, citrus, umami, herby, salty, sweet, rich
+- If the source is from a named publication (Milk Street, ATK, America's Test Kitchen, NYT Cooking, NYT, Serious Eats, BBC Good Food, Ottolenghi, etc.), include it in the name e.g. "Milk Street: Dish Name" or "ATK: Dish Name"
 - Return ONLY valid JSON, no markdown, no explanation
 
 JSON format:
@@ -2673,7 +2674,7 @@ function showRecipePreview(r) {
   const tc = cuisineTop(r.cuisine);
   const photoSrc = arPhotoData;
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const tapHint = isTouchDevice ? '<span class="ar-tap-hint">📷 tap to change</span>' : '';
+  const tapHint = isTouchDevice ? '<span class="ar-tap-hint">tap to change</span>' : '';
   const photoHtml = photoSrc
     ? `<div class="ar-preview-photo-wrap" onclick="document.getElementById('ar-file-input').click()"><img src="${photoSrc}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px 10px 0 0;display:block" alt="${r.name}" onerror="this.style.display='none'">${tapHint}</div>`
     : `<div class="ar-preview-emoji-placeholder" onclick="document.getElementById('ar-file-input').click()">${r.emoji||'🍽️'}${tapHint}</div>`;
@@ -2981,8 +2982,6 @@ function openLightbox(src, alt) {
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
-  // Auto-reload when a new SW takes over — ensures updated HTML is served immediately
-  navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
 }
 </script>
 
