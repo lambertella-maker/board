@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dolomites Hut-to-Hut · July 2026</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F8FAF6;
+  --card: #FFFFFF;
+  --text: #1C1C1C;
+  --muted: #5A5A5A;
+
+  --green: #2B6E42;
+  --green-mid: #3E8F5C;
+  --green-light: #E6F3EC;
+  --green-border: #B5D9C4;
+
+  --blue: #2060A0;
+  --blue-light: #E4EFF9;
+  --blue-border: #9DC2E0;
+
+  --orange: #B85828;
+  --orange-light: #FBF0E8;
+  --orange-border: #D89070;
+
+  --amber: #8A6200;
+  --amber-light: #FFF7DF;
+
+  --border: #D8E2D4;
+  --shadow: 0 2px 16px rgba(0,0,0,0.06);
+  --radius: 12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(155deg, rgba(16,40,24,0.88) 0%, rgba(27,79,44,0.84) 40%, rgba(43,122,72,0.78) 70%, rgba(59,149,160,0.84) 100%), url('https://www.jakelandon.com/assets/images/the-dolomites-lago-di-brais-to-rifugio-sennes/_blogPostHeroImage/2016-06-20_dolomitesDSC02068.jpg') center 60% / cover no-repeat;
+  border-radius: 0 0 24px 24px;
+  padding: 60px 44px 52px;
+  margin: 0 -20px 50px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.hero-hills {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  opacity: 0.12;
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 0.76em;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  opacity: 0.65;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.8em;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  position: relative; z-index: 1;
+}
+.hero h1 em { color: #8DE8B0; font-style: normal; }
+.hero .tagline {
+  font-size: 1.0em;
+  opacity: 0.82;
+  margin-bottom: 32px;
+  position: relative; z-index: 1;
+  max-width: 580px;
+  line-height: 1.55;
+}
+.hero-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.hs {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  padding: 12px 18px;
+  text-align: center;
+  min-width: 84px;
+}
+.hs .val { font-size: 1.65em; font-weight: 700; display: block; line-height: 1.1; }
+.hs .lbl { font-size: 0.68em; opacity: 0.72; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ─── ROUTE ARC ─── */
+.arc-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow);
+  font-size: 0.88em;
+}
+.arc-stop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  min-width: 100px;
+}
+.arc-stop .dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-bottom: 3px;
+}
+.dot-blue   { background: var(--blue); }
+.dot-green1 { background: #3A9E62; }
+.dot-green2 { background: var(--green); }
+.dot-orange { background: var(--orange); }
+.arc-stop .name { font-weight: 600; font-size: 0.88em; line-height: 1.3; }
+.arc-stop .elev { color: var(--muted); font-size: 0.76em; white-space: nowrap; }
+.arc-arrow { color: var(--green-mid); font-size: 1.1em; font-weight: 700; padding: 0 4px; }
+
+/* ─── HEADINGS ─── */
+h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.45em;
+  font-weight: 400;
+  color: var(--green);
+  margin: 48px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--green-light);
+}
+h3 { font-size: 1.03em; font-weight: 600; margin-bottom: 6px; }
+p { margin-bottom: 10px; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul { padding-left: 18px; }
+li { margin-bottom: 4px; }
+
+/* ─── DAY CARDS ─── */
+.day-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 22px 0;
+  overflow: hidden;
+}
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 24px;
+  border-bottom: 2px solid transparent;
+}
+.dh-travel  { background: #EFF3F8; border-color: #A8C0D6; }
+.dh-green1  { background: #EBF6EF; border-color: #5CB87A; }
+.dh-green2  { background: #E4F2EA; border-color: var(--green); }
+.dh-summit  { background: var(--orange-light); border-color: var(--orange); }
+.dh-return  { background: #F2F4F0; border-color: #AABBA8; }
+
+.day-pill {
+  background: rgba(0,0,0,0.09);
+  border-radius: 8px;
+  padding: 8px 14px;
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 58px;
+}
+.day-pill .dn { font-size: 1.4em; font-weight: 700; display: block; line-height: 1; }
+.day-pill .dl { font-size: 0.6em; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.6; }
+
+.day-info { flex: 1; min-width: 0; }
+.day-info h3 { font-size: 1.12em; margin-bottom: 4px; }
+.day-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.8em; color: var(--muted); }
+.day-meta span { white-space: nowrap; }
+
+.tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.tag-green  { background: var(--green-light); color: var(--green); }
+.tag-blue   { background: var(--blue-light); color: var(--blue); }
+.tag-orange { background: var(--orange-light); color: var(--orange); }
+.tag-grey   { background: #EFEFEF; color: #555; }
+.tag-summit { background: #FEE8DC; color: #8A3510; }
+
+.day-body { padding: 20px 24px 24px; }
+
+.route-strip {
+  background: #F2F5F0;
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-size: 0.88em;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.route-strip .arrow { color: var(--green-mid); font-weight: 700; font-size: 1.1em; white-space: nowrap; }
+.route-strip .rname { font-weight: 600; white-space: nowrap; }
+.route-strip .rdetail { color: var(--muted); white-space: nowrap; }
+
+.highlights {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 18px;
+}
+.highlights li {
+  padding: 4px 0 4px 22px;
+  position: relative;
+  font-size: 0.9em;
+}
+.highlights li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: var(--green-mid);
+  font-size: 0.5em;
+  top: 9px;
+}
+.summit-day .highlights li::before { color: var(--orange); }
+
+/* ─── HUT BOX ─── */
+.hut-box {
+  background: linear-gradient(135deg, #F2FAF5 0%, #FAFFFE 100%);
+  border: 1px solid var(--green-border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.hut-box.summit { background: linear-gradient(135deg, #FBF3EE 0%, #FFFCFA 100%); border-color: var(--orange-border); }
+.hut-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.hut-title h4 { font-size: 1.02em; color: var(--green); margin-bottom: 2px; }
+.hut-title h4.st { color: var(--orange); }
+.hut-title p { font-size: 0.8em; color: var(--muted); margin: 0; }
+.btn-book {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 7px;
+  font-size: 0.82em;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.btn-book:hover { background: #1E5030; text-decoration: none; }
+.btn-book.sb { background: var(--orange); }
+.btn-book.sb:hover { background: #8A3510; }
+
+.hut-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.hd .hdl { color: var(--muted); font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.3px; display: block; }
+.hd .hdv { font-weight: 600; font-size: 0.88em; }
+
+.price-pill {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.84em;
+  padding: 7px 13px;
+  border-radius: 6px;
+  background: var(--green-light);
+  color: var(--green);
+}
+.price-pill.sp { background: var(--orange-light); color: var(--orange); }
+.hut-note { font-size: 0.8em; color: var(--muted); margin-top: 8px; }
+
+/* ─── PHOTOS ─── */
+.day-photo { overflow: hidden; }
+.day-photo img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.hut-photo-strip { overflow: hidden; border-radius: 8px; margin-bottom: 16px; }
+.hut-photo-strip img { width: 100%; height: 155px; object-fit: cover; object-position: center bottom; display: block; }
+
+/* ─── CALLOUT BOXES ─── */
+.note-box {
+  background: var(--blue-light);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  padding: 11px 16px;
+  font-size: 0.875em;
+  margin: 14px 0;
+  color: #1A3060;
+}
+.note-box strong { color: var(--blue); }
+
+.tip-inline {
+  background: var(--green-light);
+  border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  padding: 11px 16px;
+  font-size: 0.875em;
+  margin: 14px 0;
+  color: #1A3C28;
+}
+.tip-inline strong { color: var(--green); }
+
+.warn-box {
+  background: #FFF3CD;
+  border-left: 3px solid #E6A817;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 16px;
+  font-size: 0.875em;
+  margin: 14px 0;
+  color: #5C3D00;
+}
+.warn-box strong { color: #8A6200; }
+
+/* ─── PERSON CARDS ─── */
+.person-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 14px; margin: 16px 0; }
+.person-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.person-card .pname { font-weight: 700; font-size: 0.95em; margin-bottom: 3px; }
+.person-card .pfrom { font-size: 0.8em; color: var(--muted); margin-bottom: 10px; }
+.person-card li { font-size: 0.85em; color: var(--muted); margin-bottom: 4px; }
+.person-card ul { padding-left: 14px; }
+.person-card a { color: var(--blue); font-size: 0.85em; }
+.person-card .price-badge {
+  display: inline-block;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 0.78em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+/* ─── WEATHER SECTION ─── */
+.weather-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 16px 0; }
+.wx-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.wx-card h4 { font-size: 0.9em; margin-bottom: 8px; color: var(--green); }
+.wx-card li { font-size: 0.855em; color: var(--muted); margin-bottom: 4px; }
+.wx-card ul { padding-left: 14px; }
+.wx-card .big-temp { font-size: 1.8em; font-weight: 700; color: var(--text); display: block; line-height: 1.1; margin-bottom: 4px; }
+.wx-card .temp-sub { font-size: 0.8em; color: var(--muted); }
+
+/* ─── GRIDS ─── */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; margin: 16px 0; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin: 16px 0; }
+
+.lcard, .tip-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+.lcard h3, .tip-card h3 { font-size: 0.95em; margin-bottom: 10px; }
+.tip-card h3 { color: var(--green); }
+.lcard p, .lcard li, .tip-card li { font-size: 0.875em; color: var(--muted); margin-bottom: 5px; }
+.lcard ul, .tip-card ul { padding-left: 16px; }
+.lcard a, .tip-card a { color: var(--blue); }
+.lcard strong { color: var(--text); }
+.price-tag {
+  display: inline-block;
+  background: var(--green-light);
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.82em;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.cost-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+.cost-card h3 { font-size: 0.93em; margin-bottom: 10px; }
+.cost-card li { font-size: 0.875em; color: var(--muted); margin-bottom: 5px; overflow-wrap: break-word; word-break: break-word; }
+.cost-card ul { padding-left: 16px; }
+.cost-total { background: var(--green-light); border-color: var(--green-border); }
+.cost-total h3 { color: var(--green); }
+
+/* ─── BOOKING CHIPS ─── */
+.booking-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+.booking-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 9px 15px;
+  font-size: 0.85em;
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+.booking-chip:hover { border-color: var(--green); text-decoration: none; }
+.booking-chip .bc-icon { font-size: 1.1em; }
+.booking-chip .bc-label { font-weight: 600; display: block; line-height: 1.3; }
+.booking-chip .bc-sub { color: var(--muted); font-size: 0.82em; }
+
+/* ─── URGENT BANNER ─── */
+.urgent-banner {
+  background: #FFF0E6;
+  border: 1.5px solid #D4732A;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.urgent-banner .ub-icon { font-size: 1.5em; flex-shrink: 0; }
+.urgent-banner h4 { font-size: 0.95em; color: var(--orange); margin-bottom: 4px; }
+.urgent-banner p { font-size: 0.87em; color: #5C3010; margin: 0; }
+
+/* ─── FOOTER ─── */
+.footer {
+  margin-top: 56px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+  font-size: 0.8em;
+  color: var(--muted);
+  text-align: center;
+}
+.footer a { color: var(--muted); }
+
+/* ─── PRINT ─── */
+@media print {
+  body { max-width: 100%; padding: 0 14px; font-size: 12px; }
+  .hero { border-radius: 0; margin: 0 -14px 32px; padding: 40px 28px; }
+  .day-card, .lcard, .tip-card, .cost-card, .person-card, .wx-card { break-inside: avoid; }
+  h2 { break-after: avoid; }
+  .arc-banner, .urgent-banner { break-inside: avoid; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 0.72em; color: #888; word-break: break-all; }
+  .btn-book::after, .booking-chip::after { display: none !important; }
+  @page { margin: 1.5cm 1.8cm; }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 620px) {
+  .hero { padding: 42px 22px 36px; }
+  .hero h1 { font-size: 2.0em; }
+  .arc-banner { gap: 8px; font-size: 0.82em; }
+  .hut-header { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<div class="hero">
+  <svg class="hero-hills" viewBox="0 0 900 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,140 Q80,90 160,105 Q230,120 300,75 Q370,30 430,60 Q490,90 550,70 Q600,55 650,40 Q700,25 740,50 Q790,80 830,30 L860,10 L900,35 L900,140 Z" fill="white"/>
+  </svg>
+  <div class="hero-eyebrow">Alta Via 1 — Green Route · Fanes-Sennes Natural Park · Dolomites, Italy</div>
+  <h1>Dolomites <em>Hut-to-Hut</em><br>July 2026</h1>
+  <div class="tagline">
+    Green alpine plateaux first, iconic Dolomite rock as the payoff on the final day. Three proper hut nights on the quieter, meadow-rich northern Alta Via 1 — designed for a group who already knows what the Alps look like and wants something genuinely new.
+  </div>
+  <div class="hero-stats">
+    <div class="hs"><span class="val">3</span><span class="lbl">Hut Nights</span></div>
+    <div class="hs"><span class="val">4</span><span class="lbl">Hiking Days</span></div>
+    <div class="hs"><span class="val">~38km</span><span class="lbl">Total Distance</span></div>
+    <div class="hs"><span class="val">2,752m</span><span class="lbl">High Point</span></div>
+    <div class="hs"><span class="val">T2–T3</span><span class="lbl">Grade</span></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     BOOKING URGENCY
+════════════════════════════════════════ -->
+<div class="urgent-banner">
+  <div class="ub-icon">⚡</div>
+  <div>
+    <h4>Book Lagazuoi Now — July Fills Fast</h4>
+    <p>Late July is peak season. Rifugio Lagazuoi (Night 3) requires a 50% non-refundable deposit and fills 8–12 weeks out. Rifugio Fanes has only 11 dorm beds. If you're targeting 3rd–4th week of July, book all three huts before the end of April. Bus 442 to Lago di Braies must also be pre-booked for peak season (10 Jul – 10 Sep).</p>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     ROUTE ARC
+════════════════════════════════════════ -->
+<div class="arc-banner">
+  <div class="arc-stop">
+    <div class="dot dot-blue"></div>
+    <span class="name">Lago di Braies</span>
+    <span class="elev">1,496m · Start</span>
+  </div>
+  <span class="arc-arrow">→</span>
+  <div class="arc-stop">
+    <div class="dot dot-green1"></div>
+    <span class="name">Rifugio Sennes</span>
+    <span class="elev">2,126m · Night 1</span>
+  </div>
+  <span class="arc-arrow">→</span>
+  <div class="arc-stop">
+    <div class="dot dot-green2"></div>
+    <span class="name">Rifugio Fanes</span>
+    <span class="elev">2,060m · Night 2</span>
+  </div>
+  <span class="arc-arrow">→</span>
+  <div class="arc-stop">
+    <div class="dot dot-orange"></div>
+    <span class="name">Rifugio Lagazuoi</span>
+    <span class="elev">2,752m · Night 3</span>
+  </div>
+  <span class="arc-arrow">→</span>
+  <div class="arc-stop">
+    <div class="dot" style="background:#888;"></div>
+    <span class="name">Cortina d'Ampezzo</span>
+    <span class="elev">1,224m · Fly home</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     WHY THIS ROUTE
+════════════════════════════════════════ -->
+<h2>Why This Route</h2>
+<p style="font-size:0.9em; color:var(--muted);">The Dolomites have two faces: the stark limestone towers most people picture (Cinque Torri, Tre Cime), and the greener, softer north — meadow plateaux, larch forests, and wide-open valleys that feel more like the Alps you've hiked before, but different enough to be worth the trip. This route gives you both. Two days immersed in the Fanes-Sennes plateau — genuinely one of the most beautiful alpine landscapes in Europe — and one night on Lagazuoi at 2,752m, the most dramatic hut position in the whole Dolomites. You earn the rock.</p>
+
+<p style="font-size:0.9em; color:var(--muted);">It's a linear route with a clear narrative arc (green → dramatic), which is more satisfying than a loop. No via ferrata, no exposure stress. Intermediate-comfortable throughout; the advanced hiker in the group has room to push on every day without anyone feeling held back.</p>
+
+
+<!-- ════════════════════════════════════════
+     WHO'S GOING + FLIGHTS
+════════════════════════════════════════ -->
+<h2>Who's Going + Getting to Venice</h2>
+<p style="font-size:0.9em; color:var(--muted);">Everyone flies into <strong>Venice Marco Polo (VCE)</strong> on Day 0 and takes the ATVO coach to Cortina together. Aim for arrival at VCE by 14:00 to catch the mid-afternoon bus — there are 4–5 daily departures.</p>
+
+<div class="person-grid">
+
+  <div class="person-card">
+    <div class="pname">Ella</div>
+    <div class="pfrom">London, UK</div>
+    <ul>
+      <li>easyJet LGW → VCE or BA LHR → VCE</li>
+      <li>Flight time: ~2h15</li>
+      <li>Multiple daily departures</li>
+      <li><strong>Avoid Ryanair to Treviso (TSF)</strong> — adds 45 min extra transfer</li>
+    </ul>
+    <span class="price-badge">~£60–180 return</span>
+    <br><a href="https://www.skyscanner.net" target="_blank">Search Skyscanner →</a>
+  </div>
+
+  <div class="person-card">
+    <div class="pname">Dina</div>
+    <div class="pfrom">Washington DC or Chicago</div>
+    <ul>
+      <li><strong>From DC (IAD/DCA):</strong> Lufthansa via FRA, Austrian via VIE, or United via FRA → VCE. ~11–13h total</li>
+      <li><strong>From Chicago (ORD):</strong> Lufthansa via FRA, United via FRA/MUC → VCE. ~12–14h total</li>
+      <li>Target same-day arrival as the group</li>
+    </ul>
+    <span class="price-badge">~$750–1,400 return</span>
+    <br><a href="https://www.google.com/travel/flights" target="_blank">Search Google Flights →</a>
+  </div>
+
+  <div class="person-card">
+    <div class="pname">Janek</div>
+    <div class="pfrom">California (LAX / SFO)</div>
+    <ul>
+      <li>Lufthansa LAX/SFO → MUC or FRA → VCE</li>
+      <li>United LAX → FRA → VCE</li>
+      <li>~14–17h total with connection</li>
+      <li>Consider arriving Day −1 if long journey: one night in Venice is worth it</li>
+    </ul>
+    <span class="price-badge">~$900–1,700 return</span>
+    <br><a href="https://www.google.com/travel/flights" target="_blank">Search Google Flights →</a>
+  </div>
+
+  <div class="person-card">
+    <div class="pname">Maya</div>
+    <div class="pfrom">Chicago (ORD)</div>
+    <ul>
+      <li>Lufthansa ORD → FRA → VCE</li>
+      <li>United ORD → FRA → VCE</li>
+      <li>Austrian ORD → VIE → VCE</li>
+      <li>~12–14h total</li>
+    </ul>
+    <span class="price-badge">~$750–1,350 return</span>
+    <br><a href="https://www.google.com/travel/flights" target="_blank">Search Google Flights →</a>
+  </div>
+
+</div>
+
+<div class="note-box">
+  <strong>Meeting strategy:</strong> All arrive Venice VCE on Day 0 by early–mid afternoon. WhatsApp your flight numbers ahead of time and meet at the ATVO bus stop outside Arrivals — the 15:00 or 16:00 bus to Cortina (~2h30) gets you there in time for dinner. <strong>Book ATVO in advance at atvo.it</strong> — July buses sell out.
+</div>
+
+<div class="note-box" style="margin-top:10px;">
+  <strong>For Janek (long-haul):</strong> Arriving from California on the same day as London/Chicago is possible with an early transatlantic departure, but tight. If the connection feels rushed, arriving the evening before and sleeping near the airport (Venice Mestre has affordable hotels) removes all stress from Day 0.
+</div>
+
+
+<!-- ════════════════════════════════════════
+     JULY WEATHER
+════════════════════════════════════════ -->
+<h2>What to Expect in Late July</h2>
+
+<div class="weather-grid">
+  <div class="wx-card">
+    <h4>At hiking altitude (1,800–2,800m)</h4>
+    <span class="big-temp">59–72°F</span>
+    <span class="temp-sub">Daytime · Nights: 39–48°F</span>
+    <ul style="margin-top:10px;">
+      <li>Ideal hiking temperatures</li>
+      <li>Strong UV — burns fast even when air feels cool</li>
+      <li>SPF 30–50 non-negotiable</li>
+    </ul>
+  </div>
+  <div class="wx-card">
+    <h4>In valleys (Cortina / Braies ~1,200m)</h4>
+    <span class="big-temp">72–82°F</span>
+    <span class="temp-sub">Can hit 86°F in heatwaves</span>
+    <ul style="margin-top:10px;">
+      <li>Properly summer-hot at arrival/departure</li>
+      <li>Nights: 54–64°F — comfortable for sleeping</li>
+    </ul>
+  </div>
+  <div class="wx-card">
+    <h4>Afternoon thunderstorms</h4>
+    <span class="big-temp" style="color:var(--orange);">Daily</span>
+    <span class="temp-sub">The main weather risk, not heat</span>
+    <ul style="margin-top:10px;">
+      <li>Common from ~14:00–18:00 in summer</li>
+      <li>Fast-moving: rain, lightning, hail possible</li>
+      <li>Strategy: start by 07:30, be at hut by 14:00</li>
+    </ul>
+  </div>
+  <div class="wx-card">
+    <h4>What to wear</h4>
+    <ul>
+      <li>1–2 light base layers</li>
+      <li>Fleece or light down jacket (cold at Lagazuoi, even July)</li>
+      <li>Waterproof jacket — every single day</li>
+      <li>Sun hat + sunglasses</li>
+      <li>Light gloves useful at night above 2,500m</li>
+    </ul>
+  </div>
+</div>
+
+<div class="warn-box">
+  <strong>The rule that keeps you safe:</strong> On trail by 07:30. At the hut by 14:00 — especially on Day 3 (Fanes → Lagazuoi), which has exposed sections above 2,400m in the final hours. The Fanes plateau is completely open; if a storm builds, there's nowhere to shelter. An early start solves this.
+</div>
+
+
+<!-- ════════════════════════════════════════
+     ITINERARY
+════════════════════════════════════════ -->
+<h2>The Itinerary</h2>
+
+<!-- DAY 0 -->
+<div class="day-card">
+  <div class="day-header dh-travel">
+    <div class="day-pill"><span class="dn">0</span><span class="dl">Day</span></div>
+    <div class="day-info">
+      <h3>Travel Day — Everyone Arrives in Cortina</h3>
+      <div class="day-meta">
+        <span>✈ 2–17h depending on origin</span>
+        <span>🚌 +2h30 ATVO bus to Cortina</span>
+        <span class="tag tag-grey">No hiking</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="route-strip">
+      <span class="rname">All origins</span>
+      <span class="arrow">→</span>
+      <span class="rname">Venice Marco Polo (VCE)</span>
+      <span class="arrow">→ ATVO coach →</span>
+      <span class="rname">Cortina d'Ampezzo</span>
+      <span class="rdetail">(hotel, ~1 night)</span>
+    </div>
+    <ul class="highlights">
+      <li>All flights into Venice VCE — the group meets at the ATVO stop outside Arrivals. No one needs to go into Venice city centre</li>
+      <li>ATVO coach direct to Cortina: ~2h30, from €8 booked in advance. 4–5 daily departures. <strong>Book at atvo.it</strong> — July buses sell out</li>
+      <li>Cortina has good outdoor shops (Sportler, near the bus station) for any last-minute gear: headlamp, trekking poles, sleeping liner</li>
+      <li>Group dinner, gear check, early night — Day 1 starts with two buses before the trail even begins</li>
+    </ul>
+    <div class="tip-inline">
+      <strong>Janek / long-haul:</strong> If the transatlantic leg feels rushed, arriving the evening before is a low-cost, high-sanity move. A night near Venice Mestre (5 min by train from VCE, ~€60–80) means landing without stress on Day 0.
+    </div>
+  </div>
+</div>
+
+
+<!-- DAY 1 -->
+<div class="day-card">
+  <div class="day-header dh-green1">
+    <div class="day-pill"><span class="dn">1</span><span class="dl">Day</span></div>
+    <div class="day-info">
+      <h3>Lago di Braies → Rifugio Sennes</h3>
+      <div class="day-meta">
+        <span>⏱ 4–5 hrs hiking</span>
+        <span>📏 11 km</span>
+        <span>↑ +740m ↓ −110m</span>
+        <span class="tag tag-green">Moderate — steady climb</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-photo"><img src="https://www.jakelandon.com/assets/images/the-dolomites-lago-di-brais-to-rifugio-sennes/_blogPostHeroImage/2016-06-20_dolomitesDSC02068.jpg" alt="Lago di Braies, emerald lake at the start of Alta Via 1" loading="lazy"></div>
+  <div class="day-body">
+    <div class="route-strip">
+      <span class="rname">Cortina</span>
+      <span class="arrow">→ bus 445 →</span>
+      <span class="rname">Dobbiaco (~45 min)</span>
+      <span class="arrow">→ Bus 442 →</span>
+      <span class="rname">Lago di Braies (~30 min)</span>
+      <span class="arrow">→ Trail 3 AV1 →</span>
+      <span class="rname">Rifugio Sennes (2,126m)</span>
+    </div>
+    <ul class="highlights">
+      <li><strong>Lago di Braies</strong> is the starting gun — emerald green lake, Seekofel peak rising behind it, wooden rowing boats on the water. In late July the car park is restricted to residents; you're arriving by bus, which means you have priority access. Spend 20–30 minutes at the lake before heading up</li>
+      <li>Trail 3 (AV1 marker) leaves from the far end of the lake and climbs steadily through larch forest before opening onto open plateau — this is the terrain you came for. The shift from valley forest to open alpine meadow happens around hour 2 and it's a proper moment</li>
+      <li>Upper section approaching Sennes: open karst plateau, views to Croda Rossa (3,146m). Barely any other hikers by this point</li>
+      <li>Marmots reliably from the first hour. Chamois likely in the upper section. July is peak wildflower season on the meadows</li>
+    </ul>
+
+    <div class="warn-box">
+      <strong>Bus 442 — must be pre-booked in peak season (10 Jul – 10 Sep):</strong> Pay €7 cash on the bus outside those dates; inside peak season you need to reserve in advance. Check the current booking method at <a href="https://www.altavia1dolomites.com/how-to-get-to-lago-di-braies-bus-442/" target="_blank">altavia1dolomites.com</a>. Driver cannot accept card.
+    </div>
+
+    <div class="hut-box">
+      <div class="hut-photo-strip"><img src="https://www.sennes.com/wp-content/uploads/2015/02/IMG_0510111-1024x576.jpg" alt="Rifugio Sennes" loading="lazy"></div>
+      <div class="hut-header">
+        <div class="hut-title">
+          <h4>Night 1 — Rifugio Sennes</h4>
+          <p>2,126m · Fanes-Sennes-Braies Natural Park · Family-run · Hotel-style comfort</p>
+        </div>
+        <a class="btn-book" href="https://www.sennes.com/en/" target="_blank">Book Now →</a>
+      </div>
+      <div class="hut-details">
+        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,126m</span></div>
+        <div class="hd"><span class="hdl">Rooms</span><span class="hdv">Private rooms + dorms</span></div>
+        <div class="hd"><span class="hdl">En-suite</span><span class="hdv">Some rooms — rare at altitude</span></div>
+        <div class="hd"><span class="hdl">Meals</span><span class="hdv">Half board included</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+39 0474 646355</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:info@sennes.com">info@sennes.com</a></span></div>
+      </div>
+      <span class="price-pill">Dorm + half board: ~€65–80/person · Private rooms higher · Confirm directly</span>
+      <p class="hut-note">One of the more comfortable rifugios on AV1 — some private rooms have en-suite bathrooms, rare at this altitude. Panorama at sunset across to Cristallo (3,221m), Croda Rossa, and Sorapis. Good night to get the hut rhythm established: dinner at 19:00, bed early, out by 08:00.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- DAY 2 -->
+<div class="day-card">
+  <div class="day-header dh-green2">
+    <div class="day-pill"><span class="dn">2</span><span class="dl">Day</span></div>
+    <div class="day-info">
+      <h3>Rifugio Sennes → Rifugio Fanes</h3>
+      <div class="day-meta">
+        <span>⏱ 4–5 hrs hiking</span>
+        <span>📏 12 km</span>
+        <span>↓ −320m ↑ +260m</span>
+        <span class="tag tag-green">Easy-Moderate — the gentlest, prettiest day</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-photo"><img src="https://www.suedtirol.info/content/dam/idm/im/images/experiences/activities/w/w_1/smgpoic460895ad944338a0742c58c305d0e55/4d6771a2f8279612d234a1cbc76608d1.jpeg" alt="The Fanes Plateau — wide alpine meadows in the heart of the Dolomites" loading="lazy"></div>
+  <div class="day-body">
+    <div class="route-strip">
+      <span class="rname">Rifugio Sennes (2,126m)</span>
+      <span class="arrow">→ Trail 7 / AV1 →</span>
+      <span class="rname">Fanes Plateau (~2,060m)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Rifugio Fanes (2,060m)</span>
+    </div>
+    <ul class="highlights">
+      <li>The <strong>Fanes Plateau</strong> is the centrepiece of this entire trip — a vast, flat alpine meadow at 2,000m that stretches in every direction. Wide open, green, full of wildflowers in July, marmots, occasional deer. This is what you came for if you prefer green to bare rock</li>
+      <li>The transition happens early in the day: the karst terrain above Sennes softens, then suddenly the plateau opens up and it feels like an entirely different world. The scale of it catches people off guard</li>
+      <li>Day 2 is deliberately the shortest, flattest day. You can linger over breakfast at Sennes, photograph the early morning light on the plateau, and still reach Fanes by early afternoon. Don't rush it</li>
+      <li>The Fanes plateau has roots in Ladin folklore — the legend of the "Kingdom of Fanes" (a matriarchal alpine civilisation) originates here. The landscape does look genuinely other-worldly in certain light</li>
+      <li>Advanced hiker: the ridges above the plateau (Col Bechei area) offer a much longer and more technical variant — ask at Sennes for the route</li>
+    </ul>
+    <div class="tip-inline">
+      <strong>Best day for an easy pace.</strong> Use the extra time to explore the plateau on foot in the afternoon before dinner — there are circular walks from Rifugio Fanes that don't require a pack.
+    </div>
+
+    <div class="hut-box">
+      <div class="hut-photo-strip"><img src="https://www.hiwio.com/Sync/File/Img/f59136f5-1e05-459c-9608-2e2c349c609c/Below-the-Fanes-hut-lies-the-charming-Little-Fanes-hut-%C3%9Ccia-Pices-Fanes-jpg?w=1280&q=90" alt="Rifugio Fanes on the Fanes Plateau" loading="lazy"></div>
+      <div class="hut-header">
+        <div class="hut-title">
+          <h4>Night 2 — Rifugio Fanes (Gran Fanes)</h4>
+          <p>2,060m · Heart of the Fanes Plateau · Val Badia sector</p>
+        </div>
+        <a class="btn-book" href="https://www.rifugiofanes.com/en/booking" target="_blank">Book Now →</a>
+      </div>
+      <div class="hut-details">
+        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,060m</span></div>
+        <div class="hd"><span class="hdl">Private rooms</span><span class="hdv">1–5 people</span></div>
+        <div class="hd"><span class="hdl">Dorm</span><span class="hdv">11 beds (book early)</span></div>
+        <div class="hd"><span class="hdl">Meals</span><span class="hdv">Half board included</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+39 0474 453001</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:info@rifugiofanes.com">info@rifugiofanes.com</a></span></div>
+      </div>
+      <span class="price-pill">Dorm + half board: ~€70–90/person · Private rooms: ~€90–120 · <a href="https://www.rifugiofanes.com/en/rates-request/prices-conditions" target="_blank" style="color:var(--green);">See pricing page</a></span>
+      <p class="hut-note">The dorm is only 11 beds — this is the hut most likely to cause problems if you don't book early. Dinner at Fanes with the plateau going golden at sunset is the kind of evening that makes the whole trip. Quiet after 21:00; hikers start early.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- DAY 3 — Summit Day -->
+<div class="day-card summit-day">
+  <div class="day-header dh-summit">
+    <div class="day-pill"><span class="dn">3</span><span class="dl">Day</span></div>
+    <div class="day-info">
+      <h3>Rifugio Fanes → Rifugio Lagazuoi — The Payoff</h3>
+      <div class="day-meta">
+        <span>⏱ 5–7 hrs hiking</span>
+        <span>📏 15 km</span>
+        <span>↑ +920m ↓ −220m</span>
+        <span class="tag tag-summit">Challenging — biggest day, biggest reward</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-photo"><img src="https://inafarawayland.com/wp-content/uploads/2023/09/Lagazuoi-Tunnels-Hike-40-1024x683.jpg" alt="Panoramic view from Lagazuoi over the Dolomites" loading="lazy"></div>
+  <div class="day-body">
+    <div class="route-strip" style="background:#FBF2EC;">
+      <span class="rname">Rifugio Fanes (2,060m)</span>
+      <span class="arrow" style="color:var(--orange);">→ AV1 →</span>
+      <span class="rname">Capanna Alpina (1,721m)</span>
+      <span class="arrow" style="color:var(--orange);">→</span>
+      <span class="rname">Passo Valparola (2,192m)</span>
+      <span class="arrow" style="color:var(--orange);">→ Trail 402 →</span>
+      <span class="rname">Rifugio Lagazuoi (2,752m)</span>
+    </div>
+    <ul class="highlights">
+      <li>This is the day the landscape transforms around you. The route descends from the Fanes plateau into the valley at Capanna Alpina, then climbs hard and long toward Lagazuoi — the soft green meadows giving way to bare limestone ridges, then cliff. Two days of green makes the rock feel earned</li>
+      <li><strong>Passo Valparola (2,192m)</strong> is the natural mid-day rest point — there's a bar-restaurant and WWI fortifications to explore while you eat. The views from here toward the Lagazuoi massif are extraordinary</li>
+      <li>The final ascent on Trail 402 is long but never technical — steady switchbacks on open ridge, views building with every 100m of gain. Advanced hiker will want to push ahead and have a beer waiting at the top</li>
+      <li>Once at Lagazuoi: the terrace is the most panoramic in the entire Dolomites. On a clear day you can see Marmolada (the only glacier), Civetta, Pelmo, Tofane, and the full arc of the Dolomites. This is the moment the trip has been building to</li>
+      <li><strong>WWI tunnels:</strong> after checking in, descend the Austro-Hungarian mine tunnels carved through the mountain (~1h, headlamp essential, bring one each). One of the most extraordinary things in the Alps — hand-carved at 2,700m under enemy fire in 1916–17</li>
+    </ul>
+    <div class="warn-box">
+      <strong>Start no later than 07:30.</strong> Day 3 has the most exposed terrain — particularly the final ridge to Lagazuoi. Afternoon storms can build fast. Arriving at the hut by 14:00 is realistic with an early start; arriving at 17:00 in a thunderstorm is not ideal at 2,700m.
+    </div>
+    <div class="note-box">
+      <strong>Headlamp — non-negotiable.</strong> Pack it in your day bag tonight at Fanes, not tomorrow morning at Lagazuoi. You'll walk underground in complete darkness for extended sections of the WWI tunnels.
+    </div>
+
+    <div class="hut-box summit">
+      <div class="hut-photo-strip"><img src="https://cdn.world-discovery.com/20174/Rifugio-Lagazuoi.webp" alt="Rifugio Lagazuoi at 2,752m" loading="lazy" style="object-position: center 65%;"></div>
+      <div class="hut-header">
+        <div class="hut-title">
+          <h4 class="st">Night 3 — Rifugio Lagazuoi</h4>
+          <p>2,752m · Above Passo Falzarego · Most panoramic terrace in the Dolomites</p>
+        </div>
+        <a class="btn-book sb" href="https://rifugiolagazuoi.com/EN/p2-Overnight-stay-at-Rifugio-Lagazuoi" target="_blank">Book Now →</a>
+      </div>
+      <div class="hut-details">
+        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,752m</span></div>
+        <div class="hd"><span class="hdl">Capacity</span><span class="hdv">~90 beds</span></div>
+        <div class="hd"><span class="hdl">Rooms</span><span class="hdv">Dorms + private rooms</span></div>
+        <div class="hd"><span class="hdl">Sauna</span><span class="hdv">Yes — highest in Dolomites</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+39 0436 867303</span></div>
+        <div class="hd"><span class="hdl">Website</span><span class="hdv"><a href="https://rifugiolagazuoi.com" target="_blank">rifugiolagazuoi.com</a></span></div>
+      </div>
+      <span class="price-pill sp">Dorm + half board: ~€75–95/person · Private rooms: ~€100–130 · <strong>50% deposit on booking — non-refundable</strong></span>
+      <p class="hut-note">Book this one first — non-refundable deposit, fills earliest, most iconic. The on-site sauna at 2,752m after the Day 3 climb is non-negotiable. Book the sauna slot when you check in (limited capacity). Sunrise from the terrace at Lagazuoi is famous — set an alarm.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- DAY 4 -->
+<div class="day-card">
+  <div class="day-header dh-return">
+    <div class="day-pill"><span class="dn">4</span><span class="dl">Day</span></div>
+    <div class="day-info">
+      <h3>Descent → Cortina → Venice → Home</h3>
+      <div class="day-meta">
+        <span>⏱ ~2h descent</span>
+        <span>📏 5–6 km</span>
+        <span>↓ −530m</span>
+        <span class="tag tag-grey">Half-day walk, travel day</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="route-strip" style="background:#F0F2EE;">
+      <span class="rname">Lagazuoi</span>
+      <span class="arrow" style="color:#888;">→ cable car →</span>
+      <span class="rname">Passo Falzarego</span>
+      <span class="arrow" style="color:#888;">→ Dolomiti Bus →</span>
+      <span class="rname">Cortina (20 min)</span>
+      <span class="arrow" style="color:#888;">→ ATVO →</span>
+      <span class="rname">Venice VCE</span>
+      <span class="arrow" style="color:#888;">→ ✈ →</span>
+      <span class="rname">All origins</span>
+    </div>
+    <ul class="highlights">
+      <li>Take the <strong>Lagazuoi cable car down</strong> (~€21, ~7 min) to Passo Falzarego — legs have done enough, and you need the time for the bus schedule</li>
+      <li>Or descend via the WWI tunnels on foot (~1h, headlamp) if you haven't done them yet — puts you right at the cable car base station at Falzarego</li>
+      <li>Dolomiti Bus Falzarego → Cortina: ~20 min, runs roughly hourly</li>
+      <li>Long lunch in Cortina — you've earned it. There are good pizzerias and cafes near the bus station</li>
+      <li>ATVO Cortina → Venice Airport: aim for the 13:00–14:30 bus to reach VCE with time for evening flights. Last bus ~18:30 (confirm at atvo.it). <strong>Book return ticket in advance</strong></li>
+    </ul>
+    <div class="tip-inline">
+      <strong>US friends' return flights:</strong> Evening departures from VCE (19:00+) are comfortable if you catch the 13:00–14:00 ATVO. For Janek's long-haul: an extra night in Venice or Mestre removes all timing pressure and Venice is worth it — book in advance for July.
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     GETTING THERE & AROUND
+════════════════════════════════════════ -->
+<h2>Getting There &amp; Around</h2>
+
+<div class="grid-2">
+  <div class="lcard">
+    <h3>🚌 Venice Airport → Cortina d'Ampezzo</h3>
+    <p><strong>ATVO Coach</strong> — departs directly from outside VCE Arrivals.</p>
+    <ul>
+      <li>Journey: ~2h30 direct. No need to go into Venice city</li>
+      <li>Frequency: 4–5 departures/day (summer)</li>
+      <li>Price: <span class="price-tag">from €8</span> booked ahead (~€17 on day)</li>
+      <li><strong>Book in advance for July</strong> — sells out in peak weeks</li>
+      <li>Cortina Express private shuttle: ~€35/person, faster (~2h)</li>
+    </ul>
+    <p style="margin-top:8px; font-size:0.85em;">
+      <a href="https://www.atvo.it" target="_blank">atvo.it</a> ·
+      <a href="https://www.cortinaexpress.it/en/" target="_blank">cortinaexpress.it</a> ·
+      <a href="https://www.omio.com" target="_blank">Omio</a>
+    </p>
+  </div>
+
+  <div class="lcard">
+    <h3>🚍 Cortina → Lago di Braies (Day 1 morning)</h3>
+    <p>Two buses in sequence — allow 1h30 total:</p>
+    <ul>
+      <li><strong>Step 1:</strong> Cortina → Dobbiaco via Dolomiti Bus route 445 — ~45 min, ~€5–8</li>
+      <li><strong>Step 2:</strong> Dobbiaco → Lago di Braies via <strong>Bus 442</strong> — ~30 min, <span class="price-tag">€7 cash</span></li>
+      <li><strong>Peak season (10 Jul – 10 Sep): Bus 442 must be pre-booked.</strong> Driver cannot take card</li>
+      <li>Leave Cortina by 08:00 to start hiking by ~10:00</li>
+    </ul>
+    <p style="margin-top:8px; font-size:0.85em;">
+      <a href="https://www.dolomitibus.it" target="_blank">dolomitibus.it</a> ·
+      <a href="https://www.altavia1dolomites.com/how-to-get-to-lago-di-braies-bus-442/" target="_blank">Bus 442 guide</a>
+    </p>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="lcard">
+    <h3>🚡 Lagazuoi Cable Car (Day 4 descent)</h3>
+    <ul>
+      <li>Lagazuoi summit → Passo Falzarego: ~7 min</li>
+      <li>Price: <span class="price-tag">~€21</span> single. Confirm at <a href="https://lagazuoi.it/EN/Information-Prices-and-useful-information-page30-Lagazuoi-Refuge" target="_blank">lagazuoi.it</a></li>
+      <li>Runs daily in summer, first lift ~08:30</li>
+      <li>Dolomiti Bus stop is at the base station for onward to Cortina</li>
+    </ul>
+  </div>
+
+  <div class="lcard">
+    <h3>🗺 Navigation</h3>
+    <ul>
+      <li>Download <a href="https://www.komoot.com" target="_blank">Komoot</a> or <a href="https://www.alltrails.com" target="_blank">AllTrails</a> offline before leaving — no reliable signal above 2,000m</li>
+      <li>Buy <strong>Tabacco map Sheet 03</strong> (covers Braies, Fanes, Sennes, and Lagazuoi sectors) — available in Cortina outdoor shops</li>
+      <li>Trail markers are excellent throughout: red/white paint bands and numbered posts</li>
+      <li>No via ferrata kit needed — T2–T3 throughout</li>
+    </ul>
+    <p style="margin-top:8px; font-size:0.85em;"><a href="https://www.meteodolomiti.it" target="_blank">meteodolomiti.it</a> — mountain-specific forecast</p>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     BOOKING LINKS
+════════════════════════════════════════ -->
+<h2>All Booking Links</h2>
+<p style="font-size:0.9em; color:var(--muted); margin-bottom:8px;">
+  Recommended booking order: <strong>(1) Lagazuoi</strong> first — non-refundable deposit, fills fastest · <strong>(2) Fanes</strong> — only 11 dorm beds · <strong>(3) Sennes</strong> — most capacity. For late July, book before the end of April.
+</p>
+
+<div class="booking-row">
+  <a class="booking-chip" href="https://www.sennes.com/en/" target="_blank">
+    <span class="bc-icon">🌿</span>
+    <div><span class="bc-label">Rifugio Sennes</span><span class="bc-sub">Night 1 · 2,126m · sennes.com</span></div>
+  </a>
+  <a class="booking-chip" href="https://www.rifugiofanes.com/en/booking" target="_blank">
+    <span class="bc-icon">🏕</span>
+    <div><span class="bc-label">Rifugio Fanes</span><span class="bc-sub">Night 2 · 2,060m · rifugiofanes.com</span></div>
+  </a>
+  <a class="booking-chip" href="https://rifugiolagazuoi.com/EN/p2-Overnight-stay-at-Rifugio-Lagazuoi" target="_blank">
+    <span class="bc-icon">🏔</span>
+    <div><span class="bc-label">Rifugio Lagazuoi</span><span class="bc-sub">Night 3 · 2,752m · rifugiolagazuoi.com</span></div>
+  </a>
+  <a class="booking-chip" href="https://www.atvo.it" target="_blank">
+    <span class="bc-icon">🚌</span>
+    <div><span class="bc-label">ATVO Coach</span><span class="bc-sub">Venice Airport ↔ Cortina</span></div>
+  </a>
+  <a class="booking-chip" href="https://www.dolomitibus.it" target="_blank">
+    <span class="bc-icon">🚍</span>
+    <div><span class="bc-label">Dolomiti Bus</span><span class="bc-sub">Cortina → Dobbiaco + local</span></div>
+  </a>
+  <a class="booking-chip" href="https://www.altavia1dolomites.com/how-to-get-to-lago-di-braies-bus-442/" target="_blank">
+    <span class="bc-icon">🎫</span>
+    <div><span class="bc-label">Bus 442 Guide</span><span class="bc-sub">Pre-booking info for peak season</span></div>
+  </a>
+  <a class="booking-chip" href="https://www.google.com/travel/flights" target="_blank">
+    <span class="bc-icon">✈</span>
+    <div><span class="bc-label">Google Flights</span><span class="bc-sub">Search all origins → VCE</span></div>
+  </a>
+  <a class="booking-chip" href="https://www.skyscanner.net" target="_blank">
+    <span class="bc-icon">✈</span>
+    <div><span class="bc-label">Skyscanner</span><span class="bc-sub">Compare fares</span></div>
+  </a>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     COSTS
+════════════════════════════════════════ -->
+<h2>Approximate Costs Per Person</h2>
+<p style="font-size:0.9em; color:var(--muted); margin-bottom:4px;">Hut prices are in euros; flight costs shown in the origin currency. July peak-season prices throughout.</p>
+
+<div class="grid-3">
+  <div class="cost-card">
+    <h3>✈ Flights — Ella (London)</h3>
+    <ul>
+      <li>easyJet / Jet2 LGW → VCE: <strong>£80–150</strong></li>
+      <li>British Airways LHR → VCE: <strong>£130–250</strong></li>
+      <li>Book 3–4 months ahead for July</li>
+    </ul>
+  </div>
+
+  <div class="cost-card">
+    <h3>✈ Flights — Dina (DC / Chicago)</h3>
+    <ul>
+      <li>IAD or ORD → VCE via FRA/VIE: <strong>$800–1,400</strong></li>
+      <li>Lufthansa, United, Austrian</li>
+      <li>Book now — transatlantic July is expensive late</li>
+    </ul>
+  </div>
+
+  <div class="cost-card">
+    <h3>✈ Flights — Janek (California)</h3>
+    <ul>
+      <li>LAX/SFO → VCE via MUC or FRA: <strong>$950–1,700</strong></li>
+      <li>Lufthansa, United</li>
+      <li>Long-haul — book early, consider Venice night</li>
+    </ul>
+  </div>
+
+  <div class="cost-card">
+    <h3>✈ Flights — Maya (Chicago)</h3>
+    <ul>
+      <li>ORD → VCE via FRA/VIE: <strong>$800–1,350</strong></li>
+      <li>Lufthansa, United, Austrian</li>
+      <li>Same routes as Dina if flying together</li>
+    </ul>
+  </div>
+
+  <div class="cost-card">
+    <h3>🚌 Ground Transport (all)</h3>
+    <ul>
+      <li>ATVO bus ×2 (return): <strong>~€16–30</strong></li>
+      <li>Cortina → Dobbiaco bus: <strong>~€7</strong></li>
+      <li>Bus 442 to Braies: <strong>€7</strong></li>
+      <li>Cable car (Day 4 descent): <strong>~€21</strong></li>
+      <li>Misc taxis: <strong>~€15–25</strong></li>
+    </ul>
+  </div>
+
+  <div class="cost-card">
+    <h3>🏨 Hotel Night in Cortina</h3>
+    <ul>
+      <li>Mid-range hotel: <strong>€60–100/person</strong></li>
+      <li>Options near bus station</li>
+      <li>Book ahead for July — Cortina fills fast</li>
+    </ul>
+  </div>
+
+  <div class="cost-card">
+    <h3>🌿 Night 1 — Rifugio Sennes</h3>
+    <ul>
+      <li>Dorm + half board: <strong>~€65–80</strong></li>
+      <li>Private en-suite rooms available</li>
+      <li>Confirm at <a href="https://www.sennes.com/en/" target="_blank">sennes.com</a></li>
+    </ul>
+  </div>
+
+  <div class="cost-card">
+    <h3>🏕 Night 2 — Rifugio Fanes</h3>
+    <ul>
+      <li>Dorm (11 beds): <strong>~€70–90</strong></li>
+      <li>Private room: <strong>~€90–120</strong></li>
+      <li><a href="https://www.rifugiofanes.com/en/rates-request/prices-conditions" target="_blank">rifugiofanes.com/prices</a></li>
+    </ul>
+  </div>
+
+  <div class="cost-card">
+    <h3>🏔 Night 3 — Rifugio Lagazuoi</h3>
+    <ul>
+      <li>Dorm + half board: <strong>~€75–95</strong></li>
+      <li>Private room: <strong>~€100–130</strong></li>
+      <li><strong>50% non-refundable deposit</strong></li>
+    </ul>
+  </div>
+
+  <div class="cost-card">
+    <h3>🍕 Food &amp; Extras</h3>
+    <ul>
+      <li>Lunches on trail (hut bar snacks): ~€12–20/day</li>
+      <li>Cortina dinners (×2): ~€35–60</li>
+      <li>Drinks, coffee, snacks: ~€20–30</li>
+      <li>Sauna at Lagazuoi: ~€10–15</li>
+    </ul>
+  </div>
+
+  <div class="cost-card cost-total" style="grid-column: span 2;">
+    <h3>💰 Total Trip Estimate</h3>
+    <ul>
+      <li>Ella (London) — budget dorms: <strong>~£480–580</strong> · mid-range: <strong>~£650–820</strong></li>
+      <li>Dina / Maya (US, Chicago/DC) — budget dorms: <strong>~$1,300–1,700</strong> · mid-range: <strong>~$1,600–2,200</strong></li>
+      <li>Janek (California) — budget dorms: <strong>~$1,500–2,000</strong> · mid-range: <strong>~$1,900–2,600</strong></li>
+      <li><strong>Bring €250 cash each</strong> — many huts cash-only or prefer cash for extras. Withdraw in Cortina on Day 0</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     TIPS
+════════════════════════════════════════ -->
+<h2>Essential Tips</h2>
+
+<div class="grid-2">
+  <div class="tip-card">
+    <h3>📅 Booking — Do This First</h3>
+    <ul>
+      <li>Book Lagazuoi first (50% non-refundable, fills fastest). Then Fanes (11-bed dorm). Then Sennes</li>
+      <li>For late July 2026, book by <strong>end of April 2026</strong> at the latest — ideally now</li>
+      <li>Email huts directly — many don't appear on booking platforms, or prefer direct contact</li>
+      <li>Pre-book Bus 442 to Lago di Braies — required 10 Jul–10 Sep</li>
+      <li>Pre-book ATVO buses both ways — July coaches sell out</li>
+    </ul>
+  </div>
+
+  <div class="tip-card">
+    <h3>🏡 Life in a Rifugio</h3>
+    <ul>
+      <li><strong>Half board = dinner + breakfast</strong>. Lunch is extra — order at the bar or bring your own snacks</li>
+      <li>Bring a <strong>silk or cotton sleeping bag liner</strong> — required at most huts, weighs almost nothing</li>
+      <li>Dorms: bunk beds, 6–12 per room. Earplugs are worth packing</li>
+      <li>Showers: usually available for ~€2–3, limited hot water — first in queue wins</li>
+      <li>Check-in from 14:00. Dinner typically 19:00–20:00. The mountain rhythm is early to bed, early to rise</li>
+    </ul>
+  </div>
+
+  <div class="tip-card">
+    <h3>💶 Cash</h3>
+    <ul>
+      <li>Bus 442: <strong>cash only</strong></li>
+      <li>Rifugio extras (drinks, sauna, showers): usually cash</li>
+      <li>Bring <strong>€250 cash per person</strong></li>
+      <li>Withdraw in Cortina on Day 0 — no ATMs on the trail</li>
+      <li>Card may work at Lagazuoi for the main bill; don't rely on it elsewhere</li>
+    </ul>
+  </div>
+
+  <div class="tip-card">
+    <h3>🎒 What to Pack</h3>
+    <ul>
+      <li>25–30L day pack only — huts provide all bedding (plus your liner)</li>
+      <li><strong>Headlamp — non-negotiable</strong> for WWI tunnels at Lagazuoi</li>
+      <li>Trekking poles — strongly recommended for Day 3 climb and Day 4 descent</li>
+      <li>Fleece or light down jacket — nights at 2,700m are cold even in late July</li>
+      <li>Waterproof jacket — every day without exception</li>
+      <li><strong>SPF 30–50, sunglasses, sun hat</strong> — UV at altitude is intense even when temps feel mild</li>
+      <li>Water capacity: 2–3L — fill at each hut before leaving</li>
+      <li>Ankle-support hiking boots — not trail runners for this distance and elevation</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<div class="footer">
+  <p>Planned for 3rd–4th week of July 2026 · Prices approximate, confirm directly · All links verified March 2026</p>
+  <p style="margin-top:8px;">
+    <a href="https://www.sennes.com/en/" target="_blank">sennes.com</a> ·
+    <a href="https://www.rifugiofanes.com/en/" target="_blank">rifugiofanes.com</a> ·
+    <a href="https://rifugiolagazuoi.com" target="_blank">rifugiolagazuoi.com</a> ·
+    <a href="https://www.atvo.it" target="_blank">atvo.it</a> ·
+    <a href="https://www.dolomitibus.it" target="_blank">dolomitibus.it</a>
+  </p>
+</div>
+
+</body>
+</html>
