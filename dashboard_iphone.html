@@ -547,7 +547,7 @@
     </div>
   </div>
 
-  <div class="section-title">Fund Allocation (Fidelity · ~$1,100/mo)</div>
+  <div class="section-title">Monthly buy amounts — Fidelity</div>
   <div class="card"><div id="m-fund-rows"><div style="color:var(--muted);font-size:0.75rem;">Loading…</div></div></div>
 
   <div class="section-title">Key Rules</div>
@@ -712,13 +712,13 @@ function liveEstimates() {
     ];
     const moUSD = 1100;
     fundRowsEl.innerHTML = funds.map((f, i) => {
-      const holdingUSD = Math.round(fidelityEst * f.pct / 100);
-      const moContrib  = Math.round(moUSD * f.pct / 100);
+      const moContrib = Math.round(moUSD * f.pct / 100);
       const border = i < funds.length - 1 ? 'border-bottom:1px solid var(--border);' : '';
       return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;${border}">` +
-        `<div><div style="font-size:0.8rem;font-weight:600;color:var(--text);">${f.name} <span style="font-size:0.68rem;font-weight:500;color:${f.color};">${f.pct}% · ${f.role}</span></div>` +
-        `<div style="font-size:0.64rem;color:var(--muted);">${f.desc} · +$${moContrib}/mo</div></div>` +
-        `<div style="text-align:right;"><div style="font-size:0.92rem;font-weight:700;color:${f.color};">~$${holdingUSD.toLocaleString('en-GB')}</div></div></div>`;
+        `<div><div style="font-size:0.8rem;font-weight:600;color:var(--text);">${f.name} <span style="font-size:0.68rem;font-weight:500;color:${f.color};">${f.pct}%</span></div>` +
+        `<div style="font-size:0.64rem;color:var(--muted);">${f.desc}</div></div>` +
+        `<div style="text-align:right;"><div style="font-size:0.98rem;font-weight:800;color:${f.color};">$${moContrib}</div>` +
+        `<div style="font-size:0.62rem;color:var(--muted);">this month</div></div></div>`;
     }).join('');
   }
 
