@@ -561,38 +561,78 @@
 
   /* ── Desktop layout (≥900px) ───────────────────────────────────────────── */
   @media(min-width:900px){
-    /* Sidebar nav */
-    #tabbar{position:fixed;top:0;left:0;bottom:0;right:auto;width:220px;
+    /* ── Sidebar ── */
+    #tabbar{position:fixed;top:0;left:0;bottom:0;right:auto;width:240px;
       flex-direction:column;align-items:stretch;height:100vh;
       border-right:1px solid var(--border);border-top:none;
       padding:0;box-shadow:none;background:var(--bg);}
     #tabbar::before{content:'🌿 Meal Planner';display:block;
-      font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;
-      letter-spacing:.08em;padding:28px 20px 14px;}
-    .tab{flex:0 0 auto;flex-direction:row;gap:10px;padding:11px 16px;
-      justify-content:flex-start;border-radius:8px;margin:2px 8px;}
-    .tab-icon{font-size:1.05rem;}
-    .tab-label{font-size:0.78rem;font-weight:600;letter-spacing:0;text-transform:none;}
-    .tab.active{background:rgba(181,69,27,0.09);border-radius:8px;}
+      font-size:1rem;font-weight:900;color:var(--text);letter-spacing:-0.01em;
+      padding:32px 20px 20px;}
+    .tab{flex:0 0 auto;flex-direction:row;gap:12px;padding:11px 20px;
+      justify-content:flex-start;border-radius:10px;margin:1px 10px;}
+    .tab:hover{background:var(--card2);}
+    .tab-icon{font-size:1.1rem;}
+    .tab-label{font-size:0.82rem;font-weight:600;letter-spacing:0;text-transform:none;}
+    .tab.active{background:rgba(181,69,27,0.1);}
+    .tab.active .tab-label{color:var(--accent);}
     .tab.active .tab-icon{filter:none;}
 
-    /* Shift content right */
-    #content{margin-left:220px;padding-bottom:40px;}
+    /* ── Content area ── */
+    #content{margin-left:240px;padding-bottom:60px;}
+    .tab-section{max-width:1080px;margin:0 auto;}
+    .topbar{padding:28px 24px 14px;}
+    .topbar-logo{font-size:1.3rem;}
+    .search-wrap{padding:8px 24px 4px;}
+    .filter-row{padding:8px 24px 10px;}
 
-    /* Recipe cards → 3-column grid */
-    #recipes-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:0 20px 20px;}
-    .recipe-card{margin:0;}
+    /* ── Recipe cards → 3-col grid with hover ── */
+    #recipes-list{display:grid;grid-template-columns:repeat(3,1fr);
+      gap:16px;padding:4px 24px 24px;}
+    .recipe-card{margin:0;transition:transform .15s,box-shadow .15s;cursor:pointer;}
+    .recipe-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.1);}
+    .recipe-card:active{transform:none;box-shadow:none;}
+    .recipe-card-img{height:200px;}
 
-    /* Add Recipe → centered dialog */
-    #add-recipe-screen{background:rgba(0,0,0,0.42);align-items:center;justify-content:center;padding:40px;}
-    .ar-header{max-width:520px;width:100%;background:var(--bg);
+    /* ── Home tab ── */
+    .home-greeting{padding:28px 24px 12px;}
+    .home-hero{margin:0 24px;border-radius:18px;transition:box-shadow .2s;cursor:pointer;}
+    .home-hero:hover{box-shadow:0 10px 36px rgba(0,0,0,0.18);}
+    .home-section-hdr{padding:20px 24px 8px;font-size:0.65rem;}
+    .home-picks{grid-template-columns:repeat(4,1fr);padding:0 24px;gap:12px;}
+    .home-pick-card{transition:transform .15s,box-shadow .15s;}
+    .home-pick-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.09);}
+    .home-pick-photo{height:120px;aspect-ratio:unset;}
+    .home-cuisines{padding:0 24px 4px;gap:8px;}
+    .home-cuisine-chip{padding:8px 16px;}
+    .home-cta{margin:16px 24px 28px;}
+
+    /* ── Ideas tab ── */
+    .idea-grid{padding:4px 24px 24px;gap:10px;}
+    .ideas-toolbar{padding:8px 24px;}
+    .idea-card{transition:transform .15s,box-shadow .15s;}
+    .idea-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+    .fridge-header{padding:14px 24px 0;}
+    .fridge-sub,.fridge-input-row,.fridge-tags{padding-left:24px;padding-right:24px;}
+    .btn-fridge-match,.btn-fridge-gen{margin-left:24px;margin-right:24px;width:calc(100% - 48px);}
+
+    /* ── Recipe detail modal → centered dialog ── */
+    .modal-backdrop{align-items:center;justify-content:center;}
+    .modal{width:580px;max-width:580px;border-radius:20px;
+      border:1px solid var(--border);border-bottom:1px solid var(--border);
+      max-height:84vh;padding-bottom:0;}
+    .modal-handle{display:none;}
+    .modal-hero{height:280px;border-radius:20px 20px 0 0;}
+    .modal-body{padding:20px 24px;}
+
+    /* ── Add Recipe → centered dialog ── */
+    #add-recipe-screen{background:rgba(0,0,0,0.42);align-items:center;
+      justify-content:center;padding:40px;}
+    .ar-header{max-width:540px;width:100%;background:var(--bg);
       border-radius:16px 16px 0 0;border:1px solid var(--border);border-bottom:none;}
-    .ar-body{flex:0 1 auto;max-width:520px;width:100%;max-height:70vh;
+    .ar-body{flex:0 1 auto;max-width:540px;width:100%;max-height:70vh;
       background:var(--bg);border-radius:0 0 16px 16px;
       border:1px solid var(--border);border-top:none;overflow-y:auto;}
-
-    /* Wider topbar padding */
-    .topbar{padding:22px 20px 12px;}
   }
 </style>
 </head>
