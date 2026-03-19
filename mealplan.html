@@ -2412,6 +2412,7 @@ function saveEditRecipe() {
   if (ci !== -1) {
     Object.assign(customRecipes[ci], updated);
     localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+    syncPush();
   }
   closeEditRecipe();
   renderRecipes(currentFilter);
@@ -2845,9 +2846,10 @@ function confirmAddRecipe() {
   RECIPES.push(r);
   if (arPhotoData) RECIPE_IMGS[r.id] = arPhotoData;
 
-  // Persist to localStorage
+  // Persist to localStorage + remote KV
   customRecipes.push(r);
   localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+  syncPush();
 
   // Reset and close
   arGeneratedRecipe = null;
@@ -2869,6 +2871,47 @@ function confirmAddRecipe() {
     if (list) list.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 50);
   showToast('✓ Recipe added!');
+}
+
+// ─── CROSS-DEVICE SYNC (Cloudflare KV) ───────────────────────────────────────
+function _workerUrl() {
+  return localStorage.getItem('ar_proxy_url') || 'https://mealplan-proxy.lambert-ella.workers.dev/';
+}
+
+async function syncPush() {
+  try {
+    await fetch(_workerUrl(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kv_set: 'custom_recipes', data: customRecipes })
+    });
+  } catch(e) {}
+}
+
+async function syncPull() {
+  try {
+    const res = await fetch(_workerUrl(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kv_get: 'custom_recipes' })
+    });
+    const remote = await res.json();
+    if (!Array.isArray(remote) || remote.length === 0) return;
+    // Merge: union by ID, remote wins on conflict
+    const byId = {};
+    customRecipes.forEach(r => byId[r.id] = r);
+    remote.forEach(r => byId[r.id] = r);
+    const merged = Object.values(byId);
+    const hasNew = merged.some(r => !customRecipes.find(x => x.id === r.id));
+    if (!hasNew) return;
+    customRecipes = merged;
+    localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+    customRecipes.forEach(r => {
+      if (!RECIPES.find(x => x.id === r.id)) RECIPES.push(r);
+      if (r._photoData && !RECIPE_IMGS[r.id]) RECIPE_IMGS[r.id] = r._photoData;
+    });
+    renderRecipes(currentFilter);
+  } catch(e) {}
 }
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
@@ -2897,6 +2940,9 @@ document.addEventListener('DOMContentLoaded', () => {
     `<div class="filter-chip ${f === 'All' ? 'active' : ''}" data-filter="${f}" onclick="setFilter('${f}')">${f}</div>`
   ).join('');
   renderRecipes('All');
+
+  // Pull any remotely-saved custom recipes (cross-device sync)
+  syncPull();
 
   // Purge any API key that was previously stored in browser — key now lives only in Cloudflare Worker secret
   localStorage.removeItem('ar_api_key');
