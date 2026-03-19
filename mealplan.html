@@ -561,28 +561,30 @@
 
   /* ── Desktop layout (≥900px) ───────────────────────────────────────────── */
   @media(min-width:900px){
-    /* ── Sidebar ── */
-    #tabbar{position:fixed;top:0;left:0;bottom:0;right:auto;width:240px;
+    /* ── Sidebar — editorial, no emojis ── */
+    #tabbar{position:fixed;top:0;left:0;bottom:0;right:auto;width:200px;
       flex-direction:column;align-items:stretch;height:100vh;
       border-right:1px solid var(--border);border-top:none;
-      padding:0;box-shadow:none;background:var(--bg);}
-    #tabbar::before{content:'🌿 Meal Planner';display:block;
-      font-size:1rem;font-weight:900;color:var(--text);letter-spacing:-0.01em;
-      padding:32px 20px 20px;}
-    .tab{flex:0 0 auto;flex-direction:row;gap:12px;padding:11px 20px;
-      justify-content:flex-start;border-radius:10px;margin:1px 10px;}
-    .tab:hover{background:var(--card2);}
-    .tab-icon{font-size:1.1rem;}
-    .tab-label{font-size:0.82rem;font-weight:600;letter-spacing:0;text-transform:none;}
-    .tab.active{background:rgba(181,69,27,0.1);}
-    .tab.active .tab-label{color:var(--accent);}
+      padding:0;background:var(--bg);}
+    #tabbar::before{content:'Meal Planner';display:block;
+      font-size:1.05rem;font-weight:900;color:var(--text);letter-spacing:-0.02em;
+      padding:36px 24px 32px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+    .tab{flex:0 0 auto;flex-direction:row;gap:0;padding:10px 24px;
+      justify-content:flex-start;border-radius:0;margin:0;
+      border-left:3px solid transparent;transition:background .12s,border-color .12s;}
+    .tab:hover{background:var(--card2);border-left-color:var(--border);}
+    .tab-icon{display:none;}
+    .tab-label{font-size:0.85rem;font-weight:500;letter-spacing:0;
+      text-transform:none;color:var(--soft);}
+    .tab.active{background:transparent;border-left:3px solid var(--accent);}
+    .tab.active .tab-label{color:var(--text);font-weight:700;}
     .tab.active .tab-icon{filter:none;}
 
     /* ── Content area ── */
-    #content{margin-left:240px;padding-bottom:60px;}
+    #content{margin-left:200px;padding-bottom:60px;}
     .tab-section{max-width:1080px;margin:0 auto;}
     .topbar{padding:28px 24px 14px;}
-    .topbar-logo{font-size:1.3rem;}
+    .topbar-logo{font-size:1.3rem;font-weight:900;letter-spacing:-0.02em;}
     .search-wrap{padding:8px 24px 4px;}
     .filter-row{padding:8px 24px 10px;}
 
