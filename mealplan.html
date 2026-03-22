@@ -2902,13 +2902,17 @@ async function syncPull() {
     customRecipes.forEach(r => byId[r.id] = r);
     remote.forEach(r => byId[r.id] = r);
     const merged = Object.values(byId);
-    const hasNew = merged.some(r => !customRecipes.find(x => x.id === r.id));
-    if (!hasNew) return;
+    // Detect any change: new recipes OR updates to existing ones
+    const hasChanges = merged.length !== customRecipes.length ||
+      merged.some(r => JSON.stringify(r) !== JSON.stringify(customRecipes.find(x => x.id === r.id)));
+    if (!hasChanges) return;
     customRecipes = merged;
     localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
     customRecipes.forEach(r => {
-      if (!RECIPES.find(x => x.id === r.id)) RECIPES.push(r);
-      if (r._photoData && !RECIPE_IMGS[r.id]) RECIPE_IMGS[r.id] = r._photoData;
+      const ri = RECIPES.findIndex(x => x.id === r.id);
+      if (ri === -1) RECIPES.push(r);
+      else Object.assign(RECIPES[ri], r);
+      if (r._photoData) RECIPE_IMGS[r.id] = r._photoData;
     });
     renderRecipes(currentFilter);
   } catch(e) {}
@@ -2941,8 +2945,10 @@ document.addEventListener('DOMContentLoaded', () => {
   ).join('');
   renderRecipes('All');
 
-  // Pull any remotely-saved custom recipes (cross-device sync)
-  syncPull();
+  // Pull remote recipes first, then push merged state back to KV.
+  // The push-after-pull ensures recipes added before sync was set up (or from a
+  // device that hasn't pushed yet) reach KV and become visible on all devices.
+  syncPull().then(() => { if (customRecipes.length > 0) syncPush(); });
 
   // Purge any API key that was previously stored in browser — key now lives only in Cloudflare Worker secret
   localStorage.removeItem('ar_api_key');
