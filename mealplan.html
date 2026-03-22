@@ -2324,6 +2324,8 @@ function readAndSavePhoto(id, file) {
     // Re-render cards for tabs that reconstruct full HTML (recipes list, favourites)
     renderRecipes(currentFilter);
     renderFavourites();
+    // Push to KV after frame renders so the UI update isn't blocked by JSON serialisation
+    requestAnimationFrame(() => syncPush());
   };
   reader.readAsDataURL(file);
 }
