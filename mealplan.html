@@ -2311,9 +2311,8 @@ function readAndSavePhoto(id, file) {
   const reader = new FileReader();
   reader.onload = e => {
     photoOverrides[id] = e.target.result;
-    localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+    try { localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides)); } catch(e) {}
     RECIPE_IMGS[id] = e.target.result;
-    syncPush();
     // Update every rendered image for this recipe across all tabs instantly
     document.querySelectorAll(`img[data-recipe-id="${id}"]`).forEach(img => { img.src = e.target.result; });
     // Also update modal hero if open
@@ -2917,7 +2916,7 @@ async function syncPull() {
         merged.some(r => JSON.stringify(r) !== JSON.stringify(customRecipes.find(x => x.id === r.id)));
       if (recipeChanged) {
         customRecipes = merged;
-        localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+        try { localStorage.setItem('custom_recipes', JSON.stringify(customRecipes)); } catch(e) {}
         customRecipes.forEach(r => {
           const ri = RECIPES.findIndex(x => x.id === r.id);
           if (ri === -1) RECIPES.push(r);
@@ -2934,7 +2933,7 @@ async function syncPull() {
       const merged = { ...photoOverrides, ...remotePhotos };
       if (JSON.stringify(merged) !== JSON.stringify(photoOverrides)) {
         Object.assign(photoOverrides, remotePhotos);
-        localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+        try { localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides)); } catch(e) {}
         Object.assign(RECIPE_IMGS, photoOverrides);
         changed = true;
       }
