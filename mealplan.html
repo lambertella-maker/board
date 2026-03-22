@@ -1735,7 +1735,7 @@ function renderHome() {
     try { localStorage.setItem('home_picks_v2', JSON.stringify({ date: today, heroId: hero.id, pickIds: picks.map(r => r.id) })); } catch(e) {}
   }
   const dateStr = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
-  const src = RECIPE_IMGS[hero.id];
+  const src = photoOverrides[hero.id] || RECIPE_IMGS[hero.id];
   const pc = cuisinePlaceholder(hero.cuisine);
   const heroImg = src
     ? `<img src="${src}" alt="${hero.name}" data-recipe-id="${hero.id}" loading="eager" onerror="this.style.display='none'">`
@@ -1774,7 +1774,7 @@ function renderHome() {
         <div class="home-section-hdr">Try these</div>
         <div class="home-picks">
           ${picks.map(r => {
-            const s = RECIPE_IMGS[r.id];
+            const s = photoOverrides[r.id] || RECIPE_IMGS[r.id];
             const p = cuisinePlaceholder(r.cuisine);
             const img = s
               ? `<img src="${s}" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="this.outerHTML='<div class=\\'home-pick-placeholder ${p}\\'>${r.emoji}</div>'">`
@@ -2313,6 +2313,7 @@ function readAndSavePhoto(id, file) {
     photoOverrides[id] = e.target.result;
     localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
     RECIPE_IMGS[id] = e.target.result;
+    syncPush();
     // Update every rendered image for this recipe across all tabs instantly
     document.querySelectorAll(`img[data-recipe-id="${id}"]`).forEach(img => { img.src = e.target.result; });
     // Also update modal hero if open
@@ -2879,42 +2880,70 @@ function _workerUrl() {
 }
 
 async function syncPush() {
+  const url = _workerUrl();
   try {
-    await fetch(_workerUrl(), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ kv_set: 'custom_recipes', data: customRecipes })
-    });
+    await Promise.all([
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kv_set: 'custom_recipes', data: customRecipes })
+      }),
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kv_set: 'photo_overrides', data: photoOverrides })
+      })
+    ]);
   } catch(e) {}
 }
 
 async function syncPull() {
+  const url = _workerUrl();
   try {
-    const res = await fetch(_workerUrl(), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ kv_get: 'custom_recipes' })
-    });
-    const remote = await res.json();
-    if (!Array.isArray(remote) || remote.length === 0) return;
-    // Merge: union by ID, remote wins on conflict
-    const byId = {};
-    customRecipes.forEach(r => byId[r.id] = r);
-    remote.forEach(r => byId[r.id] = r);
-    const merged = Object.values(byId);
-    // Detect any change: new recipes OR updates to existing ones
-    const hasChanges = merged.length !== customRecipes.length ||
-      merged.some(r => JSON.stringify(r) !== JSON.stringify(customRecipes.find(x => x.id === r.id)));
-    if (!hasChanges) return;
-    customRecipes = merged;
-    localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
-    customRecipes.forEach(r => {
-      const ri = RECIPES.findIndex(x => x.id === r.id);
-      if (ri === -1) RECIPES.push(r);
-      else Object.assign(RECIPES[ri], r);
-      if (r._photoData) RECIPE_IMGS[r.id] = r._photoData;
-    });
-    renderRecipes(currentFilter);
+    const [recipeRes, photoRes] = await Promise.all([
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kv_get: 'custom_recipes' }) }),
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kv_get: 'photo_overrides' }) })
+    ]);
+    const [remoteRecipes, remotePhotos] = await Promise.all([recipeRes.json(), photoRes.json()]);
+    let changed = false;
+
+    // Merge custom recipes: union by ID, remote wins on conflict
+    if (Array.isArray(remoteRecipes) && remoteRecipes.length > 0) {
+      const byId = {};
+      customRecipes.forEach(r => byId[r.id] = r);
+      remoteRecipes.forEach(r => byId[r.id] = r);
+      const merged = Object.values(byId);
+      const recipeChanged = merged.length !== customRecipes.length ||
+        merged.some(r => JSON.stringify(r) !== JSON.stringify(customRecipes.find(x => x.id === r.id)));
+      if (recipeChanged) {
+        customRecipes = merged;
+        localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+        customRecipes.forEach(r => {
+          const ri = RECIPES.findIndex(x => x.id === r.id);
+          if (ri === -1) RECIPES.push(r);
+          else Object.assign(RECIPES[ri], r);
+          // Only apply _photoData if no drag-drop override exists for this recipe
+          if (r._photoData && !photoOverrides[r.id]) RECIPE_IMGS[r.id] = r._photoData;
+        });
+        changed = true;
+      }
+    }
+
+    // Merge photo overrides: union, remote wins on conflict
+    if (remotePhotos && typeof remotePhotos === 'object' && !Array.isArray(remotePhotos)) {
+      const merged = { ...photoOverrides, ...remotePhotos };
+      if (JSON.stringify(merged) !== JSON.stringify(photoOverrides)) {
+        Object.assign(photoOverrides, remotePhotos);
+        localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+        Object.assign(RECIPE_IMGS, photoOverrides);
+        changed = true;
+      }
+    }
+
+    if (changed) {
+      renderRecipes(currentFilter);
+      renderHome();
+    }
   } catch(e) {}
 }
 
@@ -2945,10 +2974,11 @@ document.addEventListener('DOMContentLoaded', () => {
   ).join('');
   renderRecipes('All');
 
-  // Pull remote recipes first, then push merged state back to KV.
-  // The push-after-pull ensures recipes added before sync was set up (or from a
-  // device that hasn't pushed yet) reach KV and become visible on all devices.
-  syncPull().then(() => { if (customRecipes.length > 0) syncPush(); });
+  // Pull remote data first, then push merged state back to KV.
+  // The push-after-pull ensures recipes/photos added before sync was set up reach KV.
+  syncPull().then(() => {
+    if (customRecipes.length > 0 || Object.keys(photoOverrides).length > 0) syncPush();
+  });
 
   // Purge any API key that was previously stored in browser — key now lives only in Cloudflare Worker secret
   localStorage.removeItem('ar_api_key');
