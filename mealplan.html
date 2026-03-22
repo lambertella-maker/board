@@ -2313,7 +2313,7 @@ function readAndSavePhoto(id, file) {
     photoOverrides[id] = e.target.result;
     localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
     RECIPE_IMGS[id] = e.target.result;
-    setTimeout(() => syncPush(), 0); // defer so UI updates render first
+    syncPush();
     // Update every rendered image for this recipe across all tabs instantly
     document.querySelectorAll(`img[data-recipe-id="${id}"]`).forEach(img => { img.src = e.target.result; });
     // Also update modal hero if open
