@@ -71,7 +71,7 @@
     font-family:inherit;outline:none;transition:border-color .15s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a8178' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
   .search-input:focus{border-color:var(--accent);}
   .search-input::placeholder{color:var(--muted);}
-  .search-input::-webkit-search-cancel-button{-webkit-appearance:none;display:none;}
+
 
   /* CARDS */
   .section-title{font-size:0.62rem;font-weight:700;text-transform:uppercase;
@@ -791,7 +791,7 @@
     </div>
   </div>
   <div class="search-wrap">
-    <input class="search-input" id="recipe-search" type="search" placeholder="Search recipes…" oninput="onSearch(this.value)" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <input class="search-input" id="recipe-search" type="text" placeholder="Search recipes…" oninput="onSearch(this.value)" autocorrect="off" autocapitalize="off" spellcheck="false">
     <button class="search-clear" id="search-clear-btn" onclick="clearSearch()" title="Clear">✕</button>
   </div>
   <div class="filter-row" id="recipe-filters"></div>
