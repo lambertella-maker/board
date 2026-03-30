@@ -173,11 +173,11 @@
   .tag-us { background:rgba(34,211,238,0.15); color:var(--cyan); }
   .tag-alert { background:rgba(251,191,36,0.15); color:var(--amber); }
   .filed-returns { display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem; margin-top:1rem; }
-  .filed-year { background:var(--card2); border:1px solid var(--border); border-radius:10px; padding:1rem; text-align:center; transition:border-color .2s; }
+  .filed-year { background:var(--card2); border:1px solid var(--border); border-radius:8px; padding:0.55rem 0.75rem; text-align:center; transition:border-color .2s; }
   .filed-year:hover { border-color:var(--indigo); }
-  .filed-year-num { font-size:1.1rem; font-weight:800; color:var(--text); }
-  .filed-year-status { font-size:0.7rem; font-weight:700; margin-top:0.3rem; }
-  .filed-year-note { font-size:0.68rem; color:var(--muted); margin-top:0.4rem; line-height:1.4; }
+  .filed-year-num { font-size:0.9rem; font-weight:800; color:var(--text); }
+  .filed-year-status { font-size:0.62rem; font-weight:700; margin-top:0.2rem; }
+  .filed-year-note { font-size:0.6rem; color:var(--muted); margin-top:0.25rem; line-height:1.35; }
 
   /* SUPERPLAN */
   .superplan-intro { background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.2); border-radius:16px; padding:2rem; margin-bottom:2rem; text-align:center; }
@@ -1569,10 +1569,10 @@ function renderFiledReturns() {
   if (!grid) return;
 
   const defaults = [
-    { year: 2023, status: 'empty',    statusLabel: 'No documents',    note: '1040 · Form 1116 · Schedule B · FBAR',           color: 'var(--muted)',  border: '' },
-    { year: 2024, status: 'empty',    statusLabel: 'No documents',    note: '1040 · Form 1116 · Schedule B · FBAR',           color: 'var(--muted)',  border: '' },
-    { year: 2025, status: 'progress', statusLabel: 'In progress',     note: 'Due Jun 15 or Oct 15 · Gathering docs',          color: 'var(--amber)',  border: 'rgba(251,191,36,0.4)' },
-    { year: 2026, status: 'open',     statusLabel: 'Year in progress', note: 'Includes Mar bonus · File by Jun/Oct 2027',     color: 'var(--green)',  border: 'rgba(52,211,153,0.3)' },
+    { year: 2023, status: 'empty',    statusLabel: '⚠ No docs on file', note: '1040 · Form 1116 · Schedule B · FBAR',                             color: 'var(--muted)',  border: '' },
+    { year: 2024, status: 'filed',    statusLabel: 'Filed — 2 docs',    note: 'Filed in 2025 · 1040 · Form 1116 · Schedule B · FBAR',             color: 'var(--green)',  border: 'rgba(52,211,153,0.4)' },
+    { year: 2025, status: 'filed',    statusLabel: 'Filed — 2 docs',    note: 'Filed in 2026 · 1040 · Form 1116 · Schedule B · FBAR',             color: 'var(--green)',  border: 'rgba(52,211,153,0.4)' },
+    { year: 2026, status: 'progress', statusLabel: 'Current year',      note: 'Filing due Jun/Oct 2027 · year in progress',                       color: 'var(--amber)',  border: 'rgba(251,191,36,0.4)' },
   ];
 
   const data = (typeof window.TAX_RETURNS_DATA !== 'undefined') ? window.TAX_RETURNS_DATA : defaults;
