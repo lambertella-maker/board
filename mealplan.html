@@ -63,14 +63,15 @@
   /* SEARCH BAR */
   .search-wrap{padding:10px 14px 4px;position:relative;}
   .search-clear{position:absolute;right:22px;top:50%;transform:translateY(-50%);
-    background:none;border:none;color:var(--muted);font-size:1rem;cursor:pointer;
-    padding:4px;line-height:1;display:none;}
-  .search-clear.visible{display:block;}
+    background:none;border:none;color:var(--muted);font-size:0.9rem;cursor:pointer;
+    padding:6px;line-height:1;opacity:0;pointer-events:none;transition:opacity .15s;}
+  .search-wrap:has(input:not(:placeholder-shown)) .search-clear{opacity:1;pointer-events:auto;}
   .search-input{width:100%;background:var(--card);border:1px solid var(--border);
     border-radius:10px;padding:9px 14px 9px 36px;font-size:0.82rem;color:var(--text);
     font-family:inherit;outline:none;transition:border-color .15s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a8178' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
   .search-input:focus{border-color:var(--accent);}
   .search-input::placeholder{color:var(--muted);}
+  .search-input::-webkit-search-cancel-button{-webkit-appearance:none;display:none;}
 
   /* CARDS */
   .section-title{font-size:0.62rem;font-weight:700;text-transform:uppercase;
@@ -2300,17 +2301,13 @@ let currentSearch = '';
 
 function onSearch(val) {
   currentSearch = val.toLowerCase().trim();
-  const btn = document.getElementById('search-clear-btn');
-  if (btn) btn.classList.toggle('visible', currentSearch.length > 0);
   renderRecipes(currentFilter);
 }
 
 function clearSearch() {
   currentSearch = '';
   const inp = document.getElementById('recipe-search');
-  if (inp) inp.value = '';
-  const btn = document.getElementById('search-clear-btn');
-  if (btn) btn.classList.remove('visible');
+  if (inp) { inp.value = ''; inp.focus(); }
   renderRecipes(currentFilter);
 }
 
