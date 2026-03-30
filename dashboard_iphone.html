@@ -404,7 +404,7 @@
       <div class="pillar-stat-row"><span class="pillar-stat-k">UK assets</span><span class="pillar-stat-v" style="color:var(--green)">~£31k + pension</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">US assets</span><span class="pillar-stat-v">~$9,800</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">ILR target</span><span class="pillar-stat-v">Sep 2029</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Citizenship</span><span class="pillar-stat-v">Sep 2030</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Citizenship eligible</span><span class="pillar-stat-v">Sep 2030+ · optional</span></div>
       <div class="pillar-why-text">Retire in the UK, the US, or Europe. After 2030 a British passport adds 186 visa-free countries. This is exceptional.</div>
     </div>
   </div>
@@ -444,7 +444,7 @@
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
     <div class="prog-labels"><span>£0</span><span id="m-move-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,000</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Move cost</span><span style="font-weight:600;">~£2,000 · professional managed service</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Bonus buffer</span><span style="color:var(--indigo); font-weight:600;">~£6,200–7,000 gross · Mar 2027</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Bonus buffer</span><span style="color:var(--indigo); font-weight:600;">~£3,600–£4,100 net · Mar 2027</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Promotion upside</span><span style="color:var(--amber); font-weight:600;">8–15% if grade up · ~£66–71k</span></div>
     <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Pot self-funds · bonus + COL as buffer</span><span>May–Jul 2027</span></div>
   </div>
@@ -460,6 +460,20 @@
     <div class="goal-row-m"><span class="goal-row-k">Taxes + fees</span><span style="font-weight:600;">~£600 cash per trip</span></div>
     <div class="goal-row-m"><span class="goal-row-k">2-4-1</span><span style="color:var(--amber); font-weight:600;">Second seat free ✓</span></div>
     <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Waiting on CSP</span><span>~Early 2027</span></div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <span style="font-size:1.4rem;">🇬🇧</span>
+      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 4 · Sep 2029</div><div style="font-size:0.95rem; font-weight:700;">ILR — Permanent Residency</div></div>
+    </div>
+    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">10-yr long residence from Sep 2019 · no more visa renewals after Sep 2029</div>
+    <div class="prog-wrap"><div class="prog-fill" id="m-ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
+    <div class="prog-labels"><span>Mar 2026</span><span id="m-ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>Sep 2029</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">ILR fee</span><span style="color:var(--amber); font-weight:600;">£2,885 now · ~£3,340 by 2029</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Total all-in</span><span style="color:var(--indigo); font-weight:600;">~£4,500 (fee + solicitor)</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Funded by</span><span style="color:var(--green); font-weight:600;">~£4k net bonus · ILR fee covered · ~£1k for solicitor separately</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Consult solicitor Mar 2029</span><span>Sep 2029</span></div>
   </div>
 
 </div>
@@ -764,15 +778,22 @@ liveEstimates();
 // ── GOAL PROGRESS BARS ────────────────────────────────────────────────────────
 (function() {
   const cspStart  = new Date(2026, 1, 1);
-  const cspMonths = Math.max(0, (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth()));
+  const cspMonths = Math.max(1, (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth()) + 1);
   document.getElementById('m-csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
-  document.getElementById('m-csp-lbl').textContent  = cspMonths <= 1 ? `${cspMonths}mo in` : `${cspMonths}mo in`;
+  document.getElementById('m-csp-lbl').textContent  = cspMonths === 1 ? `1mo in` : `${cspMonths}mo in`;
 
   const marchStart = new Date(2026, 2, 1);
   const moElapsed  = Math.max(0, (today.getFullYear() - marchStart.getFullYear()) * 12 + (today.getMonth() - marchStart.getMonth()));
-  const flatSaved  = moElapsed * 124;
+  const flatSaved  = moElapsed * 120;
   document.getElementById('m-move-prog').style.width = Math.min(100, flatSaved / 2000 * 100) + '%';
   document.getElementById('m-move-lbl').textContent  = `£${flatSaved.toLocaleString()} saved`;
+
+  const ilrDeadline = new Date(2029, 8, 1);
+  const ilrStart    = new Date(2026, 2, 1);
+  const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
+  const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
+  document.getElementById('m-ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
+  document.getElementById('m-ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
 })();
 
 // ── FIRE CALCULATOR ───────────────────────────────────────────────────────────

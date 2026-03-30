@@ -166,6 +166,11 @@
     margin:0 14px 10px;cursor:pointer;transition:box-shadow .15s;overflow:hidden;}
   .recipe-card:active{box-shadow:0 0 0 2px rgba(181,69,27,0.15);}
   .recipe-card-img{width:100%;height:170px;object-fit:cover;display:block;}
+  .recipe-img-wrap{position:relative;}
+  .card-photo-btn{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.45);
+    border:none;border-radius:8px;color:#fff;font-size:0.72rem;padding:4px 8px;
+    cursor:pointer;z-index:10;backdrop-filter:blur(4px);line-height:1.3;}
+  .card-photo-btn:active{opacity:0.7;}
   .recipe-card-img-placeholder{width:100%;height:120px;display:flex;align-items:center;
     justify-content:center;font-size:2.8rem;}
   .recipe-card-body{padding:12px 14px;}
@@ -2273,7 +2278,9 @@ function recipeCard(r) {
   const tc = cuisineTop(r.cuisine);
   const badges = r.flavors.slice(0, 3).map(f => `<span class="meal-tag f-${f}">${flavorEmoji(f)} ${f}</span>`).join('');
   return `<div class="recipe-card ${tc}" onclick="openModal('${r.id}')">
-    ${recipeImgEl(r, 'banner')}
+    <div class="recipe-img-wrap">${recipeImgEl(r, 'banner')}
+      <button class="card-photo-btn" onclick="event.stopPropagation();triggerPhotoUpload('${r.id}')">📷</button>
+    </div>
     <div class="recipe-card-body">
       <div class="recipe-header">
         <div style="flex:1">
@@ -2473,13 +2480,37 @@ function toggleModalExpand() {
   btn.textContent = m.classList.contains('expanded') ? '⊡' : '⛶';
 }
 
+function triggerPhotoUpload(id) {
+  // Works on all devices: iOS/Android shows gallery picker, desktop shows file dialog
+  const inp = document.createElement('input');
+  inp.type = 'file';
+  inp.accept = 'image/*';
+  inp.onchange = () => { if (inp.files[0]) readAndSavePhoto(id, inp.files[0]); };
+  inp.click();
+}
+
 function deleteRecipe(id) {
-  deleted.add(id);
-  localStorage.setItem('fodmap_deleted', JSON.stringify([...deleted]));
+  if (id.startsWith('c_')) {
+    // Custom recipe: permanently remove
+    customRecipes = customRecipes.filter(r => r.id !== id);
+    const ri = RECIPES.findIndex(r => r.id === id);
+    if (ri !== -1) RECIPES.splice(ri, 1);
+    delete RECIPE_IMGS[id];
+    delete photoOverrides[id];
+    try {
+      localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+      localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+    } catch(e) {}
+    syncPush();
+  } else {
+    // Built-in: just hide
+    deleted.add(id);
+    localStorage.setItem('fodmap_deleted', JSON.stringify([...deleted]));
+    updateDeletedCount();
+  }
   closeModal();
   renderRecipes(currentFilter);
   renderFavourites();
-  updateDeletedCount();
 }
 
 function restoreAll() {
@@ -3329,6 +3360,16 @@ function addCbRecipeToMine(code, recipeId, sharedById) {
   showToast('Added to your recipes ✓');
 }
 
+async function removeCbEntry(code, recipeId, sharedById, cardEl) {
+  cardEl.style.opacity = '0.4';
+  const recipes = (await cbKvGet('cb_' + code + '_recipes')) || [];
+  const updated = recipes.filter(r => !(r.id === recipeId && r.sharedById === sharedById));
+  await cbKvSet('cb_' + code + '_recipes', updated);
+  cbFeedCache[code] = updated;
+  cardEl.remove();
+  showToast('Removed from cookbook');
+}
+
 function cbTimeAgo(ts) {
   const secs = Math.floor((Date.now() - ts) / 1000);
   if (secs < 60) return 'just now';
@@ -3359,6 +3400,7 @@ function renderCbRecipeCard(entry, code) {
         </button>
         <button class="cb-add-btn" onclick="addCbRecipeToMine('${code}','${entry.id}','${entry.sharedById}')">+ My recipes</button>
         <button class="cb-view-btn" onclick="openModal('${entry.id}')">View</button>
+        ${myProfile && entry.sharedById === myProfile.id ? `<button class="cb-leave-btn" style="margin-left:auto" onclick="removeCbEntry('${code}','${entry.id}','${entry.sharedById}',this.closest('.cb-recipe-card'))">Remove</button>` : ''}
       </div>
     </div>
   </div>`;
@@ -3378,6 +3420,8 @@ async function renderFriendsTab() {
 
   // ── Profile not set up ──────────────────────────────────────
   if (!myProfile) {
+    // Show setup + missing photos even without profile
+    const missing = recipesWithoutPhotos();
     el.innerHTML = `
       <div class="friends-setup-card">
         <div class="friends-setup-emoji">👋</div>
@@ -3388,7 +3432,14 @@ async function renderFriendsTab() {
           `<div class="emoji-option ${i===0?'selected':''}" data-emoji="${e}" onclick="selectProfileEmoji(this)">${e}</div>`
         ).join('')}</div>
         <button class="friends-save-btn" onclick="saveFriendsProfile()">Get started</button>
-      </div>`;
+      </div>
+      ${missing.length > 0 ? `<div class="friends-section-hdr">Missing Photos (${missing.length})</div>
+      <div class="card"><ul class="no-photo-list">${missing.map(r =>
+        `<li class="no-photo-item">
+          <span><span class="no-photo-emoji">${r.emoji}</span>${r.name}</span>
+          <button class="no-photo-add-btn" onclick="triggerPhotoUpload('${r.id}')">📷 Add</button>
+        </li>`
+      ).join('')}</ul></div>` : ''}`;
     return;
   }
 
@@ -3472,14 +3523,14 @@ async function renderFriendsTab() {
     }
   }
 
-  // Recipes without photos
+  // Recipes without photos — always show
   const missing = recipesWithoutPhotos();
   if (missing.length > 0) {
     html += `<div class="friends-section-hdr">Missing Photos (${missing.length})</div>
     <div class="card"><ul class="no-photo-list">${missing.map(r =>
       `<li class="no-photo-item">
         <span><span class="no-photo-emoji">${r.emoji}</span>${r.name}</span>
-        <button class="no-photo-add-btn" onclick="openModal('${r.id}')">Add photo</button>
+        <button class="no-photo-add-btn" onclick="triggerPhotoUpload('${r.id}')">📷 Add</button>
       </li>`
     ).join('')}</ul></div>`;
   }

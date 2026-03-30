@@ -38,8 +38,8 @@
         border-bottom:1px solid var(--border); }
   .logo { font-size:1.1rem; font-weight:700; background:linear-gradient(135deg,var(--indigo),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
   .nav-links { display:flex; gap:1.4rem; flex-wrap:wrap; }
-  .nav-links a { color:var(--soft); text-decoration:none; font-size:0.82rem; font-weight:500; transition:color .2s; cursor:pointer; }
-  .nav-links a:hover { color:var(--text); }
+  .nav-links a, .nav-links button { color:var(--soft); text-decoration:none; font-size:0.82rem; font-weight:500; transition:color .2s; cursor:pointer; background:none; border:none; padding:0; font-family:inherit; }
+  .nav-links a:hover, .nav-links button:hover { color:var(--text); }
   .date-pill { background:var(--card2); border:1px solid var(--border); border-radius:20px; padding:0.3rem 1rem; font-size:0.75rem; color:var(--soft); }
   .refresh-btn { background:none; border:none; cursor:pointer; color:var(--muted); font-size:0.8rem; padding:2px 4px; line-height:1; transition:color .2s; }
   .refresh-btn:hover { color:var(--soft); }
@@ -330,14 +330,14 @@
 <nav>
   <div class="logo">Ella Lambert — Finance Hub</div>
   <div class="nav-links">
-    <a href="#overview" onclick="event.preventDefault();scrollToSection('overview')">Overview</a>
-    <a href="#superplan" onclick="event.preventDefault();scrollToSection('superplan')">Superplan</a>
-    <a href="#journey" onclick="event.preventDefault();scrollToSection('journey')">Journey</a>
-    <a href="#goals" onclick="event.preventDefault();scrollToSection('goals')">Goals</a>
-    <a href="#tax" onclick="event.preventDefault();scrollToSection('tax')">Tax</a>
-    <a href="#paye-checker" onclick="event.preventDefault();scrollToSection('paye-checker')">PAYE</a>
-    <a href="#fire" onclick="event.preventDefault();scrollToSection('fire')">FIRE</a>
-    <a href="#investments" onclick="event.preventDefault();scrollToSection('investments')">Investments</a>
+    <button onclick="scrollToSection('overview')">Overview</button>
+    <button onclick="scrollToSection('superplan')">Superplan</button>
+    <button onclick="scrollToSection('journey')">Journey</button>
+    <button onclick="scrollToSection('goals')">Goals</button>
+    <button onclick="scrollToSection('tax')">Tax</button>
+    <button onclick="scrollToSection('paye-checker')">PAYE</button>
+    <button onclick="scrollToSection('fire')">FIRE</button>
+    <button onclick="scrollToSection('investments')">Investments</button>
   </div>
   <div style="display:flex;align-items:center;gap:4px">
     <div class="date-pill" id="live-date"></div>
@@ -515,8 +515,8 @@
         <div class="pillar-stat"><span class="pillar-stat-label">UK assets</span><span class="pillar-stat-value" style="color:var(--green)">~£31k + pension</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">US assets</span><span class="pillar-stat-value">~$9,800 (~£7.8k)</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">ILR target</span><span class="pillar-stat-value">Sep 2029</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Citizenship target</span><span class="pillar-stat-value">Sep 2030</span></div>
-        <div class="pillar-why">The rarest pillar: genuine optionality. You can retire in the UK, the US, or Europe. You have assets, pensions, and credit in both major Anglophone economies. After 2030, a British passport adds 186 visa-free countries. This is not normal. This is exceptional.</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Citizenship eligible</span><span class="pillar-stat-value">Sep 2030+ · optional</span></div>
+        <div class="pillar-why">The rarest pillar: genuine optionality. You can retire in the UK, the US, or Europe. You have assets, pensions, and credit in both major Anglophone economies. ILR locks in the right to live and work here permanently. This is not normal. This is exceptional.</div>
       </div>
 
     </div>
@@ -596,7 +596,7 @@
         <div class="jc-card" style="border-color:rgba(129,140,248,0.25); opacity:0.75;">
           <div class="jc-year" style="color:var(--soft)">Sep 2029</div>
           <div class="jc-title">ILR Target</div>
-          <div class="jc-desc">10yr long residence. Sep 2030 → British citizen.</div>
+          <div class="jc-desc">10yr long residence. Sep 2030+ → citizenship eligible if desired.</div>
         </div>
       </div>
 
@@ -657,7 +657,7 @@
         </div>
         <div class="goal-row"><span class="goal-row-label">Move cost</span><span class="goal-row-value">~£2,000 · professional managed service, all-in</span></div>
         <div class="goal-row"><span class="goal-row-label">Pot at window</span><span class="goal-row-value" style="color:var(--green)">~£1,920 by Jul 2027 · fully covered hands-off</span></div>
-        <div class="goal-row"><span class="goal-row-label">Mar 2027 bonus</span><span class="goal-row-value" style="color:var(--indigo)">~£6,200–£7,000 gross · comfortable buffer above cost</span></div>
+        <div class="goal-row"><span class="goal-row-label">Mar 2027 bonus</span><span class="goal-row-value" style="color:var(--indigo)">~£3,600–£4,100 net · comfortable buffer above move cost</span></div>
         <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">£61,439 + COL rise · ~£63–64k at move time</span></div>
         <div class="goal-row"><span class="goal-row-label">Promotion upside</span><span class="goal-row-value" style="color:var(--amber)">8–15% if grade up · ~£66–71k · makes it very comfortable</span></div>
         <div class="goal-timeline">
@@ -668,39 +668,12 @@
         </div>
       </div>
 
-      <!-- Goal 3: ILR & British Citizenship -->
-      <div class="goal-card">
-        <div class="goal-header">
-          <div class="goal-icon">🇬🇧</div>
-          <div>
-            <div class="goal-name">Goal 3 · Sep 2029</div>
-            <div class="goal-title">ILR — Permanent Residency</div>
-          </div>
-        </div>
-        <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from Sep 2019 · application window Sep 2029 · no more visa renewals</div>
-          <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
-          <div class="progress-labels"><span>Mar 2026</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>Sep 2029</span></div>
-        </div>
-        <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises ~5%/yr · file early</span></div>
-        <div class="goal-row"><span class="goal-row-label">Solicitor</span><span class="goal-row-value">~£1,000–1,500 · consult Mar 2029</span></div>
-        <div class="goal-row"><span class="goal-row-label">Total target</span><span class="goal-row-value" style="color:var(--indigo)">~£4,000–4,500 all-in</span></div>
-        <div class="goal-row"><span class="goal-row-label">Funded by</span><span class="goal-row-value" style="color:var(--green)">Single Mar 2028 bonus (~£7k gross) covers it</span></div>
-        <div class="goal-row"><span class="goal-row-label">What it unlocks</span><span class="goal-row-value">Live and work in UK permanently · no immigration stress</span></div>
-        <div class="goal-timeline">
-          <div class="goal-pill no-bruce" id="ilr-pill">
-            <div class="gp-label" id="ilr-pill-label">Consult solicitor Mar 2029 · apply Sep 2029</div>
-            <span id="ilr-timeline">Sep 2029</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Goal 4: Business class LHR → ORD -->
+      <!-- Goal 3: Business class LHR → ORD -->
       <div class="goal-card">
         <div class="goal-header">
           <div class="goal-icon">✈️</div>
           <div>
-            <div class="goal-name">Goal 4 · Travel · ~Early 2027</div>
+            <div class="goal-name">Goal 3 · Travel · ~Early 2027</div>
             <div class="goal-title">Business class LHR → ORD</div>
           </div>
         </div>
@@ -718,6 +691,33 @@
           <div class="goal-pill no-bruce" id="avios-pill">
             <div class="gp-label" id="avios-pill-label">Waiting on CSP · book once bonus lands</div>
             <span id="avios-timeline">~Early 2027</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goal 4: ILR — Permanent Residency -->
+      <div class="goal-card">
+        <div class="goal-header">
+          <div class="goal-icon">🇬🇧</div>
+          <div>
+            <div class="goal-name">Goal 4 · Sep 2029</div>
+            <div class="goal-title">ILR — Permanent Residency</div>
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from Sep 2019 · application window Sep 2029 · no more visa renewals</div>
+          <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
+          <div class="progress-labels"><span>Mar 2026</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>Sep 2029</span></div>
+        </div>
+        <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises ~5%/yr · ~£3,340 by 2029</span></div>
+        <div class="goal-row"><span class="goal-row-label">Solicitor</span><span class="goal-row-value">~£1,000–1,500 · consult Mar 2029</span></div>
+        <div class="goal-row"><span class="goal-row-label">Total target</span><span class="goal-row-value" style="color:var(--indigo)">~£4,500 all-in</span></div>
+        <div class="goal-row"><span class="goal-row-label">Funded by</span><span class="goal-row-value" style="color:var(--green)">~£4k net bonus · covers ILR fee · budget ~£1k separately for solicitor</span></div>
+        <div class="goal-row"><span class="goal-row-label">What it unlocks</span><span class="goal-row-value">Live and work in UK permanently · no immigration stress</span></div>
+        <div class="goal-timeline">
+          <div class="goal-pill no-bruce" id="ilr-pill">
+            <div class="gp-label" id="ilr-pill-label">Consult solicitor Mar 2029 · apply Sep 2029</div>
+            <span id="ilr-timeline">Sep 2029</span>
           </div>
         </div>
       </div>
@@ -753,13 +753,13 @@
           <div style="font-size:0.75rem; color:var(--soft);">ILR application</div>
         </div>
         <div style="padding:1rem; background:rgba(34,211,238,0.08); border:1px solid rgba(34,211,238,0.3); border-radius:10px;">
-          <div style="font-size:0.7rem; color:var(--cyan); font-weight:700; margin-bottom:0.3rem;">GOAL</div>
-          <div style="font-weight:700;">Sep 2030</div>
-          <div style="font-size:0.75rem; color:var(--soft);">British citizen</div>
+          <div style="font-size:0.7rem; color:var(--cyan); font-weight:700; margin-bottom:0.3rem;">OPTIONALITY</div>
+          <div style="font-weight:700;">Sep 2030+</div>
+          <div style="font-size:0.75rem; color:var(--soft);">Citizenship eligible</div>
         </div>
       </div>
       <div style="margin-top:1.2rem; font-size:0.78rem; color:var(--muted);">
-        10-year long residence route (Sep 2019 → Sep 2029) is ~10 months faster than Skilled Worker 5-year route (Jul 2030). No ISAs until CLN — regardless of ILR or citizenship.
+        10-year long residence route (Sep 2019 → Sep 2029) is ~10 months faster than Skilled Worker 5-year route (Jul 2030). ILR is the primary goal — citizenship remains optional. No ISAs until CLN, regardless of ILR status.
       </div>
     </div>
   </section>
@@ -1246,10 +1246,12 @@ document.getElementById('live-date').textContent =
 function scrollToSection(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  const navH = document.querySelector('nav')?.offsetHeight || 80;
-  let top = 0, node = el;
-  while (node) { top += node.offsetTop; node = node.offsetParent; }
-  window.scrollTo({ top: top - navH - 16, behavior: 'smooth' });
+  setTimeout(function() {
+    const navH = document.querySelector('nav')?.offsetHeight || 80;
+    let top = 0, node = el;
+    while (node) { top += node.offsetTop; node = node.offsetParent; }
+    window.scrollTo({ top: top - navH - 16, behavior: 'smooth' });
+  }, 0);
 }
 
 // ── CHART DEFAULTS ───────────────────────────────────────────────────────────
@@ -1582,12 +1584,12 @@ renderFiledReturns();
 function updateGoals() {
   const b = document.getElementById('goalsBruceToggle').checked;
 
-  // CSP progress — clean Amex history since Feb 2026
+  // CSP progress — clean Amex history since Feb 2026 (count month you're IN, not completed)
   const cspStart    = new Date(2026, 1, 1);
-  const cspMonths   = Math.max(0, (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth()));
+  const cspMonths   = Math.max(1, (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth()) + 1);
   const cspMonthsLeft = Math.max(0, 9 - cspMonths);
   document.getElementById('csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
-  document.getElementById('csp-months-lbl').textContent = cspMonths <= 1 ? `${cspMonths} month in` : `${cspMonths} months in`;
+  document.getElementById('csp-months-lbl').textContent = cspMonths === 1 ? `1 month in` : `${cspMonths} months in`;
 
   // Flat Move Pot — shared between move goal and purchase goal
   const marchStart = new Date(2026, 2, 1);
@@ -1595,9 +1597,22 @@ function updateGoals() {
   const flatSaved  = moElapsed * 120;
 
   // Goal 2: Move to nicer flat (£2,000 managed move target)
-  const moveTarget = 2000;
-  document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100) + '%';
-  document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
+  const moveTarget  = 2000;
+  if (b) {
+    // With Bruce: project to Jun 2027 midpoint of move window
+    const moveDate    = new Date(2027, 5, 1);
+    const bruceStart  = new Date(2026, 6, 1);
+    const bruceMoProj = Math.max(0, (moveDate.getFullYear() - bruceStart.getFullYear()) * 12 + (moveDate.getMonth() - bruceStart.getMonth()));
+    const flatProj    = Math.max(0, (moveDate.getFullYear() - marchStart.getFullYear()) * 12 + (moveDate.getMonth() - marchStart.getMonth())) * 120;
+    const bruceProj   = bruceMoProj * Math.round(16000 / 12);
+    const totalProj   = flatProj + bruceProj;
+    const movePct     = Math.min(100, totalProj / moveTarget * 100);
+    document.getElementById('move-prog').style.width = movePct.toFixed(1) + '%';
+    document.getElementById('move-saved-lbl').textContent = movePct >= 100 ? 'Fully funded by Jun 2027' : `£${totalProj.toLocaleString()} by Jun 2027`;
+  } else {
+    document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100).toFixed(1) + '%';
+    document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
+  }
 
   // Goal 3: ILR — time-to-prepare progress bar
   const ilrDeadline = new Date(2029, 8, 1);
