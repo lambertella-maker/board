@@ -61,7 +61,11 @@
     border-radius:12px;padding:0.22rem 0.65rem;}
 
   /* SEARCH BAR */
-  .search-wrap{padding:10px 14px 4px;}
+  .search-wrap{padding:10px 14px 4px;position:relative;}
+  .search-clear{position:absolute;right:22px;top:50%;transform:translateY(-50%);
+    background:none;border:none;color:var(--muted);font-size:1rem;cursor:pointer;
+    padding:4px;line-height:1;display:none;}
+  .search-clear.visible{display:block;}
   .search-input{width:100%;background:var(--card);border:1px solid var(--border);
     border-radius:10px;padding:9px 14px 9px 36px;font-size:0.82rem;color:var(--text);
     font-family:inherit;outline:none;transition:border-color .15s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a8178' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
@@ -166,11 +170,9 @@
     margin:0 14px 10px;cursor:pointer;transition:box-shadow .15s;overflow:hidden;}
   .recipe-card:active{box-shadow:0 0 0 2px rgba(181,69,27,0.15);}
   .recipe-card-img{width:100%;height:170px;object-fit:cover;display:block;}
-  .recipe-img-wrap{position:relative;}
-  .card-photo-btn{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.45);
-    border:none;border-radius:8px;color:#fff;font-size:0.72rem;padding:4px 8px;
-    cursor:pointer;z-index:10;backdrop-filter:blur(4px);line-height:1.3;}
-  .card-photo-btn:active{opacity:0.7;}
+  .card-photo-btn-inline{background:none;border:none;font-size:1rem;padding:2px 4px;
+    cursor:pointer;line-height:1;opacity:0.55;flex-shrink:0;}
+  .card-photo-btn-inline:active{opacity:1;}
   .recipe-card-img-placeholder{width:100%;height:120px;display:flex;align-items:center;
     justify-content:center;font-size:2.8rem;}
   .recipe-card-body{padding:12px 14px;}
@@ -789,6 +791,7 @@
   </div>
   <div class="search-wrap">
     <input class="search-input" id="recipe-search" type="search" placeholder="Search recipes…" oninput="onSearch(this.value)" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <button class="search-clear" id="search-clear-btn" onclick="clearSearch()" title="Clear">✕</button>
   </div>
   <div class="filter-row" id="recipe-filters"></div>
   <div id="recipes-list"></div>
@@ -2278,15 +2281,14 @@ function recipeCard(r) {
   const tc = cuisineTop(r.cuisine);
   const badges = r.flavors.slice(0, 3).map(f => `<span class="meal-tag f-${f}">${flavorEmoji(f)} ${f}</span>`).join('');
   return `<div class="recipe-card ${tc}" onclick="openModal('${r.id}')">
-    <div class="recipe-img-wrap">${recipeImgEl(r, 'banner')}
-      <button class="card-photo-btn" onclick="event.stopPropagation();triggerPhotoUpload('${r.id}')">📷</button>
-    </div>
+    ${recipeImgEl(r, 'banner')}
     <div class="recipe-card-body">
       <div class="recipe-header">
         <div style="flex:1">
           <div class="recipe-title">${r.name}</div>
           <div class="recipe-cuisine">${r.cuisine} · ${r.time}</div>
         </div>
+        <button class="card-photo-btn-inline" onclick="event.stopPropagation();triggerPhotoUpload('${r.id}')" title="Change photo">📷</button>
         <button class="delete-btn" onclick="event.stopPropagation();deleteRecipe('${r.id}')" title="Remove">✕</button>
       </div>
       <div class="recipe-chips"><span class="meal-tag meal-protein">🥩 ${r.protein}</span>${badges}</div>
@@ -2298,6 +2300,17 @@ let currentSearch = '';
 
 function onSearch(val) {
   currentSearch = val.toLowerCase().trim();
+  const btn = document.getElementById('search-clear-btn');
+  if (btn) btn.classList.toggle('visible', currentSearch.length > 0);
+  renderRecipes(currentFilter);
+}
+
+function clearSearch() {
+  currentSearch = '';
+  const inp = document.getElementById('recipe-search');
+  if (inp) inp.value = '';
+  const btn = document.getElementById('search-clear-btn');
+  if (btn) btn.classList.remove('visible');
   renderRecipes(currentFilter);
 }
 
