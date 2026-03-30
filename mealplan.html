@@ -658,6 +658,110 @@
     .home-section-hdr.home-browse-hdr{padding:20px 24px 8px;}
     .home-cuisines.home-browse{padding:0 24px 4px;}
   }
+  /* ─── FRIENDS TAB ──────────────────────────────────────────────────────── */
+  .friends-setup-card{background:var(--card);border:1px solid var(--border);border-radius:16px;
+    margin:0 14px 10px;padding:22px 16px;text-align:center;}
+  .friends-setup-emoji{font-size:2.6rem;margin-bottom:10px;}
+  .friends-setup-title{font-size:1rem;font-weight:700;color:var(--text);
+    font-family:var(--font-serif);margin-bottom:6px;}
+  .friends-setup-sub{font-size:0.73rem;color:var(--muted);margin-bottom:16px;line-height:1.7;}
+  .friends-name-input,.friends-cb-name-input{width:100%;background:var(--card2);
+    border:1px solid var(--border);border-radius:10px;padding:10px 14px;
+    font-size:0.88rem;color:var(--text);font-family:inherit;outline:none;
+    margin-bottom:10px;text-align:center;}
+  .friends-name-input:focus,.friends-cb-name-input:focus{border-color:var(--accent);}
+  .emoji-picker-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+  .emoji-option{font-size:1.4rem;width:40px;height:40px;border-radius:10px;background:var(--card2);
+    border:2px solid transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .emoji-option.selected{border-color:var(--accent);background:#fff3ee;}
+  .emoji-option:active{transform:scale(0.92);}
+  .friends-save-btn,.friends-create-btn{background:var(--accent);border:none;border-radius:12px;
+    padding:12px 28px;color:#fff;font-size:0.88rem;font-weight:700;cursor:pointer;
+    font-family:inherit;width:100%;margin-top:4px;}
+  .friends-save-btn:active,.friends-create-btn:active{opacity:0.8;}
+  .friends-profile-card{background:var(--card);border:1px solid var(--border);border-radius:16px;
+    margin:0 14px 10px;padding:14px 16px;display:flex;align-items:center;gap:14px;}
+  .friends-avatar{font-size:2rem;width:50px;height:50px;border-radius:50%;
+    background:var(--card2);border:2px solid var(--border);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .friends-profile-info{flex:1;min-width:0;}
+  .friends-profile-name{font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:2px;}
+  .friends-profile-sub{font-size:0.65rem;color:var(--muted);}
+  .friends-edit-btn{background:none;border:1px solid var(--border);border-radius:8px;
+    padding:5px 10px;font-size:0.68rem;color:var(--muted);cursor:pointer;font-family:inherit;}
+  .friends-edit-btn:active{opacity:0.7;}
+  .cookbook-card{background:var(--card);border:1.5px solid var(--accent);border-radius:16px;
+    margin:0 14px 10px;padding:16px;}
+  .cookbook-card-name{font-size:0.88rem;font-weight:700;color:var(--text);
+    margin-bottom:2px;display:flex;align-items:center;gap:6px;}
+  .cookbook-owner-chip{font-size:0.58rem;background:var(--accent);color:#fff;
+    padding:2px 7px;border-radius:10px;font-weight:600;}
+  .cookbook-card-sub{font-size:0.65rem;color:var(--muted);margin-bottom:10px;}
+  .cookbook-code-row{display:flex;align-items:center;gap:8px;}
+  .cookbook-code{font-size:1.25rem;font-weight:900;letter-spacing:.14em;color:var(--accent);
+    font-family:'Courier New',monospace;background:var(--card2);border:1px solid var(--border);
+    border-radius:10px;padding:7px 14px;flex:1;text-align:center;}
+  .copy-code-btn{background:var(--accent);border:none;border-radius:10px;padding:8px 14px;
+    color:#fff;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;}
+  .copy-code-btn:active{opacity:0.7;transform:scale(0.95);}
+  .friends-join-card{background:var(--card);border:1px solid var(--border);border-radius:16px;
+    margin:0 14px 10px;padding:16px;}
+  .friends-join-title{font-size:0.72rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.07em;color:var(--soft);margin-bottom:10px;}
+  .friends-join-row{display:flex;gap:8px;}
+  .friends-code-input{flex:1;background:var(--card2);border:1px solid var(--border);
+    border-radius:10px;padding:9px 12px;font-size:0.88rem;font-weight:700;
+    letter-spacing:.08em;color:var(--text);font-family:'Courier New',monospace;
+    text-transform:uppercase;outline:none;}
+  .friends-code-input:focus{border-color:var(--accent);}
+  .friends-join-btn{background:var(--accent2);border:none;border-radius:10px;
+    padding:9px 16px;color:#fff;font-size:0.78rem;font-weight:700;cursor:pointer;
+    font-family:inherit;}
+  .friends-join-btn:active{opacity:0.7;}
+  .cb-recipe-card{background:var(--card);border:1px solid var(--border);border-radius:14px;
+    margin:0 14px 10px;overflow:hidden;}
+  .cb-recipe-img{width:100%;height:140px;object-fit:cover;display:block;cursor:zoom-in;}
+  .cb-recipe-img-ph{width:100%;height:80px;display:flex;align-items:center;justify-content:center;
+    font-size:2.2rem;background:var(--card2);}
+  .cb-recipe-body{padding:12px 14px;}
+  .cb-recipe-name{font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:6px;cursor:pointer;}
+  .cb-attribution{display:flex;align-items:center;gap:5px;margin-bottom:8px;}
+  .cb-from-name{font-size:0.64rem;color:var(--muted);font-weight:600;}
+  .cb-from-time{font-size:0.6rem;color:var(--muted);margin-left:auto;}
+  .cb-actions{display:flex;gap:7px;flex-wrap:wrap;}
+  .cb-madeit-btn{background:none;border:1px solid var(--border);border-radius:20px;
+    padding:5px 12px;font-size:0.67rem;font-weight:600;color:var(--muted);
+    cursor:pointer;font-family:inherit;transition:all .15s;}
+  .cb-madeit-btn.done{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+  .cb-madeit-btn:active{transform:scale(0.95);}
+  .cb-add-btn,.cb-view-btn,.cb-twist-btn{background:none;border:1px solid var(--border);
+    border-radius:20px;padding:5px 12px;font-size:0.67rem;font-weight:600;
+    color:var(--soft);cursor:pointer;font-family:inherit;}
+  .cb-add-btn:active,.cb-view-btn:active,.cb-twist-btn:active{opacity:0.7;}
+  .cb-twist-btn{margin-left:auto;}
+  .share-to-cb-btn{display:block;width:100%;background:none;border:1px solid var(--border);
+    border-radius:10px;padding:10px 14px;font-size:0.78rem;font-weight:600;
+    color:var(--soft);cursor:pointer;font-family:inherit;text-align:left;margin-top:8px;}
+  .share-to-cb-btn:hover{background:var(--card2);}
+  .share-to-cb-btn:active{background:var(--border);}
+  .friends-empty{text-align:center;padding:32px 20px;color:var(--muted);
+    font-size:0.78rem;line-height:1.8;}
+  .friends-section-hdr{font-size:0.62rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.1em;color:var(--muted);padding:18px 14px 8px;}
+  .cb-followed-header{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 14px 4px;}
+  .cb-followed-name{font-size:0.72rem;font-weight:700;color:var(--soft);}
+  .cb-leave-btn{font-size:0.62rem;color:var(--muted);background:none;border:none;
+    cursor:pointer;font-family:inherit;}
+  .cb-leave-btn:active{opacity:0.7;}
+  .no-photo-list{list-style:none;padding:0 2px;}
+  .no-photo-item{display:flex;align-items:center;justify-content:space-between;
+    padding:8px 0;border-bottom:1px solid var(--border);font-size:0.78rem;color:var(--soft);}
+  .no-photo-item:last-child{border-bottom:none;}
+  .no-photo-emoji{font-size:1.1rem;margin-right:6px;}
+  .no-photo-add-btn{background:none;border:1px solid var(--border);border-radius:8px;
+    padding:3px 9px;font-size:0.64rem;color:var(--muted);cursor:pointer;font-family:inherit;}
+  .no-photo-add-btn:active{opacity:0.7;}
 </style>
 </head>
 <body>
@@ -803,6 +907,15 @@
   </div>
 </div>
 
+<!-- ════ FRIENDS ════ -->
+<div class="tab-section" id="tab-friends">
+  <div class="topbar">
+    <div class="topbar-logo">Cookbook</div>
+    <div class="topbar-date" id="topbar-date-friends">—</div>
+  </div>
+  <div id="friends-content"></div>
+</div>
+
 </div><!-- /content -->
 
 <!-- TAB BAR -->
@@ -822,6 +935,10 @@
   <div class="tab" data-tab="tips" onclick="showTab('tips');document.getElementById('content').scrollTop=0">
     <span class="tab-icon">💡</span>
     <span class="tab-label">Tips</span>
+  </div>
+  <div class="tab" data-tab="friends" onclick="showTab('friends');document.getElementById('content').scrollTop=0">
+    <span class="tab-icon">👥</span>
+    <span class="tab-label">Friends</span>
   </div>
 </nav>
 </div><!-- /app -->
@@ -1658,6 +1775,7 @@ function showTab(id) {
   document.getElementById('tab-' + id).classList.add('active');
   document.querySelector('.tab[data-tab="' + id + '"]').classList.add('active');
   if (id === 'home') renderHome();
+  if (id === 'friends') renderFriendsTab();
   localStorage.setItem('lastTab', id);
 }
 
@@ -2303,7 +2421,8 @@ function openModal(id) {
       <div class="macro-box"><div class="macro-val" style="color:var(--c-every)">${r.macros.carbs}g</div><div class="macro-lbl">carbs</div></div>
     </div>
     ${id.startsWith('c_') ? `<button class="edit-recipe-btn" onclick="showEditRecipe('${id}')">Edit recipe</button>` : ''}
-    <button class="delete-recipe-btn" onclick="deleteRecipe('${id}')">Remove this recipe</button>`;
+    <button class="delete-recipe-btn" onclick="deleteRecipe('${id}')">Remove this recipe</button>
+    ${(myCookbook || followedCookbooks.length > 0) ? `<button class="share-to-cb-btn" onclick="shareModalRecipeToCookbook('${id}')">📖 Share to cookbook${myCookbook ? ' · ' + myCookbook : ''}</button>` : ''}`;
   document.getElementById('recipe-modal').classList.add('open');
 }
 
@@ -2951,7 +3070,7 @@ async function syncPull() {
 // ─── INIT ────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const dateStr = new Date().toLocaleDateString('en-GB', {day:'numeric', month:'short'});
-  ['topbar-date-recipes','topbar-date-ideas','topbar-date-tips']
+  ['topbar-date-recipes','topbar-date-ideas','topbar-date-tips','topbar-date-friends']
     .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = dateStr; });
 
   // Merge custom recipes saved to localStorage
@@ -2987,7 +3106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Restore last active tab (prevents iOS PWA reload jumping to home)
   const lastTab = localStorage.getItem('lastTab');
-  if (lastTab && ['home','recipes','ideas','tips'].includes(lastTab) && lastTab !== 'home') {
+  if (lastTab && ['home','recipes','ideas','tips','friends'].includes(lastTab) && lastTab !== 'home') {
     showTab(lastTab);
   }
 
@@ -3037,6 +3156,342 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// ─── FRIENDS / COOKBOOK ──────────────────────────────────────────────────────
+
+let myProfile = JSON.parse(localStorage.getItem('my_profile') || 'null');
+// { name, emoji, id }
+let myCookbook = localStorage.getItem('my_cookbook') || null;
+// code string, e.g. "EL4K2M"
+let followedCookbooks = JSON.parse(localStorage.getItem('followed_cookbooks') || '[]');
+// array of code strings
+let cbFeedCache = {};
+// code → [{...recipe, sharedBy, sharedByEmoji, sharedById, sharedAt, madeBy:[]}]
+
+const PROFILE_EMOJIS = ['🍜','🌮','🍱','🥗','🍣','🍕','🍔','🧁','🥘','🍝','🫙','🥩','🌶️','🧆','🍤'];
+
+function genCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return Array.from({length:6}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+}
+
+async function cbKvGet(key) {
+  const url = _workerUrl();
+  try {
+    const res = await fetch(url, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kv_get:key})});
+    return await res.json();
+  } catch(e) { return null; }
+}
+
+async function cbKvSet(key, data) {
+  const url = _workerUrl();
+  try {
+    await fetch(url, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kv_set:key,data})});
+  } catch(e) {}
+}
+
+function saveFriendsProfile() {
+  const nameEl = document.getElementById('friends-name-field');
+  const name = nameEl ? nameEl.value.trim() : '';
+  if (!name) { showToast('Enter your name first'); return; }
+  const selectedEmoji = document.querySelector('.emoji-option.selected');
+  const emoji = selectedEmoji ? selectedEmoji.dataset.emoji : '🍜';
+  const id = myProfile?.id || ('u_' + Date.now().toString(36));
+  myProfile = {name, emoji, id};
+  localStorage.setItem('my_profile', JSON.stringify(myProfile));
+  renderFriendsTab();
+  showToast('Profile saved ✓');
+}
+
+function selectProfileEmoji(el) {
+  document.querySelectorAll('.emoji-option').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+async function doCreateCookbook() {
+  if (!myProfile) { showToast('Set up your profile first'); return; }
+  const nameEl = document.getElementById('cb-name-field');
+  const cbName = nameEl ? nameEl.value.trim() : '';
+  if (!cbName) { showToast('Give your cookbook a name'); return; }
+  const code = genCode();
+  const meta = {name:cbName, createdAt:Date.now(), ownerName:myProfile.name, ownerEmoji:myProfile.emoji, ownerId:myProfile.id};
+  await cbKvSet('cb_' + code, meta);
+  await cbKvSet('cb_' + code + '_recipes', []);
+  myCookbook = code;
+  localStorage.setItem('my_cookbook', code);
+  renderFriendsTab();
+  showToast('Cookbook created! Share code ' + code + ' with friends 🎉');
+}
+
+async function doJoinCookbook() {
+  if (!myProfile) { showToast('Set up your profile first'); return; }
+  const inp = document.getElementById('join-code-field');
+  const code = inp ? inp.value.trim().toUpperCase().replace(/\s/g,'') : '';
+  if (code.length < 4) { showToast('Enter a valid invite code'); return; }
+  if (code === myCookbook) { showToast("That's your own cookbook!"); return; }
+  if (followedCookbooks.includes(code)) { showToast('Already following this cookbook'); return; }
+  showToast('Joining…');
+  const meta = await cbKvGet('cb_' + code);
+  if (!meta || !meta.name) { showToast('Cookbook not found — check the code'); return; }
+  followedCookbooks.push(code);
+  localStorage.setItem('followed_cookbooks', JSON.stringify(followedCookbooks));
+  renderFriendsTab();
+  showToast('Joined "' + meta.name + '" ✓');
+}
+
+async function leaveCookbook(code) {
+  followedCookbooks = followedCookbooks.filter(c => c !== code);
+  localStorage.setItem('followed_cookbooks', JSON.stringify(followedCookbooks));
+  delete cbFeedCache[code];
+  renderFriendsTab();
+  showToast('Left cookbook');
+}
+
+function copyCookbookCode() {
+  if (!myCookbook) return;
+  navigator.clipboard?.writeText(myCookbook).then(() => showToast('Code copied! ✓')).catch(() => {
+    const tmp = document.createElement('input');
+    tmp.value = myCookbook;
+    document.body.appendChild(tmp);
+    tmp.select();
+    document.execCommand('copy');
+    tmp.remove();
+    showToast('Code copied! ✓');
+  });
+}
+
+async function shareModalRecipeToCookbook(id) {
+  if (!myProfile) { showToast('Set up your Friends profile first'); showTab('friends'); return; }
+  const allCookbooks = [myCookbook, ...followedCookbooks].filter(Boolean);
+  if (!allCookbooks.length) { showToast('No cookbook yet — go to Friends tab to create one'); return; }
+  // Use the first available cookbook (own cookbook preferred)
+  const code = myCookbook || followedCookbooks[0];
+  const r = RECIPES.find(x => x.id === id);
+  if (!r) return;
+  const current = (await cbKvGet('cb_' + code + '_recipes')) || [];
+  // Avoid exact duplicate from same person
+  if (current.find(x => x.id === id && x.sharedById === myProfile.id)) {
+    showToast('Already shared this one!');
+    return;
+  }
+  const imgSrc = photoOverrides[id] || RECIPE_IMGS[id] || null;
+  const entry = {
+    ...r,
+    _photoData: imgSrc,
+    sharedBy: myProfile.name,
+    sharedByEmoji: myProfile.emoji,
+    sharedById: myProfile.id,
+    sharedAt: Date.now(),
+    madeBy: []
+  };
+  current.unshift(entry);
+  await cbKvSet('cb_' + code + '_recipes', current);
+  cbFeedCache[code] = current;
+  showToast('Shared to cookbook ✓');
+}
+
+async function markCbMadeIt(code, recipeId, sharedById, btn) {
+  if (!myProfile) { showToast('Set up your profile first'); return; }
+  const uid = myProfile.id;
+  // Optimistic UI
+  const done = btn.classList.toggle('done');
+  btn.textContent = done ? '✓ Made it!' : '👨‍🍳 Made it?';
+  const recipes = (await cbKvGet('cb_' + code + '_recipes')) || [];
+  const idx = recipes.findIndex(r => r.id === recipeId && r.sharedById === sharedById);
+  if (idx !== -1) {
+    const entry = recipes[idx];
+    if (!Array.isArray(entry.madeBy)) entry.madeBy = [];
+    if (entry.madeBy.includes(uid)) entry.madeBy = entry.madeBy.filter(x => x !== uid);
+    else entry.madeBy.push(uid);
+    await cbKvSet('cb_' + code + '_recipes', recipes);
+    cbFeedCache[code] = recipes;
+  }
+}
+
+function addCbRecipeToMine(code, recipeId, sharedById) {
+  // Look up the entry from the feed cache
+  const feed = cbFeedCache[code] || [];
+  const entry = feed.find(r => r.id === recipeId && r.sharedById === sharedById);
+  if (!entry) { showToast('Recipe not found'); return; }
+  // If it's a built-in recipe, no need to copy — just tell them
+  if (!recipeId.startsWith('c_') && RECIPES.find(x => x.id === recipeId)) {
+    showToast('Already in your recipes ✓');
+    return;
+  }
+  const newId = 'c_' + Date.now().toString(36);
+  const r = {...entry, id: newId, _fromCookbook: true};
+  delete r.sharedBy; delete r.sharedByEmoji; delete r.sharedById; delete r.sharedAt; delete r.madeBy; delete r._code;
+  customRecipes.push(r);
+  RECIPES.push(r);
+  if (r._photoData) RECIPE_IMGS[newId] = r._photoData;
+  try { localStorage.setItem('custom_recipes', JSON.stringify(customRecipes)); } catch(e) {}
+  syncPush();
+  showToast('Added to your recipes ✓');
+}
+
+function cbTimeAgo(ts) {
+  const secs = Math.floor((Date.now() - ts) / 1000);
+  if (secs < 60) return 'just now';
+  if (secs < 3600) return Math.floor(secs/60) + 'm ago';
+  if (secs < 86400) return Math.floor(secs/3600) + 'h ago';
+  return Math.floor(secs/86400) + 'd ago';
+}
+
+function renderCbRecipeCard(entry, code) {
+  const imgSrc = entry._photoData || null;
+  const alreadyMade = myProfile && Array.isArray(entry.madeBy) && entry.madeBy.includes(myProfile.id);
+  const madeCount = Array.isArray(entry.madeBy) ? entry.madeBy.length : 0;
+  return `<div class="cb-recipe-card">
+    ${imgSrc
+      ? `<img class="cb-recipe-img" src="${imgSrc}" alt="${entry.name}" onclick="openLightbox(this.src,'${entry.name.replace(/'/g,'')}')" onerror="this.outerHTML='<div class=\\'cb-recipe-img-ph\\'>${entry.emoji}</div>'">`
+      : `<div class="cb-recipe-img-ph">${entry.emoji}</div>`}
+    <div class="cb-recipe-body">
+      <div class="cb-recipe-name" onclick="openModal('${entry.id}')">${entry.name}</div>
+      <div class="cb-attribution">
+        <span>${entry.sharedByEmoji}</span>
+        <span class="cb-from-name">${entry.sharedBy}</span>
+        <span class="cb-from-time">${cbTimeAgo(entry.sharedAt)}</span>
+      </div>
+      <div class="cb-actions">
+        <button class="cb-madeit-btn ${alreadyMade ? 'done' : ''}"
+          onclick="markCbMadeIt('${code}','${entry.id}','${entry.sharedById}',this)">
+          ${alreadyMade ? '✓ Made it!' : '👨‍🍳 Made it?'}${madeCount > 0 ? ' · ' + madeCount : ''}
+        </button>
+        <button class="cb-add-btn" onclick="addCbRecipeToMine('${code}','${entry.id}','${entry.sharedById}')">+ My recipes</button>
+        <button class="cb-view-btn" onclick="openModal('${entry.id}')">View</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function recipesWithoutPhotos() {
+  return RECIPES.filter(r => {
+    if (deleted.has(r.id)) return false;
+    const src = photoOverrides[r.id] || RECIPE_IMGS[r.id] || r._photoData;
+    return !src;
+  });
+}
+
+async function renderFriendsTab() {
+  const el = document.getElementById('friends-content');
+  if (!el) return;
+
+  // ── Profile not set up ──────────────────────────────────────
+  if (!myProfile) {
+    el.innerHTML = `
+      <div class="friends-setup-card">
+        <div class="friends-setup-emoji">👋</div>
+        <div class="friends-setup-title">Welcome to Cookbook</div>
+        <div class="friends-setup-sub">Share recipes with friends, see what they're cooking,<br>and mark what you've tried.</div>
+        <input class="friends-name-input" id="friends-name-field" placeholder="Your name" maxlength="30">
+        <div class="emoji-picker-row">${PROFILE_EMOJIS.map((e,i) =>
+          `<div class="emoji-option ${i===0?'selected':''}" data-emoji="${e}" onclick="selectProfileEmoji(this)">${e}</div>`
+        ).join('')}</div>
+        <button class="friends-save-btn" onclick="saveFriendsProfile()">Get started</button>
+      </div>`;
+    return;
+  }
+
+  // ── Load cookbook feeds ─────────────────────────────────────
+  const allCodes = [myCookbook, ...followedCookbooks].filter(Boolean);
+  for (const code of allCodes) {
+    if (!cbFeedCache[code]) {
+      cbFeedCache[code] = (await cbKvGet('cb_' + code + '_recipes')) || [];
+    }
+  }
+
+  let html = '';
+
+  // Profile card
+  html += `<div class="friends-profile-card">
+    <div class="friends-avatar">${myProfile.emoji}</div>
+    <div class="friends-profile-info">
+      <div class="friends-profile-name">${myProfile.name}</div>
+      <div class="friends-profile-sub">Your profile · tap to edit</div>
+    </div>
+    <button class="friends-edit-btn" onclick="clearFriendsProfile()">Edit</button>
+  </div>`;
+
+  // My cookbook
+  if (myCookbook) {
+    html += `<div class="friends-section-hdr">Your Cookbook</div>
+    <div class="cookbook-card">
+      <div class="cookbook-card-name">📖 My Cookbook <span class="cookbook-owner-chip">owner</span></div>
+      <div class="cookbook-card-sub">Share this code with friends so they can join</div>
+      <div class="cookbook-code-row">
+        <div class="cookbook-code">${myCookbook}</div>
+        <button class="copy-code-btn" onclick="copyCookbookCode()">Copy</button>
+      </div>
+    </div>`;
+  } else {
+    // Create cookbook
+    html += `<div class="friends-section-hdr">Your Cookbook</div>
+    <div class="friends-setup-card" style="text-align:left;padding:16px;">
+      <div style="font-size:0.78rem;color:var(--soft);margin-bottom:10px;">Create a shared cookbook — invite friends with a code.</div>
+      <input class="friends-cb-name-input" id="cb-name-field" placeholder="e.g. Ella & Friends 🍜" maxlength="40">
+      <button class="friends-create-btn" onclick="doCreateCookbook()">Create cookbook</button>
+    </div>`;
+  }
+
+  // Join a cookbook
+  html += `<div class="friends-join-card">
+    <div class="friends-join-title">Join a friend's cookbook</div>
+    <div class="friends-join-row">
+      <input class="friends-code-input" id="join-code-field" placeholder="ABC123" maxlength="6">
+      <button class="friends-join-btn" onclick="doJoinCookbook()">Join</button>
+    </div>
+  </div>`;
+
+  // Feed — all cookbooks
+  if (allCodes.length > 0) {
+    const allEntries = [];
+    for (const code of allCodes) {
+      const recipes = cbFeedCache[code] || [];
+      recipes.forEach(r => allEntries.push({...r, _code: code}));
+    }
+    allEntries.sort((a,b) => (b.sharedAt||0) - (a.sharedAt||0));
+
+    if (allEntries.length > 0) {
+      html += `<div class="friends-section-hdr">Shared Recipes</div>`;
+      allEntries.forEach(entry => {
+        html += renderCbRecipeCard(entry, entry._code);
+      });
+    } else {
+      html += `<div class="friends-empty">No recipes shared yet.<br>Open any recipe and tap "Share to cookbook" ✓</div>`;
+    }
+
+    // Followed cookbooks manage section
+    if (followedCookbooks.length > 0) {
+      html += `<div class="friends-section-hdr">Following</div>`;
+      for (const code of followedCookbooks) {
+        html += `<div class="cb-followed-header">
+          <span class="cb-followed-name">📖 ${code}</span>
+          <button class="cb-leave-btn" onclick="leaveCookbook('${code}')">Leave</button>
+        </div>`;
+      }
+    }
+  }
+
+  // Recipes without photos
+  const missing = recipesWithoutPhotos();
+  if (missing.length > 0) {
+    html += `<div class="friends-section-hdr">Missing Photos (${missing.length})</div>
+    <div class="card"><ul class="no-photo-list">${missing.map(r =>
+      `<li class="no-photo-item">
+        <span><span class="no-photo-emoji">${r.emoji}</span>${r.name}</span>
+        <button class="no-photo-add-btn" onclick="openModal('${r.id}')">Add photo</button>
+      </li>`
+    ).join('')}</ul></div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+function clearFriendsProfile() {
+  myProfile = null;
+  localStorage.removeItem('my_profile');
+  renderFriendsTab();
+}
 
 function openLightbox(src, alt) {
   const lb = document.getElementById('img-lightbox');

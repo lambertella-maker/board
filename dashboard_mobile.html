@@ -330,14 +330,14 @@
 <nav>
   <div class="logo">Ella Lambert — Finance Hub</div>
   <div class="nav-links">
-    <a onclick="scrollToSection('overview')">Overview</a>
-    <a onclick="scrollToSection('superplan')">Superplan</a>
-    <a onclick="scrollToSection('journey')">Journey</a>
-    <a onclick="scrollToSection('goals')">Goals</a>
-    <a onclick="scrollToSection('tax')">Tax</a>
-    <a onclick="scrollToSection('paye-checker')">PAYE</a>
-    <a onclick="scrollToSection('fire')">FIRE</a>
-    <a onclick="scrollToSection('investments')">Investments</a>
+    <a href="#overview" onclick="event.preventDefault();scrollToSection('overview')">Overview</a>
+    <a href="#superplan" onclick="event.preventDefault();scrollToSection('superplan')">Superplan</a>
+    <a href="#journey" onclick="event.preventDefault();scrollToSection('journey')">Journey</a>
+    <a href="#goals" onclick="event.preventDefault();scrollToSection('goals')">Goals</a>
+    <a href="#tax" onclick="event.preventDefault();scrollToSection('tax')">Tax</a>
+    <a href="#paye-checker" onclick="event.preventDefault();scrollToSection('paye-checker')">PAYE</a>
+    <a href="#fire" onclick="event.preventDefault();scrollToSection('fire')">FIRE</a>
+    <a href="#investments" onclick="event.preventDefault();scrollToSection('investments')">Investments</a>
   </div>
   <div style="display:flex;align-items:center;gap:4px">
     <div class="date-pill" id="live-date"></div>
@@ -641,39 +641,66 @@
         </div>
       </div>
 
-      <!-- Goal 2: Move to nicer flat — West Hampstead / Chiswick / Hampstead Heath -->
+      <!-- Goal 2: Move to nicer flat — May–Jul 2027 -->
       <div class="goal-card">
         <div class="goal-header">
           <div class="goal-icon">🗝️</div>
           <div>
-            <div class="goal-name">Goal 2 · Nearest · 2027</div>
+            <div class="goal-name">Goal 2 · May–Jul 2027</div>
             <div class="goal-title">Upgrade to a Nicer Flat</div>
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Flat Move Pot building — £124/mo from Mar 2026 · ~£5,000 needed to move</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£120/mo pot from Mar 2026 · covers ~£2,000 managed move cost by Jul 2027</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
-          <div class="progress-labels"><span>£0</span><span id="move-saved-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">~£5,000 move-in costs</span></div>
+          <div class="progress-labels"><span>£0</span><span id="move-saved-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,000 move cost</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">Target areas</span><span class="goal-row-value" style="color:var(--cyan)">West Hampstead · Chiswick · Hampstead Heath</span></div>
-        <div class="goal-row"><span class="goal-row-label">Upfront costs</span><span class="goal-row-value">~£5,000 · 5-wk deposit + first month + moving</span></div>
-        <div class="goal-row"><span class="goal-row-label">Flat Move Pot</span><span class="goal-row-value">£124/mo earmarked from Mar 2026 · hands-off</span></div>
-        <div class="goal-row"><span class="goal-row-label">Budget headroom</span><span class="goal-row-value" style="color:var(--green)">£973/mo leftover · £850 investing + £124 move pot = balanced</span></div>
-        <div class="goal-row"><span class="goal-row-label">Apr 2026 salary rise</span><span class="goal-row-value" style="color:var(--indigo)">£61,439 → breathing room to spend more on lifestyle</span></div>
+        <div class="goal-row"><span class="goal-row-label">Move cost</span><span class="goal-row-value">~£2,000 · professional managed service, all-in</span></div>
+        <div class="goal-row"><span class="goal-row-label">Pot at window</span><span class="goal-row-value" style="color:var(--green)">~£1,920 by Jul 2027 · fully covered hands-off</span></div>
+        <div class="goal-row"><span class="goal-row-label">Mar 2027 bonus</span><span class="goal-row-value" style="color:var(--indigo)">~£6,200–£7,000 gross · comfortable buffer above cost</span></div>
+        <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">£61,439 + COL rise · ~£63–64k at move time</span></div>
+        <div class="goal-row"><span class="goal-row-label">Promotion upside</span><span class="goal-row-value" style="color:var(--amber)">8–15% if grade up · ~£66–71k · makes it very comfortable</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
-            <div class="gp-label" id="move-pill-label">£124/mo pot · system balanced · no uncommitted float</div>
-            <span id="move-timeline">Mid-2027</span>
+            <div class="gp-label" id="move-pill-label">Pot self-funds move · bonus + COL rise as buffer</div>
+            <span id="move-timeline">May–Jul 2027</span>
           </div>
         </div>
       </div>
 
-      <!-- Goal 3: Business class LHR → ORD -->
+      <!-- Goal 3: ILR & British Citizenship -->
+      <div class="goal-card">
+        <div class="goal-header">
+          <div class="goal-icon">🇬🇧</div>
+          <div>
+            <div class="goal-name">Goal 3 · Sep 2029</div>
+            <div class="goal-title">ILR — Permanent Residency</div>
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from Sep 2019 · application window Sep 2029 · no more visa renewals</div>
+          <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
+          <div class="progress-labels"><span>Mar 2026</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>Sep 2029</span></div>
+        </div>
+        <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises ~5%/yr · file early</span></div>
+        <div class="goal-row"><span class="goal-row-label">Solicitor</span><span class="goal-row-value">~£1,000–1,500 · consult Mar 2029</span></div>
+        <div class="goal-row"><span class="goal-row-label">Total target</span><span class="goal-row-value" style="color:var(--indigo)">~£4,000–4,500 all-in</span></div>
+        <div class="goal-row"><span class="goal-row-label">Funded by</span><span class="goal-row-value" style="color:var(--green)">Single Mar 2028 bonus (~£7k gross) covers it</span></div>
+        <div class="goal-row"><span class="goal-row-label">What it unlocks</span><span class="goal-row-value">Live and work in UK permanently · no immigration stress</span></div>
+        <div class="goal-timeline">
+          <div class="goal-pill no-bruce" id="ilr-pill">
+            <div class="gp-label" id="ilr-pill-label">Consult solicitor Mar 2029 · apply Sep 2029</div>
+            <span id="ilr-timeline">Sep 2029</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goal 4: Business class LHR → ORD -->
       <div class="goal-card">
         <div class="goal-header">
           <div class="goal-icon">✈️</div>
           <div>
-            <div class="goal-name">Goal 3 · Travel · ~Early 2027</div>
+            <div class="goal-name">Goal 4 · Travel · ~Early 2027</div>
             <div class="goal-title">Business class LHR → ORD</div>
           </div>
         </div>
@@ -695,32 +722,6 @@
         </div>
       </div>
 
-      <!-- Goal 4: Financial Independence — Freedom Number -->
-      <div class="goal-card">
-        <div class="goal-header">
-          <div class="goal-icon">🌐</div>
-          <div>
-            <div class="goal-name">Goal 4 · Long Game</div>
-            <div class="goal-title">Financial Independence — Freedom Number</div>
-          </div>
-        </div>
-        <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£500k liquid/invested excl. pension — when work becomes genuinely optional</div>
-          <div class="progress-bar"><div class="progress-fill" id="fi-prog" style="width:1.5%"></div></div>
-          <div class="progress-labels"><span>£0</span><span id="fi-current-lbl" style="color:var(--indigo)">~£7,500 now</span><span style="color:var(--amber)">£500,000</span></div>
-        </div>
-        <div class="goal-row"><span class="goal-row-label">Freedom number</span><span class="goal-row-value" style="color:var(--amber)">£500,000 liquid/invested · excl. pension</span></div>
-        <div class="goal-row"><span class="goal-row-label">At 4% draw</span><span class="goal-row-value" style="color:var(--green)">£20,000/yr passive — covers full spend less rent</span></div>
-        <div class="goal-row"><span class="goal-row-label">Investing rate</span><span class="goal-row-value">£13,800/yr · Fidelity £10,200 + SIP effective £3,600</span></div>
-        <div class="goal-row"><span class="goal-row-label">Conservative path</span><span class="goal-row-value" style="color:var(--indigo)">7% CAGR, flat contributions → ~2044 · each raise shortens this</span></div>
-        <div class="goal-row"><span class="goal-row-label">Pension on top</span><span class="goal-row-value">£18,440 now at 5.5% CAGR → separate pillar, not counted here</span></div>
-        <div class="goal-timeline">
-          <div class="goal-pill no-bruce" id="fi-pill">
-            <div class="gp-label" id="fi-pill-label">7% CAGR · flat contributions · no salary growth assumed</div>
-            <span id="fi-timeline">~2044</span>
-          </div>
-        </div>
-      </div>
 
     </div>
   </section>
@@ -1246,7 +1247,9 @@ function scrollToSection(id) {
   const el = document.getElementById(id);
   if (!el) return;
   const navH = document.querySelector('nav')?.offsetHeight || 80;
-  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - navH - 16, behavior: 'smooth' });
+  let top = 0, node = el;
+  while (node) { top += node.offsetTop; node = node.offsetParent; }
+  window.scrollTo({ top: top - navH - 16, behavior: 'smooth' });
 }
 
 // ── CHART DEFAULTS ───────────────────────────────────────────────────────────
@@ -1589,31 +1592,30 @@ function updateGoals() {
   // Flat Move Pot — shared between move goal and purchase goal
   const marchStart = new Date(2026, 2, 1);
   const moElapsed  = Math.max(0, (today.getFullYear() - marchStart.getFullYear()) * 12 + (today.getMonth() - marchStart.getMonth()));
-  const flatSaved  = moElapsed * 124;
+  const flatSaved  = moElapsed * 120;
 
-  // Goal 2: Move to nicer flat (£5,000 move-in target)
-  const moveTarget = 5000;
+  // Goal 2: Move to nicer flat (£2,000 managed move target)
+  const moveTarget = 2000;
   document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100) + '%';
   document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
 
-  // Goal 4: Financial Independence (£500k freedom number)
-  const sipMonthsGoal = Math.max(0, (today.getFullYear() - 2024) * 12 + (today.getMonth() - 10)) + (today.getDate() >= 24 ? 1 : 0);
-  const fiCurrent = Math.round(9800 * 0.77) + sipMonthsGoal * 300; // Fidelity + Roth + SIP (acquisition cost)
-  document.getElementById('fi-prog').style.width = Math.min(100, fiCurrent / 500000 * 100).toFixed(2) + '%';
-  document.getElementById('fi-current-lbl').textContent = `~£${fiCurrent.toLocaleString()} now`;
+  // Goal 3: ILR — time-to-prepare progress bar
+  const ilrDeadline = new Date(2029, 8, 1);
+  const ilrStart    = new Date(2026, 2, 1);
+  const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
+  const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
+  document.getElementById('ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
+  document.getElementById('ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
 
   setPill('csp',    b,
     b ? "Bruce covers $4k spend → 60k UR bonus immediately on approval" : `Building history · ${cspMonthsLeft} months to go`,
     "Late 2026");
   setPill('move',   b,
-    b ? "Dad's gifts cover move-in costs immediately" : "£124/mo pot · system balanced · no uncommitted float",
-    b ? "Now" : "Mid-2027");
+    b ? "Dad's gifts cover move costs immediately" : "Pot self-funds move · bonus + COL rise as buffer",
+    b ? "Now" : "May–Jul 2027");
   setPill('avios',  b,
     b ? "CSP bonus + Bruce covers £600 fees → book late 2026" : "Waiting on CSP · book once bonus lands",
     b ? "~Late 2026" : "~Early 2027");
-  setPill('fi',     b,
-    b ? "Dad's £16k/yr gift + £850/mo investing → FI pulled forward ~6 years" : '7% CAGR · flat contributions · no salary growth assumed',
-    b ? '~2038' : '~2044');
 }
 
 function setPill(id, withBruce, label, value) {
