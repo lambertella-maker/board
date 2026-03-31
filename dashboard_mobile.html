@@ -119,6 +119,17 @@
 
   /* TOGGLE */
   .toggle-row { display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem; padding:1rem; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.2); border-radius:10px; }
+  .info-btn { background:none; border:none; color:var(--muted); cursor:pointer; font-size:0.68rem; font-family:inherit; padding:0; text-decoration:underline; line-height:1; }
+  .info-btn:hover { color:var(--soft); }
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:9000; align-items:center; justify-content:center; padding:1.5rem; }
+  .modal-overlay.open { display:flex; }
+  .modal-box { background:var(--card); border:1px solid var(--border); border-radius:16px; max-width:540px; width:100%; padding:1.6rem; position:relative; max-height:82vh; overflow-y:auto; }
+  .modal-close { position:absolute; top:0.9rem; right:1.1rem; background:none; border:none; color:var(--muted); font-size:1.4rem; cursor:pointer; line-height:1; }
+  .modal-close:hover { color:var(--text); }
+  .modal-rule { display:flex; gap:0.7rem; padding:0.55rem 0; border-bottom:1px solid var(--border); font-size:0.8rem; }
+  .modal-rule:last-of-type { border-bottom:none; }
+  .modal-rule-label { color:var(--muted); flex-shrink:0; width:130px; }
+  .modal-rule-value { color:var(--text); font-weight:600; }
   .toggle { position:relative; width:44px; height:24px; flex-shrink:0; }
   .toggle input { opacity:0; width:0; height:0; }
   .toggle-slider { position:absolute; cursor:pointer; inset:0; background:var(--border); border-radius:24px; transition:.3s; }
@@ -647,7 +658,7 @@
           <div class="goal-icon">🗝️</div>
           <div>
             <div class="goal-name">Goal 2 · May–Jul 2027</div>
-            <div class="goal-title">Upgrade to a Nicer Flat</div>
+            <div class="goal-title">Upgrade to a Nicer Flat <button class="info-btn" onclick="document.getElementById('rent-modal').classList.add('open')">ℹ rent rules</button></div>
           </div>
         </div>
         <div style="margin-bottom:1rem;">
@@ -843,7 +854,7 @@
       <div style="background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.35); border-radius:10px; padding:0.9rem 1.1rem;">
         <div style="font-size:0.62rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Starting Soon · UK 2026/27 · Primary</div>
         <div style="font-size:0.82rem; font-weight:700;">6 Apr 2026 · Your £61,439 year</div>
-        <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Full breakdown below · 5 weeks away</div>
+        <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Full breakdown below · <span id="tax-yr-countdown"></span></div>
       </div>
       <div style="text-align:center; color:var(--muted); font-size:1rem;">|</div>
       <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.2); border-radius:10px; padding:0.9rem 1.1rem;">
@@ -939,30 +950,6 @@
         <div style="font-size:0.71rem; color:var(--soft); margin-top:0.7rem; line-height:1.5; border-top:1px solid var(--border); padding-top:0.6rem;">*GymFlex: £97.40/mo gross sacrifice − £1.95 NI saving = <strong style="color:var(--text);">£95.45/mo net cost</strong> — a separate choice starting April 2026. It offsets the apparent gain but it's not the raise's fault. Without it, the £2,645 raise alone gives <strong style="color:var(--text);">+£115/mo net</strong>. The 40% band is working as intended. The raise still matters: it grows your pension, your NI record, and your future raise baseline.</div>
       </div>
 
-      <!-- March 2026 prediction -->
-      <div class="paye-section-label" style="margin-bottom:0.5rem;">March 2026 — Bonus Month Prediction · Computed from verified Feb payslip</div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
-        <div style="font-size:0.79rem; background:var(--card2); border-radius:9px; padding:0.85rem 1rem; border:1px solid var(--border);">
-          <div style="font-size:0.65rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.4rem;">What Goes In (March taxable basis)</div>
-          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">Regular IT taxable + BiK addback (no GymFlex in March)</span><span>£4,596.30</span></div>
-          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">Bonus after SALX (50% to pension)</span><span style="color:var(--green);">£3,185.50</span></div>
-          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border); font-weight:700;"><span>March IT taxable total</span><span>£7,781.80</span></div>
-          <div style="display:flex; justify-content:space-between; padding:0.22rem 0;"><span style="color:var(--muted);">March NI basis</span><span>£7,641.01</span></div>
-        </div>
-        <div style="font-size:0.79rem; background:rgba(244,114,182,0.04); border-radius:9px; padding:0.85rem 1rem; border:1px solid rgba(244,114,182,0.25);">
-          <div style="font-size:0.65rem; color:var(--pink); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.4rem;">What Comes Out — March 2026</div>
-          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">Income Tax</span><span style="color:var(--pink); font-weight:700;">£2,096</span></div>
-          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">National Insurance</span><span style="color:var(--pink); font-weight:700;">£319</span></div>
-          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:2px solid var(--border); margin-top:0.2rem;"><span style="font-weight:700; color:var(--text);">Net pay (bonus month!)</span><span style="color:var(--green); font-weight:800; font-size:1.05rem;">~£5,136</span></div>
-          <div style="margin-top:0.7rem; font-size:0.65rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Full 2025/26 Tax Year</div>
-          <div style="display:flex; justify-content:space-between; padding:0.22rem 0; border-bottom:1px solid var(--border);"><span style="color:var(--muted);">Total IT</span><span style="font-weight:700;">~£11,717</span></div>
-          <div style="display:flex; justify-content:space-between; padding:0.22rem 0;"><span style="color:var(--muted);">Total NI</span><span style="font-weight:700;">~£3,192</span></div>
-        </div>
-      </div>
-
-      <div style="font-size:0.74rem; color:var(--muted); background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem; border:1px solid var(--border); line-height:1.7;">
-        <strong style="color:var(--amber);">Why taxable &gt; NIable every month:</strong> PMI (£116.91) + Dental (£23.88) = £140.79/mo added as BiK. From April 2026, GymFlex OpRA adds £97/mo more. Always the explanation — never a payroll error. &nbsp;·&nbsp; <strong style="color:var(--text);">1283L confirmed ✓</strong>
-      </div>
     </div>
 
     <!-- US 2025 — COMPACT SECONDARY -->
@@ -1711,6 +1698,17 @@ function setPill(id, withBruce, label, value) {
 }
 updateGoals();
 
+// Tax year countdown
+(function() {
+  const target = new Date(2026, 3, 6); // 6 Apr 2026
+  const now = new Date(); now.setHours(0,0,0,0);
+  const days = Math.round((target - now) / 86400000);
+  const el = document.getElementById('tax-yr-countdown');
+  if (!el) return;
+  if (days > 0) el.textContent = days === 1 ? '1 day away' : days < 14 ? `${days} days away` : `${Math.ceil(days/7)} wks away`;
+  else el.textContent = 'current year';
+})();
+
 function mdToHtml(raw) {
   // 1. Extract fenced code blocks before any escaping
   const blocks = [];
@@ -1879,5 +1877,22 @@ function mdToHtml(raw) {
 })();
 
 </script>
+
+<!-- Rent Rules Modal -->
+<div class="modal-overlay" id="rent-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('rent-modal').classList.remove('open')">×</button>
+    <div style="font-size:0.58rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:0.4rem;">UK Housing Law · In force 1 May 2026</div>
+    <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Renters' Rights Act</div>
+    <div class="modal-rule"><div class="modal-rule-label">Section 21 abolished</div><div class="modal-rule-value">No more no-fault evictions. Landlord must have a legal ground to end the tenancy.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Landlord wants to sell</div><div class="modal-rule-value">Ground 1A · only usable after first 12 months of tenancy · must give 4 months notice · you keep the home until notice expires.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Your notice to leave</div><div class="modal-rule-value">2 months (unchanged). You leave on your own timeline.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Rent increases</div><div class="modal-rule-value">Annual limit only · 2 months notice required · you can challenge at tribunal if above market rate.</div></div>
+    <div class="modal-rule" style="margin-top:0.6rem;background:rgba(52,211,153,0.06);border-radius:8px;padding:0.7rem;border:1px solid rgba(52,211,153,0.2);">
+      <div class="modal-rule-label" style="color:var(--green);">Your timeline</div>
+      <div class="modal-rule-value">Move plan is May–Jul 2027. Worst case: landlord gives notice right after May 2026 → you'd need to leave by Sep 2026. Very unlikely — landlords rarely sell that quickly and you have a good arrangement. If notice comes any time after Jan 2027, your move window is unaffected.</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

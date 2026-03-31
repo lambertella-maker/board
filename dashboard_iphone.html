@@ -438,7 +438,7 @@
   <div class="card">
     <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
       <span style="font-size:1.4rem;">🗝️</span>
-      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 2 · May–Jul 2027</div><div style="font-size:0.95rem; font-weight:700;">Upgrade to a Nicer Flat</div></div>
+      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 2 · May–Jul 2027</div><div style="font-size:0.95rem; font-weight:700;">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
     <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">£120/mo pot from Mar 2026 · covers ~£2,000 managed move by Jul 2027</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
@@ -975,7 +975,33 @@ mCalcFire();
   }
 })();
 
-
 </script>
+
+<!-- Rent Rules Modal -->
+<style>
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:9000;align-items:center;justify-content:center;padding:1rem;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:var(--card);border:1px solid var(--border);border-radius:14px;max-width:400px;width:100%;padding:1.3rem;position:relative;max-height:85vh;overflow-y:auto;}
+  .modal-close{position:absolute;top:0.8rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1;}
+  .modal-rule{display:flex;flex-direction:column;gap:0.2rem;padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:0.78rem;}
+  .modal-rule:last-of-type{border-bottom:none;}
+  .modal-rule-label{color:var(--muted);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+  .modal-rule-value{color:var(--text);font-weight:600;}
+</style>
+<div class="modal-overlay" id="rent-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('rent-modal').classList.remove('open')">×</button>
+    <div style="font-size:0.58rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:0.4rem;">UK Housing Law · In force 1 May 2026</div>
+    <div style="font-size:1rem;font-weight:800;margin-bottom:1rem;">Renters' Rights Act</div>
+    <div class="modal-rule"><div class="modal-rule-label">Section 21 abolished</div><div class="modal-rule-value">No more no-fault evictions. Landlord must have a legal ground.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Landlord wants to sell</div><div class="modal-rule-value">Ground 1A · only after 12 months into tenancy · 4 months notice · you stay until notice expires.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Your notice to leave</div><div class="modal-rule-value">2 months (unchanged).</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Rent increases</div><div class="modal-rule-value">Annual only · 2 months notice · tribunal if excessive.</div></div>
+    <div class="modal-rule" style="background:rgba(52,211,153,0.06);border-radius:8px;padding:0.6rem;border:1px solid rgba(52,211,153,0.2);margin-top:0.5rem;">
+      <div class="modal-rule-label" style="color:var(--green);">Your timeline</div>
+      <div class="modal-rule-value">Move plan May–Jul 2027. If landlord gives notice after Jan 2027 → unaffected. Worst case is notice right after May 2026 → leave by Sep 2026. Very unlikely.</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
