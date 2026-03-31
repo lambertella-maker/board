@@ -781,16 +781,23 @@ function liveEstimates() {
       { name:'FTIHX', desc:'International Ex-US',   pct:10, color:'var(--cyan)',   role:'Diversifier' },
       { name:'FXNAX', desc:'US Bond Index',          pct:5,  color:'var(--amber)', role:'Ballast' },
     ];
-    const moUSD = 475; // taxable portion only; Roth $625/mo tracked separately
-    fundRowsEl.innerHTML = funds.map((f, i) => {
-      const moContrib = Math.round(moUSD * f.pct / 100);
-      const border = i < funds.length - 1 ? 'border-bottom:1px solid var(--border);' : '';
-      return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;${border}">` +
-        `<div><div style="font-size:0.8rem;font-weight:600;color:var(--text);">${f.name} <span style="font-size:0.68rem;font-weight:500;color:${f.color};">${f.pct}%</span></div>` +
-        `<div style="font-size:0.64rem;color:var(--muted);">${f.desc}</div></div>` +
-        `<div style="text-align:right;"><div style="font-size:0.98rem;font-weight:800;color:${f.color};">$${moContrib}</div>` +
-        `<div style="font-size:0.62rem;color:var(--muted);">this month</div></div></div>`;
-    }).join('');
+    const moTaxable = 475;
+    const moRoth = 625;
+    const makeRows = (mo, label) =>
+      funds.map((f, i) => {
+        const amt = Math.round(mo * f.pct / 100);
+        const border = i < funds.length - 1 ? 'border-bottom:1px solid var(--border);' : '';
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;${border}">` +
+          `<div><div style="font-size:0.8rem;font-weight:600;color:var(--text);">${f.name} <span style="font-size:0.68rem;font-weight:500;color:${f.color};">${f.pct}%</span></div>` +
+          `<div style="font-size:0.64rem;color:var(--muted);">${f.desc}</div></div>` +
+          `<div style="text-align:right;"><div style="font-size:0.98rem;font-weight:800;color:${f.color};">$${amt}</div>` +
+          `<div style="font-size:0.62rem;color:var(--muted);">${label}</div></div></div>`;
+      }).join('');
+    fundRowsEl.innerHTML =
+      `<div style="font-size:0.68rem;font-weight:700;color:var(--cyan);letter-spacing:0.04em;padding-bottom:4px;">ROTH IRA · $${moRoth}/mo</div>` +
+      makeRows(moRoth, 'Roth') +
+      `<div style="font-size:0.68rem;font-weight:700;color:var(--green);letter-spacing:0.04em;padding:10px 0 4px;">TAXABLE · $${moTaxable}/mo</div>` +
+      makeRows(moTaxable, 'Taxable');
   }
 
   const isMarch = today >= new Date(2026,2,24) && today < APR_PAYDAY;
