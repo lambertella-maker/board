@@ -342,11 +342,11 @@
     <div class="pillar-header"><div class="pillar-ico">📈</div><div><div class="pillar-label">Pillar 4 · US Investing</div><div class="pillar-name">Fidelity Index Funds</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" id="m-pillar-fid" style="color:var(--green)">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly input</span><span class="pillar-stat-v">$517/mo taxable + $583/mo Roth = $1,100</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly input</span><span class="pillar-stat-v">$475/mo taxable + $625/mo Roth = $1,100</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Target split</span><span class="pillar-stat-v">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Annual total (Fidelity)</span><span class="pillar-stat-v">£10,200/yr: taxable + Roth</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">~£1.1M (taxable, after-tax)</span></div>
-      <div class="pillar-why-text">$517/mo taxable + $583/mo Roth = same $1,100 total. Wise → Chase US → Fidelity ACH. No decisions, no drift.</div>
+      <div class="pillar-why-text">$475/mo taxable + $625/mo Roth = same $1,100 total. Both execute 30th, fully automated.</div>
     </div>
   </div>
 
@@ -354,10 +354,10 @@
     <div class="pillar-header"><div class="pillar-ico">🌱</div><div><div class="pillar-label">Pillar 5 · US Retirement</div><div class="pillar-name">Roth IRA</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" style="color:var(--pink)" id="m-pillar-roth">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly contribution</span><span class="pillar-stat-v" style="color:var(--pink)">$583/mo from April 2026</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly contribution</span><span class="pillar-stat-v" style="color:var(--pink)">$625/mo · executes 30th</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Tax on growth</span><span class="pillar-stat-v" style="color:var(--green)">Zero. Ever.</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--pink)">~£1.3M tax-free</span></div>
-      <div class="pillar-why-text">$583/mo from existing pipeline — no cash flow change. UK-US treaty: Roth withdrawals tax-free in both UK and US.</div>
+      <div class="pillar-why-text">Max-pace 2026 at $7,500/yr. UK-US treaty (Art.17): tax-free in both countries. Contributions always accessible penalty-free.</div>
     </div>
   </div>
 
@@ -581,7 +581,7 @@
 </div>
 
 <div class="tab-section" id="tab-invest">
-  <div class="topbar"><div class="topbar-logo">Investments</div><button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button></div>
+  <div class="topbar"><div class="topbar-logo">Investments</div><div style="display:flex;gap:0.5rem;align-items:center;"><button onclick="document.getElementById('invest-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ strategy</button><button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button></div></div>
 
   <div class="metrics-grid">
     <div class="metric">
@@ -605,12 +605,16 @@
       <span class="fire-stat-val" id="m-inv-pension" style="color:var(--pink)">—</span>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Fidelity Brokerage</div><div style="font-size:0.64rem;color:var(--muted);">FSKAX · FTIHX · FXNAX · Zero fees</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Roth IRA</div><div style="font-size:0.64rem;color:var(--muted);">+$625/mo · tax-free · $7,500/yr limit</div></div>
+      <span class="fire-stat-val" id="m-inv-roth" style="color:var(--amber)">—</span>
+    </div>
+    <div class="fire-stat-row">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Fidelity Taxable</div><div style="font-size:0.64rem;color:var(--muted);">+$475/mo · FSKAX/FTIHX/FXNAX</div></div>
       <span class="fire-stat-val" id="m-inv-fid" style="color:var(--green)">—</span>
     </div>
-    <div class="fire-stat-row" style="border-bottom:none;">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Roth IRA</div><div style="font-size:0.64rem;color:var(--muted);">+$583/mo · tax-free growth</div></div>
-      <span class="fire-stat-val" id="m-inv-roth" style="color:var(--amber)">—</span>
+    <div class="fire-stat-row" style="border-bottom:none;opacity:0.6;">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--muted);">Class C Legacy</div><div style="font-size:0.64rem;color:var(--muted);">$3,948 · ~1% ER · no new contributions</div></div>
+      <span class="fire-stat-val" style="color:var(--muted);">review</span>
     </div>
   </div>
 
@@ -722,11 +726,11 @@ function liveEstimates() {
 
   const mosInvest   = Math.max(0, monthsSince(new Date(2026, 2, 1)));
   const fidelityEst = fskaxDelta
-    ? Math.round(3948 * fskaxDelta + mosInvest * 517)
-    : Math.round(3948 * Math.pow(1.07, daysA / 365) + mosInvest * 517);
+    ? Math.round(3948 * fskaxDelta + mosInvest * 475)
+    : Math.round(3948 * Math.pow(1.07, daysA / 365) + mosInvest * 475);
   const rothEst = fskaxDelta
-    ? Math.round(1931 * fskaxDelta + mosInvest * 583)
-    : Math.round(1931 * Math.pow(1.07, daysA / 365) + mosInvest * 583);
+    ? Math.round(1931 * fskaxDelta + mosInvest * 625)
+    : Math.round(1931 * Math.pow(1.07, daysA / 365) + mosInvest * 625);
   const chaseUSEst = 1600; // static working capital anchor
 
   const PENSION_ANCHOR = new Date(2026, 2, 3);
@@ -777,7 +781,7 @@ function liveEstimates() {
       { name:'FTIHX', desc:'International Ex-US',   pct:10, color:'var(--cyan)',   role:'Diversifier' },
       { name:'FXNAX', desc:'US Bond Index',          pct:5,  color:'var(--amber)', role:'Ballast' },
     ];
-    const moUSD = 517; // taxable portion only; Roth $583/mo tracked separately
+    const moUSD = 475; // taxable portion only; Roth $625/mo tracked separately
     fundRowsEl.innerHTML = funds.map((f, i) => {
       const moContrib = Math.round(moUSD * f.pct / 100);
       const border = i < funds.length - 1 ? 'border-bottom:1px solid var(--border);' : '';
@@ -988,6 +992,21 @@ mCalcFire();
   .modal-rule-label{color:var(--muted);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
   .modal-rule-value{color:var(--text);font-weight:600;}
 </style>
+<div class="modal-overlay" id="invest-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('invest-modal').classList.remove('open')">×</button>
+    <div style="font-size:0.58rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:0.4rem;">Locked April 2026</div>
+    <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
+    <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">£850 Wise → Chase US → Fidelity. $625/mo Roth + $475/mo taxable. Executes 30th. Fully automated.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Both accounts</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical allocation. No monthly rebalancing.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Roth · $625/mo</div><div class="modal-rule-value">Zero tax on growth or withdrawal — US and UK (treaty Art.17). $7,500/yr 2026 limit. Contributions = liquidity backstop.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Taxable · $475/mo</div><div class="modal-rule-value">~0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 · ~1% ER · no new money. Review migration when convenient.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET: salary sacrifice now, tax-free growth, 25% lump sum + 75% income at drawdown. ~£1.9M at 67. Retirement covered.</div></div>
+    <div class="modal-rule" style="border-bottom:none;"><div class="modal-rule-label">No ISAs</div><div class="modal-rule-value">Blocked while US citizen. Trigger = CLN only.</div></div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="rent-modal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal-box">
     <button class="modal-close" onclick="document.getElementById('rent-modal').classList.remove('open')">×</button>
