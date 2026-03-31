@@ -445,7 +445,7 @@ li { margin-bottom: 4px; }
 .checklist .cl-urgent::before { content: '☐'; color: var(--orange); }
 
 /* ─── HUT OVERVIEW GRID ─── */
-.hut-overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+.hut-overview-grid { display: grid; grid-template-columns: 1fr 1.1fr 1.1fr 1.1fr 1fr; gap: 12px; margin: 20px 0; align-items: stretch; }
 .hut-ov-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -463,31 +463,34 @@ li { margin-bottom: 4px; }
 .hut-ov-body h3 { font-size: 0.97em; color: var(--green); margin-bottom: 2px; }
 .hut-ov-body .ov-elev { font-size: 0.8em; color: var(--muted); margin-bottom: 8px; }
 .hut-ov-body .ov-note { font-size: 0.82em; color: var(--muted); line-height: 1.4; }
+.travel-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+.travel-card-band {
+  height: 8px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.travel-card-body {
+  padding: 14px 14px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.travel-card-body .tc-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+.travel-card-body .tc-date { font-size: 1.05em; font-weight: 700; color: var(--text); line-height: 1.2; }
+.travel-card-body .tc-sub { font-size: 0.8em; color: var(--muted); margin-top: 6px; line-height: 1.45; }
 
 /* ─── PHOTOS ─── */
 .hut-photo-strip { overflow: hidden; border-radius: 8px; margin-bottom: 16px; }
 .hut-photo-strip img { width: 100%; height: 180px; object-fit: cover; object-position: center 40%; display: block; }
 .section-photo { overflow: hidden; border-radius: var(--radius); margin: 16px 0; }
 .section-photo img { width: 100%; height: 200px; object-fit: cover; object-position: center 50%; display: block; }
-
-/* ─── DATES STRIP ─── */
-.dates-strip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 20px;
-  margin-bottom: 20px;
-  font-size: 0.84em;
-  box-shadow: var(--shadow);
-}
-.ds-item { display: flex; align-items: center; gap: 6px; }
-.ds-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.ds-label { color: var(--muted); }
-.ds-val { font-weight: 600; }
-.ds-sep { color: var(--border); padding: 0 4px; }
 
 /* ─── TRIP TOTAL ─── */
 .trip-total-card {
@@ -515,11 +518,10 @@ li { margin-bottom: 4px; }
   .hero h1 { font-size: 2.1em; }
   .weather-grid { grid-template-columns: 1fr; }
   .cost-grid { grid-template-columns: 1fr; }
-  .hut-overview-grid { grid-template-columns: 1fr; }
+  .hut-overview-grid { grid-template-columns: 1fr 1fr; }
+  .hut-overview-grid .travel-card:last-child { grid-column: 1 / -1; }
   .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
   .hut-header { flex-direction: column; }
-  .dates-strip { gap: 4px; }
-  .ds-sep { display: none; }
 }
 </style>
 </head>
@@ -529,8 +531,8 @@ li { margin-bottom: 4px; }
      HERO
 ══════════════════════════════════════════════════════════════ -->
 <div class="hero">
-  <div class="hero-eyebrow">Karnischer Höhenweg · Peace Trail · Carnic Alps · Austria–Italy Border</div>
-  <h1>Carnic <em>Höhenweg</em><br>Hut-to-Hut · July 2026</h1>
+  <div class="hero-eyebrow">Austria Ridge Trek · Peace Trail · Carnic Alps · Austria–Italy Border</div>
+  <h1>Austria <em>Ridge Trek</em><br>Hut-to-Hut · July 2026</h1>
   <p class="tagline">
     A WWI ridge trail that's genuinely off the tourist circuit. Three nights of Alpenverein huts along the Austria–Italy border, with the Sextener Dolomites on one side and the Carnic valleys on the other. Four-hour hiking days, optional summits, and a landscape that most people driving through the Alps have never seen.
   </p>
@@ -579,20 +581,6 @@ li { margin-bottom: 4px; }
 </div>
 
 <!-- ─── DATES STRIP ─── -->
-<div class="dates-strip">
-  <div class="ds-item"><div class="ds-dot" style="background:#4B7BFF"></div><span class="ds-label">Fri 24 Jul</span>&nbsp;<span class="ds-val">US friends arrive London</span></div>
-  <div class="ds-sep">·</div>
-  <div class="ds-item"><div class="ds-dot" style="background:#4B7BFF"></div><span class="ds-label">Sun 26 Jul</span>&nbsp;<span class="ds-val">All fly → Sexten</span></div>
-  <div class="ds-sep">·</div>
-  <div class="ds-item"><div class="ds-dot" style="background:#3A9E62"></div><span class="ds-label">Mon 27 Jul</span>&nbsp;<span class="ds-val">Night 1 — Sillianer Hütte</span></div>
-  <div class="ds-sep">·</div>
-  <div class="ds-item"><div class="ds-dot" style="background:#2B6E42"></div><span class="ds-label">Tue 28 Jul</span>&nbsp;<span class="ds-val">Night 2 — Obstanserseehütte</span></div>
-  <div class="ds-sep">·</div>
-  <div class="ds-item"><div class="ds-dot" style="background:#B85828"></div><span class="ds-label">Wed 29 Jul</span>&nbsp;<span class="ds-val">Night 3 — Porzehütte</span></div>
-  <div class="ds-sep">·</div>
-  <div class="ds-item"><div class="ds-dot" style="background:#888"></div><span class="ds-label">Thu 30 Jul</span>&nbsp;<span class="ds-val">Descend → fly home</span></div>
-</div>
-
 <!-- ═══════════════════════════════════════════════════════════
      URGENT BOOKING ALERT
 ══════════════════════════════════════════════════════════════ -->
@@ -609,33 +597,64 @@ li { margin-bottom: 4px; }
 <h2>The Three Huts</h2>
 
 <div class="hut-overview-grid">
+
+  <!-- ARRIVAL -->
+  <div class="travel-card">
+    <div class="travel-card-band" style="background: var(--blue);"></div>
+    <div class="travel-card-body">
+      <div class="tc-label">Arrival</div>
+      <div class="tc-date">Fri 24 Jul</div>
+      <div class="tc-sub">US friends arrive London. 2 days together in the city.</div>
+      <div class="tc-date" style="margin-top:10px;">Sun 26 Jul</div>
+      <div class="tc-sub">All fly London → Venice or Innsbruck. Drive to Sexten. Hotel overnight. Leave big bags.</div>
+    </div>
+  </div>
+
+  <!-- NIGHT 1 -->
   <div class="hut-ov-card">
     <div class="hut-ov-photo" style="background: url('https://eportal.alpenverein.at/skripts/show_bild.php?huetteNr=0209&breite=350') center / cover no-repeat, linear-gradient(150deg, #2B6E42, #6BB89A);"></div>
     <div class="hut-ov-body">
-      <div class="ov-night">Night 1 · Monday</div>
+      <div class="ov-night">Night 1 · Mon 27 Jul</div>
       <h3>Sillianer Hütte</h3>
-      <div class="ov-elev">2,447m · Westernmost hut on the Carnic Main Ridge</div>
-      <div class="ov-note">66 beds (28 private + 38 dorm). Alpenverein-managed. Note: management change for 2026 — confirm booking is open. Book directly via email or Alpenverein website.</div>
+      <div class="ov-elev">2,447m · Carnic Main Ridge</div>
+      <div class="ov-note">66 beds. Alpenverein-managed. Chairlift start from Sexten. Confirm booking open (management change 2026).</div>
     </div>
   </div>
+
+  <!-- NIGHT 2 -->
   <div class="hut-ov-card">
     <div class="hut-ov-photo" style="background: url('https://www.alpenverein-austria.at/austria/slides/bilder/sommer2018/weblication/wThumbnails/Obstans-Galbavy-2013-1-71cd0ca38e2d74c61d5930d7ca278e50.jpg') center / cover no-repeat, linear-gradient(150deg, #1E5A96, #78B8E0);"></div>
     <div class="hut-ov-body">
-      <div class="ov-night">Night 2 · Tuesday</div>
+      <div class="ov-night">Night 2 · Tue 28 Jul</div>
       <h3>Obstanserseehütte</h3>
-      <div class="ov-elev">2,306m · Above the Obstansersee alpine lake</div>
-      <div class="ov-note">Family-run (Bodner family). Named after the lake it overlooks. Probably the most atmospheric of the three — high ridge position with panoramas to the Dolomites and Grossglockner. Book early.</div>
+      <div class="ov-elev">2,306m · Above alpine lake</div>
+      <div class="ov-note">Family-run (Bodner). Most atmospheric of the three — Dolomites + Grossglockner panoramas. Book first.</div>
     </div>
   </div>
+
+  <!-- NIGHT 3 -->
   <div class="hut-ov-card">
-    <div class="hut-ov-photo" style="background: url('https://img1.oastatic.com/img2/14690577/max/variant.jpg') center / cover no-repeat, linear-gradient(150deg, #B85828, #E8A878);"></div>
+    <div class="hut-ov-photo" style="background: url('https://www.alpenverein-austria.at/austria/slides/bilder/sommer2018/weblication/wThumbnails/Obstans-Galbavy-2013-1-71cd0ca38e2d74c61d5930d7ca278e50.jpg') center / cover no-repeat, linear-gradient(150deg, #B85828, #E8A878);"></div>
     <div class="hut-ov-body">
-      <div class="ov-night">Night 3 · Wednesday</div>
+      <div class="ov-night">Night 3 · Wed 29 Jul</div>
       <h3>Porzehütte</h3>
       <div class="ov-elev">1,942m · Above Obertilliach</div>
-      <div class="ov-note">85 beds across 11 dorm rooms. Recently rebuilt (2020). Alpenverein-managed. The most spacious hut on your route — good for a longer dinner and rest before the descent.</div>
+      <div class="ov-note">85 beds, rebuilt 2020. Largest hut on the route. Straightforward descent to Obertilliach next morning.</div>
     </div>
   </div>
+
+  <!-- DEPARTURE -->
+  <div class="travel-card">
+    <div class="travel-card-band" style="background: #888;"></div>
+    <div class="travel-card-body">
+      <div class="tc-label">Departure</div>
+      <div class="tc-date">Thu 30 Jul</div>
+      <div class="tc-sub">Descend to Obertilliach (~2h). Drive to Innsbruck (~2h).</div>
+      <div class="tc-date" style="margin-top:10px;">Thu evening or Fri 31 Jul</div>
+      <div class="tc-sub">Ella → LHR. Dina → US hub. Janek + Maya → EU or US. Optional: night in Lienz, fly Friday.</div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -793,7 +812,7 @@ li { margin-bottom: 4px; }
 
     <div class="hut-box">
       <div class="hut-photo-strip">
-        <img src="https://vcdn.bergfex.at/images/resized/profiles/detail/1dd/4b1823c0dd521dad14f0707fbf4e21dd.jpg" alt="Karnischer Höhenweg ridge trail" loading="lazy">
+        <img src="https://vcdn.bergfex.at/images/resized/profiles/detail/1dd/4b1823c0dd521dad14f0707fbf4e21dd.jpg" alt="Austria Ridge Trek trail" loading="lazy">
       </div>
       <div class="hut-header">
         <div class="hut-title">
@@ -852,7 +871,7 @@ li { margin-bottom: 4px; }
     </div>
     <ul class="highlights">
       <li>The longest and most committing day. 12km of ridge walking between two huts, with a cumulative elevation profile rather than one big climb — you'll be going up and down multiple times across several ridge points</li>
-      <li>The route continues east along the Karnischer Hauptkamm (Carnic Main Ridge), following the Austria–Italy border. The views stay extraordinary throughout — both sides of the border visible simultaneously from most high points</li>
+      <li>The route continues east along the Carnic Main Ridge (Austria–Italy border). The views stay extraordinary throughout — both sides of the border visible simultaneously from most high points</li>
       <li><strong>Hollbrucker Spitze</strong> and surrounding peaks are available as optional detours; these are proper summits requiring an extra 60–90 minutes each but accessible without technical gear from the main trail</li>
       <li>The descent to Porzehütte in the final section is the longest downhill of the trip — knees will know they've done something. Poles recommended. The hut appears below you as you work down from the ridge</li>
       <li>Porzehütte at 1,942m is lower than the previous two huts — the air feels noticeably warmer. It's also the newest of the three (rebuilt 2020). Large enough that you can spread out, good kitchen</li>
@@ -1228,7 +1247,7 @@ li { margin-bottom: 4px; }
     <ul>
       <li>Kompass map Sheet 47 (Sillian/Obertilliach) — buy in Sexten</li>
       <li>Download offline Komoot or Outdooractive before the trip</li>
-      <li>Route 403 / Karnischer Höhenweg clearly signed throughout</li>
+      <li>Route 403 / Austria Ridge Trek clearly signed throughout</li>
       <li>Compass or GPS device (phone GPS fine as backup)</li>
     </ul>
   </div>
@@ -1294,7 +1313,7 @@ li { margin-bottom: 4px; }
      FOOTER
 ══════════════════════════════════════════════════════════════ -->
 <div style="margin-top: 60px; padding: 20px 0; border-top: 1px solid var(--border); font-size: 0.78em; color: var(--muted); text-align: center;">
-  Karnischer Höhenweg · Carnic Peace Trail · Sexten → Sillianer Hütte → Obstanserseehütte → Porzehütte → Obertilliach<br>
+  Austria Ridge Trek · Carnic Alps · Sexten → Sillianer Hütte → Obstanserseehütte → Porzehütte → Obertilliach<br>
   July 27–30, 2026 · Ella, Dina, Janek, Maya<br>
   <span style="margin-top: 6px; display: block;">Hut availability: <a href="https://caa.alpenverein.at/service/bettencheck.html" target="_blank">caa.alpenverein.at/bettencheck</a> · Route 403 / Friedensweg</span>
 </div>
