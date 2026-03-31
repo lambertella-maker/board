@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karnischer Höhenweg · July 2026</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F7F9F8;
+  --card: #FFFFFF;
+  --text: #1C1C1C;
+  --muted: #5A5A5A;
+
+  --green: #2B6E42;
+  --green-mid: #3E8F5C;
+  --green-light: #E6F3EC;
+  --green-border: #B5D9C4;
+
+  --blue: #1E5A96;
+  --blue-mid: #2D7BBF;
+  --blue-light: #E1EEF9;
+  --blue-border: #9DC2E0;
+
+  --slate: #3B5E7C;
+  --slate-light: #E8EFF5;
+  --slate-border: #AABFD6;
+
+  --orange: #B85828;
+  --orange-light: #FBF0E8;
+  --orange-border: #D89070;
+
+  --amber: #8A6200;
+  --amber-light: #FFF7DF;
+
+  --border: #D8E2D4;
+  --shadow: 0 2px 16px rgba(0,0,0,0.06);
+  --radius: 12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(155deg, rgba(10,28,50,0.92) 0%, rgba(20,55,88,0.88) 35%, rgba(30,90,80,0.82) 65%, rgba(43,110,66,0.80) 100%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Sextner_Dolomiten_Fischleintal.jpg/1280px-Sextner_Dolomiten_Fischleintal.jpg') center 55% / cover no-repeat;
+  border-radius: 0 0 24px 24px;
+  padding: 60px 44px 52px;
+  margin: 0 -20px 50px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 80px;
+  background: linear-gradient(to top, rgba(10,28,50,0.25), transparent);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 0.76em;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  opacity: 0.65;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.8em;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  position: relative; z-index: 1;
+}
+.hero h1 em { color: #78D4A8; font-style: normal; }
+.hero .tagline {
+  font-size: 1.0em;
+  opacity: 0.82;
+  margin-bottom: 32px;
+  position: relative; z-index: 1;
+  max-width: 580px;
+  line-height: 1.55;
+}
+.hero-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.hs {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  padding: 12px 18px;
+  text-align: center;
+  min-width: 84px;
+}
+.hs .val { font-size: 1.65em; font-weight: 700; display: block; line-height: 1.1; }
+.hs .lbl { font-size: 0.68em; opacity: 0.72; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ─── ROUTE ARC ─── */
+.arc-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow);
+  font-size: 0.88em;
+}
+.arc-stop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  min-width: 100px;
+}
+.arc-stop .dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-bottom: 3px;
+}
+.dot-start  { background: #1E5A96; }
+.dot-night1 { background: #3A9E62; }
+.dot-night2 { background: #2B6E42; }
+.dot-night3 { background: #B85828; }
+.dot-end    { background: #5A7A6A; }
+.arc-stop .name { font-weight: 600; font-size: 0.88em; line-height: 1.3; }
+.arc-stop .elev { color: var(--muted); font-size: 0.76em; white-space: nowrap; }
+.arc-arrow { color: var(--green-mid); font-size: 1.1em; font-weight: 700; padding: 0 4px; }
+
+/* ─── HEADINGS ─── */
+h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.45em;
+  font-weight: 400;
+  color: var(--green);
+  margin: 48px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--green-light);
+}
+h3 { font-size: 1.03em; font-weight: 600; margin-bottom: 6px; }
+p { margin-bottom: 10px; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul { padding-left: 18px; }
+li { margin-bottom: 4px; }
+
+/* ─── DAY CARDS ─── */
+.day-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 22px 0;
+  overflow: hidden;
+}
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 24px;
+  border-bottom: 2px solid transparent;
+}
+.dh-travel  { background: #EFF3F8; border-color: #A8C0D6; }
+.dh-green1  { background: #EBF6EF; border-color: #5CB87A; }
+.dh-green2  { background: #E4F2EA; border-color: var(--green); }
+.dh-summit  { background: var(--orange-light); border-color: var(--orange); }
+.dh-return  { background: #F2F4F0; border-color: #AABBA8; }
+
+.day-pill {
+  background: rgba(0,0,0,0.09);
+  border-radius: 8px;
+  padding: 8px 14px;
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 58px;
+}
+.day-pill .dn { font-size: 1.4em; font-weight: 700; display: block; line-height: 1; }
+.day-pill .dl { font-size: 0.6em; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.6; }
+
+.day-info { flex: 1; min-width: 0; }
+.day-info h3 { font-size: 1.12em; margin-bottom: 4px; }
+.day-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.8em; color: var(--muted); }
+.day-meta span { white-space: nowrap; }
+
+.tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.tag-green  { background: var(--green-light); color: var(--green); }
+.tag-blue   { background: var(--blue-light); color: var(--blue); }
+.tag-orange { background: var(--orange-light); color: var(--orange); }
+.tag-grey   { background: #EFEFEF; color: #555; }
+.tag-summit { background: #FEE8DC; color: #8A3510; }
+.tag-ridge  { background: #E8EFF5; color: #3B5E7C; }
+
+.day-body { padding: 20px 24px 24px; }
+
+.route-strip {
+  background: #F2F5F0;
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-size: 0.88em;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.route-strip .arrow { color: var(--green-mid); font-weight: 700; font-size: 1.1em; white-space: nowrap; }
+.route-strip .rname { font-weight: 600; white-space: nowrap; }
+.route-strip .rdetail { color: var(--muted); white-space: nowrap; }
+
+.highlights {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 18px;
+}
+.highlights li {
+  padding: 4px 0 4px 22px;
+  position: relative;
+  font-size: 0.9em;
+}
+.highlights li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: var(--green-mid);
+  font-size: 0.5em;
+  top: 9px;
+}
+.summit-day .highlights li::before { color: var(--orange); }
+
+/* ─── HUT BOX ─── */
+.hut-box {
+  background: linear-gradient(135deg, #F2FAF5 0%, #FAFFFE 100%);
+  border: 1px solid var(--green-border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.hut-box.summit { background: linear-gradient(135deg, #FBF3EE 0%, #FFFCFA 100%); border-color: var(--orange-border); }
+.hut-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.hut-title h4 { font-size: 1.02em; color: var(--green); margin-bottom: 2px; }
+.hut-title h4.st { color: var(--orange); }
+.hut-title p { font-size: 0.8em; color: var(--muted); margin: 0; }
+.btn-book {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 7px;
+  font-size: 0.82em;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.btn-book:hover { background: #1E5030; text-decoration: none; }
+.btn-book.sb { background: var(--orange); }
+.btn-book.sb:hover { background: #8A3510; }
+
+.hut-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.hd .hdl { color: var(--muted); font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.3px; display: block; }
+.hd .hdv { font-weight: 600; font-size: 0.88em; }
+.hd .hdv a { color: var(--blue); }
+
+.price-pill {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.84em;
+  padding: 7px 13px;
+  border-radius: 6px;
+  background: var(--green-light);
+  color: var(--green);
+}
+.price-pill.sp { background: var(--orange-light); color: var(--orange); }
+.hut-note { font-size: 0.8em; color: var(--muted); margin-top: 8px; }
+
+/* ─── CALLOUT BOXES ─── */
+.note-box {
+  background: var(--blue-light);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  padding: 11px 16px;
+  font-size: 0.875em;
+  margin: 14px 0;
+  color: #1A3060;
+}
+.note-box strong { color: var(--blue); }
+
+.tip-inline {
+  background: var(--green-light);
+  border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  padding: 11px 16px;
+  font-size: 0.875em;
+  margin: 14px 0;
+  color: #1A3C28;
+}
+.tip-inline strong { color: var(--green); }
+
+.warn-box {
+  background: #FFF3CD;
+  border-left: 3px solid #E6A817;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 16px;
+  font-size: 0.875em;
+  margin: 14px 0;
+  color: #5C3D00;
+}
+.warn-box strong { color: #8A6200; }
+
+.urgent-box {
+  background: linear-gradient(135deg, #FFF1E8 0%, #FFF8F3 100%);
+  border: 1.5px solid var(--orange-border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 40px;
+}
+.urgent-box h4 { color: var(--orange); font-size: 1.0em; margin-bottom: 8px; }
+.urgent-box p { font-size: 0.88em; color: #5C3000; margin-bottom: 0; }
+
+/* ─── PERSON CARDS ─── */
+.person-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 14px; margin: 16px 0; }
+.person-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.person-card .pname { font-weight: 700; font-size: 0.95em; margin-bottom: 3px; }
+.person-card .pfrom { font-size: 0.8em; color: var(--muted); margin-bottom: 10px; }
+.person-card li { font-size: 0.85em; color: var(--muted); margin-bottom: 4px; }
+.person-card ul { padding-left: 14px; }
+.person-card .price-badge {
+  display: inline-block;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 0.78em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+/* ─── WEATHER GRID ─── */
+.weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.wx-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.wx-card h4 { font-size: 0.88em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px; }
+.temp-main { font-size: 1.5em; font-weight: 700; color: var(--green); line-height: 1.1; margin-bottom: 2px; }
+.temp-sub { font-size: 0.8em; color: var(--muted); }
+
+/* ─── COSTS ─── */
+.cost-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin: 16px 0; }
+.cost-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.cost-card h4 { font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+.cost-card ul { padding-left: 0; list-style: none; }
+.cost-card li { font-size: 0.87em; padding: 4px 0; border-bottom: 1px solid #F0F0F0; display: flex; justify-content: space-between; overflow-wrap: break-word; word-break: break-word; }
+.cost-card li:last-child { border-bottom: none; }
+.cost-card .total-row { font-weight: 700; color: var(--green); margin-top: 6px; border-top: 2px solid var(--green-border) !important; padding-top: 8px !important; }
+.cv { font-weight: 600; white-space: nowrap; margin-left: 8px; }
+
+/* ─── FLIGHT COMPARE TABLE ─── */
+.flight-table { width: 100%; border-collapse: collapse; font-size: 0.87em; margin: 16px 0; }
+.flight-table th { background: var(--green-light); color: var(--green); padding: 9px 12px; text-align: left; font-weight: 600; font-size: 0.85em; }
+.flight-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+.flight-table tr:hover td { background: #F8FBF9; }
+.flight-table .best-row td { background: #EBF6EF; font-weight: 600; }
+.recommend-badge { background: var(--green-light); color: var(--green); font-size: 0.75em; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+
+/* ─── CHECKLIST ─── */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  padding: 9px 12px 9px 36px;
+  border-radius: 7px;
+  position: relative;
+  font-size: 0.88em;
+  margin-bottom: 4px;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.checklist li::before {
+  content: '☐';
+  position: absolute;
+  left: 12px;
+  color: var(--green);
+  font-size: 1.0em;
+  top: 8px;
+}
+.checklist li strong { color: var(--text); }
+.checklist li .cl-sub { color: var(--muted); font-size: 0.9em; display: block; margin-top: 1px; }
+.checklist .cl-done { background: var(--green-light); border-color: var(--green-border); }
+.checklist .cl-done::before { content: '✔'; color: var(--green); }
+.checklist .cl-urgent { background: var(--orange-light); border-color: var(--orange-border); }
+.checklist .cl-urgent::before { content: '☐'; color: var(--orange); }
+
+/* ─── HUT OVERVIEW GRID ─── */
+.hut-overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 20px 0; }
+.hut-ov-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.hut-ov-photo {
+  height: 130px;
+  background-size: cover;
+  background-position: center;
+}
+.hut-ov-body { padding: 14px 16px; }
+.hut-ov-body .ov-night { font-size: 0.72em; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 3px; }
+.hut-ov-body h3 { font-size: 0.97em; color: var(--green); margin-bottom: 2px; }
+.hut-ov-body .ov-elev { font-size: 0.8em; color: var(--muted); margin-bottom: 8px; }
+.hut-ov-body .ov-note { font-size: 0.82em; color: var(--muted); line-height: 1.4; }
+
+/* ─── GEAR GRID ─── */
+.gear-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+.gear-col h4 { font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 8px; }
+.gear-col ul { padding-left: 14px; }
+.gear-col li { font-size: 0.85em; margin-bottom: 3px; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  .hero { padding: 44px 20px 40px; }
+  .hero h1 { font-size: 2.1em; }
+  .weather-grid { grid-template-columns: 1fr; }
+  .cost-grid { grid-template-columns: 1fr; }
+  .flight-table th, .flight-table td { padding: 8px 8px; font-size: 0.82em; }
+  .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .hut-header { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-eyebrow">Karnischer Höhenweg · Peace Trail · Carnic Alps · Austria–Italy Border</div>
+  <h1>Carnic <em>Höhenweg</em><br>Hut-to-Hut · July 2026</h1>
+  <p class="tagline">
+    A WWI ridge trail that's genuinely off the tourist circuit. Three nights of Alpenverein huts along the Austria–Italy border, with the Sextener Dolomites on one side and the Carnic valleys on the other. Four-hour hiking days, optional summits, and a landscape that most people driving through the Alps have never seen.
+  </p>
+  <div class="hero-stats">
+    <div class="hs"><span class="val">3</span><span class="lbl">Hut Nights</span></div>
+    <div class="hs"><span class="val">~28 km</span><span class="lbl">Trail Distance</span></div>
+    <div class="hs"><span class="val">T3</span><span class="lbl">Grade</span></div>
+    <div class="hs"><span class="val">2,447 m</span><span class="lbl">Highest Hut</span></div>
+    <div class="hs"><span class="val">Jul 27–30</span><span class="lbl">Hiking Days</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ROUTE ARC
+══════════════════════════════════════════════════════════════ -->
+<div class="arc-banner">
+  <div class="arc-stop">
+    <div class="dot dot-start"></div>
+    <div class="name">Helmjet Sexten</div>
+    <div class="elev">~1,968m · Chairlift top</div>
+  </div>
+  <div class="arc-arrow">→</div>
+  <div class="arc-stop">
+    <div class="dot dot-night1"></div>
+    <div class="name">Sillianer Hütte</div>
+    <div class="elev">2,447m · Night 1</div>
+  </div>
+  <div class="arc-arrow">→</div>
+  <div class="arc-stop">
+    <div class="dot dot-night2"></div>
+    <div class="name">Obstanserseehütte</div>
+    <div class="elev">2,306m · Night 2</div>
+  </div>
+  <div class="arc-arrow">→</div>
+  <div class="arc-stop">
+    <div class="dot dot-night3"></div>
+    <div class="name">Porzehütte</div>
+    <div class="elev">1,942m · Night 3</div>
+  </div>
+  <div class="arc-arrow">→</div>
+  <div class="arc-stop">
+    <div class="dot dot-end"></div>
+    <div class="name">Obertilliach</div>
+    <div class="elev">~1,450m · Finish</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     URGENT BOOKING ALERT
+══════════════════════════════════════════════════════════════ -->
+<div class="urgent-box">
+  <h4>⚡ Book All Three Huts Now — July Fills Fast</h4>
+  <p>
+    It's late March and you're targeting late July — you're at the exact edge of the booking window. Alpenverein huts on this route are booked directly (no unified platform). The Obstanserseehütte is the most capacity-constrained. Email or call all three <strong>this week</strong>, then book your flights and Sexten hotel once huts are confirmed. Do not book flights first.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HUT OVERVIEW
+══════════════════════════════════════════════════════════════ -->
+<h2>The Three Huts</h2>
+
+<div class="hut-overview-grid">
+  <div class="hut-ov-card">
+    <div class="hut-ov-photo" style="background: linear-gradient(150deg, #2B6E42 0%, #4A9E72 50%, #6BB89A 100%);"></div>
+    <div class="hut-ov-body">
+      <div class="ov-night">Night 1 · Monday</div>
+      <h3>Sillianer Hütte</h3>
+      <div class="ov-elev">2,447m · Westernmost hut on the Carnic Main Ridge</div>
+      <div class="ov-note">66 beds (28 private + 38 dorm). Alpenverein-managed. Note: management change for 2026 — confirm booking is open. Book directly via email or Alpenverein website.</div>
+    </div>
+  </div>
+  <div class="hut-ov-card">
+    <div class="hut-ov-photo" style="background: linear-gradient(150deg, #1E5A96 0%, #3A82C0 50%, #78B8E0 100%);"></div>
+    <div class="hut-ov-body">
+      <div class="ov-night">Night 2 · Tuesday</div>
+      <h3>Obstanserseehütte</h3>
+      <div class="ov-elev">2,306m · Above the Obstansersee alpine lake</div>
+      <div class="ov-note">Family-run (Bodner family). Named after the lake it overlooks. Probably the most atmospheric of the three — high ridge position with panoramas to the Dolomites and Grossglockner. Book early.</div>
+    </div>
+  </div>
+  <div class="hut-ov-card">
+    <div class="hut-ov-photo" style="background: linear-gradient(150deg, #B85828 0%, #D87848 50%, #E8A878 100%);"></div>
+    <div class="hut-ov-body">
+      <div class="ov-night">Night 3 · Wednesday</div>
+      <h3>Porzehütte</h3>
+      <div class="ov-elev">1,942m · Above Obertilliach</div>
+      <div class="ov-note">85 beds across 11 dorm rooms. Recently rebuilt (2020). Alpenverein-managed. The most spacious hut on your route — good for a longer dinner and rest before the descent.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 0 — TRAVEL DAY
+══════════════════════════════════════════════════════════════ -->
+<h2>The Route — Day by Day</h2>
+
+<div class="day-card">
+  <div class="day-header dh-travel">
+    <div class="day-pill">
+      <span class="dn">0</span>
+      <span class="dl">Day</span>
+    </div>
+    <div class="day-info">
+      <h3>London → Airport → Sexten / San Candido</h3>
+      <div class="day-meta">
+        <span>Sunday 26 July</span>
+        <span class="tag tag-blue">Travel Day</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="route-strip">
+      <span class="rname">London (LHR/LGW/STN)</span>
+      <span class="arrow">✈</span>
+      <span class="rname">Venice VCE or Innsbruck INN</span>
+      <span class="arrow">🚗</span>
+      <span class="rname">Sexten / San Candido</span>
+      <span class="rdetail">(~1.5–2h drive · hotel overnight)</span>
+    </div>
+    <ul class="highlights">
+      <li>Ella arrives from London. US friends (Dina, Janek, Maya) have been in London since Friday the 24th — all depart together on Sunday the 26th</li>
+      <li>If flying to <strong>Venice (VCE or Treviso TSF)</strong>: drive ~1.5–2h northeast via A27 motorway + SS51 road. Pass through Cortina d'Ampezzo for a look and a coffee before continuing the last 30min to Sexten/San Candido</li>
+      <li>If flying to <strong>Innsbruck (INN)</strong>: drive ~2h south via Brenner Pass (A13) and through the Inn/Puster valleys. Scenic road; slightly longer but worth it if flight prices are better</li>
+      <li>Arrive Sexten late afternoon or early evening. Leave all large bags at the hotel — hikers carry day packs only on the trail. Organise this tonight</li>
+      <li>Pack hiking bags tonight: everything not carried on trail stays in the hotel. The hotel holds your bags and you return on Day 4 to collect or arrange transfer</li>
+      <li>Gear check: poles, layers, rain gear, headlamp (non-negotiable for Day 3 tunnels), hiking boots broken in. See gear list below</li>
+      <li>Early dinner and early night — Day 1 starts with the chairlift and a proper climb</li>
+    </ul>
+    <div class="warn-box">
+      <strong>Luggage logistics — sort this tonight.</strong> Your hotel in Sexten stores your big bags while you hike. Confirm this when you book. You arrive at Porzehütte after Day 3, descend to Obertilliach on Day 4, and either someone drives the car back (if car-free hike) or you arrange a taxi back to Sexten to collect bags and car. Plan this loop before the trip — the transfer logistics from Obertilliach back to Sexten take about 45 minutes.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 1
+══════════════════════════════════════════════════════════════ -->
+<div class="day-card">
+  <div class="day-header dh-green1">
+    <div class="day-pill">
+      <span class="dn">1</span>
+      <span class="dl">Mon</span>
+    </div>
+    <div class="day-info">
+      <h3>Sexten → Sillianer Hütte</h3>
+      <div class="day-meta">
+        <span>Monday 27 July</span>
+        <span>📏 ~7.8 km</span>
+        <span>↑ ~480m from chairlift</span>
+        <span>⏱ ~2–2.5h from chairlift top</span>
+        <span class="tag tag-green">Moderate</span>
+        <span class="tag tag-ridge">Ridge Start</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="route-strip">
+      <span class="rname">Sexten village</span>
+      <span class="arrow">→</span>
+      <span class="rname">Helmjet chairlift</span>
+      <span class="rdetail">(~1,968m top)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Austrian border ridge</span>
+      <span class="arrow">→</span>
+      <span class="rname">Sillianer Hütte (2,447m)</span>
+    </div>
+    <ul class="highlights">
+      <li>The <strong>Helmjet Sexten chairlift</strong> is the smart way to start — it saves roughly 700m of vertical gain and 2+ hours. Buy your ticket in Sexten village and ride up to ~1,968m. A matter of preference whether to hike the whole thing, but the real trail starts from the top and the chairlift is genuinely a normal way to begin this section</li>
+      <li>From the chairlift top you hit the main ridge almost immediately. The border between Italy and Austria runs along the crest — you're literally standing on it for much of the day</li>
+      <li>Trail marker: Route 403 (Carnic Peace Trail / Friedensweg). Follow it east from the chairlift and you'll stay on the main ridge all the way to the hut</li>
+      <li>The landscape opens up fast: the Sextener Dolomites (Drei Zinnen / Tre Cime visible on a clear day) sit to the south across the Italian side; the gentler green Carnic valleys drop away to the north into Austria</li>
+      <li>WWI is everywhere on this trail. The border ridge was one of the most strategic and brutal front lines of the entire war — Austrian and Italian soldiers fought at altitudes above 2,500m through multiple winters. Gun emplacements, wire remnants, and carved tunnels are visible from Day 1. The Peace Trail designation is intentional</li>
+      <li>The section to Sillianer Hütte is the shortest hiking day, good for settling into the rhythm and testing your pacing</li>
+    </ul>
+    <div class="tip-inline">
+      <strong>Optional summit from Day 1:</strong> Eisenleiten or nearby ridgeline peaks above Sillianer Hütte offer an additional 45–90 minutes for anyone with energy after arriving at the hut. Leave your pack at the hut first.
+    </div>
+
+    <div class="hut-box">
+      <div class="hut-header">
+        <div class="hut-title">
+          <h4>Night 1 — Sillianer Hütte</h4>
+          <p>2,447m · Carnic Main Ridge · Sillian, Osttirol, Austria</p>
+        </div>
+        <a href="https://www.alpenverein.at/sillianerhuette/" target="_blank" class="btn-book">Book / Check</a>
+      </div>
+      <div class="hut-details">
+        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,447 m</span></div>
+        <div class="hd"><span class="hdl">Capacity</span><span class="hdv">66 beds (28 + 38 dorm)</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 53 23 802</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:sillian@sektion.alpenverein.at">sillian@<br>sektion.alpenverein.at</a></span></div>
+        <div class="hd"><span class="hdl">Website</span><span class="hdv"><a href="https://www.alpenverein.at/sillianerhuette/" target="_blank">alpenverein.at</a></span></div>
+        <div class="hd"><span class="hdl">Booking</span><span class="hdv">Alpenverein online or direct contact</span></div>
+        <div class="hd"><span class="hdl">Open 2026</span><span class="hdv">Early June – early October</span></div>
+      </div>
+      <div class="price-pill">Half-board available · typical ~€50–65/person</div>
+      <p class="hut-note">
+        Westernmost hut on the Carnic Main Ridge. Note: the hut is undergoing a management change for 2026 — contact the Alpenverein section directly to confirm the booking system is active. Don't assume the website is current. Phone call recommended.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 2
+══════════════════════════════════════════════════════════════ -->
+<div class="day-card">
+  <div class="day-header dh-green2">
+    <div class="day-pill">
+      <span class="dn">2</span>
+      <span class="dl">Tue</span>
+    </div>
+    <div class="day-info">
+      <h3>Sillianer Hütte → Obstanserseehütte</h3>
+      <div class="day-meta">
+        <span>Tuesday 28 July</span>
+        <span>📏 ~8.5 km</span>
+        <span>↑ ~641m cumulative gain</span>
+        <span>⏱ ~3.5–4h</span>
+        <span class="tag tag-green">Moderate–Hard</span>
+        <span class="tag tag-summit">Optional Summits</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="route-strip">
+      <span class="rname">Sillianer Hütte (2,447m)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Eisenreich (2,665m)</span>
+      <span class="rdetail">optional summit</span>
+      <span class="arrow">→</span>
+      <span class="rname">Obstanserseehütte (2,306m)</span>
+    </div>
+    <ul class="highlights">
+      <li>Day 2 is the most varied — the ridge gains more height than Day 1, and the terrain includes sections with fixed cables and short ladders. None of it requires technical gear, but sure-footedness matters. No one should be in sandals or trail runners on this section</li>
+      <li><strong>Eisenreich (2,665m)</strong> is the high point of the route and it's achievable as a slight detour above the main trail. Takes an extra 45–60 minutes return but the view from the summit is the payoff — the full Dolomites panorama to the south and the Carnic valley system to the north</li>
+      <li>The trail passes several WWI fortification sites — look for the carved tunnels and remnants of wire positions built into the rock face. Some sections have interpretive markers</li>
+      <li>The <strong>Obstansersee</strong> (alpine lake) appears below the hut as you descend toward it in the afternoon. The hut sits above the lake with views across to the Dolomites ridge. In July the light on the lake in the late afternoon is notable</li>
+      <li>Day 2 is a medium day — not the longest, but the most technically interesting. Start by 08:00 to arrive by early afternoon with time for the optional summit</li>
+    </ul>
+    <div class="tip-inline">
+      <strong>Depart Sillianer by 08:00.</strong> Afternoon storms can build on the ridge above 2,500m. The fixed cable sections are manageable in dry conditions; wet rock changes the calculation. An early start keeps you ahead of any weather that builds after noon.
+    </div>
+
+    <div class="hut-box">
+      <div class="hut-header">
+        <div class="hut-title">
+          <h4>Night 2 — Obstanserseehütte</h4>
+          <p>2,306m · Above the Obstansersee · Kartitsch, Osttirol, Austria</p>
+        </div>
+        <a href="https://obstans.jimdofree.com/" target="_blank" class="btn-book">Book Direct</a>
+      </div>
+      <div class="hut-details">
+        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,306 m</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 161 87 23</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:info@bodner.tirol">info@bodner.tirol</a></span></div>
+        <div class="hd"><span class="hdl">Website</span><span class="hdv"><a href="https://obstans.jimdofree.com/" target="_blank">obstans.jimdofree.com</a></span></div>
+        <div class="hd"><span class="hdl">Hut keeper</span><span class="hdv">Bodner Heinz family</span></div>
+        <div class="hd"><span class="hdl">Open 2026</span><span class="hdv">Late June – end September</span></div>
+      </div>
+      <div class="price-pill">Half-board typical · email to confirm rates</div>
+      <p class="hut-note">
+        Family-run, not managed by Alpenverein — contact the Bodner family directly. This is the most atmosphere-rich hut on the route: smaller, personal, and positioned with the best views. Book this one first.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 3
+══════════════════════════════════════════════════════════════ -->
+<div class="day-card summit-day">
+  <div class="day-header dh-summit">
+    <div class="day-pill">
+      <span class="dn">3</span>
+      <span class="dl">Wed</span>
+    </div>
+    <div class="day-info">
+      <h3>Obstanserseehütte → Porzehütte</h3>
+      <div class="day-meta">
+        <span>Wednesday 29 July</span>
+        <span>📏 ~12 km</span>
+        <span>↑ ~660m cumulative</span>
+        <span>⏱ ~5–6h</span>
+        <span class="tag tag-orange">Longest Day</span>
+        <span class="tag tag-summit">Optional Summits</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="route-strip">
+      <span class="rname">Obstanserseehütte (2,306m)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Hollbrucker Spitze</span>
+      <span class="rdetail">optional</span>
+      <span class="arrow">→</span>
+      <span class="rname">Carnic Ridge</span>
+      <span class="arrow">→</span>
+      <span class="rname">Porzehütte (1,942m)</span>
+    </div>
+    <ul class="highlights">
+      <li>The longest and most committing day. 12km of ridge walking between two huts, with a cumulative elevation profile rather than one big climb — you'll be going up and down multiple times across several ridge points</li>
+      <li>The route continues east along the Karnischer Hauptkamm (Carnic Main Ridge), following the Austria–Italy border. The views stay extraordinary throughout — both sides of the border visible simultaneously from most high points</li>
+      <li><strong>Hollbrucker Spitze</strong> and surrounding peaks are available as optional detours; these are proper summits requiring an extra 60–90 minutes each but accessible without technical gear from the main trail</li>
+      <li>The descent to Porzehütte in the final section is the longest downhill of the trip — knees will know they've done something. Poles recommended. The hut appears below you as you work down from the ridge</li>
+      <li>Porzehütte at 1,942m is lower than the previous two huts — the air feels noticeably warmer. It's also the newest of the three (rebuilt 2020). Large enough that you can spread out, good kitchen</li>
+    </ul>
+    <div class="warn-box">
+      <strong>Early start essential — depart Obstansersee by 07:30.</strong> Day 3 is the longest day and has the most exposure on the ridge. Weather builds from early afternoon in July. At 12km with 660m of gain/loss, arriving after 15:00 in deteriorating weather is not comfortable. Leave by 07:30 and you'll arrive well before any afternoon storms.
+    </div>
+    <div class="note-box">
+      <strong>Headlamp in your day pack tonight.</strong> Porzehütte has access to one of the WWI tunnel networks — if you explore them on Day 4 morning before descending, you'll need it. Worth it.
+    </div>
+
+    <div class="hut-box summit">
+      <div class="hut-header">
+        <div class="hut-title">
+          <h4 class="st">Night 3 — Porzehütte</h4>
+          <p>1,942m · Above Obertilliach · Osttirol, Austria</p>
+        </div>
+        <a href="https://www.alpenverein.at/porzehuette/" target="_blank" class="btn-book sb">Book / Check</a>
+      </div>
+      <div class="hut-details">
+        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">1,942 m</span></div>
+        <div class="hd"><span class="hdl">Capacity</span><span class="hdv">85 beds (11 dorm rooms)</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 325 6452</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:info@porzehuette.at">info@porzehuette.at</a></span></div>
+        <div class="hd"><span class="hdl">Website</span><span class="hdv"><a href="https://www.alpenverein.at/porzehuette/" target="_blank">alpenverein.at</a></span></div>
+        <div class="hd"><span class="hdl">Built</span><span class="hdv">Rebuilt 2020 — newest on the route</span></div>
+        <div class="hd"><span class="hdl">Booking</span><span class="hdv">Alpenverein online or direct</span></div>
+      </div>
+      <div class="price-pill sp">Largest hut · most likely to have space · book at least 2 weeks ahead</div>
+      <p class="hut-note">
+        Largest capacity of the three. Modern facilities post-rebuild. Straightforward descent to Obertilliach from here (2–2.5h, well-marked). Porzehütte is the finish-line hut — dinner here tends to feel celebratory.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 4 — DESCENT + DEPARTURE
+══════════════════════════════════════════════════════════════ -->
+<div class="day-card">
+  <div class="day-header dh-return">
+    <div class="day-pill">
+      <span class="dn">4</span>
+      <span class="dl">Thu</span>
+    </div>
+    <div class="day-info">
+      <h3>Porzehütte → Obertilliach → Innsbruck Airport</h3>
+      <div class="day-meta">
+        <span>Thursday 30 July</span>
+        <span>📏 ~5–6 km descent</span>
+        <span>⏱ ~2h to village</span>
+        <span class="tag tag-grey">Descent Day</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="route-strip">
+      <span class="rname">Porzehütte (1,942m)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Obertilliach (1,450m)</span>
+      <span class="rdetail">~2h descent</span>
+      <span class="arrow">→</span>
+      <span class="rname">Drive to Innsbruck</span>
+      <span class="rdetail">~2h via Lienz</span>
+      <span class="arrow">✈</span>
+      <span class="rname">Innsbruck INN</span>
+      <span class="rdetail">Ella → LHR · US friends → home</span>
+    </div>
+    <ul class="highlights">
+      <li>Short morning descent to Obertilliach (~2h on well-marked trail). Relaxed pace, legs have done the hard work. You finish in the valley at ~1,450m</li>
+      <li>From Obertilliach, <strong>Innsbruck airport is ~2 hours by car</strong> via Lienz and the Brenner pass route. Evening flights are achievable with an early-ish descent (leave Porzehütte by 08:30, Obertilliach by ~10:30, Innsbruck by ~12:30)</li>
+      <li><strong>Ella</strong>: Innsbruck → LHR direct, multiple daily options (Lufthansa/Austrian via Munich/Vienna, or direct)</li>
+      <li><strong>US friends (Dina, Janek, Maya)</strong>: Innsbruck is well-connected for transatlantic. Icelandair flies via Reykjavik to US cities. Austrian/Lufthansa connect through Vienna/Munich. Chicago (ORD), Washington (IAD), and New York (JFK) are all reachable with one stop. Alternatively: drive 3h to Venice for more direct transatlantic options (Delta JFK direct from VCE)</li>
+      <li>If evening flights don't work or you want a rest night: <strong>Lienz</strong> is 30 minutes from Obertilliach, a proper Austrian town with hotels, restaurants, and train connections. Fly Friday instead. No stress</li>
+    </ul>
+    <div class="note-box">
+      <strong>Bag logistics on Day 4.</strong> If you rented a car from Innsbruck, it's parked either at your Sexten hotel or a nearby parking area. After descending to Obertilliach, you'll need to get back to the car. Options: (1) taxi from Obertilliach to Sexten (~45 min, ~€60–80), (2) leave a driver at Sexten on Day 0 who collects the group on Day 4, (3) arrange a local shuttle. The Osttirol Taxi + local accommodation can help organise this in advance — ask your Sexten hotel.
+    </div>
+    <div class="tip-inline">
+      <strong>Fly Friday if in doubt.</strong> Thursday evening flights are achievable but tight — a late descent or a slow day puts pressure on the drive. If US friends have long-haul connections, a Thursday night in Lienz and a Friday morning flight removes all timing risk and Venice becomes an option for those with direct transatlantic needs.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     GETTING THERE
+══════════════════════════════════════════════════════════════ -->
+<h2>Getting There — Flights &amp; Car</h2>
+
+<p>This route sits between two good airports. Venice is cheaper; Innsbruck is more convenient. Either works. If car-rental simplicity matters more than flight price, Innsbruck wins. If the group is price-sensitive (budget airlines, Ryanair, Treviso), go Venice.</p>
+
+<h3 style="margin-top: 20px; margin-bottom: 10px;">Flight Options — London → Airport (Sunday 26 July)</h3>
+
+<table class="flight-table">
+  <thead>
+    <tr>
+      <th>Airport</th>
+      <th>Flight Time</th>
+      <th>Drive to Sexten</th>
+      <th>Typical July Price</th>
+      <th>Carriers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="best-row">
+      <td>Venice VCE / Treviso TSF <span class="recommend-badge">Cheapest</span></td>
+      <td>~2h 20min</td>
+      <td>~1.5–2h via A27 + Cortina</td>
+      <td>From ~£25–70 one-way</td>
+      <td>Ryanair (TSF), easyJet, BA (VCE)</td>
+    </tr>
+    <tr>
+      <td>Innsbruck INN</td>
+      <td>~2h</td>
+      <td>~2h via Brenner Pass (A13)</td>
+      <td>From ~£80–130 one-way</td>
+      <td>Lufthansa, easyJet, Austrian Air</td>
+    </tr>
+    <tr>
+      <td>Salzburg SZG</td>
+      <td>~2h 25min</td>
+      <td>~3h — not recommended</td>
+      <td>From ~£70–110 one-way</td>
+      <td>Lufthansa, easyJet</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note-box">
+  <strong>The drive from Venice via Cortina d'Ampezzo is genuinely beautiful</strong> — it adds 30 minutes vs the direct route but you pass through the heart of the Dolomites. Worth doing on Day 0 if you arrive in good time.
+</div>
+
+<h3 style="margin-top: 24px; margin-bottom: 12px;">Car Rental — Recommended Approach</h3>
+
+<div class="cost-grid">
+  <div class="cost-card">
+    <h4>Option A — Rent Innsbruck (Recommended)</h4>
+    <ul>
+      <li><span>Pick up</span><span class="cv">INN Airport, Sun Jul 26</span></li>
+      <li><span>Drive to Sexten</span><span class="cv">~90km, 2h south</span></li>
+      <li><span>Drop off</span><span class="cv">INN Airport, Thu Jul 30</span></li>
+      <li><span>One-way fee</span><span class="cv">None (same location)</span></li>
+      <li><span>Vignette</span><span class="cv">Pre-installed or buy at pickup</span></li>
+      <li class="total-row"><span>Estimated cost</span><span class="cv">~€160–250 all-in</span></li>
+    </ul>
+  </div>
+  <div class="cost-card">
+    <h4>Option B — Rent Venice, Drop Innsbruck</h4>
+    <ul>
+      <li><span>Pick up</span><span class="cv">VCE Airport, Sun Jul 26</span></li>
+      <li><span>Drive to Sexten</span><span class="cv">~110km, 1.5–2h</span></li>
+      <li><span>Drop off</span><span class="cv">INN Airport, Thu Jul 30</span></li>
+      <li><span>One-way fee</span><span class="cv">+€50–120 (Italy→Austria)</span></li>
+      <li><span>Vignette</span><span class="cv">Buy at Austrian border/gas station</span></li>
+      <li class="total-row"><span>Estimated cost</span><span class="cv">~€250–370 all-in</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="warn-box">
+  <strong>Austrian highway vignette — required.</strong> Every car driving on Austrian motorways (Autobahn) needs a vignette sticker. Cost: €9.40 for 10 days or €27.40 for 2 months. If renting in Innsbruck it may be included — confirm with the rental company. If renting in Venice and driving into Austria, buy it immediately at the first petrol station after the border. Not having one = €120 fine.
+</div>
+
+<h3 style="margin-top: 24px; margin-bottom: 12px;">Return Flights — Innsbruck (Thu 30 Jul or Fri 31 Jul)</h3>
+
+<div class="person-grid">
+  <div class="person-card">
+    <div class="pname">Ella</div>
+    <div class="pfrom">London-based · returning to LHR</div>
+    <ul>
+      <li>Innsbruck → LHR direct (rare) or via Munich/Vienna (45min hop, then LHR)</li>
+      <li>Lufthansa Munich connection: very reliable, multiple daily</li>
+      <li>Austrian Airlines via Vienna also good</li>
+      <li>Thursday evening or Friday morning equally fine</li>
+    </ul>
+    <span class="price-badge">~£80–150 return leg</span>
+  </div>
+  <div class="person-card">
+    <div class="pname">Dina, Janek, Maya</div>
+    <div class="pfrom">US-based · via London or direct from region</div>
+    <ul>
+      <li>Innsbruck → Munich → ORD/IAD/JFK (Lufthansa + United)</li>
+      <li>Innsbruck → Reykjavik → US (Icelandair — good value)</li>
+      <li>Or: drive 3h to Venice → Delta JFK direct (cleanest transatlantic)</li>
+      <li>Or: return to London, catch transatlantic from LHR (most options)</li>
+    </ul>
+    <span class="price-badge">~$450–700 for transatlantic leg</span>
+  </div>
+</div>
+
+<div class="tip-inline">
+  <strong>ETIAS reminder — US citizens.</strong> Dina, Janek, and Maya will need ETIAS (EU Schengen travel authorisation) before the trip. It's expected to be fully live for US passport holders in 2026 — quick online application, ~€7 fee, valid 3 years. Apply a month before departure. Austria is Schengen; this applies. Ella (UK passport, no ETIAS needed for EU under current rules) does not need it.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HOTELS + LUGGAGE STORAGE
+══════════════════════════════════════════════════════════════ -->
+<h2>Hotels &amp; Luggage Storage</h2>
+
+<p>You need two hotel nights: one before the hike (Sexten, Sunday Jul 26) and optionally one after (Obertilliach/Lienz, Thursday Jul 30 if flying Friday). The Sexten pre-hike hotel is the critical one — it holds your bags for the entire 4-day hike.</p>
+
+<div class="warn-box">
+  <strong>Luggage storage is the most important logistical question.</strong> You cannot carry large bags on T3 ridge terrain. Every person packs a day pack (~30L max) for the hike. Everything else stays at your Sexten pre-hike hotel. When you book the hotel, confirm explicitly: "We are hiking for 4 days — can you store 4 large bags while we are away?" Most hotels in Sexten/San Candido say yes. Confirm it in writing.
+</div>
+
+<div class="cost-grid">
+  <div class="cost-card">
+    <h4>Pre-hike: Sexten / San Candido (Sun Jul 26)</h4>
+    <ul>
+      <li><span>Sexten village</span><span class="cv">closest to chairlift</span></li>
+      <li><span>San Candido (Innichen)</span><span class="cv">15km, more services</span></li>
+      <li><span>Luggage storage</span><span class="cv">confirm on booking</span></li>
+      <li><span>Book timing</span><span class="cv">Book April 2026 — July peak</span></li>
+      <li class="total-row"><span>Typical July price</span><span class="cv">~€90–160/night (2 rooms)</span></li>
+    </ul>
+  </div>
+  <div class="cost-card">
+    <h4>Post-hike: Lienz or Obertilliach (Thu Jul 30 if needed)</h4>
+    <ul>
+      <li><span>Obertilliach village</span><span class="cv">literally at hike end</span></li>
+      <li><span>Lienz</span><span class="cv">30min drive, proper town</span></li>
+      <li><span>Train connections</span><span class="cv">Lienz → Innsbruck direct</span></li>
+      <li><span>Recommended if</span><span class="cv">flying Friday not Thursday</span></li>
+      <li class="total-row"><span>Typical July price</span><span class="cv">~€80–150/night (2 rooms)</span></li>
+    </ul>
+  </div>
+</div>
+
+<h3 style="margin-top: 20px;">Suggested Booking Sites</h3>
+<ul>
+  <li><a href="https://www.booking.com" target="_blank">Booking.com</a> — search "Sesto" or "San Candido" for pre-hike, "Obertilliach" or "Lienz" for post-hike</li>
+  <li><a href="https://www.sesto.it/en/accommodation-in-the-sesto-dolomites/" target="_blank">sesto.it official tourism portal</a> — direct booking options, local knowledge</li>
+  <li><a href="https://www.osttirol.com/en/hotel-obertilliach/" target="_blank">osttirol.com</a> — Obertilliach area accommodation</li>
+</ul>
+
+<!-- ═══════════════════════════════════════════════════════════
+     WEATHER
+══════════════════════════════════════════════════════════════ -->
+<h2>July Weather on the Carnic Ridge</h2>
+
+<div class="weather-grid">
+  <div class="wx-card">
+    <h4>At Ridge Altitude (2,000–2,600m)</h4>
+    <div class="temp-main">10–18°C</div>
+    <div class="temp-sub">Daytime highs · warmest weeks</div>
+    <ul style="margin-top: 10px; font-size: 0.87em;">
+      <li>Nights at huts: 4–10°C — layers essential</li>
+      <li>Afternoon thunderstorms build fast, especially Days 2 and 3</li>
+      <li>Ridge exposed: rain gear always in pack, not in hotel bag</li>
+      <li>Snowpatches possible in shaded gullies until mid-July</li>
+    </ul>
+  </div>
+  <div class="wx-card">
+    <h4>General July Pattern</h4>
+    <div class="temp-main">Stable mornings</div>
+    <div class="temp-sub">Weather window: 06:00–13:00</div>
+    <ul style="margin-top: 10px; font-size: 0.87em;">
+      <li>July is peak season — warmest and driest month</li>
+      <li>The Austria–Italy border ridge catches weather from both sides</li>
+      <li>Morning departures by 07:30–08:00 get the best conditions</li>
+      <li>Check: <a href="https://www.zamg.ac.at" target="_blank">ZAMG</a> (Austrian weather) + <a href="https://www.meteo.it" target="_blank">meteo.it</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     APPROXIMATE COSTS
+══════════════════════════════════════════════════════════════ -->
+<h2>Approximate Costs per Person</h2>
+
+<div class="cost-grid">
+  <div class="cost-card">
+    <h4>Flights (per person)</h4>
+    <ul>
+      <li><span>LHR → Venice (one-way)</span><span class="cv">£30–70</span></li>
+      <li><span>Return leg (Innsbruck → LHR)</span><span class="cv">£80–150</span></li>
+      <li><span>Or: LHR → Innsbruck both ways</span><span class="cv">£200–350 return</span></li>
+      <li class="total-row"><span>Flight total estimate</span><span class="cv">~£150–300</span></li>
+    </ul>
+  </div>
+  <div class="cost-card">
+    <h4>Car Rental (shared ÷ 4)</h4>
+    <ul>
+      <li><span>Innsbruck rental, 4 days</span><span class="cv">€160–250 total</span></li>
+      <li><span>Fuel + toll</span><span class="cv">€40–60</span></li>
+      <li><span>Vignette (10-day)</span><span class="cv">€9.40</span></li>
+      <li class="total-row"><span>Per person share</span><span class="cv">~€55–80</span></li>
+    </ul>
+  </div>
+  <div class="cost-card">
+    <h4>Hotels (2 nights, shared room)</h4>
+    <ul>
+      <li><span>Pre-hike Sexten (Sun)</span><span class="cv">€45–80/person</span></li>
+      <li><span>Post-hike Lienz if needed (Thu)</span><span class="cv">€40–75/person</span></li>
+      <li class="total-row"><span>Hotel total estimate</span><span class="cv">~€85–155</span></li>
+    </ul>
+  </div>
+  <div class="cost-card">
+    <h4>Huts (3 nights half-board)</h4>
+    <ul>
+      <li><span>Typical hut rate (bed + dinner + breakfast)</span><span class="cv">~€50–70/night</span></li>
+      <li><span>3 nights</span><span class="cv">~€150–210</span></li>
+      <li><span>Alpenverein membership discount</span><span class="cv">~€5–10/night off</span></li>
+      <li class="total-row"><span>Hut total estimate</span><span class="cv">~€130–210</span></li>
+    </ul>
+  </div>
+  <div class="cost-card">
+    <h4>Extras</h4>
+    <ul>
+      <li><span>Helmjet chairlift (Sexten, one-way)</span><span class="cv">~€20–25</span></li>
+      <li><span>Transfer Obertilliach → Sexten (taxi, ÷4)</span><span class="cv">~€15–20/person</span></li>
+      <li><span>Meals in Sexten/Cortina/Lienz</span><span class="cv">~€80–120</span></li>
+      <li><span>ETIAS (US citizens only)</span><span class="cv">€7</span></li>
+      <li class="total-row"><span>Extras estimate</span><span class="cv">~€120–165</span></li>
+    </ul>
+  </div>
+  <div class="cost-card">
+    <h4>Trip Total per Person</h4>
+    <ul>
+      <li><span>Flights</span><span class="cv">£150–300</span></li>
+      <li><span>Car share</span><span class="cv">£50–70</span></li>
+      <li><span>Hotels</span><span class="cv">£75–130</span></li>
+      <li><span>Huts</span><span class="cv">£115–180</span></li>
+      <li><span>Extras</span><span class="cv">£100–140</span></li>
+      <li class="total-row"><span>All-in estimate</span><span class="cv">~£490–820</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="tip-inline">
+  <strong>Alpenverein membership worth getting.</strong> Austrian Alpine Club (OeAV) membership costs ~€63/year. Benefits include reduced hut rates (€5–10 off per night), rescue insurance, and discounts at partner huts across Europe. For a group doing multiple alpine trips, it pays back immediately.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     GEAR
+══════════════════════════════════════════════════════════════ -->
+<h2>Gear</h2>
+
+<p>T3 grade requires proper kit. This is a ridge trail with some fixed cables — not technical, but unforgiving in bad gear. No trail runners on this route.</p>
+
+<div class="gear-grid">
+  <div class="gear-col">
+    <h4>Footwear + Poles</h4>
+    <ul>
+      <li>Stiff hiking boots, ankle support — non-negotiable</li>
+      <li>Broken in before the trip (not fresh out of box)</li>
+      <li>Trekking poles — carry both hands for cable sections</li>
+      <li>Gaiters optional but useful in wet conditions</li>
+    </ul>
+  </div>
+  <div class="gear-col">
+    <h4>Clothing</h4>
+    <ul>
+      <li>Merino base layer (dries fast in huts)</li>
+      <li>Fleece or light down (cold at night, 2,300m+)</li>
+      <li>Waterproof shell — not just a windshell</li>
+      <li>Hiking trousers (not shorts for ridge sections)</li>
+      <li>Warm hat + gloves (July nights at altitude)</li>
+    </ul>
+  </div>
+  <div class="gear-col">
+    <h4>Pack Contents (daily)</h4>
+    <ul>
+      <li>2L water + filter/purification tabs</li>
+      <li>Packed lunch (order from hut evening before)</li>
+      <li>Headlamp + spare batteries (WWI tunnels)</li>
+      <li>First aid kit: blister pads, Compeed, pain relief</li>
+      <li>Sun protection: cream + lip balm (ridge = full exposure)</li>
+      <li>Emergency space blanket — weighs nothing</li>
+    </ul>
+  </div>
+  <div class="gear-col">
+    <h4>Navigation</h4>
+    <ul>
+      <li>Kompass map Sheet 47 (Sillian/Obertilliach) — buy in Sexten</li>
+      <li>Download offline Komoot or Outdooractive before the trip</li>
+      <li>Route 403 / Karnischer Höhenweg clearly signed throughout</li>
+      <li>Compass or GPS device (phone GPS fine as backup)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="note-box">
+  <strong>Cash in Austria.</strong> Alpenverein huts typically accept cash (euros) and sometimes cards. Bring €200+ per person in cash. ATMs in Sexten and San Candido; none on the trail or in Obertilliach village.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BOOKING CHECKLIST
+══════════════════════════════════════════════════════════════ -->
+<h2>Booking Checklist</h2>
+
+<ul class="checklist">
+  <li class="cl-urgent">
+    <strong>Obstanserseehütte — Night 2</strong>
+    <span class="cl-sub">Call or email now: +43 664 161 87 23 / info@bodner.tirol — family-run, smaller capacity, book first</span>
+  </li>
+  <li class="cl-urgent">
+    <strong>Sillianer Hütte — Night 1</strong>
+    <span class="cl-sub">Contact: +43 664 53 23 802 / sillian@sektion.alpenverein.at — confirm booking is active (management change 2026)</span>
+  </li>
+  <li class="cl-urgent">
+    <strong>Porzehütte — Night 3</strong>
+    <span class="cl-sub">Contact: +43 664 325 6452 / info@porzehuette.at — largest hut, most likely to have space, still book soon</span>
+  </li>
+  <li>
+    <strong>Outbound flights — London → Venice or Innsbruck (Sun 26 Jul)</strong>
+    <span class="cl-sub">Book after huts confirmed. Venice (Ryanair/easyJet via TSF/VCE) usually cheapest. Search now — July fills early</span>
+  </li>
+  <li>
+    <strong>Car rental — Innsbruck Airport (recommended)</strong>
+    <span class="cl-sub">Europcar / Sixt / Hertz at INN. Book 4-day rental in advance. Confirm vignette status</span>
+  </li>
+  <li>
+    <strong>Pre-hike hotel — Sexten or San Candido (Sun 26 Jul night)</strong>
+    <span class="cl-sub">Confirm luggage storage explicitly when booking. Search booking.com for "Sesto" or "San Candido". Book by April</span>
+  </li>
+  <li>
+    <strong>Return flights — Innsbruck (Thu 30 Jul evening or Fri 31 Jul)</strong>
+    <span class="cl-sub">Ella: INN → LHR. US friends: INN → US hubs (Icelandair, Lufthansa) or drive Venice for Delta direct</span>
+  </li>
+  <li>
+    <strong>ETIAS — Dina, Janek, Maya (US passports)</strong>
+    <span class="cl-sub">EU Schengen travel authorisation for US citizens. Apply online ~1 month before trip. ~€7. Apply by June 2026</span>
+  </li>
+  <li>
+    <strong>Post-hike hotel — Obertilliach or Lienz (only if flying Friday)</strong>
+    <span class="cl-sub">Optional. Lienz is more convenient for dining + transport. 30 min from Obertilliach</span>
+  </li>
+  <li>
+    <strong>Kompass map sheet 47 — buy on arrival in Sexten</strong>
+    <span class="cl-sub">Available in outdoor shops in Sexten and San Candido. Or download Komoot / Outdooractive before leaving London</span>
+  </li>
+  <li>
+    <strong>Obertilliach → Sexten transfer — arrange in advance</strong>
+    <span class="cl-sub">Taxi ~€60–80, ~45 min. Ask your Sexten hotel or the Osttirol Tourism board to arrange. Do not leave this for Day 4</span>
+  </li>
+</ul>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════════ -->
+<div style="margin-top: 60px; padding: 20px 0; border-top: 1px solid var(--border); font-size: 0.78em; color: var(--muted); text-align: center;">
+  Karnischer Höhenweg · Carnic Peace Trail · Sexten → Sillianer Hütte → Obstanserseehütte → Porzehütte → Obertilliach<br>
+  July 27–30, 2026 · Ella, Dina, Janek, Maya<br>
+  <span style="margin-top: 6px; display: block;">Hut availability: <a href="https://caa.alpenverein.at/service/bettencheck.html" target="_blank">caa.alpenverein.at/bettencheck</a> · Route 403 / Friedensweg</span>
+</div>
+
+</body>
+</html>
