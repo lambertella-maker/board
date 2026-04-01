@@ -6,6 +6,7 @@
 <title>Austria Ridge Hike · July 2026</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
   --bg: #F7F9F8;
   --card: #FFFFFF;
@@ -511,6 +512,15 @@ li { margin-bottom: 4px; }
 .gear-col ul { padding-left: 14px; }
 .gear-col li { font-size: 0.85em; margin-bottom: 3px; }
 
+/* ─── PACKING CHECKLIST ─── */
+.pack-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
+.pack-col { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 15px; box-shadow: var(--shadow); }
+.pack-col h4 { font-size: 0.74em; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--border); }
+.pack-col ul { list-style: none; padding: 0; margin: 0; }
+.pack-col li { font-size: 0.81em; padding: 3px 0 3px 18px; position: relative; margin-bottom: 2px; line-height: 1.4; }
+.pack-col li::before { content: '☐'; position: absolute; left: 0; color: var(--green-mid); font-size: 0.95em; line-height: 1.4; }
+.pack-col li.done::before { content: '☑'; color: var(--green); }
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 700px) {
   .hero { padding: 44px 20px 40px; }
@@ -521,6 +531,7 @@ li { margin-bottom: 4px; }
   .hut-overview-grid .travel-card:last-child { grid-column: 1 / -1; }
   .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
   .hut-header { flex-direction: column; }
+  .pack-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -580,15 +591,6 @@ li { margin-bottom: 4px; }
 </div>
 
 <!-- ─── DATES STRIP ─── -->
-<!-- ═══════════════════════════════════════════════════════════
-     URGENT BOOKING ALERT
-══════════════════════════════════════════════════════════════ -->
-<div class="urgent-box">
-  <h4>⚡ Book All Three Huts Now — July Fills Fast</h4>
-  <p>
-    It's late March and you're targeting late July — you're at the exact edge of the booking window. Alpenverein huts on this route are booked directly (no unified platform). The Obstanserseehütte is the most capacity-constrained. Email or call all three <strong>this week</strong>, then book your flights and Sexten hotel once huts are confirmed. Do not book flights first.
-  </p>
-</div>
 
 <!-- ═══════════════════════════════════════════════════════════
      HUT OVERVIEW
@@ -605,7 +607,7 @@ li { margin-bottom: 4px; }
       <div class="tc-date">Fri 24 Jul</div>
       <div class="tc-sub">US friends arrive London. 2 days together in the city.</div>
       <div class="tc-date" style="margin-top:10px;">Sun 26 Jul</div>
-      <div class="tc-sub">All fly London → Venice or Innsbruck. Drive to Sexten. Hotel overnight. Leave big bags.</div>
+      <div class="tc-sub">All fly LHR → Innsbruck (INN), arrive by 18:10. Drive 2.5h south to <strong>Sillian</strong>. Hotel overnight. Big bags stay here. Train to chairlift next morning (20 min direct).</div>
     </div>
   </div>
 
@@ -616,18 +618,18 @@ li { margin-bottom: 4px; }
       <div class="ov-night">Night 1 · Mon 27 Jul</div>
       <h3>Sillianer Hütte</h3>
       <div class="ov-elev">2,447m · Carnic Main Ridge</div>
-      <div class="ov-note">66 beds. Alpenverein-managed. Chairlift start from Sexten. Confirm booking open (management change 2026).</div>
+      <div class="ov-note"><span style="display:inline-block;background:#EBF6EF;color:#2B6E42;font-size:0.73em;font-weight:700;padding:1px 7px;border-radius:4px;margin-bottom:5px;">✓ CONFIRMED</span><br>Ref 6032294 · Mehrbettzimmer (private multi-bed) · Half-board</div>
     </div>
   </div>
 
   <!-- NIGHT 2 -->
   <div class="hut-ov-card">
-    <div class="hut-ov-photo" style="background: url('https://vcdn.bergfex.at/images/resized/profiles/detail/1dd/4b1823c0dd521dad14f0707fbf4e21dd.jpg') center / cover no-repeat, linear-gradient(150deg, #1E5A96, #78B8E0);"></div>
+    <div class="hut-ov-photo" style="background: url('https://www.alpenverein-austria.at/austria/slides/bilder/sommer2018/weblication/wThumbnails/Obstans-Galbavy-2013-1-71cd0ca38e2d74c61d5930d7ca278e50.jpg') center / cover no-repeat, linear-gradient(150deg, #1E5A96, #78B8E0);"></div>
     <div class="hut-ov-body">
       <div class="ov-night">Night 2 · Tue 28 Jul</div>
       <h3>Obstanserseehütte</h3>
       <div class="ov-elev">2,306m · Above alpine lake</div>
-      <div class="ov-note">Family-run (Bodner). Most atmospheric of the three — Dolomites + Grossglockner panoramas. Book first.</div>
+      <div class="ov-note"><span style="display:inline-block;background:#EBF6EF;color:#2B6E42;font-size:0.73em;font-weight:700;padding:1px 7px;border-radius:4px;margin-bottom:5px;">✓ CONFIRMED</span><br>Ref 6032344 · Matratzenlager (dorm) · Half-board · Hold until 16:30</div>
     </div>
   </div>
 
@@ -638,7 +640,7 @@ li { margin-bottom: 4px; }
       <div class="ov-night">Night 3 · Wed 29 Jul</div>
       <h3>Porzehütte</h3>
       <div class="ov-elev">1,942m · Above Obertilliach</div>
-      <div class="ov-note">85 beds, rebuilt 2020. Largest hut on the route. Straightforward descent to Obertilliach next morning.</div>
+      <div class="ov-note"><span style="display:inline-block;background:#EBF6EF;color:#2B6E42;font-size:0.73em;font-weight:700;padding:1px 7px;border-radius:4px;margin-bottom:5px;">✓ CONFIRMED</span><br>Ref 6032243 · Matratzenlager (dorm) · Half-board · Rebuilt 2020</div>
     </div>
   </div>
 
@@ -648,7 +650,7 @@ li { margin-bottom: 4px; }
     <div class="travel-card-body">
       <div class="tc-label">Departure</div>
       <div class="tc-date">Thu 30 Jul</div>
-      <div class="tc-sub">Descend to Obertilliach (~2h). Drive to Innsbruck (~2h).</div>
+      <div class="tc-sub">Descend to Obertilliach (~2h). Taxi to Sillian (~25 min). Pick up car + bags. Drive to Innsbruck (~2h).</div>
       <div class="tc-date" style="margin-top:10px;">Thu evening or Fri 31 Jul</div>
       <div class="tc-sub">Ella → LHR. Dina → US hub. Janek + Maya → EU or US. Optional: night in Lienz, fly Friday.</div>
     </div>
@@ -668,7 +670,7 @@ li { margin-bottom: 4px; }
       <span class="dl">Day</span>
     </div>
     <div class="day-info">
-      <h3>London → Airport → Sexten / San Candido</h3>
+      <h3>London → Innsbruck → Sillian</h3>
       <div class="day-meta">
         <span>Sunday 26 July</span>
         <span class="tag tag-blue">Travel Day</span>
@@ -676,25 +678,29 @@ li { margin-bottom: 4px; }
     </div>
   </div>
   <div class="day-body">
+    <div class="section-photo">
+      <img src="https://www.dolomitemountains.com/res/photo/gallery/900x900/10790_1.jpg" alt="Alpine scenery, travel day" loading="lazy" style="object-position: center 30%;">
+    </div>
     <div class="route-strip">
-      <span class="rname">London (LHR/LGW/STN)</span>
+      <span class="rname">London (LHR)</span>
       <span class="arrow">✈</span>
-      <span class="rname">Venice VCE or Innsbruck INN</span>
+      <span class="rname">Innsbruck (INN)</span>
+      <span class="rdetail">arrive by 18:10</span>
       <span class="arrow">🚗</span>
-      <span class="rname">Sexten / San Candido</span>
-      <span class="rdetail">(~1.5–2h drive · hotel overnight)</span>
+      <span class="rname">Sillian</span>
+      <span class="rdetail">(~2.5h drive south · hotel overnight)</span>
     </div>
     <ul class="highlights">
-      <li>Ella arrives from London. US friends (Dina, Janek, Maya) have been in London since Friday the 24th — all depart together on Sunday the 26th</li>
-      <li>If flying to <strong>Venice (VCE or Treviso TSF)</strong>: drive ~1.5–2h northeast via A27 motorway + SS51 road. Pass through Cortina d'Ampezzo for a look and a coffee before continuing the last 30min to Sexten/San Candido</li>
-      <li>If flying to <strong>Innsbruck (INN)</strong>: drive ~2h south via Brenner Pass (A13) and through the Inn/Puster valleys. Scenic road; slightly longer but worth it if flight prices are better</li>
-      <li>Arrive Sexten late afternoon or early evening. Leave all large bags at the hotel — hikers carry day packs only on the trail. Organise this tonight</li>
-      <li>Pack hiking bags tonight: everything not carried on trail stays in the hotel. The hotel holds your bags and you return on Day 4 to collect or arrange transfer</li>
-      <li>Gear check: poles, layers, rain gear, headlamp (non-negotiable for Day 3 tunnels), hiking boots broken in. See gear list below</li>
-      <li>Early dinner and early night — Day 1 starts with the chairlift and a proper climb</li>
+      <li>Ella arrives from London. US friends (Dina, Janek, Maya) have been in London since Friday the 24th — all depart together on Sunday the 26th, target landing Innsbruck by 18:10</li>
+      <li>Drive ~2.5h south from INN via Brenner Pass (A13) through the Inn and Puster valleys into East Tyrol — scenic, straightforward, signs for Lienz then Sillian</li>
+      <li>Arrive Sillian late evening. Hotel is your base for the whole trip — car parks here. Leave all large bags at the hotel (confirm luggage storage when booking)</li>
+      <li>Pack hiking bags tonight: 30L day packs only on the trail. Everything not carried stays locked in the hotel. The hotel holds your bags for all 4 days while you hike</li>
+      <li>Tomorrow morning: 20-minute direct train from Sillian to Sexten, then straight to the chairlift. No car needed on Day 1</li>
+      <li>Gear check: poles, layers, rain gear, headlamp (non-negotiable for Day 3 tunnels), hiking boots broken in. See packing list below</li>
+      <li>Early dinner and early night — Day 1 starts with the train + chairlift and a proper ridge climb</li>
     </ul>
-    <div class="warn-box">
-      <strong>Luggage logistics — sort this tonight.</strong> Your hotel in Sexten stores your big bags while you hike. Confirm this when you book. You arrive at Porzehütte after Day 3, descend to Obertilliach on Day 4, and either someone drives the car back (if car-free hike) or you arrange a taxi back to Sexten to collect bags and car. Plan this loop before the trip — the transfer logistics from Obertilliach back to Sexten take about 45 minutes.
+    <div class="tip-inline">
+      <strong>Car logistics — simple.</strong> Rent from Innsbruck Airport, drive to Sillian, park at the hotel for 4 days. On Day 4: taxi from Obertilliach back to Sillian (~25 min, ~€30–40), collect car and bags, drive back to INN to drop off. No one needs to shuttle or leave early.
     </div>
   </div>
 </div>
@@ -709,8 +715,8 @@ li { margin-bottom: 4px; }
       <span class="dl">Mon</span>
     </div>
     <div class="day-info">
-      <h3>Sexten → Sillianer Hütte</h3>
-    <div class="day-meta">
+      <h3>Sillian → Sexten → Sillianer Hütte</h3>
+      <div class="day-meta">
         <span>Monday 27 July</span>
         <span>📏 ~7.8 km</span>
         <span>↑ ~480m from chairlift</span>
@@ -720,12 +726,15 @@ li { margin-bottom: 4px; }
       </div>
     </div>
   </div>
-   <div class="day-body">
+  <div class="day-body">
     <div class="section-photo">
-      <img src="https://www.dolomitemountains.com/res/photo/gallery/900x900/10790_1.jpg" alt="Obertilliach valley" loading="lazy" object-position: center 30%;">
+      <img src="https://www.dolomitemountains.com/res/photo/gallery/900x900/10790_1.jpg" alt="Sexten Dolomites, Day 1 start" loading="lazy" style="object-position: center 60%;">
     </div>
-      <div class="route-strip">
-      <span class="rname">Sexten village</span>
+    <div class="route-strip">
+      <span class="rname">Sillian</span>
+      <span class="arrow">🚂</span>
+      <span class="rname">Sexten</span>
+      <span class="rdetail">(20 min direct train)</span>
       <span class="arrow">→</span>
       <span class="rname">Helmjet chairlift</span>
       <span class="rdetail">(~1,968m top)</span>
@@ -752,20 +761,20 @@ li { margin-bottom: 4px; }
           <h4>Night 1 — Sillianer Hütte</h4>
           <p>2,447m · Carnic Main Ridge · Sillian, Osttirol, Austria</p>
         </div>
-        <a href="https://www.alpenverein.at/sillianerhuette/" target="_blank" class="btn-book">Book / Check</a>
+        <span style="background:#EBF6EF;color:#2B6E42;font-size:0.82em;font-weight:700;padding:7px 14px;border-radius:7px;flex-shrink:0;">✓ Booked · Ref 6032294</span>
       </div>
       <div class="hut-details">
         <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,447 m</span></div>
-        <div class="hd"><span class="hdl">Capacity</span><span class="hdv">66 beds (28 + 38 dorm)</span></div>
-        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 53 23 802</span></div>
-        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:sillian@sektion.alpenverein.at">sillian@<br>sektion.alpenverein.at</a></span></div>
-        <div class="hd"><span class="hdl">Website</span><span class="hdv"><a href="https://www.alpenverein.at/sillianerhuette/" target="_blank">alpenverein.at</a></span></div>
-        <div class="hd"><span class="hdl">Booking</span><span class="hdv">Alpenverein online or direct contact</span></div>
-        <div class="hd"><span class="hdl">Open 2026</span><span class="hdv">Early June – early October</span></div>
+        <div class="hd"><span class="hdl">Room type</span><span class="hdv">Mehrbettzimmer (private multi-bed room)</span></div>
+        <div class="hd"><span class="hdl">Guests</span><span class="hdv">4 beds reserved · 27–28 Jul</span></div>
+        <div class="hd"><span class="hdl">Board</span><span class="hdv">Half-board included (dinner + breakfast)</span></div>
+        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Marco Rager</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+49 151 542 655 41</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:marco.rager@sillianer-huette.at">marco.rager@<br>sillianer-huette.at</a></span></div>
       </div>
-      <div class="price-pill">Half-board available · typical ~€50–65/person</div>
+      <div class="price-pill">Half-board confirmed · typical ~€55–70/person</div>
       <p class="hut-note">
-        Westernmost hut on the Carnic Main Ridge. Note: the hut is undergoing a management change for 2026 — contact the Alpenverein section directly to confirm the booking system is active. Don't assume the website is current. Phone call recommended.
+        Westernmost hut on the Carnic Main Ridge. Mehrbettzimmer = private multi-bed room for the group, not open dorm.
       </p>
     </div>
   </div>
@@ -792,12 +801,11 @@ li { margin-bottom: 4px; }
       </div>
     </div>
   </div>
-   <div class="day-body">
+  <div class="day-body">
     <div class="section-photo">
-      <img src="https://www.alltrails.com/mugen/image/location-app-router?url=https%3A%2F%2Fimages.alltrails.com%2FeyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMTE5MzkxMjI3L2E0ZTA3Mjg1MzgxNDMwOWMxYmMyNjM4NDc0ZDFmNGMxLmpwZyIsImVkaXRzIjp7InRvRm9ybWF0Ijoid2VicCIsInJlc2l6ZSI6eyJ3aWR0aCI6IjEwODAiLCJoZWlnaHQiOiI3MDAiLCJmaXQiOiJjb3ZlciJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ%3D%3D&w=3840&q=90" alt="Obertilliach valley" loading="lazy" style="object-fit: cover; object-position: center 68%;"
->
-  </div>
-     <div class="route-strip">
+      <img src="https://www.alltrails.com/mugen/image/location-app-router?url=https%3A%2F%2Fimages.alltrails.com%2FeyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMTE5MzkxMjI3L2E0ZTA3Mjg1MzgxNDMwOWMxYmMyNjM4NDc0ZDFmNGMxLmpwZyIsImVkaXRzIjp7InRvRm9ybWF0Ijoid2VicCIsInJlc2l6ZSI6eyJ3aWR0aCI6IjEwODAiLCJoZWlnaHQiOiI3MDAiLCJmaXQiOiJjb3ZlciJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ%3D%3D&w=3840&q=90" alt="Carnic Ridge trail, Day 2" loading="lazy" style="object-fit: cover; object-position: center 68%;">
+    </div>
+    <div class="route-strip">
       <span class="rname">Sillianer Hütte (2,447m)</span>
       <span class="arrow">→</span>
       <span class="rname">Eisenreich (2,665m)</span>
@@ -817,27 +825,25 @@ li { margin-bottom: 4px; }
     </div>
 
     <div class="hut-box">
-      <div class="hut-photo-strip">
-
-      </div>
       <div class="hut-header">
         <div class="hut-title">
           <h4>Night 2 — Obstanserseehütte</h4>
           <p>2,306m · Above the Obstansersee · Kartitsch, Osttirol, Austria</p>
         </div>
-        <a href="https://obstans.jimdofree.com/" target="_blank" class="btn-book">Book Direct</a>
+        <span style="background:#EBF6EF;color:#2B6E42;font-size:0.82em;font-weight:700;padding:7px 14px;border-radius:7px;flex-shrink:0;">✓ Booked · Ref 6032344</span>
       </div>
       <div class="hut-details">
         <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,306 m</span></div>
-        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 161 87 23</span></div>
-        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:info@bodner.tirol">info@bodner.tirol</a></span></div>
-        <div class="hd"><span class="hdl">Website</span><span class="hdv"><a href="https://obstans.jimdofree.com/" target="_blank">obstans.jimdofree.com</a></span></div>
-        <div class="hd"><span class="hdl">Hut keeper</span><span class="hdv">Bodner Heinz family</span></div>
-        <div class="hd"><span class="hdl">Open 2026</span><span class="hdv">Late June – end September</span></div>
+        <div class="hd"><span class="hdl">Room type</span><span class="hdv">Matratzenlager (dorm)</span></div>
+        <div class="hd"><span class="hdl">Guests</span><span class="hdv">4 beds reserved · 28–29 Jul</span></div>
+        <div class="hd"><span class="hdl">Board</span><span class="hdv">Half-board included (dinner + breakfast)</span></div>
+        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Bodner Heinz</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 932 978 99</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:obstans.reservierung@gmail.com">obstans.reservierung@gmail.com</a></span></div>
       </div>
-      <div class="price-pill">Half-board typical · email to confirm rates</div>
+      <div class="price-pill">Half-board confirmed · typical ~€50–65/person</div>
       <p class="hut-note">
-        Family-run, not managed by Alpenverein — contact the Bodner family directly. This is the most atmosphere-rich hut on the route: smaller, personal, and positioned with the best views. Book this one first.
+        Family-run. Most atmospheric hut on the route — Dolomites + Grossglockner panoramas from the terrace. <strong>Hold until 16:30</strong> — if running late, call +43 664 932 978 99 to confirm arrival.
       </p>
     </div>
   </div>
@@ -864,11 +870,11 @@ li { margin-bottom: 4px; }
       </div>
     </div>
   </div>
-   <div class="day-body">
+  <div class="day-body">
     <div class="section-photo">
-      <img src="https://img0.oastatic.com/img2/40176476/max/variant.jpg" loading="lazy"object-position: center 30%;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Kleine_und_Gro%C3%9Fe_Kinigat_Karnischer_Hauptkamm_20070706.jpg" alt="Karnischer Hauptkamm ridge, Day 3" loading="lazy" style="object-position: center 40%;">
     </div>
-     <div class="route-strip">
+    <div class="route-strip">
       <span class="rname">Obstanserseehütte (2,306m)</span>
       <span class="arrow">→</span>
       <span class="rname">Hollbrucker Spitze</span>
@@ -898,20 +904,20 @@ li { margin-bottom: 4px; }
           <h4 class="st">Night 3 — Porzehütte</h4>
           <p>1,942m · Above Obertilliach · Osttirol, Austria</p>
         </div>
-        <a href="https://www.alpenverein.at/porzehuette/" target="_blank" class="btn-book sb">Book / Check</a>
+        <span style="background:#FBF0E8;color:#B85828;font-size:0.82em;font-weight:700;padding:7px 14px;border-radius:7px;flex-shrink:0;">✓ Booked · Ref 6032243</span>
       </div>
       <div class="hut-details">
         <div class="hd"><span class="hdl">Elevation</span><span class="hdv">1,942 m</span></div>
-        <div class="hd"><span class="hdl">Capacity</span><span class="hdv">85 beds (11 dorm rooms)</span></div>
+        <div class="hd"><span class="hdl">Room type</span><span class="hdv">Matratzenlager (dorm)</span></div>
+        <div class="hd"><span class="hdl">Guests</span><span class="hdv">4 beds reserved · 29–30 Jul</span></div>
+        <div class="hd"><span class="hdl">Board</span><span class="hdv">Half-board included (dinner + breakfast)</span></div>
+        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Bernd Fürhapter</span></div>
         <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 325 6452</span></div>
         <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:info@porzehuette.at">info@porzehuette.at</a></span></div>
-        <div class="hd"><span class="hdl">Website</span><span class="hdv"><a href="https://www.alpenverein.at/porzehuette/" target="_blank">alpenverein.at</a></span></div>
-        <div class="hd"><span class="hdl">Built</span><span class="hdv">Rebuilt 2020 — newest on the route</span></div>
-        <div class="hd"><span class="hdl">Booking</span><span class="hdv">Alpenverein online or direct</span></div>
       </div>
-      <div class="price-pill sp">Largest hut · most likely to have space · book at least 2 weeks ahead</div>
+      <div class="price-pill sp">Half-board confirmed · typical ~€50–65/person</div>
       <p class="hut-note">
-        Largest capacity of the three. Modern facilities post-rebuild. Straightforward descent to Obertilliach from here (2–2.5h, well-marked). Porzehütte is the finish-line hut — dinner here tends to feel celebratory.
+        Largest of the three huts, rebuilt 2020. Modern facilities. Straightforward descent to Obertilliach next morning (2–2.5h, well-marked). The finish-line hut — dinner here will feel like a celebration.
       </p>
     </div>
   </div>
@@ -959,8 +965,8 @@ li { margin-bottom: 4px; }
       <li><strong>US friends (Dina, Janek, Maya)</strong>: Innsbruck is well-connected for transatlantic. Icelandair flies via Reykjavik to US cities. Austrian/Lufthansa connect through Vienna/Munich. Chicago (ORD), Washington (IAD), and New York (JFK) are all reachable with one stop. Alternatively: drive 3h to Venice for more direct transatlantic options (Delta JFK direct from VCE)</li>
       <li>If evening flights don't work or you want a rest night: <strong>Lienz</strong> is 30 minutes from Obertilliach, a proper Austrian town with hotels, restaurants, and train connections. Fly Friday instead. No stress</li>
     </ul>
-    <div class="note-box">
-      <strong>Bag logistics on Day 4.</strong> If you rented a car from Innsbruck, it's parked either at your Sexten hotel or a nearby parking area. After descending to Obertilliach, you'll need to get back to the car. Options: (1) taxi from Obertilliach to Sexten (~45 min, ~€60–80), (2) leave a driver at Sexten on Day 0 who collects the group on Day 4, (3) arrange a local shuttle. The Osttirol Taxi + local accommodation can help organise this in advance — ask your Sexten hotel.
+    <div class="tip-inline">
+      <strong>Bag logistics on Day 4 — already solved.</strong> Car is parked at the Sillian hotel. After descending to Obertilliach, take a taxi to Sillian (~25 min, ~€30–40). Collect bags and car from the hotel, then drive ~2h back to Innsbruck Airport to drop the rental. Book the taxi in advance — ask your Sillian hotel when you check in.
     </div>
     <div class="tip-inline">
       <strong>Fly Friday if in doubt.</strong> Thursday evening flights are achievable but tight — a late descent or a slow day puts pressure on the drive. If US friends have long-haul connections, a Thursday night in Lienz and a Friday morning flight removes all timing risk and Venice becomes an option for those with direct transatlantic needs.
@@ -973,72 +979,25 @@ li { margin-bottom: 4px; }
 ══════════════════════════════════════════════════════════════ -->
 <h2>Getting There — Flights &amp; Car</h2>
 
-<p>This route sits between two good airports. Venice is cheaper; Innsbruck is more convenient. Either works. If car-rental simplicity matters more than flight price, Innsbruck wins. If the group is price-sensitive (budget airlines, Ryanair, Treviso), go Venice.</p>
-
-<h3 style="margin-top: 20px; margin-bottom: 10px;">Flight Options — London → Airport (Sunday 26 July)</h3>
-
-<div class="flight-table-wrap"><table class="flight-table">
-  <thead>
-    <tr>
-      <th>Airport</th>
-      <th>Flight Time</th>
-      <th>Drive to Sexten</th>
-      <th>Typical July Price</th>
-      <th>Carriers</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="best-row">
-      <td>Venice VCE / Treviso TSF <span class="recommend-badge">Cheapest</span></td>
-      <td>~2h 20min</td>
-      <td>~1.5–2h via A27 + Cortina</td>
-      <td>From ~£25–70 one-way</td>
-      <td>Ryanair (TSF), easyJet, BA (VCE)</td>
-    </tr>
-    <tr>
-      <td>Innsbruck INN</td>
-      <td>~2h</td>
-      <td>~2h via Brenner Pass (A13)</td>
-      <td>From ~£80–130 one-way</td>
-      <td>Lufthansa, easyJet, Austrian Air</td>
-    </tr>
-    <tr>
-      <td>Salzburg SZG</td>
-      <td>~2h 25min</td>
-      <td>~3h — not recommended</td>
-      <td>From ~£70–110 one-way</td>
-      <td>Lufthansa, easyJet</td>
-    </tr>
-  </tbody>
-</table></div>
+<p>Flying into <strong>Innsbruck (INN)</strong> — target arrival by 18:10 on Sunday 26 July. Direct flights from LHR on Lufthansa, easyJet, and Austrian. ~2h flight. Drive from INN to Sillian is 2.5h south via Brenner Pass (A13). Search and book flights directly — July fills up.</p>
 
 <div class="note-box">
-  <strong>The drive from Venice via Cortina d'Ampezzo is genuinely beautiful</strong> — it adds 30 minutes vs the direct route but you pass through the heart of the Dolomites. Worth doing on Day 0 if you arrive in good time.
+  <strong>Return: Thu 30 Jul evening or Fri 31 Jul.</strong> Ella: INN → LHR (Lufthansa via Munich, Austrian via Vienna, or direct). US friends: INN → hub (Icelandair via Reykjavik, Lufthansa via Munich) or drive to Venice for Delta direct to JFK.
 </div>
 
-<h3 style="margin-top: 24px; margin-bottom: 12px;">Car Rental — Recommended Approach</h3>
+<h3 style="margin-top: 24px; margin-bottom: 12px;">Car Rental — Innsbruck Airport</h3>
 
-<div class="cost-grid">
+<div class="cost-grid" style="grid-template-columns: 1fr;">
   <div class="cost-card">
-    <h4>Option A — Rent Innsbruck (Recommended)</h4>
+    <h4>Innsbruck Roundtrip · Sun 26 Jul → Thu 30 Jul</h4>
     <ul>
       <li><span>Pick up</span><span class="cv">INN Airport, Sun Jul 26</span></li>
-      <li><span>Drive to Sexten</span><span class="cv">~90km, 2h south</span></li>
+      <li><span>Drive to Sillian</span><span class="cv">~115km, 2.5h south via Brenner (A13)</span></li>
+      <li><span>Park at Sillian hotel</span><span class="cv">4 days while hiking</span></li>
+      <li><span>Day 4: taxi Obertilliach → Sillian</span><span class="cv">~25 min · ~€30–40</span></li>
       <li><span>Drop off</span><span class="cv">INN Airport, Thu Jul 30</span></li>
-      <li><span>One-way fee</span><span class="cv">None (same location)</span></li>
-      <li><span>Vignette</span><span class="cv">Pre-installed or buy at pickup</span></li>
-      <li class="total-row"><span>Estimated cost</span><span class="cv">~€160–250 all-in</span></li>
-    </ul>
-  </div>
-  <div class="cost-card">
-    <h4>Option B — Rent Venice, Drop Innsbruck</h4>
-    <ul>
-      <li><span>Pick up</span><span class="cv">VCE Airport, Sun Jul 26</span></li>
-      <li><span>Drive to Sexten</span><span class="cv">~110km, 1.5–2h</span></li>
-      <li><span>Drop off</span><span class="cv">INN Airport, Thu Jul 30</span></li>
-      <li><span>One-way fee</span><span class="cv">+€50–120 (Italy→Austria)</span></li>
-      <li><span>Vignette</span><span class="cv">Buy at Austrian border/gas station</span></li>
-      <li class="total-row"><span>Estimated cost</span><span class="cv">~€250–370 all-in</span></li>
+      <li><span>Vignette</span><span class="cv">Confirm with rental co. — may be pre-installed</span></li>
+      <li class="total-row"><span>Estimated rental cost</span><span class="cv">~€160–250 all-in (÷4 = ~€40–65/person)</span></li>
     </ul>
   </div>
 </div>
@@ -1047,36 +1006,8 @@ li { margin-bottom: 4px; }
   <strong>Austrian highway vignette — required.</strong> Every car driving on Austrian motorways (Autobahn) needs a vignette sticker. Cost: €9.40 for 10 days or €27.40 for 2 months. If renting in Innsbruck it may be included — confirm with the rental company. If renting in Venice and driving into Austria, buy it immediately at the first petrol station after the border. Not having one = €120 fine.
 </div>
 
-<h3 style="margin-top: 24px; margin-bottom: 12px;">Return Flights — Innsbruck (Thu 30 Jul or Fri 31 Jul)</h3>
-
-<div class="person-grid">
-  <div class="person-card">
-    <div class="pname">Ella</div>
-    <div class="pfrom">London-based · returning to LHR</div>
-    <ul>
-      <li>Innsbruck → LHR direct (rare) or via Munich/Vienna (45min hop, then LHR)</li>
-      <li>Lufthansa Munich connection: very reliable, multiple daily</li>
-      <li>Austrian Airlines via Vienna also good</li>
-      <li>Thursday evening or Friday morning equally fine</li>
-    </ul>
-    <span class="price-badge">~£80–150 return leg</span>
-  </div>
-  <div class="person-card">
-    <div class="pname">Dina, Janek, Maya</div>
-    <div class="pfrom">US-based · Dina: US passport · Janek + Maya: EU passports</div>
-    <ul>
-      <li>Innsbruck → Munich → ORD/IAD/JFK (Lufthansa + United)</li>
-      <li>Innsbruck → Reykjavik → US (Icelandair — good value)</li>
-      <li>Or: drive 3h to Venice → Delta JFK direct (cleanest transatlantic)</li>
-      <li>Or: return to London, catch transatlantic from LHR (most options)</li>
-      <li>Janek + Maya (EU passports): no ETIAS, no extra Schengen steps</li>
-    </ul>
-    <span class="price-badge">~$450–700 for transatlantic leg</span>
-  </div>
-</div>
-
 <div class="tip-inline">
-  <strong>ETIAS — Ella and Dina (US passports).</strong> Both will need ETIAS (EU Schengen travel authorisation) before the trip. Expected to be fully live for US passport holders in 2026 — quick online application, ~€7 fee, valid 3 years. Apply a month before departure. Austria is Schengen. <strong>Janek and Maya (EU passports) do not need ETIAS.</strong>
+  <strong>ETIAS — Ella and Dina (US passports).</strong> Both will need ETIAS (EU Schengen travel authorisation) before the trip. Quick online application, ~€7 fee, valid 3 years. Apply 1 month before departure. <strong>Janek and Maya (EU passports) do not need ETIAS.</strong>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -1084,20 +1015,20 @@ li { margin-bottom: 4px; }
 ══════════════════════════════════════════════════════════════ -->
 <h2>Hotels &amp; Luggage Storage</h2>
 
-<p>You need two hotel nights: one before the hike (Sexten, Sunday Jul 26) and optionally one after (Obertilliach/Lienz, Thursday Jul 30 if flying Friday). The Sexten pre-hike hotel is the critical one — it holds your bags for the entire 4-day hike.</p>
+<p>One hotel night before the hike (Sillian, Sunday Jul 26) and optionally one after (Obertilliach/Lienz, Thursday Jul 30 if flying Friday). Sillian is your base — car parks here, bags stay here for all 4 days while you hike. 20-min direct train to Sexten chairlift start next morning.</p>
 
-<div class="warn-box">
-  <strong>Luggage storage is the most important logistical question.</strong> You cannot carry large bags on T3 ridge terrain. Every person packs a day pack (~30L max) for the hike. Everything else stays at your Sexten pre-hike hotel. When you book the hotel, confirm explicitly: "We are hiking for 4 days — can you store 4 large bags while we are away?" Most hotels in Sexten/San Candido say yes. Confirm it in writing.
+<div class="tip-inline">
+  <strong>Luggage storage — confirm on booking.</strong> "We're hiking for 4 days — can you store 4 large bags?" Most hotels in Sillian do this without issue. Confirm in writing when booking. Day packs only on the trail (~30L max).
 </div>
 
 <div class="cost-grid">
   <div class="cost-card">
-    <h4>Pre-hike: Sexten / San Candido (Sun Jul 26)</h4>
+    <h4>Pre-hike: Sillian (Sun Jul 26)</h4>
     <ul>
-      <li><span>Sexten village</span><span class="cv">closest to chairlift</span></li>
-      <li><span>San Candido (Innichen)</span><span class="cv">15km, more services</span></li>
+      <li><span>Location</span><span class="cv">20 min direct train to Sexten chairlift</span></li>
+      <li><span>Car parks here</span><span class="cv">4 days while you hike</span></li>
       <li><span>Luggage storage</span><span class="cv">confirm on booking</span></li>
-      <li><span>Book timing</span><span class="cv">Book April 2026 — July peak</span></li>
+      <li><span>Book timing</span><span class="cv">Book now — July peak</span></li>
       <li class="total-row"><span>Typical July price</span><span class="cv">~€90–160/night (2 rooms)</span></li>
     </ul>
   </div>
@@ -1115,9 +1046,8 @@ li { margin-bottom: 4px; }
 
 <h3 style="margin-top: 20px;">Suggested Booking Sites</h3>
 <ul>
-  <li><a href="https://www.booking.com" target="_blank">Booking.com</a> — search "Sesto" or "San Candido" for pre-hike, "Obertilliach" or "Lienz" for post-hike</li>
-  <li><a href="https://www.sesto.it/en/accommodation-in-the-sesto-dolomites/" target="_blank">sesto.it official tourism portal</a> — direct booking options, local knowledge</li>
-  <li><a href="https://www.osttirol.com/en/hotel-obertilliach/" target="_blank">osttirol.com</a> — Obertilliach area accommodation</li>
+  <li><a href="https://www.booking.com" target="_blank">Booking.com</a> — search "Sillian" for pre-hike hotel, "Obertilliach" or "Lienz" for post-hike</li>
+  <li><a href="https://www.osttirol.com/en/hotel-obertilliach/" target="_blank">osttirol.com</a> — Obertilliach + Sillian area accommodation</li>
 </ul>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -1128,10 +1058,10 @@ li { margin-bottom: 4px; }
 <div class="weather-grid">
   <div class="wx-card">
     <h4>At Ridge Altitude (2,000–2,600m)</h4>
-    <div class="temp-main">10–18°C</div>
+    <div class="temp-main">50–64°F</div>
     <div class="temp-sub">Daytime highs · warmest weeks</div>
     <ul style="margin-top: 10px; font-size: 0.87em;">
-      <li>Nights at huts: 4–10°C — layers essential</li>
+      <li>Nights at huts: 39–50°F — layers essential</li>
       <li>Afternoon thunderstorms build fast, especially Days 2 and 3</li>
       <li>Ridge exposed: rain gear always in pack, not in hotel bag</li>
       <li>Snowpatches possible in shaded gullies until mid-July</li>
@@ -1157,107 +1087,129 @@ li { margin-bottom: 4px; }
 
 <div class="cost-grid">
   <div class="cost-card">
-    <h4>Flights (per person)</h4>
+    <h4>Pre-hike Hotel · Sillian (Sun 26 Jul)</h4>
     <ul>
-      <li><span>LHR → Venice (one-way)</span><span class="cv">£30–70</span></li>
-      <li><span>Return leg (Innsbruck → LHR)</span><span class="cv">£80–150</span></li>
-      <li><span>Or: LHR → Innsbruck both ways</span><span class="cv">£200–350 return</span></li>
-      <li class="total-row"><span>Flight total estimate</span><span class="cv">~£150–300</span></li>
+      <li><span>1 night, 2 rooms shared</span><span class="cv">~€90–160 total</span></li>
+      <li class="total-row"><span>Per person</span><span class="cv">~€45–80</span></li>
     </ul>
   </div>
   <div class="cost-card">
-    <h4>Car Rental (shared ÷ 4)</h4>
+    <h4>Car Rental · INN Roundtrip (÷4)</h4>
     <ul>
-      <li><span>Innsbruck rental, 4 days</span><span class="cv">€160–250 total</span></li>
-      <li><span>Fuel + toll</span><span class="cv">€40–60</span></li>
+      <li><span>INN rental, 4 days</span><span class="cv">~€160–250 total</span></li>
+      <li><span>Fuel (INN → Sillian + return)</span><span class="cv">~€40–55</span></li>
       <li><span>Vignette (10-day)</span><span class="cv">€9.40</span></li>
       <li class="total-row"><span>Per person share</span><span class="cv">~€55–80</span></li>
     </ul>
   </div>
   <div class="cost-card">
-    <h4>Hotels (2 nights, shared room)</h4>
+    <h4>Night 1 · Sillianer Hütte (Ref 6032294)</h4>
     <ul>
-      <li><span>Pre-hike Sexten (Sun)</span><span class="cv">€45–80/person</span></li>
-      <li><span>Post-hike Lienz if needed (Thu)</span><span class="cv">€40–75/person</span></li>
-      <li class="total-row"><span>Hotel total estimate</span><span class="cv">~€85–155</span></li>
+      <li><span>Mehrbettzimmer · 4 beds</span><span class="cv">27–28 Jul</span></li>
+      <li><span>Half-board (dinner + breakfast)</span><span class="cv">included</span></li>
+      <li class="total-row"><span>Estimated per person</span><span class="cv">~€55–70</span></li>
     </ul>
   </div>
   <div class="cost-card">
-    <h4>Huts (3 nights half-board)</h4>
+    <h4>Night 2 · Obstanserseehütte (Ref 6032344)</h4>
     <ul>
-      <li><span>Typical hut rate (bed + dinner + breakfast)</span><span class="cv">~€50–70/night</span></li>
-      <li><span>3 nights × 4 people</span><span class="cv">~€150–210 each</span></li>
-      <li class="total-row"><span>Hut total estimate</span><span class="cv">~€150–210</span></li>
+      <li><span>Matratzenlager · 4 beds</span><span class="cv">28–29 Jul</span></li>
+      <li><span>Half-board (dinner + breakfast)</span><span class="cv">included</span></li>
+      <li class="total-row"><span>Estimated per person</span><span class="cv">~€50–65</span></li>
     </ul>
   </div>
   <div class="cost-card">
-    <h4>Extras</h4>
+    <h4>Night 3 · Porzehütte (Ref 6032243)</h4>
     <ul>
-      <li><span>Helmjet chairlift (Sexten, one-way)</span><span class="cv">~€20–25</span></li>
-      <li><span>Transfer Obertilliach → Sexten (taxi, ÷4)</span><span class="cv">~€15–20/person</span></li>
-      <li><span>Meals in Sexten/Cortina/Lienz</span><span class="cv">~€80–120</span></li>
+      <li><span>Matratzenlager · 4 beds</span><span class="cv">29–30 Jul</span></li>
+      <li><span>Half-board (dinner + breakfast)</span><span class="cv">included</span></li>
+      <li class="total-row"><span>Estimated per person</span><span class="cv">~€50–65</span></li>
+    </ul>
+  </div>
+  <div class="cost-card">
+    <h4>Transport + Extras</h4>
+    <ul>
+      <li><span>Train Sillian → Sexten (Day 1)</span><span class="cv">~€5–8</span></li>
+      <li><span>Helmjet chairlift (one-way, Day 1)</span><span class="cv">~€20–25</span></li>
+      <li><span>Taxi Obertilliach → Sillian (÷4, Day 4)</span><span class="cv">~€8–10/person</span></li>
+      <li><span>Meals in Sillian + Lienz</span><span class="cv">~€60–100</span></li>
       <li><span>ETIAS (Ella + Dina, US passports)</span><span class="cv">€7 each</span></li>
-      <li class="total-row"><span>Extras estimate</span><span class="cv">~€120–165</span></li>
+      <li class="total-row"><span>Extras estimate</span><span class="cv">~€95–145</span></li>
     </ul>
   </div>
 </div>
 
 <div class="trip-total-card">
-  <h3>Trip Total — per person estimate</h3>
-  <div class="tt-row"><span>✈ Flights (both directions)</span><span class="tt-val">£150–300</span></div>
-  <div class="tt-row"><span>🚗 Car rental share (÷4, Innsbruck roundtrip)</span><span class="tt-val">£50–70</span></div>
-  <div class="tt-row"><span>🏨 Hotels (1–2 nights: Sexten + optional Lienz)</span><span class="tt-val">£75–130</span></div>
-  <div class="tt-row"><span>🏕 Huts (3 nights half-board)</span><span class="tt-val">£115–180</span></div>
-  <div class="tt-row"><span>🚡 Chairlift + taxi transfer + meals</span><span class="tt-val">£100–140</span></div>
-  <div class="tt-row total"><span>All-in estimate</span><span class="tt-val">~£490–820 per person</span></div>
-  <p style="font-size:0.8em; color: var(--muted); margin-top: 10px; margin-bottom: 0;">Budget end (~£490): Ryanair/Treviso, shared rooms, pack lunches. Comfortable end (~£820): BA flights, private rooms, full half-board.</p>
+  <h3>Trip Total — per person estimate (excl. flights)</h3>
+  <div class="tt-row"><span>🏨 Pre-hike hotel · Sillian (1 night)</span><span class="tt-val">€45–80</span></div>
+  <div class="tt-row"><span>🚗 Car rental share (÷4, INN roundtrip)</span><span class="tt-val">€55–80</span></div>
+  <div class="tt-row"><span>🏕 Huts · 3 nights half-board (confirmed)</span><span class="tt-val">€155–200</span></div>
+  <div class="tt-row"><span>🚂🚡🚕 Train + chairlift + taxi + meals</span><span class="tt-val">€95–145</span></div>
+  <div class="tt-row total"><span>All-in estimate (excl. flights)</span><span class="tt-val">~€350–505 per person</span></div>
+  <p style="font-size:0.8em; color: var(--muted); margin-top: 10px; margin-bottom: 0;">Flights additional — search LHR → INN return, target arrive 26 Jul by 18:10, depart 30–31 Jul. Budget end: shared rooms, pack lunches. Comfortable end: private rooms, restaurant meals in Sillian.</p>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
      GEAR
 ══════════════════════════════════════════════════════════════ -->
-<h2>Gear</h2>
+<h2>Packing List</h2>
 
-<p>T3 grade requires proper kit. This is a ridge trail with some fixed cables — not technical, but unforgiving in bad gear. No trail runners on this route.</p>
+<p>T3 grade — stiff boots and poles are non-negotiable. No trail runners on this route. Day packs only (~30L): everything else stays at the Sillian hotel.</p>
 
-<div class="gear-grid">
-  <div class="gear-col">
-    <h4>Footwear + Poles</h4>
+<div class="pack-grid">
+  <div class="pack-col">
+    <h4>Boots &amp; Poles</h4>
     <ul>
-      <li>Stiff hiking boots, ankle support — non-negotiable</li>
-      <li>Broken in before the trip (not fresh out of box)</li>
-      <li>Trekking poles — carry both hands for cable sections</li>
-      <li>Gaiters optional but useful in wet conditions</li>
+      <li>Stiff hiking boots, ankle support</li>
+      <li>Broken in before the trip</li>
+      <li>Trekking poles (both hands for cable sections)</li>
+      <li>Gaiters (optional, useful if wet)</li>
+      <li>Spare laces</li>
     </ul>
   </div>
-  <div class="gear-col">
+  <div class="pack-col">
     <h4>Clothing</h4>
     <ul>
-      <li>Merino base layer (dries fast in huts)</li>
-      <li>Fleece or light down (cold at night, 2,300m+)</li>
-      <li>Waterproof shell — not just a windshell</li>
-      <li>Hiking trousers (not shorts for ridge sections)</li>
-      <li>Warm hat + gloves (July nights at altitude)</li>
+      <li>Merino base layer × 2</li>
+      <li>Fleece or light down jacket</li>
+      <li>Waterproof shell (not just windshell)</li>
+      <li>Hiking trousers × 2</li>
+      <li>Warm hat + gloves</li>
+      <li>Hut slippers / camp shoes</li>
+      <li>Merino socks × 3</li>
     </ul>
   </div>
-  <div class="gear-col">
-    <h4>Pack Contents (daily)</h4>
+  <div class="pack-col">
+    <h4>Day Pack</h4>
     <ul>
-      <li>2L water + filter/purification tabs</li>
-      <li>Packed lunch (order from hut evening before)</li>
-      <li>Headlamp + spare batteries (WWI tunnels)</li>
-      <li>First aid kit: blister pads, Compeed, pain relief</li>
-      <li>Sun protection: cream + lip balm (ridge = full exposure)</li>
-      <li>Emergency space blanket — weighs nothing</li>
+      <li>2L water + purification tabs</li>
+      <li>Packed lunch (order night before)</li>
+      <li>Headlamp + spare batteries</li>
+      <li>Sun cream + lip balm (ridge = full exposure)</li>
+      <li>Emergency space blanket</li>
+      <li>Rain cover for pack</li>
     </ul>
   </div>
-  <div class="gear-col">
-    <h4>Navigation</h4>
+  <div class="pack-col">
+    <h4>Overnight</h4>
     <ul>
-      <li>Kompass map Sheet 47 (Sillian/Obertilliach) — buy in Sexten</li>
-      <li>Download offline Komoot or Outdooractive before the trip</li>
-      <li>Route 403 / Austria Ridge Trek clearly signed throughout</li>
-      <li>Compass or GPS device (phone GPS fine as backup)</li>
+      <li>Sleep sack / liner (huts require it)</li>
+      <li>Small towel</li>
+      <li>First aid: blister pads, Compeed, pain relief, tape</li>
+      <li>Toothbrush + minimal toiletries</li>
+      <li>Earplugs (dorms)</li>
+      <li>Phone charger + power bank</li>
+    </ul>
+  </div>
+  <div class="pack-col">
+    <h4>Docs &amp; Admin</h4>
+    <ul>
+      <li>Passport (US: confirm ETIAS done)</li>
+      <li>Travel insurance card</li>
+      <li>€200+ cash per person</li>
+      <li>Kompass map Sheet 47 (buy in Sillian)</li>
+      <li>Komoot / Outdooractive downloaded offline</li>
+      <li>Hut ref numbers saved offline</li>
     </ul>
   </div>
 </div>
@@ -1267,54 +1219,54 @@ li { margin-bottom: 4px; }
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
-     BOOKING CHECKLIST
+     PRE-TRIP CHECKLIST
 ══════════════════════════════════════════════════════════════ -->
-<h2>Booking Checklist</h2>
+<h2>Pre-Trip Checklist</h2>
 
 <ul class="checklist">
-  <li class="cl-urgent">
-    <strong>Obstanserseehütte — Night 2</strong>
-    <span class="cl-sub">Call or email now: +43 664 161 87 23 / info@bodner.tirol — family-run, smaller capacity, book first</span>
+  <li class="cl-done">
+    <strong>Sillianer Hütte — Night 1 · Ref 6032294</strong>
+    <span class="cl-sub">Mehrbettzimmer, half-board · 27–28 Jul · Contact: Marco Rager, marco.rager@sillianer-huette.at</span>
   </li>
-  <li class="cl-urgent">
-    <strong>Sillianer Hütte — Night 1</strong>
-    <span class="cl-sub">Contact: +43 664 53 23 802 / sillian@sektion.alpenverein.at — confirm booking is active (management change 2026)</span>
+  <li class="cl-done">
+    <strong>Obstanserseehütte — Night 2 · Ref 6032344</strong>
+    <span class="cl-sub">Matratzenlager, half-board · 28–29 Jul · Contact: Bodner Heinz, +43 664 932 978 99 · Hold until 16:30</span>
   </li>
-  <li class="cl-urgent">
-    <strong>Porzehütte — Night 3</strong>
-    <span class="cl-sub">Contact: +43 664 325 6452 / info@porzehuette.at — largest hut, most likely to have space, still book soon</span>
-  </li>
-  <li>
-    <strong>Outbound flights — London → Venice or Innsbruck (Sun 26 Jul)</strong>
-    <span class="cl-sub">Book after huts confirmed. Venice (Ryanair/easyJet via TSF/VCE) usually cheapest. Search now — July fills early</span>
+  <li class="cl-done">
+    <strong>Porzehütte — Night 3 · Ref 6032243</strong>
+    <span class="cl-sub">Matratzenlager, half-board · 29–30 Jul · Contact: Bernd Fürhapter, info@porzehuette.at</span>
   </li>
   <li>
-    <strong>Car rental — Innsbruck Airport (recommended)</strong>
-    <span class="cl-sub">Europcar / Sixt / Hertz at INN. Book 4-day rental in advance. Confirm vignette status</span>
+    <strong>Outbound flights — LHR → INN (Sun 26 Jul, arrive by 18:10)</strong>
+    <span class="cl-sub">Lufthansa, easyJet, Austrian Air from LHR. ~2h flight. Search now — July books up</span>
   </li>
   <li>
-    <strong>Pre-hike hotel — Sexten or San Candido (Sun 26 Jul night)</strong>
-    <span class="cl-sub">Confirm luggage storage explicitly when booking. Search booking.com for "Sesto" or "San Candido". Book by April</span>
+    <strong>Return flights — INN → home (Thu 30 Jul or Fri 31 Jul)</strong>
+    <span class="cl-sub">Ella: INN → LHR. Dina: INN → US hub (Icelandair, Lufthansa) or drive Venice → Delta JFK. Janek + Maya: EU options</span>
   </li>
   <li>
-    <strong>Return flights — Innsbruck (Thu 30 Jul evening or Fri 31 Jul)</strong>
-    <span class="cl-sub">Ella: INN → LHR. US friends: INN → US hubs (Icelandair, Lufthansa) or drive Venice for Delta direct</span>
+    <strong>Car rental — Innsbruck Airport (Sun 26 Jul, 4 days)</strong>
+    <span class="cl-sub">Europcar / Sixt / Hertz at INN. Confirm vignette included. Park at Sillian hotel for duration of hike</span>
+  </li>
+  <li>
+    <strong>Pre-hike hotel — Sillian (Sun 26 Jul night)</strong>
+    <span class="cl-sub">Confirm luggage storage for 4 days. Search Booking.com for "Sillian". Book now — July peak</span>
+  </li>
+  <li>
+    <strong>Taxi — Obertilliach → Sillian (Thu 30 Jul)</strong>
+    <span class="cl-sub">~25 min, ~€30–40. Pre-book through your Sillian hotel when you check in. Don't leave for Day 4</span>
   </li>
   <li>
     <strong>ETIAS — Ella + Dina (US passports only)</strong>
-    <span class="cl-sub">EU Schengen authorisation, ~€7 each. Apply online ~1 month before trip. Janek + Maya (EU passports) do not need this</span>
+    <span class="cl-sub">~€7 each, apply online ~1 month before trip at travel-europe.eu. Janek + Maya (EU passports) — not needed</span>
   </li>
   <li>
-    <strong>Post-hike hotel — Obertilliach or Lienz (only if flying Friday)</strong>
-    <span class="cl-sub">Optional. Lienz is more convenient for dining + transport. 30 min from Obertilliach</span>
+    <strong>Cash — €200+ per person</strong>
+    <span class="cl-sub">ATMs in Sillian before the hike. None on trail or in Obertilliach village. Huts prefer cash</span>
   </li>
   <li>
-    <strong>Kompass map sheet 47 — buy on arrival in Sexten</strong>
-    <span class="cl-sub">Available in outdoor shops in Sexten and San Candido. Or download Komoot / Outdooractive before leaving London</span>
-  </li>
-  <li>
-    <strong>Obertilliach → Sexten transfer — arrange in advance</strong>
-    <span class="cl-sub">Taxi ~€60–80, ~45 min. Ask your Sexten hotel or the Osttirol Tourism board to arrange. Do not leave this for Day 4</span>
+    <strong>Offline maps — download before leaving London</strong>
+    <span class="cl-sub">Komoot or Outdooractive (free). Download Route 403 / Friedensweg. Kompass sheet 47 available in Sillian shops</span>
   </li>
 </ul>
 
