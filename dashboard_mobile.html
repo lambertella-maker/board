@@ -1285,9 +1285,9 @@
         </div>
 
         <div style="font-size:0.72rem; color:var(--muted); line-height:1.7;">
-          <span style="color:var(--soft); font-weight:600;">UK tax: </span>After 3 years, no income tax and no NI on the shares — that's the whole point of the plan. The only possible charge is CGT on any price gain since purchase, and at this scale (~£3,600/yr in shares) it's very unlikely to exceed your £3k annual exemption. Effectively £0 UK tax.<br><br>
+          <span style="color:var(--soft); font-weight:600;">UK tax: </span>After 5 years, no income tax and no NI on the shares — that's the whole point of the plan. The only possible charge is CGT on any price gain since purchase, and at this scale (~£3,600/yr in shares) it's very unlikely to exceed your £3k annual exemption. Effectively £0 UK tax.<br><br>
           <span style="color:var(--soft); font-weight:600;">US tax — what you need to know: </span>The US doesn't recognise UK SIP rules, so every time you sell shares you owe US tax on the <em>profit</em>. Profit = sale price minus what the shares were worth when you got them (your "cost basis"). Since you'll hold 3+ years before selling, it's taxed at the lower long-term capital gains rate (~15%). You report it on Schedule D in your normal annual US return — nothing extra beyond what you already file.<br><br>
-          <span style="color:var(--amber); font-weight:600;">One thing to do now: </span>Log into your SIP platform (AbbVie benefit portal) and confirm it shows the purchase price for each monthly batch going back to Nov 2024. That's the number you'll need in 2027 to calculate your US profit. If it doesn't store it clearly, start keeping your own note. * CGT could apply if total gains across all assets exceed £3k in a tax year.<br><br>
+          <span style="color:var(--amber); font-weight:600;">One thing to do now: </span>Log into your SIP platform (AbbVie benefit portal) and confirm it shows the purchase price for each monthly batch going back to Nov 2024. That's the number you'll need in 2029 to calculate your US profit. If it doesn't store it clearly, start keeping your own note. * CGT could apply if total gains across all assets exceed £3k in a tax year.<br><br>
           <span style="color:var(--green); font-weight:600;">Bottom line — you're still winning by a lot: </span>Your real monthly outlay is ~£87 (£150 reduced by ~42% — 40% higher-rate IT + 2% NI saved via salary sacrifice) = ~£1,044/year actual cash. In return you receive £3,600 in shares. Worst case (ABBV −20%): you get £2,880 — still 2.8× your cash, zero UK tax. Flat price: £3,600 — 3.4×. ABBV +20%: proceeds £4,320, US CGT ~£108 on the £720 gain, net ~£4,212 — 4× your cash. Every scenario is a major win after all tax.
         </div>
       </div>
@@ -1388,7 +1388,7 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
   const segments = [
     { label: 'UK Savings',     val: atom + monzo + chase,            color: '#22d3ee', note: 'Atom · Monzo · Chase UK — liquid' },
     { label: 'AbbVie Pension', val: pension,                          color: '#818cf8', note: 'Aviva workplace pension · 5.5% CAGR est.' },
-    { label: 'ABBV SIP Shares',val: sip,                             color: '#f472b6', note: 'Locked 3yr · acquisition cost est.' },
+    { label: 'ABBV SIP Shares',val: sip,                             color: '#f472b6', note: 'Locked 5yr · acquisition cost est.' },
     { label: 'US Brokerage',   val: Math.round(fidUSD * fx),         color: '#34d399', note: 'Fidelity FSKAX / FTIHX / FXNAX' },
     { label: 'Roth IRA',       val: Math.round(rothUSD * fx),        color: '#fbbf24', note: 'Tax-free retirement · never touch' },
     { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * fx),   color: '#6366f1', note: 'Chase US — pipeline hub · $1,500 min' },
