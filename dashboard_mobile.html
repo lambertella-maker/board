@@ -1021,50 +1021,6 @@
 
   </section>
 
-  <!-- FIRE -->
-  <section id="fire">
-    <h2 class="section-title">FIRE <span>Calculator</span></h2>
-    <div class="fire-grid">
-      <div class="fire-controls">
-        <h3>Adjust your assumptions</h3>
-
-        <div class="toggle-row">
-          <label class="toggle"><input type="checkbox" id="bruceToggle" onchange="updateFire()"><span class="toggle-slider"></span></label>
-          <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts</strong>+$20,000/yr from summer 2026 · conservative plan: OFF</div>
-        </div>
-
-        <div class="control-group">
-          <div class="control-label">Monthly investment <span id="inv-label">£850</span></div>
-          <input type="range" id="inv-slider" min="500" max="3000" step="50" value="850" oninput="updateFire()">
-        </div>
-        <div class="control-group">
-          <div class="control-label">Annual return rate <span id="ret-label">7.0%</span></div>
-          <input type="range" id="ret-slider" min="3" max="12" step="0.5" value="7" oninput="updateFire()">
-        </div>
-        <div class="control-group">
-          <div class="control-label">Annual spending in retirement <span id="exp-label">£30,000</span></div>
-          <input type="range" id="exp-slider" min="15000" max="80000" step="1000" value="30000" oninput="updateFire()">
-        </div>
-        <div class="control-group" style="margin-bottom:0;">
-          <div class="control-label">Withdrawal rate <span id="wr-label">4.00%</span></div>
-          <input type="range" id="wr-slider" min="3" max="6" step="0.25" value="4" oninput="updateFire()">
-        </div>
-      </div>
-
-      <div class="fire-result-card">
-        <h3>Your FIRE projection</h3>
-        <div class="fire-age-big">
-          <div class="fire-age-num" id="fire-age">51</div>
-          <div class="fire-age-label">Projected retirement age · conservative estimate</div>
-        </div>
-        <div class="fire-stat"><span class="fire-stat-label">FIRE number (portfolio needed)</span><span class="fire-stat-value" id="fire-num" style="color:var(--amber)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">State pensions (UK + US at 67)</span><span class="fire-stat-value" style="color:var(--cyan)">~£23k+/yr · not counted above</span></div>
-      </div>
-    </div>
-  </section>
-
   <!-- INVESTMENTS -->
   <section id="investments">
     <h2 class="section-title">Investment <span>Engine</span> <button class="info-btn" onclick="document.getElementById('invest-modal').classList.add('open')">ℹ strategy</button></h2>
