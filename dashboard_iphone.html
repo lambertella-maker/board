@@ -748,7 +748,7 @@ function liveEstimates() {
   const salxAdded      = today >= SALX_DATE ? 3186 : 0;
   const daysPension    = daysSince(PENSION_ANCHOR);
   const mosPension     = monthsSince(PENSION_ANCHOR);
-  const pensionContribs = mosPension <= 0 ? 0 : 881.91 + Math.max(0, mosPension - 1) * 921.58;
+  const pensionContribs = mosPension <= 0 ? 0 : 881.91 + Math.max(0, mosPension - 1) * 986.25;
   const pensionEst = Math.round((PENSION_VAL + salxAdded) * Math.pow(1.055, daysPension / 365) + pensionContribs);
 
   const fmt = (v, p='£') => p + v.toLocaleString('en-GB');
