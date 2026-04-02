@@ -1297,7 +1297,16 @@
 
     <!-- Net Worth Composition -->
     <div class="chart-card">
-      <h3>Net Worth Composition — Where Your Money Lives</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+        <h3 style="margin:0;">Net Worth Composition — Where Your Money Lives</h3>
+        <div style="display:flex;align-items:center;gap:0.75rem;min-width:260px;">
+          <span style="font-size:0.68rem;font-weight:700;color:var(--muted);white-space:nowrap;">Project to</span>
+          <input type="range" id="nw-slider" min="0" max="10" step="1" value="0"
+            style="flex:1;accent-color:#818cf8;cursor:pointer;"
+            oninput="nwSliderChange(this.value)">
+          <span id="nw-slider-lbl" style="font-size:0.78rem;font-weight:700;color:var(--indigo);min-width:36px;text-align:right;">Today</span>
+        </div>
+      </div>
       <div style="display:grid; grid-template-columns:200px 1fr; gap:2rem; align-items:center;">
         <canvas id="nwChart" width="200" height="200"></canvas>
         <div id="nw-breakdown" style="display:flex; flex-direction:column; gap:0.75rem;"></div>
