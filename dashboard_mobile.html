@@ -1518,11 +1518,11 @@ function liveEstimates() {
 
     function monthSchedule(y, m) {
       // Mar 2026: bonus month net £5,136 − £124 move pot = £5,012; Apr 2026+: £3,441 − £124 = £3,317
-      const salary = (y === 2026 && m === 2) ? 5012 : 3317;
+      const salary = (y === 2026 && m === 2) ? 5012 : 3513;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus full household
         { date: new Date(y, m,  4), amount: -1300   }, // Amex autopay (~4th; avg £1,300, varies £1,100–1,400)
-        { date: new Date(y, m, 12), amount: -1250   }, // Rent
+        { date: new Date(y, m, 12), amount: (y > 2026 || (y === 2026 && m >= 6)) ? -1125 : -1250 }, // Rent (splits Jul 2026: −£125/mo)
         { date: new Date(y, m, 24), amount: salary  }, // Salary net − move pot
         { date: new Date(y, m, 24), amount:  -850   }, // Wise to US (same day as salary)
         { date: new Date(y, m, 26), amount:  -53.48 }, // Vancsi bills (council tax/water diff)
@@ -1566,7 +1566,7 @@ function liveEstimates() {
   const mosPension     = monthsSince(PENSION_ANCHOR);
   // Monthly contributions: use £882 for March month, £922 from April onwards
   const pensionContribs = mosPension <= 0 ? 0
-    : 881.91 + Math.max(0, mosPension - 1) * 921.58;
+    : 881.91 + Math.max(0, mosPension - 1) * 986.25;
   const pensionEst = Math.round((PENSION_VAL + salxAdded) * Math.pow(1.055, daysPension / 365) + pensionContribs);
 
   // DYNAMIC HERO NET — switches at April 24 payday
@@ -1577,9 +1577,9 @@ function liveEstimates() {
   const heroBadgeEl = document.getElementById('hero-net-badge');
   if (heroNetEl) {
     if (isAprilOnwards) {
-      heroNetEl.textContent  = '~£3,441';
-      heroSubEl.textContent  = 'Payday 24th · April 2026 · HMRC formula';
-      heroBadgeEl.textContent = '↑ up from £3,417 · verify vs Apr payslip';
+      heroNetEl.textContent  = '~£3,633';
+      heroSubEl.textContent  = 'Promotion min case · Payday 24th';
+      heroBadgeEl.textContent = '↑ from £3,441 · confirm final salary after HR chat';
     } else if (isMarchPayday) {
       heroNetEl.textContent  = '~£5,136';
       heroSubEl.textContent  = 'Bonus month · March 24 payday';
