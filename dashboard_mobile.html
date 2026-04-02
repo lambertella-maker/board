@@ -1385,32 +1385,20 @@ new Chart(document.getElementById('budgetChart'), {
 });
 
 // ── NET WORTH COMPOSITION ─────────────────────────────────────────────────────
-// Called from liveEstimates() with live-computed values. FX: GBP/USD ~0.77.
-function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, fx = 0.77, mktLabel = 'Estimated · CAGR model', sip = 0) {
-  const segments = [
-    { label: 'UK Savings',     val: atom + monzo + chase,            color: '#22d3ee', note: 'Atom · Monzo · Chase UK — liquid' },
-    { label: 'AbbVie Pension', val: pension,                          color: '#818cf8', note: 'Aviva workplace pension · 5.5% CAGR est.' },
-    { label: 'ABBV SIP Shares',val: sip,                             color: '#f472b6', note: 'Locked 5yr · acquisition cost est.' },
-    { label: 'US Brokerage',   val: Math.round(fidUSD * fx),         color: '#34d399', note: 'Fidelity FSKAX / FTIHX / FXNAX' },
-    { label: 'Roth IRA',       val: Math.round(rothUSD * fx),        color: '#fbbf24', note: 'Tax-free retirement · never touch' },
-    { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * fx),   color: '#6366f1', note: 'Chase US — pipeline hub · $1,500 min' },
-  ];
-  const total = segments.reduce((s, x) => s + x.val, 0);
-  const nwFmt = `~£${Math.round(total / 1000).toLocaleString()}k`;
-  const heroNw = document.getElementById('hero-nw-value');
-  const spNw   = document.getElementById('sp-nw-value');
-  if (heroNw) heroNw.textContent = nwFmt;
-  if (spNw)   spNw.textContent   = nwFmt;
+let gNwBases = null;
+let gNwChart = null;
+let gNwFx    = 0.77;
 
-  const totalUSDCmp = total / fx;
+function renderNwBreakdown(segs, label) {
+  const total    = segs.reduce((s, x) => s + x.val, 0);
+  const totalUSD = total / gNwFx;
   const ukRank = total < 15000 ? 'around median' : total < 30000 ? 'top 30%' : total < 60000 ? 'top 20%' : total < 100000 ? 'top 10%' : 'top 5%';
-  const usRank = totalUSDCmp < 39000 ? 'below median' : totalUSDCmp < 80000 ? 'above median' : totalUSDCmp < 150000 ? 'top 30%' : 'top 15%';
-
+  const usRank = totalUSD < 39000 ? 'below median' : totalUSD < 80000 ? 'above median' : totalUSD < 150000 ? 'top 30%' : 'top 15%';
   document.getElementById('nw-breakdown').innerHTML =
     `<div style="font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:2px;">` +
     `£${total.toLocaleString()} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>` +
-    `<div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.9rem;">FX £${fx.toFixed(3)}/$ · ${mktLabel}</div>` +
-    segments.map(s => {
+    `<div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.9rem;">FX £${gNwFx.toFixed(3)}/$ · ${label}</div>` +
+    segs.map(s => {
       const pct = ((s.val / total) * 100).toFixed(1);
       return `<div style="padding:0.75rem 1rem;background:var(--card2);border-radius:10px;border-left:3px solid ${s.color};display:flex;justify-content:space-between;align-items:center;">` +
         `<div><div style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:0.15rem;">${s.label}</div>` +
@@ -1420,10 +1408,52 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
     }).join('') +
     `<div style="margin-top:0.5rem;padding:0.4rem 0.75rem;background:rgba(52,211,153,0.07);border-radius:8px;border:1px solid rgba(52,211,153,0.18);display:flex;gap:1.4rem;font-size:0.67rem;color:var(--muted);">` +
     `<span>🇬🇧 <span style="color:var(--green);font-weight:600;">${ukRank}</span> · age 25, UK</span>` +
-    `<span>🇺🇸 <span style="color:var(--green);font-weight:600;">${usRank}</span> · ages 25–34, US</span>` +
-    `</div>`;
+    `<span>🇺🇸 <span style="color:var(--green);font-weight:600;">${usRank}</span> · ages 25–34, US</span></div>`;
+}
 
-  new Chart(document.getElementById('nwChart'), {
+function nwSliderChange(yrs) {
+  const yr  = parseInt(yrs);
+  const lbl = document.getElementById('nw-slider-lbl');
+  if (lbl) lbl.textContent = yr === 0 ? 'Today' : String(2026 + yr);
+  if (!gNwBases) return;
+  if (yr === 0) { renderNwBreakdown(gNwBases.segs, gNwBases.mktLabel); if (gNwChart) { gNwChart.data.datasets[0].data = gNwBases.segs.map(s => s.val); gNwChart.update(); } return; }
+  const months = yr * 12;
+  const r7 = 0.07/12, r55 = 0.055/12, FX = gNwFx;
+  const fvc = (pmt, mo, r) => r > 0 ? pmt * ((Math.pow(1+r,mo)-1)/r) : pmt*mo;
+  const segs = [
+    { label:'UK Savings',     val: Math.round(gNwBases.ukSav + 200*months),                                                              color:'#22d3ee', note:'Atom · Monzo · Chase UK — liquid' },
+    { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(986.25,months,r55)),                         color:'#818cf8', note:'Aviva workplace pension · 5.5% CAGR est.' },
+    { label:'ABBV SIP Shares',val: Math.round(gNwBases.sip + 300*Math.min(months, Math.max(0,60-gNwBases.sipCompleted))),                color:'#f472b6', note:'Locked 5yr · acquisition cost est.' },
+    { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+r7,months) + fvc(475,months,r7))*FX),                         color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
+    { label:'Roth IRA',       val: Math.round((gNwBases.rothUSD*Math.pow(1+r7,months) + fvc(625,months,r7))*FX),                        color:'#fbbf24', note:'Tax-free retirement · never touch' },
+    { label:'US Cash',        val: Math.round(gNwBases.usCashUSD*FX),                                                                   color:'#6366f1', note:'Chase US — pipeline hub · $1,500 min' },
+  ];
+  renderNwBreakdown(segs, `Projected · ${2026+yr} · 7% equities · 5.5% pension`);
+  if (gNwChart) { gNwChart.data.datasets[0].data = segs.map(s => s.val); gNwChart.update(); }
+}
+
+// Called from liveEstimates() with live-computed values. FX: GBP/USD ~0.77.
+function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, fx = 0.77, mktLabel = 'Estimated · CAGR model', sip = 0, sipCompleted = 0) {
+  gNwFx = fx;
+  const segments = [
+    { label: 'UK Savings',     val: atom + monzo + chase,            color: '#22d3ee', note: 'Atom · Monzo · Chase UK — liquid' },
+    { label: 'AbbVie Pension', val: pension,                          color: '#818cf8', note: 'Aviva workplace pension · 5.5% CAGR est.' },
+    { label: 'ABBV SIP Shares',val: sip,                             color: '#f472b6', note: 'Locked 5yr · acquisition cost est.' },
+    { label: 'US Brokerage',   val: Math.round(fidUSD * fx),         color: '#34d399', note: 'Fidelity FSKAX / FTIHX / FXNAX' },
+    { label: 'Roth IRA',       val: Math.round(rothUSD * fx),        color: '#fbbf24', note: 'Tax-free retirement · never touch' },
+    { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * fx),color: '#6366f1', note: 'Chase US — pipeline hub · $1,500 min' },
+  ];
+  const total = segments.reduce((s, x) => s + x.val, 0);
+  const nwFmt = `~£${Math.round(total / 1000).toLocaleString()}k`;
+  const heroNw = document.getElementById('hero-nw-value');
+  const spNw   = document.getElementById('sp-nw-value');
+  if (heroNw) heroNw.textContent = nwFmt;
+  if (spNw)   spNw.textContent   = nwFmt;
+
+  gNwBases = { ukSav: atom+monzo+chase, pension, sip, sipCompleted, fidUSD, rothUSD, usCashUSD: chaseUSUSD||0, segs: segments, mktLabel };
+  renderNwBreakdown(segments, mktLabel);
+
+  gNwChart = new Chart(document.getElementById('nwChart'), {
     type: 'doughnut',
     data: {
       labels: segments.map(s => s.label),
