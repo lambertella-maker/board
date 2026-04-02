@@ -1569,17 +1569,18 @@ function liveEstimates() {
     : 881.91 + Math.max(0, mosPension - 1) * 986.25;
   const pensionEst = Math.round((PENSION_VAL + salxAdded) * Math.pow(1.055, daysPension / 365) + pensionContribs);
 
-  // DYNAMIC HERO NET — switches at April 24 payday
-  const isMarchPayday   = today >= new Date(2026, 2, 24) && today < APR_PAYDAY;
-  const isAprilOnwards  = today >= APR_PAYDAY;
+  // DYNAMIC HERO NET — switches at April 1 for promo preview, April 24 for payday
+  const isMarchPayday     = today >= new Date(2026, 2, 24) && today < new Date(2026, 3, 1);
+  const isAprilPrePayday  = today >= new Date(2026, 3, 1) && today < APR_PAYDAY;
+  const isAprilOnwards    = today >= APR_PAYDAY;
   const heroNetEl   = document.getElementById('hero-net-value');
   const heroSubEl   = document.getElementById('hero-net-sub');
   const heroBadgeEl = document.getElementById('hero-net-badge');
   if (heroNetEl) {
-    if (isAprilOnwards) {
+    if (isAprilOnwards || isAprilPrePayday) {
       heroNetEl.textContent  = '~£3,633';
-      heroSubEl.textContent  = 'Promotion min case · Payday 24th';
-      heroBadgeEl.textContent = '↑ from £3,441 · confirm final salary after HR chat';
+      heroSubEl.textContent  = 'Promotion min case · confirm after HR chat';
+      heroBadgeEl.textContent = '⚠ confirm effective date + final salary after HR';
     } else if (isMarchPayday) {
       heroNetEl.textContent  = '~£5,136';
       heroSubEl.textContent  = 'Bonus month · March 24 payday';
