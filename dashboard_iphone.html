@@ -836,20 +836,33 @@ function liveEstimates() {
   const mSpNw   = document.getElementById('m-sp-nw');
   if (mNwHero) mNwHero.textContent = mNwFmt;
   if (mSpNw)   mSpNw.textContent   = mNwFmt;
-  const totalUSDCmp = mTotal / FX_M;
-  const ukRank = mTotal < 15000 ? 'around median' : mTotal < 30000 ? 'top 30%' : mTotal < 60000 ? 'top 20%' : mTotal < 100000 ? 'top 10%' : 'top 5%';
-  const usRank = totalUSDCmp < 39000 ? 'below median' : totalUSDCmp < 80000 ? 'above median' : totalUSDCmp < 150000 ? 'top 30%' : 'top 15%';
-  const rankEl = document.getElementById('m-nw-rank');
-  if (rankEl) rankEl.innerHTML =
-    `<span>🇬🇧 <span style="color:var(--green);font-weight:600;">${ukRank}</span> · age 25, UK</span>` +
-    `<span>🇺🇸 <span style="color:var(--green);font-weight:600;">${usRank}</span> · ages 25–34, US</span>`;
 
+  // Store bases for projection slider
+  gNwBases = {
+    ukSav:       atomEst + monzoEst + chaseEst,
+    pension:     pensionEst,
+    sip:         sipEst,
+    sipCompleted:sipCompleted,
+    fidelityUSD: fidelityEst,
+    rothUSD:     rothEst,
+    usCashUSD:   chaseUSEst,
+    fx:          FX_M,
+    segs:        mSegs
+  };
+  renderNWSegs(mSegs);
+}
+
+let gNwBases = null;
+
+function renderNWSegs(segs) {
+  const total = segs.reduce((s, x) => s + x.val, 0);
   const nwTotalEl = document.getElementById('m-nw-total');
   const nwRowsEl  = document.getElementById('m-nw-rows');
-  if (nwTotalEl) nwTotalEl.textContent = '£' + mTotal.toLocaleString();
-  if (nwRowsEl) nwRowsEl.innerHTML = mSegs.map((s, i) => {
-    const pct = ((s.val / mTotal) * 100).toFixed(1);
-    const sep = i < mSegs.length - 1 ? `<div style="height:1px;background:var(--border);margin:0;"></div>` : '';
+  const rankEl    = document.getElementById('m-nw-rank');
+  if (nwTotalEl) nwTotalEl.textContent = '£' + total.toLocaleString();
+  if (nwRowsEl) nwRowsEl.innerHTML = segs.map((s, i) => {
+    const pct = ((s.val / total) * 100).toFixed(1);
+    const sep = i < segs.length - 1 ? `<div style="height:1px;background:var(--border);margin:0;"></div>` : '';
     return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">` +
       `<div style="display:flex;align-items:center;gap:10px;">` +
       `<div style="width:3px;height:34px;background:${s.color};border-radius:2px;flex-shrink:0;"></div>` +
@@ -857,7 +870,43 @@ function liveEstimates() {
       `<div style="font-size:0.68rem;color:var(--muted);">${s.note} · ${pct}%</div></div></div>` +
       `<div style="font-size:0.92rem;font-weight:700;color:${s.color};">£${s.val.toLocaleString()}</div></div>${sep}`;
   }).join('');
+  if (rankEl) {
+    const totalUSD = total / 0.77;
+    const ukRank = total < 15000 ? 'around median' : total < 30000 ? 'top 30%' : total < 60000 ? 'top 20%' : total < 100000 ? 'top 10%' : 'top 5%';
+    const usRank = totalUSD < 39000 ? 'below median' : totalUSD < 80000 ? 'above median' : totalUSD < 150000 ? 'top 30%' : 'top 15%';
+    rankEl.innerHTML =
+      `<span>🇬🇧 <span style="color:var(--green);font-weight:600;">${ukRank}</span> · age 25, UK</span>` +
+      `<span>🇺🇸 <span style="color:var(--green);font-weight:600;">${usRank}</span> · ages 25–34, US</span>`;
+  }
 }
+
+function nwSliderChange(yrs) {
+  const lbl = document.getElementById('m-nw-slider-lbl');
+  const yr = parseInt(yrs);
+  if (lbl) lbl.textContent = yr === 0 ? 'Today' : String(2026 + yr);
+  if (yr === 0) { renderNWSegs(gNwBases.segs); return; }
+  if (!gNwBases) return;
+  const months = yr * 12;
+  const r7  = 0.07 / 12;
+  const r55 = 0.055 / 12;
+  const FX  = gNwBases.fx;
+  const fvc = (pmt, mo, r) => r > 0 ? pmt * ((Math.pow(1+r,mo) - 1) / r) : pmt * mo;
+  const ukSav     = gNwBases.ukSav + 200 * months;
+  const pensionFV = gNwBases.pension * Math.pow(1+r55, months) + fvc(986.25, months, r55);
+  const sipLeft   = Math.max(0, 60 - gNwBases.sipCompleted);
+  const sip       = gNwBases.sip + 300 * Math.min(months, sipLeft);
+  const fidFV     = Math.round((gNwBases.fidelityUSD * Math.pow(1+r7, months) + fvc(475, months, r7)) * FX);
+  const rothFV    = Math.round((gNwBases.rothUSD    * Math.pow(1+r7, months) + fvc(625, months, r7)) * FX);
+  renderNWSegs([
+    { label:'UK Savings',     val: Math.round(ukSav),       color:'#22d3ee', note:'Atom · Monzo · Chase UK' },
+    { label:'AbbVie Pension', val: Math.round(pensionFV),   color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
+    { label:'ABBV SIP Shares',val: Math.round(sip),         color:'#f472b6', note:'Locked 5yr · acquisition cost' },
+    { label:'US Brokerage',   val: fidFV,                   color:'#34d399', note:'Fidelity — FSKAX/FTIHX/FXNAX' },
+    { label:'Roth IRA',       val: rothFV,                  color:'#fbbf24', note:'Tax-free · never touch' },
+    { label:'US Cash',        val: Math.round(gNwBases.usCashUSD * FX), color:'#6366f1', note:'Chase US — pipeline hub' },
+  ]);
+}
+
 liveEstimates();
 
 // ── GOAL PROGRESS BARS ────────────────────────────────────────────────────────
