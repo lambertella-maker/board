@@ -802,14 +802,16 @@ function liveEstimates() {
       makeRows(moTaxable, 'Taxable');
   }
 
-  const isMarch = today >= new Date(2026,2,24) && today < APR_PAYDAY;
-  const isApr   = today >= APR_PAYDAY;
+  const isMarch      = today >= new Date(2026,2,24) && today < new Date(2026,3,1);
+  const isAprPre     = today >= new Date(2026,3,1)  && today < APR_PAYDAY;
+  const isApr        = today >= APR_PAYDAY;
   const nv = document.getElementById('m-net-value');
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
-  if (isApr)        { nv.textContent='~£3,633'; ns.textContent='Promotion min case'; nb.textContent='confirm after HR chat'; }
-  else if (isMarch) { nv.textContent='~£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
-  else              { nv.textContent='£3,417';  ns.textContent='Payday 24th';  nb.textContent='→ ~£3,441 Apr'; }
+  if (isApr)           { nv.textContent='~£3,633'; ns.textContent='Promotion min case'; nb.textContent='confirm after HR chat'; }
+  else if (isAprPre)   { nv.textContent='~£3,633'; ns.textContent='Promotion min case'; nb.textContent='confirm after HR chat'; }
+  else if (isMarch)    { nv.textContent='~£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
+  else                 { nv.textContent='£3,417';  ns.textContent='Payday 24th';  nb.textContent='→ ~£3,441 Apr'; }
 
   // Net worth composition
   const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
