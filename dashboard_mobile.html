@@ -1642,7 +1642,7 @@ function liveEstimates() {
   if (pillarEl) pillarEl.textContent = '~' + fmt(pensionEst);
   const pensionSubEl = document.getElementById('hero-pension-sub');
   if (pensionSubEl) pensionSubEl.textContent = 'Liquid ~£23k + pension ~' + fmt(pensionEst);
-  drawNetWorthChart(atomEst, monzoEst, chaseEst, pensionEst, fidelityEst, rothEst, chaseUSEst, liveFX, mktLabel, sipEst);
+  drawNetWorthChart(atomEst, monzoEst, chaseEst, pensionEst, fidelityEst, rothEst, chaseUSEst, liveFX, mktLabel, sipEst, sipCompleted);
 }
 liveEstimates();
 
