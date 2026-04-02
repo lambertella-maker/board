@@ -1580,10 +1580,14 @@ function liveEstimates() {
   const heroSubEl   = document.getElementById('hero-net-sub');
   const heroBadgeEl = document.getElementById('hero-net-badge');
   if (heroNetEl) {
-    if (isAprilOnwards || isAprilPrePayday) {
+    if (isAprilOnwards) {
       heroNetEl.textContent  = '~£3,633';
       heroSubEl.textContent  = 'Promotion min case · confirm after HR chat';
       heroBadgeEl.textContent = '⚠ confirm effective date + final salary after HR';
+    } else if (isAprilPrePayday) {
+      heroNetEl.textContent  = '£3,441';
+      heroSubEl.textContent  = '→ £3,633 promo min · April merit base';
+      heroBadgeEl.textContent = 'confirm after HR chat';
     } else if (isMarchPayday) {
       heroNetEl.textContent  = '~£5,136';
       heroSubEl.textContent  = 'Bonus month · March 24 payday';
