@@ -727,7 +727,7 @@ function liveEstimates() {
       const salary = (y === 2026 && m === 2) ? 5012 : 3513;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus
-        { date: new Date(y, m,  4), amount: -1300   }, // Amex autopay (~4th; avg £1,300, varies £1,100–1,400)
+        { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
         { date: new Date(y, m, 12), amount: (y > 2026 || (y === 2026 && m >= 6)) ? -1125 : -1250 }, // Rent (splits Jul 2026: −£125/mo)
         { date: new Date(y, m, 24), amount: salary  }, // Salary net − move pot
         { date: new Date(y, m, 24), amount:  -850   }, // Wise (same day as salary)
