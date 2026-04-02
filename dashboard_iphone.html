@@ -582,7 +582,22 @@
   <div class="section-title">Net Worth Composition</div>
   <div class="card">
     <div style="font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:2px;" id="m-nw-total">—</div>
-    <div style="font-size:0.7rem;color:var(--muted);margin-bottom:14px;">total net worth · USD at £0.77 · updates on load</div>
+    <div style="font-size:0.7rem;color:var(--muted);margin-bottom:10px;">total net worth · USD at £0.77 · updates on load</div>
+
+    <!-- Projection slider -->
+    <div style="margin-bottom:12px;padding:8px 10px;background:rgba(129,140,248,0.06);border:1px solid rgba(129,140,248,0.15);border-radius:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:0.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Project to</span>
+        <span id="m-nw-slider-lbl" style="font-size:0.78rem;font-weight:700;color:var(--indigo);">Today</span>
+      </div>
+      <input type="range" id="m-nw-slider" min="0" max="10" step="1" value="0"
+        style="width:100%;accent-color:#818cf8;cursor:pointer;height:4px;"
+        oninput="nwSliderChange(this.value)">
+      <div style="display:flex;justify-content:space-between;font-size:0.58rem;color:var(--muted);margin-top:4px;">
+        <span>Today</span><span>2031</span><span>2036</span>
+      </div>
+    </div>
+
     <div id="m-nw-rows" style="display:flex;flex-direction:column;gap:0;"></div>
     <div id="m-nw-rank" style="margin-top:10px;padding:0.35rem 0.65rem;background:rgba(52,211,153,0.07);border-radius:8px;border:1px solid rgba(52,211,153,0.18);display:flex;gap:1rem;font-size:0.65rem;color:var(--muted);"></div>
   </div>
