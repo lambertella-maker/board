@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Austria Ridge Hike · July 2026</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F7F9F8;
+  --card: #FFFFFF;
+  --text: #1C1C1C;
+  --muted: #5A5A5A;
+
+  --green: #2B6E42;
+  --green-mid: #3E8F5C;
+  --green-light: #E6F3EC;
+  --green-border: #B5D9C4;
+
+  --blue: #1E5A96;
+  --blue-mid: #2D7BBF;
+  --blue-light: #E1EEF9;
+  --blue-border: #9DC2E0;
+
+  --slate: #3B5E7C;
+  --slate-light: #E8EFF5;
+  --slate-border: #AABFD6;
+
+  --orange: #B85828;
+  --orange-light: #FBF0E8;
+  --orange-border: #D89070;
+
+  --amber: #8A6200;
+  --amber-light: #FFF7DF;
+
+  --border: #D8E2D4;
+  --shadow: 0 2px 16px rgba(0,0,0,0.06);
+  --radius: 12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(155deg, rgba(10,28,50,0.88) 0%, rgba(20,55,88,0.84) 35%, rgba(30,90,80,0.78) 65%, rgba(43,110,66,0.76) 100%), url('https://www.dolomitemountains.com/res/photo/gallery/900x900/10790_1.jpg') center 50% / cover no-repeat;
+  border-radius: 0 0 24px 24px;
+  padding: 60px 44px 52px;
+  margin: 0 -20px 50px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 80px;
+  background: linear-gradient(to top, rgba(10,28,50,0.25), transparent);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 0.76em;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  opacity: 0.65;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.8em;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  position: relative; z-index: 1;
+}
+.hero h1 em { color: #78D4A8; font-style: normal; }
+.hero .tagline {
+  font-size: 1.0em;
+  opacity: 0.82;
+  margin-bottom: 32px;
+  position: relative; z-index: 1;
+  max-width: 580px;
+  line-height: 1.55;
+}
+.hero-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.hs {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  padding: 12px 18px;
+  text-align: center;
+  min-width: 84px;
+}
+.hs .val { font-size: 1.65em; font-weight: 700; display: block; line-height: 1.1; }
+.hs .lbl { font-size: 0.68em; opacity: 0.72; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ─── ROUTE ARC ─── */
+.arc-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow);
+  font-size: 0.88em;
+}
+.arc-stop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  min-width: 100px;
+}
+.arc-stop .dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-bottom: 3px;
+}
+.dot-start  { background: #1E5A96; }
+.dot-night1 { background: #3A9E62; }
+.dot-night2 { background: #2B6E42; }
+.dot-night3 { background: #B85828; }
+.dot-end    { background: #5A7A6A; }
+.arc-stop .name { font-weight: 600; font-size: 0.88em; line-height: 1.3; }
+.arc-stop .elev { color: var(--muted); font-size: 0.76em; white-space: nowrap; }
+.arc-arrow { color: var(--green-mid); font-size: 1.1em; font-weight: 700; padding: 0 4px; }
+
+/* ─── HEADINGS ─── */
+h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.45em;
+  font-weight: 400;
+  color: var(--green);
+  margin: 48px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--green-light);
+}
+h3 { font-size: 1.03em; font-weight: 600; margin-bottom: 6px; }
+p { margin-bottom: 10px; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul { padding-left: 18px; }
+li { margin-bottom: 4px; }
+
+/* ─── DAY CARDS ─── */
+.day-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 22px 0;
+  overflow: hidden;
+}
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 24px;
+  border-bottom: 2px solid transparent;
+}
+.dh-travel  { background: #EFF3F8; border-color: #A8C0D6; }
+.dh-green1  { background: #EBF6EF; border-color: #5CB87A; }
+.dh-green2  { background: #E4F2EA; border-color: var(--green); }
+.dh-summit  { background: var(--orange-light); border-color: var(--orange); }
+.dh-return  { background: #F2F4F0; border-color: #AABBA8; }
+
+.day-pill {
+  background: rgba(0,0,0,0.09);
+  border-radius: 8px;
+  padding: 8px 14px;
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 58px;
+}
+.day-pill .dn { font-size: 1.4em; font-weight: 700; display: block; line-height: 1; }
+.day-pill .dl { font-size: 0.6em; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.6; }
+
+.day-info { flex: 1; min-width: 0; }
+.day-info h3 { font-size: 1.12em; margin-bottom: 4px; }
+.day-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.8em; color: var(--muted); }
+.day-meta span { white-space: nowrap; }
+
+.tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.tag-green  { background: var(--green-light); color: var(--green); }
+.tag-blue   { background: var(--blue-light); color: var(--blue); }
+.tag-orange { background: var(--orange-light); color: var(--orange); }
+.tag-grey   { background: #EFEFEF; color: #555; }
+.tag-summit { background: #FEE8DC; color: #8A3510; }
+.tag-ridge  { background: #E8EFF5; color: #3B5E7C; }
+
+.day-body { padding: 20px 24px 24px; }
+
+.route-strip {
+  background: #F2F5F0;
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-size: 0.88em;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.route-strip .arrow { color: var(--green-mid); font-weight: 700; font-size: 1.1em; white-space: nowrap; }
+.route-strip .rname { font-weight: 600; white-space: nowrap; }
+.route-strip .rdetail { color: var(--muted); white-space: nowrap; }
+
+.highlights {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 18px;
+}
+.highlights li {
+  padding: 4px 0 4px 22px;
+  position: relative;
+  font-size: 0.9em;
+}
+.highlights li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: var(--green-mid);
+  font-size: 0.5em;
+  top: 9px;
+}
+.summit-day .highlights li::before { color: var(--orange); }
+
+/* ─── HUT BOX ─── */
+.hut-box {
+  background: linear-gradient(135deg, #F2FAF5 0%, #FAFFFE 100%);
+  border: 1px solid var(--green-border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.hut-box.summit { background: linear-gradient(135deg, #FBF3EE 0%, #FFFCFA 100%); border-color: var(--orange-border); }
+.hut-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.hut-title h4 { font-size: 1.02em; color: var(--green); margin-bottom: 2px; }
+.hut-title h4.st { color: var(--orange); }
+.hut-title p { font-size: 0.8em; color: var(--muted); margin: 0; }
+.btn-book {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 7px;
+  font-size: 0.82em;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.btn-book:hover { background: #1E5030; text-decoration: none; }
+.btn-book.sb { background: var(--orange); }
+.btn-book.sb:hover { background: #8A3510; }
+
+.hut-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.hd .hdl { color: var(--muted); font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.3px; display: block; }
+.hd .hdv { font-weight: 600; font-size: 0.88em; }
+.hd .hdv a { color: var(--blue); }
+
+.price-pill {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.84em;
+  padding: 7px 13px;
+  border-radius: 6px;
+  background: var(--green-light);
+  color: var(--green);
+}
+.price-pill.sp { background: var(--orange-light); color: var(--orange); }
+.hut-note { font-size: 0.8em; color: var(--muted); margin-top: 8px; }
+
+/* ─── CALLOUT BOXES ─── */
+.note-box {
+  background: var(--blue-light);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  padding: 11px 16px;
+  font-size: 0.875em;
+  margin: 14px 0;
+  color: #1A3060;
+}
+.note-box strong { color: var(--blue); }
+
+.tip-inline {
+  background: var(--green-light);
+  border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  padding: 11px 16px;
+  font-size: 0.875em;
+  margin: 14px 0;
+  color: #1A3C28;
+}
+.tip-inline strong { color: var(--green); }
+
+.warn-box {
+  background: #FFF3CD;
+  border-left: 3px solid #E6A817;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 16px;
+  font-size: 0.875em;
+  margin: 14px 0;
+  color: #5C3D00;
+}
+.warn-box strong { color: #8A6200; }
+
+.urgent-box {
+  background: linear-gradient(135deg, #FFF1E8 0%, #FFF8F3 100%);
+  border: 1.5px solid var(--orange-border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 40px;
+}
+.urgent-box h4 { color: var(--orange); font-size: 1.0em; margin-bottom: 8px; }
+.urgent-box p { font-size: 0.88em; color: #5C3000; margin-bottom: 0; }
+
+/* ─── PERSON CARDS ─── */
+.person-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 14px; margin: 16px 0; }
+.person-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.person-card .pname { font-weight: 700; font-size: 0.95em; margin-bottom: 3px; }
+.person-card .pfrom { font-size: 0.8em; color: var(--muted); margin-bottom: 10px; }
+.person-card li { font-size: 0.85em; color: var(--muted); margin-bottom: 4px; }
+.person-card ul { padding-left: 14px; }
+.person-card .price-badge {
+  display: inline-block;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 0.78em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+/* ─── WEATHER GRID ─── */
+.weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.wx-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.wx-card h4 { font-size: 0.88em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px; }
+.temp-main { font-size: 1.5em; font-weight: 700; color: var(--green); line-height: 1.1; margin-bottom: 2px; }
+.temp-sub { font-size: 0.8em; color: var(--muted); }
+
+/* ─── COSTS ─── */
+.cost-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 16px 0; }
+.cost-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.cost-card h4 { font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+.cost-card ul { padding-left: 0; list-style: none; }
+.cost-card li { font-size: 0.87em; padding: 4px 0; border-bottom: 1px solid #F0F0F0; display: flex; justify-content: space-between; overflow-wrap: break-word; word-break: break-word; }
+.cost-card li:last-child { border-bottom: none; }
+.cost-card .total-row { font-weight: 700; color: var(--green); margin-top: 6px; border-top: 2px solid var(--green-border) !important; padding-top: 8px !important; }
+.cv { font-weight: 600; white-space: nowrap; margin-left: 8px; }
+
+/* ─── FLIGHT COMPARE TABLE ─── */
+.flight-table { width: 100%; border-collapse: collapse; font-size: 0.87em; margin: 16px 0; }
+.flight-table th { background: var(--green-light); color: var(--green); padding: 9px 12px; text-align: left; font-weight: 600; font-size: 0.85em; }
+.flight-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.flight-table-wrap { overflow-x: auto; }
+.flight-table tr:hover td { background: #F8FBF9; }
+.flight-table .best-row td { background: #EBF6EF; font-weight: 600; }
+.recommend-badge { background: var(--green-light); color: var(--green); font-size: 0.75em; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+
+/* ─── CHECKLIST ─── */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  padding: 9px 12px 9px 36px;
+  border-radius: 7px;
+  position: relative;
+  font-size: 0.88em;
+  margin-bottom: 4px;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.checklist li::before {
+  content: '☐';
+  position: absolute;
+  left: 12px;
+  color: var(--green);
+  font-size: 1.0em;
+  top: 8px;
+}
+.checklist li strong { color: var(--text); }
+.checklist li .cl-sub { color: var(--muted); font-size: 0.9em; display: block; margin-top: 1px; }
+.checklist .cl-done { background: var(--green-light); border-color: var(--green-border); }
+.checklist .cl-done::before { content: '✔'; color: var(--green); }
+.checklist .cl-urgent { background: var(--orange-light); border-color: var(--orange-border); }
+.checklist .cl-urgent::before { content: '☐'; color: var(--orange); }
+
+/* ─── HUT OVERVIEW GRID ─── */
+.hut-overview-grid { display: grid; grid-template-columns: 1fr 1.1fr 1.1fr 1.1fr 1fr; gap: 12px; margin: 20px 0; align-items: stretch; }
+.hut-ov-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.hut-ov-photo {
+  height: 130px;
+  background-size: cover;
+  background-position: center;
+}
+.hut-ov-body { padding: 14px 16px; }
+.hut-ov-body .ov-night { font-size: 0.72em; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 3px; }
+.hut-ov-body h3 { font-size: 0.97em; color: var(--green); margin-bottom: 2px; }
+.hut-ov-body .ov-elev { font-size: 0.8em; color: var(--muted); margin-bottom: 8px; }
+.hut-ov-body .ov-note { font-size: 0.82em; color: var(--muted); line-height: 1.4; }
+.travel-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+.travel-card-band {
+  height: 8px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.travel-card-body {
+  padding: 14px 14px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.travel-card-body .tc-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+.travel-card-body .tc-date { font-size: 1.05em; font-weight: 700; color: var(--text); line-height: 1.2; }
+.travel-card-body .tc-sub { font-size: 0.8em; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+
+/* ─── PHOTOS ─── */
+.hut-photo-strip { overflow: hidden; border-radius: 8px; margin-bottom: 16px; }
+.hut-photo-strip img { width: 100%; height: 180px; object-fit: cover; object-position: center 40%; display: block; }
+.section-photo { overflow: hidden; border-radius: var(--radius); margin: 16px 0; }
+.section-photo img { width: 100%; height: 200px; object-fit: cover; object-position: center 50%; display: block; }
+
+/* ─── TRIP TOTAL ─── */
+.tt-section { padding-bottom: 8px; margin-bottom: 2px; border-bottom: 1px solid var(--green-border); }
+.tt-section .tt-row { border-bottom: none; padding-bottom: 3px; }
+.tt-sub { font-size: 0.8em; color: var(--muted); padding: 2px 0 1px 6px; display: flex; justify-content: space-between; gap: 8px; line-height: 1.4; }
+.ts-val { font-weight: 500; white-space: nowrap; color: var(--text); }
+.trip-total-card {
+  background: linear-gradient(135deg, #EBF6EF 0%, #F8FFF9 100%);
+  border: 2px solid var(--green-border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  margin: 20px 0;
+}
+.trip-total-card h3 { color: var(--green); font-size: 1.1em; margin-bottom: 14px; }
+.tt-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--green-border); font-size: 0.9em; }
+.tt-row:last-child { border-bottom: none; }
+.tt-row.total { font-weight: 700; color: var(--green); font-size: 1.0em; padding-top: 10px; margin-top: 4px; border-top: 2px solid var(--green); border-bottom: none; }
+.tt-val { font-weight: 600; }
+
+/* ─── GEAR GRID ─── */
+.gear-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+.gear-col h4 { font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 8px; }
+.gear-col ul { padding-left: 14px; }
+.gear-col li { font-size: 0.85em; margin-bottom: 3px; }
+
+/* ─── PACKING CHECKLIST ─── */
+.pack-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
+.pack-col { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 15px; box-shadow: var(--shadow); }
+.pack-col h4 { font-size: 0.74em; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--border); }
+.pack-col ul { list-style: none; padding: 0; margin: 0; }
+.pack-col li { font-size: 0.81em; padding: 3px 0 3px 18px; position: relative; margin-bottom: 2px; line-height: 1.4; }
+.pack-col li::before { content: '☐'; position: absolute; left: 0; color: var(--green-mid); font-size: 0.95em; line-height: 1.4; }
+.pack-col li.done::before { content: '☑'; color: var(--green); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 700px) {
+  .hero { padding: 44px 20px 40px; }
+  .hero h1 { font-size: 2.1em; }
+  .weather-grid { grid-template-columns: 1fr; }
+  .cost-grid { grid-template-columns: 1fr; }
+  .hut-overview-grid { grid-template-columns: 1fr 1fr; }
+  .hut-overview-grid .travel-card:last-child { grid-column: 1 / -1; }
+  .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .hut-header { flex-direction: column; }
+  .pack-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-eyebrow">Austria Ridge Trek · Peace Trail · Carnic Alps · Austria–Italy Border</div>
+  <h1>Austria <em>Ridge Trek</em><br>Hut-to-Hut · July 2026</h1>
+  <p class="tagline">
+    A WWI ridge trail that's genuinely off the tourist circuit. Three nights of Alpenverein huts along the Austria–Italy border, with the Sextener Dolomites on one side and the Carnic valleys on the other. Four-hour hiking days, optional summits, and a landscape that most people driving through the Alps have never seen.
+  </p>
+  <div class="hero-stats">
+    <div class="hs"><span class="val">3</span><span class="lbl">Hut Nights</span></div>
+    <div class="hs"><span class="val">~28 km</span><span class="lbl">Trail Distance</span></div>
+    <div class="hs"><span class="val">T3</span><span class="lbl">Grade</span></div>
+    <div class="hs"><span class="val">2,447 m</span><span class="lbl">Highest Hut</span></div>
+    <div class="hs"><span class="val">Jul 27–30</span><span class="lbl">Hiking Days</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ROUTE ARC
+══════════════════════════════════════════════════════════════ -->
+<div class="arc-banner">
+  <div class="arc-stop">
+    <div class="dot dot-start"></div>
+    <div class="name">Helmjet Sexten</div>
+    <div class="elev">~1,968m · Chairlift top</div>
+  </div>
+  <div class="arc-arrow">→</div>
+  <div class="arc-stop">
+    <div class="dot dot-night1"></div>
+    <div class="name">Sillianer Hütte</div>
+    <div class="elev">2,447m · Night 1</div>
+  </div>
+  <div class="arc-arrow">→</div>
+  <div class="arc-stop">
+    <div class="dot dot-night2"></div>
+    <div class="name">Obstanserseehütte</div>
+    <div class="elev">2,306m · Night 2</div>
+  </div>
+  <div class="arc-arrow">→</div>
+  <div class="arc-stop">
+    <div class="dot dot-night3"></div>
+    <div class="name">Porzehütte</div>
+    <div class="elev">1,942m · Night 3</div>
+  </div>
+  <div class="arc-arrow">→</div>
+  <div class="arc-stop">
+    <div class="dot dot-end"></div>
+    <div class="name">Obertilliach</div>
+    <div class="elev">~1,450m · Finish</div>
+  </div>
+</div>
+
+<!-- ─── DATES STRIP ─── -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     HUT OVERVIEW
+══════════════════════════════════════════════════════════════ -->
+<h2>The Three Huts</h2>
+
+<div class="hut-overview-grid">
+
+  <!-- ARRIVAL -->
+  <div class="travel-card">
+    <div class="travel-card-band" style="background: var(--blue);"></div>
+    <div class="travel-card-body">
+      <div class="tc-label">Arrival</div>
+      <div class="tc-date">Fri 24 Jul</div>
+      <div class="tc-sub">US friends arrive London. 2 days together in the city.</div>
+      <div class="tc-date" style="margin-top:10px;">Sun 26 Jul</div>
+      <div class="tc-sub"><strong>All four fly together</strong> — BA598 LHR 06:05 → VCE 09:20 ✓ BOOKED (ref YZA8Q6). Pick up car at Venice airport, drive ~3h north to <strong>Sillian</strong>. Hotel overnight. Big bags stay here. Day 1 morning: drive 10 min to Helmjet base, park at chairlift.</div>
+    </div>
+  </div>
+
+  <!-- NIGHT 1 -->
+  <div class="hut-ov-card">
+    <div class="hut-ov-photo" style="background: url('https://eportal.alpenverein.at/skripts/show_bild.php?huetteNr=0209&breite=350') center / cover no-repeat, linear-gradient(150deg, #2B6E42, #6BB89A);"></div>
+    <div class="hut-ov-body">
+      <div class="ov-night">Night 1 · Mon 27 Jul</div>
+      <h3>Sillianer Hütte</h3>
+      <div class="ov-elev">2,447m · Carnic Main Ridge</div>
+      <div class="ov-note"><span style="display:inline-block;background:#EBF6EF;color:#2B6E42;font-size:0.73em;font-weight:700;padding:1px 7px;border-radius:4px;margin-bottom:5px;">✓ CONFIRMED</span><br>Ref 6032294 · Mehrbettzimmer (private multi-bed) · Half-board</div>
+    </div>
+  </div>
+
+  <!-- NIGHT 2 -->
+  <div class="hut-ov-card">
+    <div class="hut-ov-photo" style="background: url('https://www.alpenverein-austria.at/austria/slides/bilder/sommer2018/weblication/wThumbnails/Obstans-Galbavy-2013-1-71cd0ca38e2d74c61d5930d7ca278e50.jpg') center / cover no-repeat, linear-gradient(150deg, #1E5A96, #78B8E0);"></div>
+    <div class="hut-ov-body">
+      <div class="ov-night">Night 2 · Tue 28 Jul</div>
+      <h3>Obstanserseehütte</h3>
+      <div class="ov-elev">2,306m · Above alpine lake</div>
+      <div class="ov-note"><span style="display:inline-block;background:#EBF6EF;color:#2B6E42;font-size:0.73em;font-weight:700;padding:1px 7px;border-radius:4px;margin-bottom:5px;">✓ CONFIRMED</span><br>Ref 6032344 · Matratzenlager (dorm) · Half-board · Hold until 16:30</div>
+    </div>
+  </div>
+
+  <!-- NIGHT 3 -->
+  <div class="hut-ov-card">
+    <div class="hut-ov-photo" style="background: url('https://img1.oastatic.com/img2/14690577/max/variant.jpg') center / cover no-repeat, linear-gradient(150deg, #B85828, #E8A878);"></div>
+    <div class="hut-ov-body">
+      <div class="ov-night">Night 3 · Wed 29 Jul</div>
+      <h3>Porzehütte</h3>
+      <div class="ov-elev">1,942m · Above Obertilliach</div>
+      <div class="ov-note"><span style="display:inline-block;background:#EBF6EF;color:#2B6E42;font-size:0.73em;font-weight:700;padding:1px 7px;border-radius:4px;margin-bottom:5px;">✓ CONFIRMED</span><br>Ref 6032243 · Matratzenlager (dorm) · Half-board · Rebuilt 2020</div>
+    </div>
+  </div>
+
+  <!-- DEPARTURE -->
+  <div class="travel-card">
+    <div class="travel-card-band" style="background: #888;"></div>
+    <div class="travel-card-body">
+      <div class="tc-label">Departure</div>
+      <div class="tc-date">Thu 30 Jul</div>
+      <div class="tc-sub">Descend to Obertilliach (~2h). Taxi to Helmjet base Sexten (~1h, collect car). Drive south to <strong>Venice VCE</strong> (~3h via Dobbiaco).</div>
+      <div class="tc-date" style="margin-top:10px;">Thu 30 Jul evening</div>
+      <div class="tc-sub">Ella + Dina: BA609 VCE 20:15 → LHR 21:25 ✓ BOOKED (ref YTF6HX). Janek + Maya: return routes TBD.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 0 — TRAVEL DAY
+══════════════════════════════════════════════════════════════ -->
+<h2>The Route — Day by Day</h2>
+
+<div class="day-card">
+  <div class="day-header dh-travel">
+    <div class="day-pill">
+      <span class="dn">0</span>
+      <span class="dl">Day</span>
+    </div>
+    <div class="day-info">
+      <h3>London → Venice → Sillian</h3>
+      <div class="day-meta">
+        <span>Sunday 26 July</span>
+        <span class="tag tag-blue">Travel Day</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="route-strip">
+      <span class="rname">London (LHR)</span>
+      <span class="arrow">✈</span>
+      <span class="rname">Venice (VCE)</span>
+      <span class="rdetail">land 09:20 · BA598</span>
+      <span class="arrow">🚗</span>
+      <span class="rname">Sillian</span>
+      <span class="rdetail">(~3h drive north · hotel overnight)</span>
+    </div>
+    <ul class="highlights">
+      <li><strong>BA598 LHR 06:05 → VCE 09:20</strong> ✓ all four. Pick up car, drive ~3h north to Sillian</li>
+      <li>Drop big bags at hotel. Pack 30L day packs for the trail</li>
+      <li>Next morning: 10 min drive to Helmjet base, park there (confirmed). No train</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 1
+══════════════════════════════════════════════════════════════ -->
+<div class="day-card">
+  <div class="day-header dh-green1">
+    <div class="day-pill">
+      <span class="dn">1</span>
+      <span class="dl">Mon</span>
+    </div>
+    <div class="day-info">
+      <h3>Sillian → Sexten → Sillianer Hütte</h3>
+      <div class="day-meta">
+        <span>Monday 27 July</span>
+        <span>📏 ~7.8 km</span>
+        <span>↑ ~480m from chairlift</span>
+        <span>⏱ ~2–2.5h from chairlift top</span>
+        <span class="tag tag-green">Moderate</span>
+        <span class="tag tag-ridge">Ridge Start</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="section-photo">
+      <img src="https://www.dolomitemountains.com/res/photo/gallery/900x900/10790_1.jpg" alt="Sexten Dolomites, Day 1 start" loading="lazy" style="object-position: center 30%;">
+    </div>
+    <div class="route-strip">
+      <span class="rname">Sillian</span>
+      <span class="arrow">🚂</span>
+      <span class="rname">Sexten</span>
+      <span class="rdetail">(10 min drive · park at base)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Helmjet chairlift</span>
+      <span class="rdetail">(~1,968m top)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Austrian border ridge</span>
+      <span class="arrow">→</span>
+      <span class="rname">Sillianer Hütte (2,447m)</span>
+    </div>
+    <ul class="highlights">
+      <li>Drive 10 min from Sillian, park at <strong>Helmjet base</strong> (confirmed), ride chairlift to ~1,968m — saves 700m of climb. Trail starts from the top</li>
+      <li>Route 403 (Carnic Peace Trail / Friedensweg) — follow it east from the chairlift. Stay on the ridge all the way to the hut</li>
+      <li>Shortest day, good for settling in. Dolomites south, Carnic valleys north. WWI fortifications visible from the first hour — emplacements carved into the rock, wire remnants, tunnel entrances</li>
+    </ul>
+    <div class="tip-inline">
+      <strong>Optional summit from Day 1:</strong> Eisenleiten or nearby ridgeline peaks above Sillianer Hütte offer an additional 45–90 minutes for anyone with energy after arriving at the hut. Leave your pack at the hut first.
+    </div>
+
+    <div class="hut-box">
+      <div class="hut-header">
+        <div class="hut-title">
+          <h4>Night 1 — Sillianer Hütte</h4>
+          <p>2,447m · Carnic Main Ridge · Sillian, Osttirol, Austria</p>
+        </div>
+        <span style="background:#EBF6EF;color:#2B6E42;font-size:0.82em;font-weight:700;padding:7px 14px;border-radius:7px;flex-shrink:0;">✓ Booked · Ref 6032294</span>
+      </div>
+      <div class="hut-details">
+        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,447 m</span></div>
+        <div class="hd"><span class="hdl">Room type</span><span class="hdv">Mehrbettzimmer (private multi-bed room)</span></div>
+        <div class="hd"><span class="hdl">Guests</span><span class="hdv">4 beds reserved · 27–28 Jul</span></div>
+        <div class="hd"><span class="hdl">Board</span><span class="hdv">Half-board included (dinner + breakfast)</span></div>
+        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Marco Rager</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+49 151 542 655 41</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:marco.rager@sillianer-huette.at">marco.rager@<br>sillianer-huette.at</a></span></div>
+      </div>
+      <div class="price-pill">Half-board confirmed · typical ~€55–70/person</div>
+      <p class="hut-note">
+        Westernmost hut on the Carnic Main Ridge. Mehrbettzimmer = private multi-bed room for the group, not open dorm.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 2
+══════════════════════════════════════════════════════════════ -->
+<div class="day-card">
+  <div class="day-header dh-green2">
+    <div class="day-pill">
+      <span class="dn">2</span>
+      <span class="dl">Tue</span>
+    </div>
+    <div class="day-info">
+      <h3>Sillianer Hütte → Obstanserseehütte</h3>
+      <div class="day-meta">
+        <span>Tuesday 28 July</span>
+        <span>📏 ~8.5 km</span>
+        <span>↑ ~641m cumulative gain</span>
+        <span>⏱ ~3.5–4h</span>
+        <span class="tag tag-green">Moderate–Hard</span>
+        <span class="tag tag-summit">Optional Summits</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="section-photo">
+      <img src="https://www.alltrails.com/mugen/image/location-app-router?url=https%3A%2F%2Fimages.alltrails.com%2FeyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMTE5MzkxMjI3L2E0ZTA3Mjg1MzgxNDMwOWMxYmMyNjM4NDc0ZDFmNGMxLmpwZyIsImVkaXRzIjp7InRvRm9ybWF0Ijoid2VicCIsInJlc2l6ZSI6eyJ3aWR0aCI6IjEwODAiLCJoZWlnaHQiOiI3MDAiLCJmaXQiOiJjb3ZlciJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ%3D%3D&w=3840&q=90" alt="Carnic Ridge trail, Day 2" loading="lazy" style="object-fit: cover; object-position: center 68%;">
+    </div>
+    <div class="route-strip">
+      <span class="rname">Sillianer Hütte (2,447m)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Eisenreich (2,665m)</span>
+      <span class="rdetail">optional summit</span>
+      <span class="arrow">→</span>
+      <span class="rname">Obstanserseehütte (2,306m)</span>
+    </div>
+    <ul class="highlights">
+      <li>Fixed cables and short ladders on this section — no technical gear needed but sure-footedness matters. Proper boots required</li>
+      <li><strong>Eisenreich (2,665m)</strong> — route's high point, 45–60 min detour return. Full Dolomites panorama from the top</li>
+      <li>Hut sits above the <strong>Obstansersee</strong> alpine lake. Most atmospheric stop on the route</li>
+    </ul>
+    <div class="tip-inline">
+      <strong>Depart Sillianer by 08:00.</strong> Afternoon storms can build on the ridge above 2,500m. The fixed cable sections are manageable in dry conditions; wet rock changes the calculation. An early start keeps you ahead of any weather that builds after noon.
+    </div>
+
+    <div class="hut-box">
+      <div class="hut-header">
+        <div class="hut-title">
+          <h4>Night 2 — Obstanserseehütte</h4>
+          <p>2,306m · Above the Obstansersee · Kartitsch, Osttirol, Austria</p>
+        </div>
+        <span style="background:#EBF6EF;color:#2B6E42;font-size:0.82em;font-weight:700;padding:7px 14px;border-radius:7px;flex-shrink:0;">✓ Booked · Ref 6032344</span>
+      </div>
+      <div class="hut-details">
+        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,306 m</span></div>
+        <div class="hd"><span class="hdl">Room type</span><span class="hdv">Matratzenlager (dorm)</span></div>
+        <div class="hd"><span class="hdl">Guests</span><span class="hdv">4 beds reserved · 28–29 Jul</span></div>
+        <div class="hd"><span class="hdl">Board</span><span class="hdv">Half-board included (dinner + breakfast)</span></div>
+        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Bodner Heinz</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 932 978 99</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:obstans.reservierung@gmail.com">obstans.reservierung@gmail.com</a></span></div>
+      </div>
+      <div class="price-pill">Half-board confirmed · typical ~€50–65/person</div>
+      <p class="hut-note">
+        Family-run. Most atmospheric hut on the route — Dolomites + Grossglockner panoramas from the terrace. <strong>Hold until 16:30</strong> — if running late, call +43 664 932 978 99 to confirm arrival.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 3
+══════════════════════════════════════════════════════════════ -->
+<div class="day-card summit-day">
+  <div class="day-header dh-green2">
+    <div class="day-pill">
+      <span class="dn">3</span>
+      <span class="dl">Wed</span>
+    </div>
+    <div class="day-info">
+      <h3>Obstanserseehütte → Porzehütte</h3>
+      <div class="day-meta">
+        <span>Wednesday 29 July</span>
+        <span>📏 ~12 km</span>
+        <span>↑ ~660m cumulative</span>
+        <span>⏱ ~5–6h</span>
+        <span class="tag tag-orange">Longest Day</span>
+        <span class="tag tag-summit">Optional Summits</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="section-photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Kleine_und_Gro%C3%9Fe_Kinigat_Karnischer_Hauptkamm_20070706.jpg" alt="Karnischer Hauptkamm ridge, Day 3" loading="lazy" style="object-position: center 15%;">
+    </div>
+    <div class="route-strip">
+      <span class="rname">Obstanserseehütte (2,306m)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Hollbrucker Spitze</span>
+      <span class="rdetail">optional</span>
+      <span class="arrow">→</span>
+      <span class="rname">Carnic Ridge</span>
+      <span class="arrow">→</span>
+      <span class="rname">Porzehütte (1,942m)</span>
+    </div>
+    <ul class="highlights">
+      <li>Longest day — rolling ridge, up and down across multiple high points rather than one big climb</li>
+      <li><strong>Hollbrucker Spitze</strong> optional detour: 60–90 min return, no technical gear, worth it</li>
+      <li>Final descent to Porzehütte is the longest downhill of the trip — poles help. Hut rebuilt 2020, modern, warmer at 1,942m</li>
+    </ul>
+    <div class="warn-box">
+      <strong>Early start essential — depart Obstansersee by 07:30.</strong> Day 3 is the longest day and has the most exposure on the ridge. Weather builds from early afternoon in July. At 12km with 660m of gain/loss, arriving after 15:00 in deteriorating weather is not comfortable. Leave by 07:30 and you'll arrive well before any afternoon storms.
+    </div>
+    <div class="note-box">
+      <strong>Headlamp in your day pack tonight.</strong> Porzehütte has access to one of the WWI tunnel networks — if you explore them on Day 4 morning before descending, you'll need it. Worth it.
+    </div>
+
+    <div class="hut-box">
+      <div class="hut-header">
+        <div class="hut-title">
+          <h4 class="st">Night 3 — Porzehütte</h4>
+          <p>1,942m · Above Obertilliach · Osttirol, Austria</p>
+        </div>
+        <span style="background:#EBF6EF;color:#2B6E42;font-size:0.82em;font-weight:700;padding:7px 14px;border-radius:7px;flex-shrink:0;">✓ Booked · Ref 6032243</span>
+      </div>
+      <div class="hut-details">
+        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">1,942 m</span></div>
+        <div class="hd"><span class="hdl">Room type</span><span class="hdv">Matratzenlager (dorm)</span></div>
+        <div class="hd"><span class="hdl">Guests</span><span class="hdv">4 beds reserved · 29–30 Jul</span></div>
+        <div class="hd"><span class="hdl">Board</span><span class="hdv">Half-board included (dinner + breakfast)</span></div>
+        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Bernd Fürhapter</span></div>
+        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 325 6452</span></div>
+        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:info@porzehuette.at">info@porzehuette.at</a></span></div>
+      </div>
+      <div class="price-pill">Half-board confirmed · typical ~€50–65/person</div>
+      <p class="hut-note">
+        Largest of the three huts, rebuilt 2020. Modern facilities. Straightforward descent to Obertilliach next morning (2–2.5h, well-marked). The finish-line hut — dinner here will feel like a celebration.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAY 4 — DESCENT + DEPARTURE
+══════════════════════════════════════════════════════════════ -->
+<div class="day-card">
+  <div class="day-header dh-return">
+    <div class="day-pill">
+      <span class="dn">4</span>
+      <span class="dl">Thu</span>
+    </div>
+    <div class="day-info">
+      <h3>Porzehütte → Obertilliach → Venice VCE</h3>
+      <div class="day-meta">
+        <span>Thursday 30 July</span>
+        <span>📏 ~5–6 km descent</span>
+        <span>⏱ ~2h to village</span>
+        <span class="tag tag-grey">Descent Day</span>
+      </div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="section-photo">
+      <img src="https://www.hotel-unterwoeger.at/fileadmin/user_upload/Obertilliach_8.jpg" alt="Obertilliach valley" loading="lazy">
+    </div>
+    <div class="route-strip">
+      <span class="rname">Porzehütte (1,942m)</span>
+      <span class="arrow">→</span>
+      <span class="rname">Obertilliach (1,450m)</span>
+      <span class="rdetail">~2h descent</span>
+      <span class="arrow">🚕</span>
+      <span class="rname">Sillian</span>
+      <span class="rdetail">~1h taxi → Helmjet base · collect car · bags from Sillian</span>
+      <span class="arrow">🚗</span>
+      <span class="rname">Venice VCE</span>
+      <span class="rdetail">~3h via Dobbiaco</span>
+      <span class="arrow">✈</span>
+      <span class="rname">Ella + Dina: BA609 VCE 20:15</span>
+      <span class="rdetail">✓ BOOKED · Janek + Maya: TBD</span>
+    </div>
+    <ul class="highlights">
+      <li>Easy 2h descent to Obertilliach on well-marked trail — the finish line</li>
+      <li>Taxi Obertilliach → Helmjet base (~1h, ~€50–70, book via Porzehütte the night before). Collect car, 10 min detour to Sillian hotel for bags, then ~3h south to VCE via Dobbiaco. Leave Porzehütte 08:00 → at VCE by 14:30</li>
+      <li><strong>Ella + Dina</strong>: BA609 VCE 20:15 → LHR 21:25 ✓ BOOKED (ref YTF6HX, Terminal 5). 5.5h at the airport — no rush</li>
+      <li><strong>Janek + Maya</strong>: return TBD. VCE options: BA/easyJet → LHR, Delta → JFK. Or Frecciarossa Venice → Rome (~3h45, ~€30–80) → FCO/CIA transatlantic</li>
+    </ul>
+    <div class="tip-inline">
+      <strong>Day 4 logistics — already solved.</strong> Car is parked at Helmjet base Sexten. Taxi from Obertilliach → Sexten/Helmjet base (~1h, ~€50–70 — ask Porzehütte to call it the evening before). Collect car, stop at Sillian hotel to grab bags (~10 min), drive ~3h south to VCE via Dobbiaco. Drop car at VCE Airport. Ella + Dina: BA609 20:15.
+    </div>
+    <div class="tip-inline">
+      <strong>Return timing — comfortable.</strong> Leave Porzehütte 08:00 → Obertilliach ~10:00 → taxi to Helmjet base ~11:00 → bags from Sillian hotel ~11:15 → drive VCE arrive ~14:30. That's 5.5h before Ella + Dina's 20:15 departure — bags checked, dinner airside, no rush. Janek + Maya's options work equally from Venice or Rome, Thu or Fri.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     GETTING THERE
+══════════════════════════════════════════════════════════════ -->
+<h2>Getting There — Flights &amp; Car</h2>
+
+<p><strong>Outbound ✓ BOOKED:</strong> BA598 LHR → VCE, Sun 26 Jul, depart 06:05, land 09:20. All four fly together (ref YZA8Q6). Pick up car at Venice Marco Polo and drive ~3h north through the Dolomites to Sillian.</p>
+
+<div class="note-box">
+  <strong>Return (Ella + Dina) ✓ BOOKED:</strong> BA609 VCE → LHR, Thu 30 Jul, depart 20:15, land 21:25, Terminal 5 (ref YTF6HX). Janek + Maya: arranging own return — options from VCE include BA/easyJet → LHR, Delta → JFK direct, or Frecciarossa train Venice → Rome (~3h45) → FCO/CIA for transatlantic.
+</div>
+
+<h3 style="margin-top: 24px; margin-bottom: 12px;">Car Rental — VCE pickup · VCE drop</h3>
+
+<div class="cost-grid" style="grid-template-columns: 1fr;">
+  <div class="cost-card">
+    <h4>Pick up VCE · Drop off VCE · Sun 26 Jul → Thu 30 Jul</h4>
+    <ul>
+      <li><span>Pick up</span><span class="cv">VCE Airport, Sun Jul 26, ~10:00</span></li>
+      <li><span>Drive to Sillian</span><span class="cv">~230km, ~3h north via Cortina / Dobbiaco</span></li>
+      <li><span>Day 1: park at Helmjet base</span><span class="cv">Sexten chairlift base, 4 days (confirmed)</span></li>
+      <li><span>Day 4: taxi Obertilliach → Helmjet base</span><span class="cv">~1h, ~€50–70 — book via Porzehütte</span></li>
+      <li><span>Drop off</span><span class="cv">VCE Airport, Thu Jul 30 (~15:00–17:00)</span></li>
+      <li><span>One-way fee</span><span class="cv">None — same airport pickup + drop</span></li>
+      <li><span>Austrian vignette</span><span class="cv">Buy at first petrol station after Italian/Austrian border</span></li>
+      <li class="total-row"><span>Estimated total (÷4)</span><span class="cv">~€35–60/person</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="warn-box">
+  <strong>Austrian highway vignette — required.</strong> Every car driving on Austrian motorways needs a vignette sticker. Cost: €9.40 for 10 days. Since you're picking up in Venice, buy it at the first petrol station after crossing into Austria. Not having one = €120 fine.
+</div>
+
+<div class="tip-inline">
+  <strong>ETIAS — Ella and Dina (US passports).</strong> Both need ETIAS (EU Schengen travel authorisation). Online application, ~€7, valid 3 years. Apply by late June. Janek and Maya (EU passports) — not needed.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HOTELS + LUGGAGE STORAGE
+══════════════════════════════════════════════════════════════ -->
+<h2>Hotels &amp; Luggage Storage</h2>
+
+<p>One hotel night before the hike (Sillian, Sunday Jul 26) and optionally one after (Obertilliach/Lienz, Thursday Jul 30 if flying Friday). Sillian is your base — bags stay here for 4 days while you hike. Day 1 morning: drive 10 min to Helmjet chairlift base and park there.</p>
+
+<div class="tip-inline">
+  <strong>Luggage storage — confirm on booking.</strong> "We're hiking for 4 days — can you store 4 large bags?" Most Sillian hotels do this without issue. Confirm in writing. Day packs only on the trail (~30L max).
+</div>
+
+<div class="cost-grid">
+  <div class="cost-card">
+    <h4>Pre-hike: Sillian (Sun Jul 26)</h4>
+    <ul>
+      <li><span>Location</span><span class="cv">10 min drive to Helmjet chairlift base</span></li>
+      <li><span>Bags stay here</span><span class="cv">4 days while you hike</span></li>
+      <li><span>Luggage storage</span><span class="cv">confirm on booking</span></li>
+      <li><span>Free cancellation</span><span class="cv">before 21 Jul</span></li>
+      <li class="total-row"><span><a href="https://www.booking.com/Share-6dAUlDE" target="_blank" style="color: var(--green); font-weight: 700;">Book · room of 4</a></span><span class="cv">$143 total · ~$36/person</span></li>
+    </ul>
+  </div>
+  <div class="cost-card">
+    <h4>Post-hike: Lienz or Obertilliach <span style="font-weight:400;font-size:0.9em;color:var(--muted);">(optional — only if flying Fri)</span></h4>
+    <ul>
+      <li><span>Obertilliach village</span><span class="cv">literally at hike end</span></li>
+      <li><span>Lienz</span><span class="cv">30 min drive, proper town</span></li>
+      <li><span>Drive to VCE from Lienz</span><span class="cv">~2.5h south via Villach</span></li>
+      <li class="total-row"><span>Typical July price</span><span class="cv">~€80–150/night (2 rooms)</span></li>
+    </ul>
+    <div style="margin-top: 10px; font-size: 0.82em; color: var(--muted);">
+      <a href="https://www.booking.com" target="_blank" style="color: var(--blue);">Booking.com</a> — search "Obertilliach" or "Lienz" ·
+      <a href="https://www.osttirol.com/en/hotel-obertilliach/" target="_blank" style="color: var(--blue);">osttirol.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     WEATHER
+══════════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════
+     APPROXIMATE COSTS
+══════════════════════════════════════════════════════════════ -->
+<h2>Approximate Costs per Person</h2>
+
+<div class="trip-total-card">
+  <h3>Trip Total — per person estimate</h3>
+
+  <div class="tt-section">
+    <div class="tt-row"><span>🏨 Pre-hike hotel · Sillian <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="tt-val">~$36</span></div>
+    <div class="tt-sub"><span>Room of 4 · $143 total · free cancel before 21 Jul</span></div>
+    <div class="tt-sub"><span>20 min train to Sexten · car + bags stored here for 4 days</span></div>
+  </div>
+
+  <div class="tt-section">
+    <div class="tt-row"><span>🚗 Car rental · VCE pickup → VCE drop (÷4)</span><span class="tt-val">~$35–65</span></div>
+    <div class="tt-sub"><span>VCE pickup Sun 26 Jul · VCE drop Thu 30 Jul · 4 days · no one-way fee</span></div>
+    <div class="tt-sub"><span>One-way fee (Austria → Italy)</span><span class="ts-val">+$55–130 total</span></div>
+    <div class="tt-sub"><span>Fuel VCE → Sillian + Sillian → VCE via Dobbiaco</span><span class="ts-val">~$18–25/person</span></div>
+  </div>
+
+  <div class="tt-section">
+    <div class="tt-row"><span>🏕 Huts · 3 nights half-board</span><span class="tt-val">~$170–220</span></div>
+    <div class="tt-sub"><span>Night 1 · Sillianer Hütte · Mehrbettzimmer · Ref 6032294</span><span class="ts-val">~$60–75</span></div>
+    <div class="tt-sub"><span>Night 2 · Obstanserseehütte · Matratzenlager · Ref 6032344</span><span class="ts-val">~$55–70</span></div>
+    <div class="tt-sub"><span>Night 3 · Porzehütte · Matratzenlager · Ref 6032243</span><span class="ts-val">~$55–70</span></div>
+  </div>
+
+  <div class="tt-section">
+    <div class="tt-row"><span>🚂 Transport + extras</span><span class="tt-val">~$105–160</span></div>
+    <div class="tt-sub"><span>Park at Helmjet base (Day 1–4)</span><span class="ts-val">~$0–5/person</span></div>
+    <div class="tt-sub"><span>Helmjet chairlift (one-way)</span><span class="ts-val">~$22–27</span></div>
+    <div class="tt-sub"><span>Taxi Obertilliach → Helmjet base Sexten (Day 4, ÷4)</span><span class="ts-val">~$14–20</span></div>
+    <div class="tt-sub"><span>Meals in Sillian + Venice</span><span class="ts-val">~$65–110</span></div>
+    <div class="tt-sub"><span>ETIAS (Ella + Dina, US passports)</span><span class="ts-val">~$8 each</span></div>
+  </div>
+
+  <div class="tt-section">
+    <div class="tt-row"><span>✈ Flights · varies by person</span><span class="tt-val">see below</span></div>
+    <div class="tt-sub"><span>Ella + Dina outbound: BA598 LHR → VCE, Sun 26 Jul ✓ BOOKED</span><span class="ts-val">~€30–60/person</span></div>
+    <div class="tt-sub"><span>Ella + Dina return: BA609 VCE → LHR, Thu 30 Jul ✓ BOOKED</span><span class="ts-val">~€35/person</span></div>
+    <div class="tt-sub"><span>Dina + Maya: own transatlantic inbound (ORD → LHR)</span><span class="ts-val">~$500–900</span></div>
+    <div class="tt-sub"><span>Janek: own transatlantic inbound (LAX → LHR)</span><span class="ts-val">~$550–1,000</span></div>
+    <div class="tt-sub"><span>Janek + Maya return from VCE: TBD</span><span class="ts-val">~$400–700</span></div>
+  </div>
+
+  <div class="tt-row total"><span>All-in estimate per person</span><span class="tt-val">Ella ~$350–550 · Dina ~$850–1,400 · Janek + Maya ~$1,400–2,200</span></div>
+  <p style="font-size:0.8em; color: var(--muted); margin-top: 10px; margin-bottom: 0;">Euro costs converted at ~$1.10/€. US friends' totals include transatlantic inbound + return from VCE (TBD).</p>
+</div>
+
+<h2>July Weather on the Carnic Ridge</h2>
+
+<div class="weather-grid">
+  <div class="wx-card">
+    <h4>At Ridge Altitude (2,000–2,600m)</h4>
+    <div class="temp-main">50–64°F</div>
+    <div class="temp-sub">Daytime highs · warmest weeks</div>
+    <ul style="margin-top: 10px; font-size: 0.87em;">
+      <li>Nights at huts: 39–50°F — layers essential</li>
+      <li>Afternoon thunderstorms build fast, especially Days 2 and 3</li>
+      <li>Ridge exposed: rain gear always in pack, not in hotel bag</li>
+      <li>Snowpatches possible in shaded gullies until mid-July</li>
+    </ul>
+  </div>
+  <div class="wx-card">
+    <h4>General July Pattern</h4>
+    <div class="temp-main">Stable mornings</div>
+    <div class="temp-sub">Weather window: 06:00–13:00</div>
+    <ul style="margin-top: 10px; font-size: 0.87em;">
+      <li>July is peak season — warmest and driest month</li>
+      <li>The Austria–Italy border ridge catches weather from both sides</li>
+      <li>Morning departures by 07:30–08:00 get the best conditions</li>
+      <li>Check: <a href="https://www.zamg.ac.at" target="_blank">ZAMG</a> (Austrian weather) + <a href="https://www.meteo.it" target="_blank">meteo.it</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     GEAR
+══════════════════════════════════════════════════════════════ -->
+<h2>Packing List</h2>
+
+<p>T3 grade — stiff boots and poles are non-negotiable. No trail runners on this route. Day packs only (~30L): everything else stays at the Sillian hotel.</p>
+
+<div class="pack-grid">
+  <div class="pack-col">
+    <h4>Boots &amp; Poles</h4>
+    <ul>
+      <li>Stiff hiking boots, ankle support</li>
+      <li>Broken in before the trip</li>
+      <li>Trekking poles (both hands for cable sections)</li>
+      <li>Gaiters (optional, useful if wet)</li>
+      <li>Spare laces</li>
+    </ul>
+  </div>
+  <div class="pack-col">
+    <h4>Clothing</h4>
+    <ul>
+      <li>Merino base layer × 2</li>
+      <li>Fleece or light down jacket</li>
+      <li>Waterproof shell (not just windshell)</li>
+      <li>Hiking trousers × 2</li>
+      <li>Warm hat + gloves</li>
+      <li>Hut slippers / camp shoes</li>
+      <li>Merino socks × 3</li>
+    </ul>
+  </div>
+  <div class="pack-col">
+    <h4>Day Pack</h4>
+    <ul>
+      <li>2L water + purification tabs</li>
+      <li>Packed lunch (order night before)</li>
+      <li>Headlamp + spare batteries</li>
+      <li>Sun cream + lip balm (ridge = full exposure)</li>
+      <li>Emergency space blanket</li>
+      <li>Rain cover for pack</li>
+    </ul>
+  </div>
+  <div class="pack-col">
+    <h4>Overnight</h4>
+    <ul>
+      <li>Sleep sack / liner (huts require it)</li>
+      <li>Small towel</li>
+      <li>First aid: blister pads, Compeed, pain relief, tape</li>
+      <li>Toothbrush + minimal toiletries</li>
+      <li>Earplugs (dorms)</li>
+      <li>Phone charger + power bank</li>
+    </ul>
+  </div>
+  <div class="pack-col">
+    <h4>Docs &amp; Admin</h4>
+    <ul>
+      <li>Passport (US: confirm ETIAS done)</li>
+      <li>Travel insurance card</li>
+      <li>€200+ cash per person</li>
+      <li>Kompass map Sheet 47 (buy in Sillian)</li>
+      <li>Komoot / Outdooractive downloaded offline</li>
+      <li>Hut ref numbers saved offline</li>
+    </ul>
+  </div>
+</div>
+
+<div class="note-box">
+  <strong>Cash in Austria.</strong> Alpenverein huts typically accept cash (euros) and sometimes cards. Bring €200+ per person in cash. ATMs in Sexten and San Candido; none on the trail or in Obertilliach village.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PRE-TRIP CHECKLIST
+══════════════════════════════════════════════════════════════ -->
+<h2>Pre-Trip Checklist</h2>
+
+<ul class="checklist">
+  <li class="cl-done">
+    <strong>Sillianer Hütte — Night 1 · Ref 6032294</strong>
+    <span class="cl-sub">Mehrbettzimmer, half-board · 27–28 Jul · Contact: Marco Rager, marco.rager@sillianer-huette.at</span>
+  </li>
+  <li class="cl-done">
+    <strong>Obstanserseehütte — Night 2 · Ref 6032344</strong>
+    <span class="cl-sub">Matratzenlager, half-board · 28–29 Jul · Contact: Bodner Heinz, +43 664 932 978 99 · Hold until 16:30</span>
+  </li>
+  <li class="cl-done">
+    <strong>Porzehütte — Night 3 · Ref 6032243</strong>
+    <span class="cl-sub">Matratzenlager, half-board · 29–30 Jul · Contact: Bernd Fürhapter, info@porzehuette.at</span>
+  </li>
+  <li>
+    <strong>Outbound flights — BA598 LHR → VCE (Sun 26 Jul, 06:05–09:20) ✓ BOOKED</strong>
+    <span class="cl-sub">All four fly together. Ref YZA8Q6. Heathrow by 04:00</span>
+  </li>
+  <li>
+    <strong>Return flights — Ella + Dina: BA609 VCE → LHR (Thu 30 Jul, 20:15–21:25) ✓ BOOKED</strong>
+    <span class="cl-sub">Ref YTF6HX, Terminal 5. Janek + Maya: return routes TBD — plenty of VCE options or train to Rome FCO</span>
+  </li>
+  <li>
+    <strong>Car rental — VCE pickup · VCE drop (Sun 26 Jul, 4 days)</strong>
+    <span class="cl-sub">Europcar / Sixt / Hertz. Pick up VCE Airport ~10:00. No one-way fee. Park at Helmjet base for 4 days. Buy Austrian vignette (€9.40) at first petrol station after border</span>
+  </li>
+  <li class="cl-done">
+    <strong>Pre-hike hotel — Sillian (Sun 26 Jul night)</strong>
+    <span class="cl-sub">Room of 4 · $143 total · free cancel before 21 Jul · confirm luggage storage on arrival</span>
+  </li>
+  <li>
+    <strong>Taxi — Obertilliach → Sillian (Thu 30 Jul)</strong>
+    <span class="cl-sub">~25 min, ~€30–40. Pre-book through your Sillian hotel when you check in. Don't leave for Day 4</span>
+  </li>
+  <li>
+    <strong>ETIAS — Ella + Dina (US passports only)</strong>
+    <span class="cl-sub">~€7 each, apply online by late June at travel-europe.eu. Janek + Maya (EU passports) — not needed</span>
+  </li>
+  <li>
+    <strong>Cash — €200+ per person</strong>
+    <span class="cl-sub">ATMs in Sillian before the hike. None on trail or in Obertilliach village. Huts prefer cash</span>
+  </li>
+  <li>
+    <strong>Offline maps — download before leaving London</strong>
+    <span class="cl-sub">Komoot or Outdooractive (free). Download Route 403 / Friedensweg. Kompass sheet 47 available in Sillian shops</span>
+  </li>
+</ul>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════════ -->
+<div style="margin-top: 60px; padding: 20px 0; border-top: 1px solid var(--border); font-size: 0.78em; color: var(--muted); text-align: center;">
+  Austria Ridge Trek · Carnic Alps · Sexten → Sillianer Hütte → Obstanserseehütte → Porzehütte → Obertilliach<br>
+  July 27–30, 2026 · Ella, Dina, Janek, Maya · Flights: BA598 out · BA609 back (E+D)<br>
+  <span style="margin-top: 6px; display: block;">Hut availability: <a href="https://caa.alpenverein.at/service/bettencheck.html" target="_blank">caa.alpenverein.at/bettencheck</a> · Route 403 / Friedensweg</span>
+</div>
+
+</body>
+</html>
