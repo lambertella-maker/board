@@ -366,11 +366,12 @@ li { margin-bottom: 4px; }
   box-shadow: var(--shadow);
 }
 .cost-card h4 { font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+.cost-card .card-sub { font-size: 0.87em; color: var(--text); font-weight: 600; margin-bottom: 10px; }
 .cost-card ul { padding-left: 0; list-style: none; }
-.cost-card li { font-size: 0.87em; padding: 4px 0; border-bottom: 1px solid #F0F0F0; display: flex; justify-content: space-between; overflow-wrap: break-word; word-break: break-word; }
+.cost-card li { font-size: 0.87em; padding: 4px 0; border-bottom: 1px solid #F0F0F0; display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 12px; align-items: start; }
 .cost-card li:last-child { border-bottom: none; }
 .cost-card .total-row { font-weight: 700; color: var(--green); margin-top: 6px; border-top: 2px solid var(--green-border) !important; padding-top: 8px !important; }
-.cv { font-weight: 600; white-space: nowrap; margin-left: 8px; }
+.cv { font-weight: 600; white-space: normal; text-align: right; min-width: 0; }
 
 /* ─── FLIGHT COMPARE TABLE ─── */
 .flight-table { width: 100%; border-collapse: collapse; font-size: 0.87em; margin: 16px 0; }
@@ -497,6 +498,8 @@ li { margin-bottom: 4px; }
   .hero h1 { font-size: 2.1em; }
   .weather-grid { grid-template-columns: 1fr; }
   .cost-grid { grid-template-columns: 1fr; }
+  .cost-card li { grid-template-columns: 1fr; gap: 4px; }
+  .cv { text-align: left; }
   .hut-overview-grid { grid-template-columns: 1fr 1fr; }
   .hut-overview-grid .travel-card:last-child { grid-column: 1 / -1; }
   .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -915,9 +918,10 @@ li { margin-bottom: 4px; }
 
 <div class="cost-grid">
   <div class="cost-card">
-    <h4>Best setup: Locauto · VCE pickup · VCE drop · small automatic</h4>
+    <h4>Car Rental</h4>
+    <div class="card-sub">Locauto · VCE pickup/drop · small automatic</div>
     <ul>
-      <li><span>Car</span><span class="cv">VW Polo Automatic or similar · 4 days · direct with Locauto</span></li>
+      <li><span>Car</span><span class="cv">VW Polo Automatic or similar · 4 days</span></li>
       <li><span>Base rental</span><span class="cv">€337.20 prepaid</span></li>
       <li><span>Optional extra driver</span><span class="cv">~€10/day = ~€40 total</span></li>
       <li><span>Parking at Helmjet</span><span class="cv">Vierschach-Helm Talstation · free</span></li>
@@ -926,7 +930,8 @@ li { margin-bottom: 4px; }
     </ul>
   </div>
   <div class="cost-card" id="hotels">
-    <h4>Pre-hike: Sillian (Sun Jul 26)</h4>
+    <h4>Hotel + Bags</h4>
+    <div class="card-sub">Sillian · Sun Jul 26 night</div>
     <ul>
       <li><span>Location</span><span class="cv">8–10 min drive to Helmjet lower station</span></li>
       <li><span>Bags stay here</span><span class="cv">4 days while you hike</span></li>
