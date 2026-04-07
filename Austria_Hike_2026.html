@@ -500,6 +500,12 @@ li { margin-bottom: 4px; }
   .cost-grid { grid-template-columns: 1fr; }
   .cost-card li { grid-template-columns: 1fr; gap: 4px; }
   .cv { text-align: left; }
+  .route-strip { gap: 5px; font-size: 0.83em; }
+  .route-strip .rname, .route-strip .rdetail { white-space: normal; }
+  .tt-row, .tt-sub { flex-direction: column; align-items: flex-start; }
+  .tt-val, .ts-val { white-space: normal; }
+  .section-nav { gap: 8px; margin: 16px 0 20px; }
+  .section-nav a { padding: 6px 10px; font-size: 0.76em; }
   .hut-overview-grid { grid-template-columns: 1fr 1fr; }
   .hut-overview-grid .travel-card:last-child { grid-column: 1 / -1; }
   .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -638,7 +644,7 @@ li { margin-bottom: 4px; }
       <li><strong>BA598 LHR 06:05 → VCE 09:20</strong> ✓ BOOKED. Uber to Heathrow around 04:00, about <strong>$20 / £15 each</strong></li>
       <li>Pick up car at VCE and drive about <strong>2h20</strong> to <strong>Hotel Schwarzer Adler, Sillian</strong></li>
       <li>Drop bags at <strong>Hotel Schwarzer Adler</strong> and pack day packs for the trail</li>
-      <li>Next morning: <strong>8–10 min drive to Helmjet lower station / Vierschach-Helm Talstation</strong></li>
+      <li>Next morning: <strong>about 10 min / about 8 km to Helmjet lower station / Vierschach-Helm Talstation</strong></li>
     </ul>
     <div class="tip-inline">
       <strong>Simple setup:</strong> VCE pickup + VCE drop, luggage at <strong>Hotel Schwarzer Adler</strong>, private transfer back to the car on Day 4.
@@ -675,7 +681,7 @@ li { margin-bottom: 4px; }
       <span class="rname">Sillian</span>
       <span class="arrow">🚗</span>
       <span class="rname">Vierschach-Helm</span>
-      <span class="rdetail">(8–10 min drive · park at Talstation)</span>
+      <span class="rdetail">(about 10 min / ~8 km · park at Talstation)</span>
       <span class="arrow">→</span>
       <span class="rname">Helmjet chairlift</span>
       <span class="rdetail">(~1,968m top)</span>
@@ -685,7 +691,7 @@ li { margin-bottom: 4px; }
       <span class="rname">Sillianer Hütte (2,447m)</span>
     </div>
     <ul class="highlights">
-      <li>Drive 8–10 min from Sillian, park at <strong>Helmjet lower station / Vierschach-Helm Talstation</strong>, then ride the chairlift to ~1,968m</li>
+      <li>Drive about 10 min / about 8 km from Hotel Schwarzer Adler, park at <strong>Helmjet lower station / Vierschach-Helm Talstation</strong>, then ride the chairlift to ~1,968m</li>
       <li>Route 403 (Carnic Peace Trail / Friedensweg) — follow it east from the chairlift. Stay on the ridge all the way to the hut</li>
       <li>Shortest day, good for settling in. Dolomites south, Carnic valleys north. WWI fortifications visible from the first hour — emplacements carved into the rock, wire remnants, tunnel entrances</li>
     </ul>
@@ -702,17 +708,13 @@ li { margin-bottom: 4px; }
         <span style="background:#EBF6EF;color:#2B6E42;font-size:0.82em;font-weight:700;padding:7px 14px;border-radius:7px;flex-shrink:0;">✓ CONFIRMED · Ref 6032294</span>
       </div>
       <div class="hut-details">
-        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,447 m</span></div>
-        <div class="hd"><span class="hdl">Room type</span><span class="hdv">Mehrbettzimmer (private multi-bed room)</span></div>
-        <div class="hd"><span class="hdl">Guests</span><span class="hdv">4 beds reserved · 27–28 Jul</span></div>
-        <div class="hd"><span class="hdl">Board</span><span class="hdv">Half-board included (dinner + breakfast)</span></div>
-        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Marco Rager</span></div>
-        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+49 151 542 655 41</span></div>
-        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:marco.rager@sillianer-huette.at">marco.rager@<br>sillianer-huette.at</a></span></div>
+        <div class="hd"><span class="hdl">Room</span><span class="hdv">Mehrbettzimmer · 4 beds · 27–28 Jul</span></div>
+        <div class="hd"><span class="hdl">Half-board</span><span class="hdv">Dinner + breakfast · ask about a sandwich for Day 2</span></div>
+        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Marco Rager · <a href="mailto:marco.rager@sillianer-huette.at">email</a> · +49 151 542 655 41</span></div>
       </div>
       <div class="price-pill">Half-board confirmed · typical ~€55–70/person</div>
       <p class="hut-note">
-        Westernmost hut on the Carnic Main Ridge. Mehrbettzimmer = private multi-bed room for the group, not open dorm.
+        Westernmost hut on the ridge. This one is your private multi-bed room, not an open dorm.
       </p>
     </div>
   </div>
@@ -769,17 +771,13 @@ li { margin-bottom: 4px; }
         <span style="background:#EBF6EF;color:#2B6E42;font-size:0.82em;font-weight:700;padding:7px 14px;border-radius:7px;flex-shrink:0;">✓ CONFIRMED · Ref 6032344</span>
       </div>
       <div class="hut-details">
-        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">2,306 m</span></div>
-        <div class="hd"><span class="hdl">Room type</span><span class="hdv">Matratzenlager (dorm)</span></div>
-        <div class="hd"><span class="hdl">Guests</span><span class="hdv">4 beds reserved · 28–29 Jul</span></div>
-        <div class="hd"><span class="hdl">Board</span><span class="hdv">Half-board included (dinner + breakfast)</span></div>
-        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Bodner Heinz</span></div>
-        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 932 978 99</span></div>
-        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:obstans.reservierung@gmail.com">obstans.reservierung@gmail.com</a></span></div>
+        <div class="hd"><span class="hdl">Room</span><span class="hdv">Matratzenlager dorm · 4 beds · 28–29 Jul</span></div>
+        <div class="hd"><span class="hdl">Half-board</span><span class="hdv">Dinner + breakfast · ask about lunch for Day 3</span></div>
+        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Bodner Heinz · <a href="mailto:obstans.reservierung@gmail.com">email</a> · +43 664 932 978 99</span></div>
       </div>
       <div class="price-pill">Half-board confirmed · typical ~€50–65/person</div>
       <p class="hut-note">
-        Family-run. Most atmospheric hut on the route — Dolomites + Grossglockner panoramas from the terrace. <strong>Hold until 16:30</strong> — if running late, call +43 664 932 978 99 to confirm arrival.
+        Family-run and probably the prettiest stop. <strong>Hold until 16:30</strong> — call if running late.
       </p>
     </div>
   </div>
@@ -841,17 +839,13 @@ li { margin-bottom: 4px; }
         <span style="background:#EBF6EF;color:#2B6E42;font-size:0.82em;font-weight:700;padding:7px 14px;border-radius:7px;flex-shrink:0;">✓ CONFIRMED · Ref 6032243</span>
       </div>
       <div class="hut-details">
-        <div class="hd"><span class="hdl">Elevation</span><span class="hdv">1,942 m</span></div>
-        <div class="hd"><span class="hdl">Room type</span><span class="hdv">Matratzenlager (dorm)</span></div>
-        <div class="hd"><span class="hdl">Guests</span><span class="hdv">4 beds reserved · 29–30 Jul</span></div>
-        <div class="hd"><span class="hdl">Board</span><span class="hdv">Half-board included (dinner + breakfast)</span></div>
-        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Bernd Fürhapter</span></div>
-        <div class="hd"><span class="hdl">Phone</span><span class="hdv">+43 664 325 6452</span></div>
-        <div class="hd"><span class="hdl">Email</span><span class="hdv"><a href="mailto:info@porzehuette.at">info@porzehuette.at</a></span></div>
+        <div class="hd"><span class="hdl">Room</span><span class="hdv">Matratzenlager dorm · 4 beds · 29–30 Jul</span></div>
+        <div class="hd"><span class="hdl">Half-board</span><span class="hdv">Dinner + breakfast · ask about a takeaway lunch for descent day</span></div>
+        <div class="hd"><span class="hdl">Contact</span><span class="hdv">Bernd Fürhapter · <a href="mailto:info@porzehuette.at">email</a> · +43 664 325 6452</span></div>
       </div>
       <div class="price-pill">Half-board confirmed · typical ~€50–65/person</div>
       <p class="hut-note">
-        Largest of the three huts, rebuilt 2020. Modern facilities. Straightforward descent to Obertilliach next morning (2–2.5h, well-marked). The finish-line hut — dinner here will feel like a celebration.
+        Largest and most modern hut of the three. Straightforward 2-hour descent to Obertilliach next morning.
       </p>
     </div>
   </div>
@@ -898,11 +892,11 @@ li { margin-bottom: 4px; }
     <ul class="highlights">
       <li>Easy 2h descent to Obertilliach on well-marked trail — the finish line</li>
       <li>Best option: private transfer from Obertilliach to <strong>Helmjet lower station / Vierschach-Helm Talstation</strong> in about 25–30 min</li>
-      <li>Collect car, optional quick stop in Sillian for bags, then about 2h20 to VCE</li>
+      <li>Collect car; a stop at Hotel Schwarzer Adler for bags adds about 10 min / about 8 km before the VCE drive</li>
       <li><strong>Ella + Dina</strong>: BA609 VCE 20:15 → LHR 21:25 ✓ BOOKED. <strong>Janek + Maya</strong>: TBD</li>
     </ul>
     <div class="tip-inline">
-      <strong>Book it the easy local way.</strong> Ask <strong>Porzehütte</strong> the evening before for a private transfer to <strong>Helmjet lower station / Vierschach-Helm Talstation</strong>. Leave the hut at 08:00 and you'll usually be at VCE around 13:30–14:00.
+      <strong>Simplest local booking:</strong> ask <strong>Porzehütte</strong> at dinner to call a local Obertilliach taxi for the next morning. Leave the hut at 08:00 and you'll usually be at VCE around 13:30–14:00.
     </div>
   </div>
 </div>
@@ -911,10 +905,6 @@ li { margin-bottom: 4px; }
      GETTING THERE
 ══════════════════════════════════════════════════════════════ -->
 <h2 id="travel">Getting There</h2>
-
-<div class="note-box">
-  <strong>Flights ✓ BOOKED:</strong> BA598 LHR → VCE, Sun 26 Jul, 06:05–09:20 (ref YZA8Q6). Ella + Dina return: BA609 VCE → LHR, Thu 30 Jul, 20:15–21:25, Terminal 5 (ref YTF6HX). Janek + Maya: TBD.
-</div>
 
 <div class="cost-grid">
   <div class="cost-card">
@@ -926,14 +916,14 @@ li { margin-bottom: 4px; }
       <li><span>Optional extra driver</span><span class="cv">~€10/day = ~€40 total</span></li>
       <li><span>Parking at Helmjet</span><span class="cv">Vierschach-Helm Talstation · free</span></li>
       <li><span>Austrian vignette</span><span class="cv">€9.40 · first petrol station after border</span></li>
-      <li class="total-row"><span>Estimated total (÷4)</span><span class="cv">~€87 pp basic · ~€97 pp with extra driver</span></li>
+      <li class="total-row"><span>Estimated total</span><span class="cv">~€87 pp basic · ~€97 pp with extra driver</span></li>
     </ul>
   </div>
   <div class="cost-card" id="hotels">
     <h4>Hotel + Bags</h4>
     <div class="card-sub">Hotel Schwarzer Adler · Sillian · Sun Jul 26</div>
     <ul>
-      <li><span>Location</span><span class="cv">8–10 min drive to Helmjet lower station</span></li>
+      <li><span>Location</span><span class="cv">about 10 min / about 8 km to Helmjet lower station</span></li>
       <li><span>Bags stay here</span><span class="cv">4 days while you hike</span></li>
       <li><span>Luggage storage</span><span class="cv">confirm on booking</span></li>
       <li><span>Free cancellation</span><span class="cv">before 21 Jul</span></li>
@@ -960,11 +950,11 @@ li { margin-bottom: 4px; }
   <div class="tt-section">
     <div class="tt-row"><span>🏨 Pre-hike hotel · Hotel Schwarzer Adler, Sillian <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="tt-val">~$36</span></div>
     <div class="tt-sub"><span>Room of 4 · $143 total · free cancel before 21 Jul</span></div>
-    <div class="tt-sub"><span>8–10 min drive to Helmjet lower station · bags stored here for 4 days</span></div>
+    <div class="tt-sub"><span>About 10 min / about 8 km to Helmjet lower station · bags stored here for 4 days</span></div>
   </div>
 
   <div class="tt-section">
-    <div class="tt-row"><span>🚗 Car rental + vignette (÷4)</span><span class="tt-val">~€87 pp basic</span></div>
+    <div class="tt-row"><span>🚗 Car rental + vignette</span><span class="tt-val">~€87 pp basic</span></div>
     <div class="tt-sub"><span>Locauto VW Polo Automatic or similar · €337.20 prepaid + €9.40 vignette</span></div>
     <div class="tt-sub"><span>Optional extra driver</span><span class="ts-val">~+€10 pp</span></div>
     <div class="tt-sub"><span>Fuel VCE → Sillian + Sillian → VCE via Dobbiaco</span><span class="ts-val">~$18–25/person</span></div>
@@ -982,7 +972,7 @@ li { margin-bottom: 4px; }
     <div class="tt-sub"><span>Uber to LHR for BA598 (Sun 26 Jul)</span><span class="ts-val">~$20 / £15 each</span></div>
     <div class="tt-sub"><span>Park at Helmjet base (Day 1–4)</span><span class="ts-val">Free</span></div>
     <div class="tt-sub"><span>Helmjet chairlift (one-way)</span><span class="ts-val">~$22–27</span></div>
-    <div class="tt-sub"><span>Private transfer Obertilliach → Helmjet lower station / Vierschach-Helm (Day 4, ÷4)</span><span class="ts-val">~$14–20</span></div>
+    <div class="tt-sub"><span>Private transfer Obertilliach → Helmjet lower station / Vierschach-Helm (Day 4)</span><span class="ts-val">~$14–20 pp</span></div>
     <div class="tt-sub"><span>Meals in Sillian + Venice</span><span class="ts-val">~$65–110</span></div>
   </div>
 
@@ -1104,11 +1094,11 @@ li { margin-bottom: 4px; }
   </li>
   <li class="cl-done">
     <strong>Outbound flights — BA598 LHR → VCE (Sun 26 Jul, 06:05–09:20) <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></strong>
-    <span class="cl-sub">All four fly together. Ref YZA8Q6. Uber to Heathrow around 04:00, about $20 / £15 each</span>
+    <span class="cl-sub">All four fly together. Uber to Heathrow around 04:00, about $20 / £15 each</span>
   </li>
   <li class="cl-done">
     <strong>Return flights — Ella + Dina: BA609 VCE → LHR (Thu 30 Jul, 20:15–21:25) <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></strong>
-    <span class="cl-sub">Ref YTF6HX, Terminal 5. Janek + Maya: return routes TBD — plenty of VCE options or train to Rome FCO</span>
+    <span class="cl-sub">Janek + Maya: return routes TBD — plenty of VCE options or train to Rome FCO</span>
   </li>
   <li>
     <strong>Car rental — VCE pickup · VCE drop (Sun 26 Jul, 4 days)</strong>
