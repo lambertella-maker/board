@@ -371,7 +371,7 @@ li { margin-bottom: 4px; }
 .cost-card li { font-size: 0.87em; padding: 3px 0; border-bottom: 1px solid #F0F0F0; display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 12px; align-items: start; }
 .cost-card li:last-child { border-bottom: none; }
 .cost-card .total-row { font-weight: 700; color: var(--green); margin-top: 6px; border-top: 2px solid var(--green-border) !important; padding-top: 8px !important; }
-.cv { font-weight: 600; white-space: nowrap; text-align: right; min-width: 0; }
+.cv { font-weight: 600; white-space: normal; text-align: right; min-width: 0; overflow-wrap: anywhere; }
 
 /* ─── FLIGHT COMPARE TABLE ─── */
 .flight-table { width: 100%; border-collapse: collapse; font-size: 0.87em; margin: 16px 0; }
@@ -381,6 +381,22 @@ li { margin-bottom: 4px; }
 .flight-table tr:hover td { background: #F8FBF9; }
 .flight-table .best-row td { background: #EBF6EF; font-weight: 600; }
 .recommend-badge { background: var(--green-light); color: var(--green); font-size: 0.75em; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+.status-pill {
+  display: inline-block;
+  background: #EBF6EF;
+  color: #2B6E42;
+  border: 1px solid #BFE0CB;
+  font-size: 0.7em;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.status-pill.sm { font-size: 0.66em; padding: 3px 7px; }
+.status-pill.lg { font-size: 0.78em; padding: 6px 10px; }
 
 /* ─── CHECKLIST ─── */
 .checklist { list-style: none; padding: 0; }
@@ -948,7 +964,7 @@ li { margin-bottom: 4px; }
   <h3>Trip Total — per person estimate</h3>
 
   <div class="tt-section">
-    <div class="tt-row"><span>🏨 Pre-hike hotel · Hotel Schwarzer Adler, Sillian <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="tt-val">~$36</span></div>
+    <div class="tt-row"><span>🏨 Pre-hike hotel · Hotel Schwarzer Adler, Sillian <span class="status-pill sm">✓ BOOKED</span></span><span class="tt-val">~$36</span></div>
     <div class="tt-sub"><span>Room of 4 · $143 total · free cancel before 21 Jul</span></div>
     <div class="tt-sub"><span>About 10 min / about 8 km to Helmjet lower station · bags stored here for 4 days</span></div>
   </div>
@@ -962,9 +978,9 @@ li { margin-bottom: 4px; }
 
   <div class="tt-section">
     <div class="tt-row"><span>🏕 Huts · 3 nights half-board</span><span class="tt-val">~$170–220</span></div>
-    <div class="tt-sub"><span>Night 1 · Sillianer Hütte · Mehrbettzimmer · Ref 6032294 <span style="background:#EBF6EF;color:#2B6E42;font-size:0.68em;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="ts-val">~$60–75</span></div>
-    <div class="tt-sub"><span>Night 2 · Obstanserseehütte · Matratzenlager · Ref 6032344 <span style="background:#EBF6EF;color:#2B6E42;font-size:0.68em;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="ts-val">~$55–70</span></div>
-    <div class="tt-sub"><span>Night 3 · Porzehütte · Matratzenlager · Ref 6032243 <span style="background:#EBF6EF;color:#2B6E42;font-size:0.68em;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="ts-val">~$55–70</span></div>
+    <div class="tt-sub"><span>Night 1 · Sillianer Hütte · Mehrbettzimmer · Ref 6032294 <span class="status-pill sm">✓ BOOKED</span></span><span class="ts-val">~$60–75</span></div>
+    <div class="tt-sub"><span>Night 2 · Obstanserseehütte · Matratzenlager · Ref 6032344 <span class="status-pill sm">✓ BOOKED</span></span><span class="ts-val">~$55–70</span></div>
+    <div class="tt-sub"><span>Night 3 · Porzehütte · Matratzenlager · Ref 6032243 <span class="status-pill sm">✓ BOOKED</span></span><span class="ts-val">~$55–70</span></div>
   </div>
 
   <div class="tt-section">
@@ -978,9 +994,9 @@ li { margin-bottom: 4px; }
 
   <div class="tt-section">
     <div class="tt-row"><span>✈ Flights · varies by person</span><span class="tt-val">see below</span></div>
-    <div class="tt-sub"><span>Ella + Dina outbound: BA598 LHR → VCE, Sun 26 Jul <span style="background:#EBF6EF;color:#2B6E42;font-size:0.68em;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="ts-val">£101 pp</span></div>
-    <div class="tt-sub"><span>Ella return: BA609 VCE → LHR, Thu 30 Jul <span style="background:#EBF6EF;color:#2B6E42;font-size:0.68em;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="ts-val">£30 with Avios</span></div>
-    <div class="tt-sub"><span>Dina return: BA609 VCE → LHR, Thu 30 Jul <span style="background:#EBF6EF;color:#2B6E42;font-size:0.68em;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="ts-val">Price not noted yet</span></div>
+    <div class="tt-sub"><span>Ella + Dina outbound: BA598 LHR → VCE, Sun 26 Jul <span class="status-pill sm">✓ BOOKED</span></span><span class="ts-val">£101 pp</span></div>
+    <div class="tt-sub"><span>Ella return: BA609 VCE → LHR, Thu 30 Jul <span class="status-pill sm">✓ BOOKED</span></span><span class="ts-val">£30 with Avios</span></div>
+    <div class="tt-sub"><span>Dina return: BA609 VCE → LHR, Thu 30 Jul <span class="status-pill sm">✓ BOOKED</span></span><span class="ts-val">Price not noted yet</span></div>
     <div class="tt-sub"><span>Maya: own transatlantic inbound (Chicago or Boston → London)</span><span class="ts-val">~$500–900</span></div>
     <div class="tt-sub"><span>Janek: own transatlantic inbound (LAX → LHR)</span><span class="ts-val">~$550–1,000</span></div>
     <div class="tt-sub"><span>Janek + Maya return from VCE: TBD</span><span class="ts-val">~$400–700</span></div>
@@ -1081,23 +1097,23 @@ li { margin-bottom: 4px; }
 
 <ul class="checklist">
   <li class="cl-done">
-    <strong>Sillianer Hütte — Night 1 · Ref 6032294 <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></strong>
+    <strong>Sillianer Hütte — Night 1 · Ref 6032294 <span class="status-pill sm">✓ BOOKED</span></strong>
     <span class="cl-sub">Mehrbettzimmer, half-board · 27–28 Jul · Contact: Marco Rager, marco.rager@sillianer-huette.at</span>
   </li>
   <li class="cl-done">
-    <strong>Obstanserseehütte — Night 2 · Ref 6032344 <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></strong>
+    <strong>Obstanserseehütte — Night 2 · Ref 6032344 <span class="status-pill sm">✓ BOOKED</span></strong>
     <span class="cl-sub">Matratzenlager, half-board · 28–29 Jul · Contact: Bodner Heinz, +43 664 932 978 99 · Hold until 16:30</span>
   </li>
   <li class="cl-done">
-    <strong>Porzehütte — Night 3 · Ref 6032243 <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></strong>
+    <strong>Porzehütte — Night 3 · Ref 6032243 <span class="status-pill sm">✓ BOOKED</span></strong>
     <span class="cl-sub">Matratzenlager, half-board · 29–30 Jul · Contact: Bernd Fürhapter, info@porzehuette.at</span>
   </li>
   <li class="cl-done">
-    <strong>Outbound flights — BA598 LHR → VCE (Sun 26 Jul, 06:05–09:20) <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></strong>
+    <strong>Outbound flights — BA598 LHR → VCE (Sun 26 Jul, 06:05–09:20) <span class="status-pill sm">✓ BOOKED</span></strong>
     <span class="cl-sub">All four fly together. Uber to Heathrow around 04:00, about $20 / £15 each</span>
   </li>
   <li class="cl-done">
-    <strong>Return flights — Ella + Dina: BA609 VCE → LHR (Thu 30 Jul, 20:15–21:25) <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></strong>
+    <strong>Return flights — Ella + Dina: BA609 VCE → LHR (Thu 30 Jul, 20:15–21:25) <span class="status-pill sm">✓ BOOKED</span></strong>
     <span class="cl-sub">Janek + Maya: return routes TBD — plenty of VCE options or train to Rome FCO</span>
   </li>
   <li>
@@ -1105,7 +1121,7 @@ li { margin-bottom: 4px; }
     <span class="cl-sub">Locauto VW Polo Automatic or similar: €337.20 prepaid basic rate. Optional extra driver ~€40 total. Park at Helmjet lower station / Vierschach-Helm for 4 days. Buy Austrian vignette (€9.40) at the first petrol station after crossing into Austria</span>
   </li>
   <li class="cl-done">
-    <strong>Pre-hike hotel — Hotel Schwarzer Adler, Sillian (Sun 26 Jul night) <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></strong>
+    <strong>Pre-hike hotel — Hotel Schwarzer Adler, Sillian (Sun 26 Jul night) <span class="status-pill sm">✓ BOOKED</span></strong>
     <span class="cl-sub">Room of 4 · $143 total · free cancel before 21 Jul · confirm luggage storage on arrival</span>
   </li>
   <li>
