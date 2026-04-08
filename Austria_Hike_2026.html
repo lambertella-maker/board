@@ -116,7 +116,7 @@ h2 {
   font-size: 1.45em;
   font-weight: 400;
   color: var(--green);
-  margin: 48px 0 16px;
+  margin: 42px 0 16px;
   padding-bottom: 10px;
   border-bottom: 2px solid var(--green-light);
 }
@@ -124,6 +124,17 @@ h3 { font-size: 1.03em; font-weight: 600; margin-bottom: 6px; }
 p { margin-bottom: 10px; }
 a { color: var(--blue); text-decoration: none; }
 a:hover { text-decoration: underline; }
+.hut-ov-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.hut-ov-link:hover { text-decoration: none; }
+.quiet-link {
+  color: inherit;
+  text-decoration: none;
+}
+.quiet-link:hover { text-decoration: none; }
 ul { padding-left: 18px; }
 li { margin-bottom: 4px; }
 
@@ -571,9 +582,6 @@ li { margin-bottom: 4px; }
 <div class="hero">
   <div class="hero-eyebrow">Austria Ridge Trek · Peace Trail · Carnic Alps · Austria–Italy Border</div>
   <h1>Austria <em>Ridge Trek</em><br>Hut-to-Hut · July 2026</h1>
-  <p class="tagline">
-    A WWI ridge trail that's genuinely off the tourist circuit. Three nights of Alpenverein huts along the Austria–Italy border, with the Sextener Dolomites on one side and the Carnic valleys on the other. Four-hour hiking days, optional summits, and a landscape that most people driving through the Alps have never seen.
-  </p>
   <div class="hero-stats">
     <div class="hs"><span class="val">3</span><span class="lbl">Hut Nights</span></div>
     <div class="hs"><span class="val">~28 km</span><span class="lbl">Trail Distance</span></div>
@@ -616,7 +624,7 @@ li { margin-bottom: 4px; }
     <div class="hut-ov-photo" style="background: url('https://eportal.alpenverein.at/skripts/show_bild.php?huetteNr=0209&breite=350') center / cover no-repeat, linear-gradient(150deg, #2B6E42, #6BB89A);"></div>
     <div class="hut-ov-body">
       <div class="ov-night">Night 1 · Mon 27 Jul</div>
-      <h3>Sillianer Hütte</h3>
+      <h3><a class="hut-ov-link" href="#night1-hut">Sillianer Hütte</a></h3>
       <div class="ov-note"><span class="status-pill sm">✓ BOOKED</span><br>Private multi-bed room · Dinner + breakfast</div>
     </div>
   </div>
@@ -626,7 +634,7 @@ li { margin-bottom: 4px; }
     <div class="hut-ov-photo" style="background: url('https://www.tirol.tl/images/cms/main/1280/B_ObstanserSee_Kartitsch.jpg') center 58% / cover no-repeat, linear-gradient(150deg, #1E5A96, #78B8E0);"></div>
     <div class="hut-ov-body">
       <div class="ov-night">Night 2 · Tue 28 Jul</div>
-      <h3>Obstanserseehütte</h3>
+      <h3><a class="hut-ov-link" href="#night2-hut">Obstanserseehütte</a></h3>
       <div class="ov-note"><span class="status-pill sm">✓ BOOKED</span><br>Dorm beds · Dinner + breakfast · Packed lunch available</div>
     </div>
   </div>
@@ -636,7 +644,7 @@ li { margin-bottom: 4px; }
     <div class="hut-ov-photo" style="background: url('https://www.alpenverein-austria.at/austria/slides/bilder/sommer2018/weblication/wThumbnails/Obstans-Galbavy-2013-1-71cd0ca38e2d74c61d5930d7ca278e50.jpg') center / cover no-repeat, linear-gradient(150deg, #B85828, #E8A878);"></div>
     <div class="hut-ov-body">
       <div class="ov-night">Night 3 · Wed 29 Jul</div>
-      <h3>Porzehütte</h3>
+      <h3><a class="hut-ov-link" href="#night3-hut">Porzehütte</a></h3>
       <div class="ov-note"><span class="status-pill sm">✓ BOOKED</span><br>Dorm beds · Dinner + breakfast · Packed lunch available</div>
     </div>
   </div>
@@ -750,7 +758,7 @@ li { margin-bottom: 4px; }
       <strong>Optional summit from Day 1:</strong> Eisenleiten or nearby ridgeline peaks above Sillianer Hütte offer an additional 45–90 minutes for anyone with energy after arriving at the hut. Leave your pack at the hut first.
     </div>
 
-    <div class="hut-box">
+    <div class="hut-box" id="night1-hut">
       <div class="hut-header">
         <div class="hut-title">
           <h4>Night 1 — Sillianer Hütte</h4>
@@ -813,7 +821,7 @@ li { margin-bottom: 4px; }
       <strong>Depart Sillianer by 08:00.</strong> Afternoon storms can build on the ridge above 2,500m. The fixed cable sections are manageable in dry conditions; wet rock changes the calculation. An early start keeps you ahead of any weather that builds after noon.
     </div>
 
-    <div class="hut-box">
+    <div class="hut-box" id="night2-hut">
       <div class="hut-header">
         <div class="hut-title">
           <h4>Night 2 — Obstanserseehütte</h4>
@@ -881,7 +889,7 @@ li { margin-bottom: 4px; }
       <strong>Headlamp in your day pack tonight.</strong> Porzehütte has access to one of the WWI tunnel networks — if you explore them on Day 4 morning before descending, you'll need it. Worth it.
     </div>
 
-    <div class="hut-box">
+    <div class="hut-box" id="night3-hut">
       <div class="hut-header">
         <div class="hut-title">
           <h4>Night 3 — Porzehütte</h4>
