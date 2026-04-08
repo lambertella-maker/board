@@ -3,13 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Ella Finance">
-<meta name="theme-color" content="#080c18">
-<link rel="apple-touch-icon" href="./finance-apple-touch-icon.png">
-<link rel="icon" type="image/png" href="./finance-icon-512.png">
-<title>Ella Lambert — Finance Dashboard (iPad)</title>
+<title>Ella Lambert — Finance Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="tax_data.js" onerror="void 0"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -41,8 +35,6 @@
   .nav-links a, .nav-links button { color:var(--soft); text-decoration:none; font-size:0.82rem; font-weight:500; transition:color .2s; cursor:pointer; background:none; border:none; padding:0; font-family:inherit; }
   .nav-links a:hover, .nav-links button:hover { color:var(--text); }
   .date-pill { background:var(--card2); border:1px solid var(--border); border-radius:20px; padding:0.3rem 1rem; font-size:0.75rem; color:var(--soft); }
-  .refresh-btn { background:none; border:none; cursor:pointer; color:var(--muted); font-size:0.8rem; padding:2px 4px; line-height:1; transition:color .2s; }
-  .refresh-btn:hover { color:var(--soft); }
 
   /* LAYOUT */
   .container { max-width:1280px; margin:0 auto; padding:0 2rem; }
@@ -206,10 +198,10 @@
   .pillar-icon { font-size:1.8rem; margin-bottom:0.8rem; }
   .pillar-name { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:0.3rem; }
   .pillar-title { font-size:1rem; font-weight:700; margin-bottom:0.8rem; }
-  .pillar-stat { display:flex; justify-content:space-between; align-items:flex-start; gap:0.9rem; margin-bottom:0.5rem; }
-  .pillar-stat-label { font-size:0.75rem; color:var(--muted); line-height:1.4; }
-  .pillar-stat-value { font-size:0.78rem; font-weight:700; text-align:right; line-height:1.4; }
-  .pillar-why { font-size:0.75rem; color:var(--soft); line-height:1.6; margin-top:1rem; padding-top:0.9rem; border-top:1px solid var(--border); }
+  .pillar-stat { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; margin-bottom:0.35rem; }
+  .pillar-stat-label { font-size:0.75rem; color:var(--muted); }
+  .pillar-stat-value { font-size:0.78rem; font-weight:700; text-align:right; }
+  .pillar-why { font-size:0.75rem; color:var(--soft); line-height:1.5; margin-top:0.9rem; padding-top:0.8rem; border-top:1px solid var(--border); }
   .superplan-total { background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(244,114,182,0.05)); border:1px solid rgba(251,191,36,0.25); border-radius:16px; padding:2rem; margin-top:2rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; text-align:center; }
   .st-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin-bottom:0.4rem; }
   .st-value { font-size:1.6rem; font-weight:800; }
@@ -294,6 +286,62 @@
   .goal-pill.with-bruce { background:rgba(251,191,36,0.1);  border:1px solid rgba(251,191,36,0.25);  color:var(--amber); }
   .goal-pill .gp-label  { font-size:0.6rem; font-weight:600; color:var(--muted); margin-bottom:0.1rem; }
 
+  /* CHAT BAR */
+  .chatbar { padding:1.4rem 2rem; display:flex; justify-content:center; }
+  .chatbar-inner { width:100%; max-width:680px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem 1.4rem; }
+  .chatbar-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.65rem; }
+  .chatbar-greeting { font-size:0.92rem; font-weight:600; background:linear-gradient(135deg,var(--indigo),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .chatbar-meta { display:flex; align-items:center; gap:0.5rem; }
+  .chat-status-dot { width:7px; height:7px; border-radius:50%; background:var(--muted); flex-shrink:0; }
+  .chat-status-dot.online { background:var(--green); box-shadow:0 0 0 3px rgba(52,211,153,0.2); }
+  .chatbar-status-text { font-size:0.7rem; color:var(--muted); }
+  .chatbar-messages { display:none; flex-direction:column; gap:0.6rem; max-height:480px; overflow-y:auto;
+    margin-bottom:0.75rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border); }
+  .chatbar-messages.visible { display:flex; }
+  .chatbar-messages::-webkit-scrollbar { width:3px; }
+  .chatbar-messages::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+  .chat-msg { max-width:88%; }
+  .chat-msg.user { align-self:flex-end; }
+  .chat-msg.assistant { align-self:flex-start; }
+  .chat-bubble { padding:0.7rem 1rem; border-radius:12px; font-size:0.83rem; line-height:1.6; }
+  /* Markdown elements inside chat bubbles */
+  .chat-bubble h3,.chat-bubble h4 { font-size:0.88rem; font-weight:700; color:var(--text); margin:0.7rem 0 0.3rem; }
+  .chat-bubble h3:first-child,.chat-bubble h4:first-child { margin-top:0; }
+  .chat-bubble p { margin:0.25rem 0; }
+  .chat-bubble ul,.chat-bubble ol { padding-left:1.1rem; margin:0.3rem 0; }
+  .chat-bubble li { margin:0.15rem 0; }
+  .chat-bubble strong { color:var(--text); font-weight:700; }
+  .chat-bubble em { color:var(--soft); }
+  .chat-bubble code { background:rgba(129,140,248,0.12); border:1px solid rgba(129,140,248,0.2);
+    border-radius:4px; padding:0.05rem 0.35rem; font-family:'SF Mono',monospace; font-size:0.78rem; color:var(--indigo); }
+  .chat-bubble pre { background:var(--bg); border:1px solid var(--border); border-radius:8px;
+    padding:0.7rem 0.9rem; overflow-x:auto; margin:0.5rem 0; }
+  .chat-bubble pre code { background:none; border:none; padding:0; color:var(--soft); font-size:0.76rem; }
+  .chat-bubble table { border-collapse:collapse; width:100%; margin:0.5rem 0; font-size:0.78rem; }
+  .chat-bubble th { background:rgba(129,140,248,0.1); color:var(--indigo); font-weight:700;
+    text-align:left; padding:0.3rem 0.6rem; border:1px solid var(--border); }
+  .chat-bubble td { padding:0.25rem 0.6rem; border:1px solid var(--border); color:var(--soft); }
+  .chat-bubble hr { border:none; border-top:1px solid var(--border); margin:0.6rem 0; }
+  .chat-bubble .md-gap { height:0.4rem; }
+  .chat-msg.user .chat-bubble { background:rgba(129,140,248,0.15); border:1px solid rgba(129,140,248,0.2); color:var(--text); border-bottom-right-radius:3px; }
+  .chat-msg.assistant .chat-bubble { background:var(--card2); border:1px solid var(--border); color:var(--text); border-bottom-left-radius:3px; }
+  .chat-update-banner { padding:0.45rem 0.7rem; background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.25); border-radius:7px; font-size:0.72rem; color:var(--amber); align-self:stretch; }
+  .chat-update-banner strong { display:block; font-size:0.65rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.15rem; }
+  .chat-thinking { color:var(--muted); font-size:0.78rem; font-style:italic; }
+  .chatbar-input-row { display:flex; align-items:center; gap:0.8rem; }
+  .chatbar-input { flex:1; background:transparent; border:none; border-bottom:1px solid var(--border); color:var(--text);
+    font-size:0.88rem; font-family:'Inter',sans-serif; outline:none; resize:none; padding:0.25rem 0;
+    line-height:1.5; max-height:72px; overflow-y:auto; transition:border-color .2s; }
+  .chatbar-input:focus { border-bottom-color:var(--indigo); }
+  .chatbar-input::placeholder { color:var(--muted); }
+  .chatbar-send { background:none; border:none; color:var(--indigo); cursor:pointer; font-size:1.15rem;
+    padding:0.1rem 0.3rem; opacity:0.6; transition:opacity .2s; flex-shrink:0; }
+  .chatbar-send:hover { opacity:1; }
+  .chatbar-send:disabled { opacity:0.25; cursor:not-allowed; }
+  .chat-offline-msg { font-size:0.75rem; color:var(--muted); background:rgba(251,191,36,0.05);
+    border:1px solid rgba(251,191,36,0.15); border-radius:7px; padding:0.5rem 0.8rem; line-height:1.5; }
+  .chat-offline-msg code { background:var(--bg); padding:0.1rem 0.3rem; border-radius:3px; font-size:0.7rem; }
+
   /* PAYE CHECKER */
   .paye-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem; }
   @media(max-width:700px){ .paye-grid { grid-template-columns:1fr; } }
@@ -311,32 +359,9 @@
   .paye-warn  { color:var(--amber); font-weight:700; }
   .paye-error { color:var(--red);   font-weight:700; }
   .paye-section-label { font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin:0.8rem 0 0.3rem; }
-
-/* ── BIOMETRIC LOCK ── */
-#lock{position:fixed;inset:0;z-index:9999;background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:0;text-align:center;padding:2rem;}
-#lock.gone{display:none;}
-#lock-icon{font-size:3rem;margin-bottom:1rem;}
-#lock-title{font-size:1.3rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-.02em;}
-#lock-sub{font-size:.8rem;color:var(--muted);margin-bottom:2rem;line-height:1.6;max-width:240px;}
-#lock-btn{background:var(--indigo);color:white;border:none;border-radius:14px;
-  padding:.85rem 2.2rem;font-size:.95rem;font-weight:700;cursor:pointer;
-  font-family:inherit;letter-spacing:-.01em;transition:opacity .15s;}
-#lock-btn:active{opacity:.7;}
-#lock-msg{margin-top:1rem;font-size:.75rem;color:var(--muted);min-height:1.2em;}
 </style>
 </head>
 <body>
-
-<!-- ── Biometric lock overlay ── -->
-<div id="lock">
-  <div id="lock-icon">💰</div>
-  <div id="lock-title">Finance Dashboard</div>
-  <div id="lock-sub">Authenticate to continue</div>
-  <button id="lock-btn" onclick="window._lockAuth()">🔓 Unlock with Face ID</button>
-  <div id="lock-msg"></div>
-</div>
 
 <nav>
   <div class="logo">Ella Lambert — Finance Hub</div>
@@ -347,14 +372,29 @@
     <button onclick="scrollToSection('goals')">Goals</button>
     <button onclick="scrollToSection('tax')">Tax</button>
     <button onclick="scrollToSection('paye-checker')">PAYE</button>
-    <button onclick="scrollToSection('fire')">FIRE</button>
     <button onclick="scrollToSection('investments')">Investments</button>
+    <button onclick="scrollToSection('fire')">FIRE</button>
   </div>
-  <div style="display:flex;align-items:center;gap:4px">
-    <div class="date-pill" id="live-date"></div>
-    <button class="refresh-btn" onclick="refreshDashboard()" title="Refresh">↺</button>
-  </div>
+  <div class="date-pill" id="live-date"></div>
 </nav>
+
+<!-- CHAT BAR -->
+<div class="chatbar">
+  <div class="chatbar-inner">
+    <div class="chatbar-top">
+      <div class="chatbar-greeting" id="chat-greeting"></div>
+      <div class="chatbar-meta">
+        <div class="chat-status-dot" id="chat-status-dot"></div>
+        <span class="chatbar-status-text" id="chat-status-text">Checking…</span>
+      </div>
+    </div>
+    <div class="chatbar-messages" id="chat-messages"></div>
+    <div class="chatbar-input-row">
+      <textarea class="chatbar-input" id="chat-input" rows="1" placeholder="Ask me anything about your finances…"></textarea>
+      <button class="chatbar-send" id="chat-send" onclick="sendChat()">↵</button>
+    </div>
+  </div>
+</div>
 
 <div class="container">
 
@@ -395,14 +435,14 @@
   <!-- ACCOUNTS -->
   <section>
     <h2 class="section-title">Your <span>Accounts</span></h2>
-    <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.8rem;">Savings anchored 24 Feb 2026 · Pension anchored 3 Mar 2026 (£18,440) · Investments at 7% CAGR · <span style="color:var(--indigo);">All estimates update on page load</span></div>
+    <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.8rem;">Savings anchored 24 Feb 2026 · Pension anchored 3 Mar 2026 (£18,440) · Investments: live prices when server online · <span style="color:var(--indigo);">All estimates update on page load</span></div>
     <div class="accounts-grid">
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£11,144</div><div class="account-rate">3.49% AER · interest daily-compounded</div><div class="account-note">Emergency fund · No withdrawals</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo</div><div class="account-balance" id="bal-monzo" style="color:var(--cyan)">£2,000</div><div class="account-rate">2.75% AER · interest daily-compounded</div><div class="account-note">Instant liquidity buffer</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">~£1,200 avg</div><div class="account-rate">Current account · typical float</div><div class="account-note">Salary hub · min £1,000 · varies by day</div></div>
-      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Advisor</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$3,948</div><div class="account-rate">Growth Opps Class C · target → FSKAX/FTIHX/FXNAX</div><div class="account-note">+$475/mo · 7% CAGR</div></div>
-      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$2,667</div><div class="account-rate">+$625/mo · $7,500/yr limit · 7% CAGR</div><div class="account-note">Active $590.72 + legacy $2,075.91</div></div>
-      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">~£18,440</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">+£3,186 SALX (Mar 2026) · £921/mo total</div></div>
+      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$3,948</div><div class="account-rate">+$475/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Active brokerage · Advisor holdings separate</div></div>
+      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$2,667</div><div class="account-rate">+$625/mo to brokerage Roth · $7,500/yr limit</div><div class="account-note">Split: $590.72 active + $2,075.91 legacy at Fidelity Advisor</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">~£18,440</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">+£3,186 SALX (Mar 2026) · £1,020/mo (G15)</div></div>
     </div>
   </section>
 
@@ -468,10 +508,10 @@
         <div class="pillar-name">Pillar 4 · US Investing</div>
         <div class="pillar-title">Fidelity Index Funds</div>
         <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--green)">~$3,948 (~£3,100)</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475 taxable + $625 Roth brokerage</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475/mo taxable + $625/mo Roth brokerage</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target allocation</span><span class="pillar-stat-value">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">~£1.1M (taxable, after-tax)</span></div>
-        <div class="pillar-why">$475 taxable + $625 Roth brokerage = active $1,100/mo. Both buy identical 85/10/5 and execute on the 30th.</div>
+        <div class="pillar-why">$475/mo taxable + $625/mo Roth brokerage = same active $1,100 pipeline via Wise → Chase US → Fidelity. Those two active brokerage accounts buy identical 85/10/5 allocation. Legacy Advisor holdings stay untouched.</div>
       </div>
 
       <div class="pillar p-pink">
@@ -479,11 +519,11 @@
         <div class="pillar-name">Pillar 5 · US Retirement</div>
         <div class="pillar-title">Roth IRA</div>
         <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--pink)">~$2,667 (~£2,100)</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Monthly contribution</span><span class="pillar-stat-value" style="color:var(--pink)">$625/mo</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">2026 annual limit</span><span class="pillar-stat-value">$7,500 · on pace ✓</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monthly contribution</span><span class="pillar-stat-value" style="color:var(--pink)">$625/mo to brokerage Roth</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">2026 annual limit</span><span class="pillar-stat-value">$7,500 · on pace at $625/mo</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Tax on growth</span><span class="pillar-stat-value" style="color:var(--green)">Zero. Ever.</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--pink)">~£1.3M tax-free</span></div>
-        <div class="pillar-why">Max-pace 2026 Roth at $7,500/yr. UK-US treaty (Art.17): tax-free in both countries. Contributions always accessible penalty-free.</div>
+        <div class="pillar-why">Combined Roth = $590.72 active brokerage + $2,075.91 legacy Roth at Fidelity Advisor. Only the brokerage Roth gets new monthly 85/10/5 buys. UK-US treaty (Article 17): tax-free in both US and UK.</div>
       </div>
 
       <div class="pillar p-indigo">
@@ -731,7 +771,6 @@
         </div>
       </div>
 
-
     </div>
 
     <!-- Long Horizon: Southern Europe Bolthole -->
@@ -896,7 +935,7 @@
         </div>
       </div>
       <div style="font-size:0.72rem; background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2); border-radius:8px; padding:0.6rem 0.8rem; margin-top:1rem; line-height:1.5; color:var(--amber);">
-        ⚠️ Verify against your first April 2026 payslip. If net differs, the gap likely reflects pension timing or HMRC band confirmation for 2026/27.</div>
+        Verify against your April 2026 payslip. If net differs, likely reflects pension timing or HMRC adjustment for Grade 15 mid-year.</div>
     </div>
 
     <!-- PAYE EXPLAINER — all UK info together -->
@@ -1025,15 +1064,15 @@
     <div class="metrics" style="margin-bottom:1.4rem;">
       <div class="metric-card">
         <div class="metric-label">Roth IRA</div>
-        <div class="metric-value" style="color:var(--amber)">$1,931</div>
-        <div class="metric-sub">+$625/mo · tax-free growth forever</div>
-        <span class="metric-badge badge-amber">$625/mo · $7,500/yr limit</span>
+        <div class="metric-value" style="color:var(--amber)">$2,667</div>
+        <div class="metric-sub">$590.72 active brokerage + $2,075.91 Advisor legacy</div>
+        <span class="metric-badge badge-amber">$625/mo active · $7,500/yr limit</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Fidelity Taxable</div>
         <div class="metric-value" style="color:var(--green)">$3,948</div>
         <div class="metric-sub">+$475/mo → FSKAX/FTIHX/FXNAX</div>
-        <span class="metric-badge badge-green">+$475/mo active · Class C legacy</span>
+        <span class="metric-badge badge-green">+$475/mo active · Advisor legacy separate</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Annual investing</div>
@@ -1084,7 +1123,7 @@
         <div class="pipe-step" style="border-color:rgba(52,211,153,0.35); background:rgba(52,211,153,0.05);">
           <div class="pipe-icon">🛒</div>
           <div class="pipe-label">Buy funds</div>
-          <div class="pipe-amount">Manual</div>
+          <div class="pipe-amount">Recurring</div>
           <div class="pipe-note">85% FSKAX · 10% FTIHX · 5% FXNAX</div>
         </div>
       </div>
@@ -1167,15 +1206,17 @@
         <div><span style="color:var(--soft);">Expense ratio</span>&nbsp;&nbsp;~1% (~65× FSKAX)</div>
         <div><span style="color:var(--soft);">Type</span>&nbsp;&nbsp;Actively managed</div>
       </div>
-      <div style="font-size:0.72rem;color:var(--muted);margin-top:0.6rem;line-height:1.6;">No new contributions. ~1% annual fee creates slow drag vs index funds. No urgent action — selling triggers LTCG (15% on gains). Review migration to FSKAX when the gain is small.</div>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:0.6rem;line-height:1.6;">Existing holding from Fidelity Advisor platform. No new contributions going here. Separate from the legacy Roth that also sits at Fidelity Advisor. Actively managed fund with ~1% annual fee creates slow drag vs index funds. No urgent action — selling triggers LTCG (15% on gains).</div>
     </div>
 
     <!-- Roth IRA + Actions -->
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; margin-bottom:1.4rem;">
       <div class="chart-card">
         <h3>Roth IRA — Tax-Free Vault</h3>
-        <div class="tax-row"><span class="tax-row-label">Current balance</span><span class="tax-row-value" style="color:var(--amber);">$1,931</span></div>
-        <div class="tax-row"><span class="tax-row-label">Monthly contribution</span><span class="tax-row-value" style="color:var(--amber);">$625/mo</span></div>
+        <div class="tax-row"><span class="tax-row-label">Current balance</span><span class="tax-row-value" style="color:var(--amber);">$2,666.63</span></div>
+        <div class="tax-row"><span class="tax-row-label">Active brokerage Roth</span><span class="tax-row-value" style="color:var(--amber);">$590.72</span></div>
+        <div class="tax-row"><span class="tax-row-label">Legacy Roth at Advisor</span><span class="tax-row-value">$2,075.91</span></div>
+        <div class="tax-row"><span class="tax-row-label">Monthly contribution</span><span class="tax-row-value" style="color:var(--amber);">$625/mo to brokerage Roth</span></div>
         <div class="tax-row"><span class="tax-row-label">2026 annual limit</span><span class="tax-row-value" style="color:var(--green)">$7,500 · on pace ✓</span></div>
         <div class="tax-row"><span class="tax-row-label">Tax on growth</span><span class="tax-row-value" style="color:var(--green)">ZERO — ever</span></div>
         <div class="tax-row"><span class="tax-row-label">Withdraw contributions</span><span class="tax-row-value" style="color:var(--green)">Anytime · penalty-free</span></div>
@@ -1188,7 +1229,7 @@
         <div style="display:flex; flex-direction:column; gap:0.7rem;">
           <div class="action-item"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Transfer £850 via Wise (one shot, no fragments)</div></div>
           <div class="action-item"><span class="action-dot green"></span><div><strong style="color:var(--text)">Taxable ($475):</strong> Recurring — $404 FSKAX · $47 FTIHX · $24 FXNAX</div></div>
-          <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Roth IRA ($625):</strong> Recurring — $531 FSKAX · $63 FTIHX · $31 FXNAX</div></div>
+          <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Roth brokerage ($625):</strong> Recurring — $531 FSKAX · $63 FTIHX · $31 FXNAX</div></div>
           <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Annually:</strong> Rebalance if allocation drifts more than 5%</div></div>
           <div class="action-item"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">At £75k salary:</strong> Increase pension AVCs (the trigger)</div></div>
           <div class="action-item"><span class="action-dot muted"></span><div><strong style="color:var(--text)">Never:</strong> Sell in a downturn. Never sell Roth. Never pick stocks.</div></div>
@@ -1321,6 +1362,7 @@
 <script>
 // ── LIVE DATE ────────────────────────────────────────────────────────────────
 const today = new Date();
+const CHATBOT_URL = 'http://localhost:5001';
 document.getElementById('live-date').textContent =
   today.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 
@@ -1360,7 +1402,7 @@ new Chart(document.getElementById('salaryChart'), {
   },
   options: {
     responsive: true,
-    plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>{const d=['Luto Research','AbbVie job G14','2025 merit','2026 merit','Promotion G15']; return `£${c.raw.toLocaleString()} · ${d[c.dataIndex]||''}`;}}}},
+    plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>{const d=['Luto Research','AbbVie job G14','2025 merit','2026 merit','Promotion G15'];return `£${c.raw.toLocaleString()} · ${d[c.dataIndex]||''}`;}}}},
     scales: {
       y: { ticks:{callback:v=>`£${(v/1000).toFixed(0)}k`}, grid:{color:'#1e2d50'} },
       x: { grid:{display:false} }
@@ -1428,7 +1470,7 @@ function nwSliderChange(yrs) {
   const fvc = (pmt, mo, r) => r > 0 ? pmt * ((Math.pow(1+r,mo)-1)/r) : pmt*mo;
   const segs = [
     { label:'UK Savings',     val: Math.round(gNwBases.ukSav + 200*months),                                                              color:'#22d3ee', note:'Atom · Monzo · Chase UK — liquid' },
-    { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(986.25,months,r55)),                         color:'#818cf8', note:'Aviva workplace pension · 5.5% CAGR est.' },
+    { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(1020,months,r55)),                         color:'#818cf8', note:'Aviva workplace pension · 5.5% CAGR est.' },
     { label:'ABBV SIP Shares',val: Math.round(gNwBases.sip + 300*Math.min(months, Math.max(0,60-gNwBases.sipCompleted))),                color:'#f472b6', note:'Locked 5yr · acquisition cost est.' },
     { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+r7,months) + fvc(475,months,r7))*FX),                         color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
     { label:'Roth IRA',       val: Math.round((gNwBases.rothUSD*Math.pow(1+r7,months) + fvc(625,months,r7))*FX),                        color:'#fbbf24', note:'Tax-free retirement · never touch' },
@@ -1459,7 +1501,6 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
   gNwBases = { ukSav: atom+monzo+chase, pension, sip, sipCompleted, fidUSD, rothUSD, usCashUSD: chaseUSUSD||0, segs: segments, mktLabel };
   renderNwBreakdown(segments, mktLabel);
 
-  if (gNwChart) gNwChart.destroy();
   gNwChart = new Chart(document.getElementById('nwChart'), {
     type: 'doughnut',
     data: {
@@ -1611,7 +1652,7 @@ function liveEstimates() {
     const todayMs  = today.getTime();
 
     function monthSchedule(y, m) {
-      // Mar 2026: bonus month net £5,136 − £124 move pot = £5,012; Apr 2026+: £3,441 − £124 = £3,317
+      // Mar 2026: bonus month net £5,012; Apr 2026+: £3,735 net − £120 move pot = £3,615
       const salary = (y === 2026 && m === 2) ? 5012 : 3615;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus full household
@@ -1637,7 +1678,7 @@ function liveEstimates() {
   const chaseEst = chaseEstimate();
 
   // US INVESTMENTS — live via FSKAX price delta; fallback to 7% CAGR
-  const mosInvest = Math.max(0, monthsSince(new Date(2026, 2, 1)));
+  const mosInvest = Math.max(0, monthsSince(new Date(2026, 2, 1))); // months since Mar 2026
   const fidelityEst = fskaxDelta
     ? Math.round(3948 * fskaxDelta + mosInvest * 475)
     : Math.round(3948 * Math.pow(1.07, daysA / 365) + mosInvest * 475);
@@ -1699,7 +1740,7 @@ function liveEstimates() {
   const fmt = (v, prefix='£') => prefix + v.toLocaleString('en-GB');
   document.getElementById('bal-atom').textContent    = fmt(atomEst);
   document.getElementById('bal-monzo').textContent   = fmt(monzoEst);
-  // Chase UK: static display (schedule estimate too volatile; kept for NW calc only)
+  // Chase UK: static display (schedule estimate too volatile to display; kept for NW calc only)
   const chaseEl = document.getElementById('bal-chase');
   if (chaseEl) { chaseEl.textContent = '~£1,200 avg'; chaseEl.style.color = 'var(--indigo)'; }
   document.getElementById('bal-fid').textContent     = '~$' + fidelityEst.toLocaleString('en-GB');
@@ -1769,7 +1810,7 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
   document.getElementById('csp-months-lbl').textContent = cspMonths === 1 ? `1 month in` : `${cspMonths} months in`;
 
-  // Move pot — £120/mo after salary hits (24th), earns ~2% AER in Monzo
+  // Move pot — £120/mo after salary hits (24th), earns ~2%/yr in Monzo
   const r        = 0.02 / 12;
   const potStart = new Date(2026, 2, 24); // first deposit: March 24, 2026
   function potPayments(d) {
@@ -1782,7 +1823,6 @@ function updateGoals() {
   // Goal 2: Move to nicer flat (£2,000 managed move target)
   const moveTarget = 2000;
   if (b) {
-    // With Bruce: project to Jun 2027 midpoint of move window
     const moveDate    = new Date(2027, 5, 1);
     const bruceStart  = new Date(2029, 0, 1);
     const bruceMoProj = Math.max(0, (moveDate.getFullYear() - bruceStart.getFullYear()) * 12 + (moveDate.getMonth() - bruceStart.getMonth()));
@@ -1835,6 +1875,34 @@ updateGoals();
   if (days > 0) el.textContent = days === 1 ? '1 day away' : days < 14 ? `${days} days away` : `${Math.ceil(days/7)} wks away`;
   else el.textContent = 'current year';
 })();
+
+// ── CHAT BAR ──────────────────────────────────────────────────────────────────
+let chatHistory = [];
+let chatOnline  = false;
+
+// Greeting
+(function() {
+  const h = new Date().getHours();
+  const g = h < 12 ? 'Good morning, Ella ✦'
+           : h < 18 ? 'Good afternoon, Ella ✦'
+           : 'Good evening, Ella ✦';
+  document.getElementById('chat-greeting').textContent = g;
+})();
+
+async function checkChatStatus() {
+  try {
+    const r = await fetch('http://localhost:5001/status', {signal: AbortSignal.timeout(2500)});
+    if (r.ok) {
+      chatOnline = true;
+      document.getElementById('chat-status-dot').classList.add('online');
+      document.getElementById('chat-status-text').textContent = 'claude-sonnet-4-6';
+    } else throw new Error();
+  } catch {
+    chatOnline = false;
+    document.getElementById('chat-status-dot').classList.remove('online');
+    document.getElementById('chat-status-text').textContent = 'server offline';
+  }
+}
 
 function mdToHtml(raw) {
   // 1. Extract fenced code blocks before any escaping
@@ -1919,107 +1987,89 @@ function mdToHtml(raw) {
   return html;
 }
 
-// ── BIOMETRIC LOCK ────────────────────────────────────────────────────────────
-function refreshDashboard() {
-  sessionStorage.setItem('dash_scroll_y', String(window.scrollY || window.pageYOffset || 0));
-  window.location.reload();
+function appendMsg(role, content) {
+  const msgs = document.getElementById('chat-messages');
+  msgs.classList.add('visible');
+  const wrap   = document.createElement('div');
+  wrap.className = `chat-msg ${role}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble';
+  bubble.innerHTML = role === 'user'
+    ? content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')
+    : mdToHtml(content);
+  wrap.appendChild(bubble);
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
 }
 
-(() => {
-  const y = sessionStorage.getItem('dash_scroll_y');
-  if (y !== null) {
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        window.scrollTo(0, parseInt(y, 10) || 0);
-        sessionStorage.removeItem('dash_scroll_y');
-      }, 80);
-    }, { once: true });
-  }
-})();
+function appendUpdateBanner(desc) {
+  const msgs = document.getElementById('chat-messages');
+  msgs.classList.add('visible');
+  const div = document.createElement('div');
+  div.className = 'chat-update-banner';
+  div.innerHTML = `<strong>Update logged</strong>${desc}`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
 
-(async () => {
-  const CRED_KEY = 'dash_biometric_cred';
-  const RP_ID   = 'lambertella-maker.github.io';
-  const lock    = document.getElementById('lock');
-  const msg     = document.getElementById('lock-msg');
-  const btn     = document.getElementById('lock-btn');
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const btn   = document.getElementById('chat-send');
+  const msg   = input.value.trim();
+  if (!msg || btn.disabled) return;
 
-  function showDash() { lock.classList.add('gone'); }
+  input.value = '';
+  input.style.height = 'auto';
+  appendMsg('user', msg);
+  chatHistory.push({role: 'user', content: msg});
+  btn.disabled = true;
 
-  // Skip on non-HTTPS (local file / localhost on Mac — WebAuthn requires HTTPS)
-  if (!window.PublicKeyCredential || location.protocol !== 'https:') { showDash(); return; }
+  const msgs = document.getElementById('chat-messages');
+  const thinking = document.createElement('div');
+  thinking.className = 'chat-msg assistant';
+  thinking.id = 'chat-thinking-indicator';
+  thinking.innerHTML = '<div class="chat-bubble chat-thinking">Thinking…</div>';
+  msgs.appendChild(thinking);
+  msgs.scrollTop = msgs.scrollHeight;
 
-  // Already unlocked this browser session
-  if (sessionStorage.getItem('dash_unlocked')) { showDash(); return; }
-
-  async function authenticate() {
-    const stored = localStorage.getItem(CRED_KEY);
-    if (!stored) return false;
-    try {
-      const credIdBytes = Uint8Array.from(atob(stored), c => c.charCodeAt(0));
-      await navigator.credentials.get({
-        publicKey: {
-          challenge: crypto.getRandomValues(new Uint8Array(32)),
-          rpId: RP_ID,
-          allowCredentials: [{ type: 'public-key', id: credIdBytes, transports: ['internal'] }],
-          userVerification: 'required',
-          timeout: 60000
-        }
-      });
-      return true;
-    } catch(e) {
-      if (e.name !== 'NotAllowedError') console.warn('biometric:', e);
-      return false;
+  try {
+    const resp = await fetch('http://localhost:5001/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message: msg, history: chatHistory}),
+      signal: AbortSignal.timeout(45000)
+    });
+    document.getElementById('chat-thinking-indicator')?.remove();
+    const data = await resp.json();
+    if (data.reply) {
+      appendMsg('assistant', data.reply);
+      chatHistory.push({role: 'assistant', content: data.reply});
+      if (data.update_detected) appendUpdateBanner(data.update_detected);
     }
+  } catch {
+    document.getElementById('chat-thinking-indicator')?.remove();
+    const offline = document.createElement('div');
+    offline.className = 'chat-offline-msg';
+    offline.innerHTML = `⚠️ Server offline — run <code>python3 ~/Desktop/Finances/chatbot_server.py</code> in Terminal`;
+    msgs.appendChild(offline);
+    msgs.classList.add('visible');
+    msgs.scrollTop = msgs.scrollHeight;
   }
 
-  async function setup() {
-    try {
-      const cred = await navigator.credentials.create({
-        publicKey: {
-          challenge: crypto.getRandomValues(new Uint8Array(32)),
-          rp: { name: 'Finance Dashboard', id: RP_ID },
-          user: { id: crypto.getRandomValues(new Uint8Array(16)), name: 'ella', displayName: 'Ella' },
-          pubKeyCredParams: [
-            { type: 'public-key', alg: -7 },
-            { type: 'public-key', alg: -257 }
-          ],
-          authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
-          timeout: 60000
-        }
-      });
-      localStorage.setItem(CRED_KEY, btoa(String.fromCharCode(...new Uint8Array(cred.rawId))));
-      return true;
-    } catch(e) {
-      msg.textContent = 'Setup failed — make sure Face ID is enabled in Settings.';
-      return false;
-    }
-  }
+  btn.disabled = false;
+  input.focus();
+}
 
-  window._lockAuth = async function() {
-    msg.textContent = '';
-    btn.disabled = true;
-    const ok = localStorage.getItem(CRED_KEY) ? await authenticate() : await setup();
-    if (ok) {
-      sessionStorage.setItem('dash_unlocked', '1');
-      showDash();
-    } else {
-      msg.textContent = 'Authentication failed — tap to try again.';
-      btn.textContent = '🔓 Try again';
-      btn.disabled = false;
-    }
-  };
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+});
+document.getElementById('chat-input').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 72) + 'px';
+});
 
-  const credId = localStorage.getItem(CRED_KEY);
-  if (!credId) {
-    document.getElementById('lock-sub').textContent = 'Set up Face ID to protect this app.';
-    btn.textContent = '⚙️ Set up Face ID';
-  } else {
-    // Auto-trigger on open
-    await window._lockAuth();
-  }
-})();
-
+checkChatStatus();
+setInterval(checkChatStatus, 30000);
 </script>
 
 <!-- Rent Rules Modal -->
@@ -2028,11 +2078,11 @@ function refreshDashboard() {
     <button class="modal-close" onclick="document.getElementById('invest-modal').classList.remove('open')">×</button>
     <div style="font-size:0.58rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:0.4rem;">Locked April 2026 · Do not deviate</div>
     <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
-    <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">£850/mo Wise → Chase US → Fidelity. <strong>$625/mo Roth IRA</strong> (Fidelity retail) + <strong>$475/mo taxable</strong> (Fidelity retail). Fully automated — no manual steps.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Allocation — both accounts</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical across Roth and taxable. No monthly rebalancing.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Roth IRA · $625/mo</div><div class="modal-rule-value">Post-tax contributions. Zero tax on growth or withdrawal — in US and UK (treaty Art.17). 2026 limit: $7,500/yr. Contributions = liquidity backstop, withdrawable anytime penalty-free. Projected ~£1.3M tax-free at 67.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">£850/mo Wise → Chase US → Fidelity. <strong>$625/mo Roth brokerage</strong> + <strong>$475/mo taxable brokerage</strong>. Both execute 30th. Fully automated.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Allocation — active brokerage only</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical across active Roth brokerage and active taxable brokerage. No monthly rebalancing.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Roth IRA</div><div class="modal-rule-value">Combined Roth = <strong>$2,666.63</strong>: <strong>$590.72</strong> active brokerage + <strong>$2,075.91</strong> legacy Roth at Fidelity Advisor. Only the brokerage Roth gets the new $625/mo. 2026 limit: $7,500/yr.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Taxable · $475/mo</div><div class="modal-rule-value">FSKAX/FTIHX/FXNAX in Fidelity retail taxable. ~0.3%/yr dividend drag. 15% LTCG on gains at sale. Pre-retirement bridge and liquidity layer. Access anytime.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 in Fidelity Advisor Growth Opps Class C. ~1% expense ratio. No new contributions. Tracked separately. Review migration when convenient — selling triggers 15% LTCG on gains.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 in Fidelity Advisor Growth Opps Class C. ~1% expense ratio. No new contributions. Separate from the legacy Roth also sitting at Fidelity Advisor.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET wrapper: salary sacrifice removes income tax + NI now, tax-free growth, 25% lump sum tax-free + 75% taxed as income at drawdown. Treaty-protected in US. ~£1.9M projected at 67. Retirement fully covered regardless of Fidelity.</div></div>
     <div class="modal-rule" style="border-bottom:none;"><div class="modal-rule-label">No ISAs</div><div class="modal-rule-value">Blocked while US citizen. Trigger = CLN (renouncing citizenship) only. Not ILR. Not British passport.</div></div>
   </div>
