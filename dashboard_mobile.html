@@ -1342,7 +1342,7 @@ Chart.defaults.font.family = 'Inter';
 new Chart(document.getElementById('salaryChart'), {
   type: 'line',
   data: {
-    labels: ['May 2023','Nov 2024 · G14','Mar 2025 · merit','Apr 2026 · merit','Apr 2026 · G15'],
+    labels: ['May 2023','Nov 2024','Mar 2025','Apr 2026','Apr 2026'],
     datasets: [{
       label: 'Salary',
       data: [28000, 57500, 58794, 61439, 68000],
@@ -1358,7 +1358,7 @@ new Chart(document.getElementById('salaryChart'), {
   },
   options: {
     responsive: true,
-    plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>{const d=['Luto Research · Graduate Visa','AbbVie start · G14','AbbVie merit · G14','AbbVie merit · G14→','G15 promotion · +10.7%']; return `£${c.raw.toLocaleString()} · ${d[c.dataIndex]||''}`;}}}},
+    plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>{const d=['Luto Research','AbbVie job G14','2025 merit','2026 merit','Promotion G15']; return `£${c.raw.toLocaleString()} · ${d[c.dataIndex]||''}`;}}}},
     scales: {
       y: { ticks:{callback:v=>`£${(v/1000).toFixed(0)}k`}, grid:{color:'#1e2d50'} },
       x: { grid:{display:false} }
