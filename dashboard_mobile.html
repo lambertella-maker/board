@@ -370,7 +370,7 @@
         <div class="metric-sub" id="hero-net-sub">Payday 24th · Chase UK · pre-April</div>
         <span class="metric-badge badge-green" id="hero-net-badge">£68,000 · Grade 15 · confirmed</span>
       </div>
-      <div class="metric-card">
+      <div class="metric-card" onclick="refreshNetWorth()" style="cursor:pointer;" title="Refresh net worth">
         <div class="metric-label">Net Worth (total)</div>
         <div class="metric-value" id="hero-nw-value" style="color:var(--indigo)">—</div>
         <div class="metric-sub" id="hero-pension-sub">Liquid £23k + pension ~£18,440</div>
@@ -447,6 +447,7 @@
         <div class="pillar-name">Pillar 2 · UK State</div>
         <div class="pillar-title">UK State Pension</div>
         <div class="pillar-stat"><span class="pillar-stat-label">NI years building</span><span class="pillar-stat-value" style="color:var(--cyan)">~3 years so far</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Earned so far</span><span class="pillar-stat-value" id="uk-state-earned">—</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target for full pension</span><span class="pillar-stat-value">35 qualifying years</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Full pension value</span><span class="pillar-stat-value">£11,502/yr (today's money)</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">State pension age</span><span class="pillar-stat-value">67 (rising)</span></div>
@@ -458,6 +459,7 @@
         <div class="pillar-name">Pillar 3 · US State</div>
         <div class="pillar-title">US Social Security</div>
         <div class="pillar-stat"><span class="pillar-stat-label">Status</span><span class="pillar-stat-value" style="color:var(--amber)">Preserved via FTC</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Earned so far</span><span class="pillar-stat-value" id="us-ss-earned">—</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Why FTC matters</span><span class="pillar-stat-value">FEIE would kill this</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">UK-US Totalization</span><span class="pillar-stat-value">NI years may count</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Inflation protection</span><span class="pillar-stat-value">COLA-linked for life</span></div>
@@ -469,10 +471,10 @@
         <div class="pillar-name">Pillar 4 · US Investing</div>
         <div class="pillar-title">Fidelity Index Funds</div>
         <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--green)">~$3,948 (~£3,100)</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475/mo taxable + $625/mo Roth = $1,100</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475 taxable + $625 Roth brokerage</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target allocation</span><span class="pillar-stat-value">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">~£1.1M (taxable, after-tax)</span></div>
-        <div class="pillar-why">$475/mo taxable + $625/mo Roth = same $1,100 total. Both accounts buy identical 85/10/5. Executes 30th, fully automated.</div>
+        <div class="pillar-why">$475 taxable + $625 Roth brokerage = active $1,100/mo. Both buy identical 85/10/5 and execute on the 30th.</div>
       </div>
 
       <div class="pillar p-pink">
@@ -1291,7 +1293,7 @@
     </section>
 
     <!-- Net Worth Composition -->
-    <div class="chart-card">
+    <div class="chart-card" onclick="refreshNetWorth()" style="cursor:pointer;" title="Refresh net worth">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
         <h3 style="margin:0;">Net Worth Composition — Where Your Money Lives</h3>
         <div style="display:flex;align-items:center;gap:0.75rem;min-width:260px;">
@@ -1436,6 +1438,13 @@ function nwSliderChange(yrs) {
   if (gNwChart) { gNwChart.data.datasets[0].data = segs.map(s => s.val); gNwChart.update(); }
 }
 
+function refreshNetWorth() {
+  const slider = document.getElementById('nw-slider');
+  const current = slider ? slider.value : '0';
+  liveEstimates();
+  if (slider) nwSliderChange(current);
+}
+
 // Called from liveEstimates() with live-computed values. FX: GBP/USD ~0.77.
 function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, fx = 0.77, mktLabel = 'Estimated · CAGR model', sip = 0, sipCompleted = 0) {
   gNwFx = fx;
@@ -1457,6 +1466,7 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
   gNwBases = { ukSav: atom+monzo+chase, pension, sip, sipCompleted, fidUSD, rothUSD, usCashUSD: chaseUSUSD||0, segs: segments, mktLabel };
   renderNwBreakdown(segments, mktLabel);
 
+  if (gNwChart) gNwChart.destroy();
   gNwChart = new Chart(document.getElementById('nwChart'), {
     type: 'doughnut',
     data: {
@@ -1634,6 +1644,18 @@ function liveEstimates() {
       heroSubEl.textContent  = 'Payday 24th · Chase UK · pre-April';
       heroBadgeEl.textContent = '→ £3,735 from Apr · Grade 15';
     }
+  }
+
+  const ukQualYears = 3;
+  const ukStateFull = 11502;
+  const ukStateEarned = document.getElementById('uk-state-earned');
+  if (ukStateEarned) {
+    ukStateEarned.textContent = `~£${Math.round((ukStateFull * ukQualYears) / 35).toLocaleString('en-GB')}/yr at today's rate`;
+  }
+
+  const usSsEarned = document.getElementById('us-ss-earned');
+  if (usSsEarned) {
+    usSsEarned.textContent = 'Not meaningful yet · 40 credits / totalization needed';
   }
 
   // Update DOM
