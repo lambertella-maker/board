@@ -257,7 +257,7 @@
       <div class="metric-label">Monthly Net</div>
       <div class="metric-value" id="m-net-value" style="color:var(--green)">£3,417</div>
       <div class="metric-sub" id="m-net-sub">£68,000 salary · payday 24th</div>
-      <div class="metric-badge badge-green" id="m-net-badge">From 12 Jul: ~£3,860 net (+£125/mo rent)</div>
+      <div class="metric-badge badge-green" id="m-net-badge">12 Jul: ~£3,860 (+£125/mo rent)</div>
     </div>
     <div class="metric">
       <div class="metric-label">Net Worth</div>
@@ -834,8 +834,8 @@ function liveEstimates() {
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
   if (isJul)           { nv.textContent='~£3,860'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='Includes £125/mo rent'; }
-  else if (isApr)      { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='From 12 Jul: ~£3,860 net (+£125/mo rent)'; }
-  else if (isAprPre)   { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='From 12 Jul: ~£3,860 net (+£125/mo rent)'; }
+  else if (isApr)      { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: ~£3,860 (+£125/mo rent)'; }
+  else if (isAprPre)   { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: ~£3,860 (+£125/mo rent)'; }
   else if (isMarch)    { nv.textContent='~£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
   else                 { nv.textContent='£3,417';  ns.textContent='Pre-raise net · payday 24th';  nb.textContent='From Apr: ~£3,735 net at £68,000'; }
 
