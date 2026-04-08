@@ -46,7 +46,7 @@
 
   /* LAYOUT */
   .container { max-width:1280px; margin:0 auto; padding:0 2rem; }
-  section { padding:3rem 0; }
+  section { padding:2.6rem 0; }
   h2.section-title { font-size:1.4rem; font-weight:700; margin-bottom:1.8rem; color:var(--text); }
   h2.section-title span { color:var(--indigo); }
 
@@ -620,7 +620,7 @@
 
     <div class="toggle-row" style="margin-bottom:1.4rem;">
       <label class="toggle"><input type="checkbox" id="goalsBruceToggle" onchange="updateGoals()"><span class="toggle-slider"></span></label>
-      <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts (+£16k/yr from 2029)</strong>Conservative plan keeps this OFF — toggle to see accelerated timelines.</div>
+      <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts (+$20,000/yr from 2029)</strong>Conservative plan keeps this OFF — toggle to see accelerated timelines.</div>
     </div>
 
     <div class="goals-grid">
@@ -1781,21 +1781,8 @@ function updateGoals() {
 
   // Goal 2: Move to nicer flat (£2,000 managed move target)
   const moveTarget = 2000;
-  if (b) {
-    // With Bruce: project to Jun 2027 midpoint of move window
-    const moveDate    = new Date(2027, 5, 1);
-    const bruceStart  = new Date(2029, 0, 1);
-    const bruceMoProj = Math.max(0, (moveDate.getFullYear() - bruceStart.getFullYear()) * 12 + (moveDate.getMonth() - bruceStart.getMonth()));
-    const flatProj    = potFV(potPayments(moveDate));
-    const bruceProj   = bruceMoProj * Math.round(16000 / 12);
-    const totalProj   = flatProj + bruceProj;
-    const movePct     = Math.min(100, totalProj / moveTarget * 100);
-    document.getElementById('move-prog').style.width = movePct.toFixed(1) + '%';
-    document.getElementById('move-saved-lbl').textContent = movePct >= 100 ? 'Fully funded by Jun 2027' : `£${totalProj.toLocaleString()} by Jun 2027`;
-  } else {
-    document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100).toFixed(1) + '%';
-    document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
-  }
+  document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100).toFixed(1) + '%';
+  document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
 
   // Goal 3: ILR — time-to-prepare progress bar
   const ilrDeadline = new Date(2029, 8, 1);
@@ -1806,14 +1793,14 @@ function updateGoals() {
   document.getElementById('ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
 
   setPill('csp',    b,
-    b ? "Bruce covers $4k spend → 60k UR bonus immediately on approval" : `Building history · ${cspMonthsLeft} months to go`,
+    b ? "Gifts start 2029, so CSP timing stays unchanged" : `Building history · ${cspMonthsLeft} months to go`,
     "Late 2026");
   setPill('move',   b,
-    b ? "Dad's gifts cover move costs immediately" : "Pot self-funds move · bonus + COL rise as buffer",
-    b ? "Now" : "May–Jul 2027");
+    b ? "Move still self-funds before 2029 gifts start" : "Pot self-funds move · bonus + COL rise as buffer",
+    "May–Jul 2027");
   setPill('avios',  b,
-    b ? "CSP bonus + Bruce covers £600 fees → book late 2026" : "Waiting on CSP · book once bonus lands",
-    b ? "~Late 2026" : "~Early 2027");
+    b ? "Gifts do not affect this pre-2029 goal" : "Waiting on CSP · book once bonus lands",
+    "~Early 2027");
 }
 
 function setPill(id, withBruce, label, value) {
