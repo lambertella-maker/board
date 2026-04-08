@@ -273,26 +273,26 @@
     </div>
     <div class="metric">
       <div class="metric-label">Savings Rate</div>
-      <div class="metric-value" style="color:var(--amber)">48%</div>
+      <div class="metric-value" style="color:var(--amber)">45%</div>
       <div class="metric-sub">vs gross · all pillars</div>
-      <div class="metric-badge badge-amber">~£31,600/yr</div>
+      <div class="metric-badge badge-amber">~£30,700/yr</div>
     </div>
   </div>
 
-  <!-- Promotion action reminder -->
-  <div style="margin:8px 0 12px;background:#fef3c722;border:1px solid rgba(251,191,36,0.4);border-radius:10px;padding:8px 12px;">
-    <div style="font-size:0.6rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">Action needed</div>
-    <div style="font-size:0.72rem;color:var(--muted);">After HR chat: confirm Specialist effective date + final salary. Update all dashboards.</div>
+  <!-- Grade 15 confirmed banner -->
+  <div style="margin:8px 0 12px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.35);border-radius:10px;padding:8px 12px;">
+    <div style="font-size:0.6rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">Grade 15 · confirmed</div>
+    <div style="font-size:0.72rem;color:var(--muted);">£68,000 · G14→G15 single jump · double jumps possible → next could be G17 (14% bonus)</div>
   </div>
 
   <div class="section-title">Accounts — live estimates</div>
   <div class="accounts-grid">
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Atom Bank</div><div class="acct-bal" id="m-bal-atom" style="color:var(--green)">—</div><div class="acct-note">3.49% AER · EF core</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Monzo</div><div class="acct-bal" id="m-bal-monzo" style="color:var(--cyan)">—</div><div class="acct-note">2.75% AER · liquid</div></div>
-    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">—</div><div class="acct-note">Salary hub</div></div>
+    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">~£1,200 avg</div><div class="acct-note">Salary hub · varies by day</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
-    <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">Tax-free · never touch</div></div>
+    <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$625/mo · started ~$1,931 · Fidelity retail</div></div>
   </div>
 
 </div>
@@ -310,7 +310,7 @@
     <div class="pillar-header"><div class="pillar-ico">🏦</div><div><div class="pillar-label">Pillar 1 · UK Workplace</div><div class="pillar-name">AbbVie Pension</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" id="m-pillar-pension" style="color:var(--indigo)">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Annual input</span><span class="pillar-stat-v">£11,059 (18% total)</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Annual input</span><span class="pillar-stat-v">£12,240 (18% total)</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Match</span><span class="pillar-stat-v">6% you + 12% AbbVie</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">~£2.1M</span></div>
       <div class="pillar-why-text">AbbVie's 12% match is a 200% return on your 6% before a single penny of growth. Fully utilised.</div>
@@ -724,7 +724,7 @@ function liveEstimates() {
     const anchorMs = ANCHOR_DATE.getTime();
     const todayMs  = today.getTime();
     function monthSchedule(y, m) {
-      const salary = (y === 2026 && m === 2) ? 5012 : 3513;
+      const salary = (y === 2026 && m === 2) ? 5012 : 3615;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus
         { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
@@ -763,15 +763,15 @@ function liveEstimates() {
   const salxAdded      = today >= SALX_DATE ? 3186 : 0;
   const daysPension    = daysSince(PENSION_ANCHOR);
   const mosPension     = monthsSince(PENSION_ANCHOR);
-  const pensionContribs = mosPension <= 0 ? 0 : 881.91 + Math.max(0, mosPension - 1) * 986.25;
+  const pensionContribs = mosPension <= 0 ? 0 : 881.91 + Math.max(0, mosPension - 1) * 1020;
   const pensionEst = Math.round((PENSION_VAL + salxAdded) * Math.pow(1.055, daysPension / 365) + pensionContribs);
 
   const fmt = (v, p='£') => p + v.toLocaleString('en-GB');
   document.getElementById('m-bal-atom').textContent    = fmt(atomEst);
   document.getElementById('m-bal-monzo').textContent   = fmt(monzoEst);
+  // Chase UK: static display (schedule estimate too volatile; kept for NW calc only)
   const ce = document.getElementById('m-bal-chase');
-  ce.textContent  = '~' + fmt(chaseEst);
-  ce.style.color  = chaseEst < 1000 ? 'var(--red)' : chaseEst < 1300 ? 'var(--amber)' : 'var(--indigo)';
+  if (ce) { ce.textContent = '~£1,200 avg'; ce.style.color = 'var(--indigo)'; }
   document.getElementById('m-bal-fid').textContent     = '~$' + fidelityEst.toLocaleString('en-GB');
   document.getElementById('m-bal-roth').textContent    = '~$' + rothEst.toLocaleString('en-GB');
   document.getElementById('m-bal-pension').textContent = '~' + fmt(pensionEst);
@@ -826,13 +826,15 @@ function liveEstimates() {
   const isMarch      = today >= new Date(2026,2,24) && today < new Date(2026,3,1);
   const isAprPre     = today >= new Date(2026,3,1)  && today < APR_PAYDAY;
   const isApr        = today >= APR_PAYDAY;
+  const isJul        = today >= new Date(2026,6,12);
   const nv = document.getElementById('m-net-value');
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
-  if (isApr)           { nv.textContent='~£3,633'; ns.textContent='Promotion min case'; nb.textContent='confirm after HR chat'; }
-  else if (isAprPre)   { nv.textContent='£3,441'; ns.textContent='→ £3,633 promo min · April merit base'; nb.textContent='confirm after HR chat'; }
+  if (isJul)           { nv.textContent='~£3,860'; ns.textContent='Payday 24th · rent −£125'; nb.textContent='£68,000 · Grade 15'; }
+  else if (isApr)      { nv.textContent='~£3,735'; ns.textContent='→ £3,860 from 12 Jul · rent −£125'; nb.textContent='£68,000 · Grade 15'; }
+  else if (isAprPre)   { nv.textContent='~£3,735'; ns.textContent='→ £3,860 from 12 Jul · rent −£125'; nb.textContent='£68,000 · Grade 15'; }
   else if (isMarch)    { nv.textContent='~£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
-  else                 { nv.textContent='£3,417';  ns.textContent='Payday 24th';  nb.textContent='→ ~£3,441 Apr'; }
+  else                 { nv.textContent='£3,417';  ns.textContent='Payday 24th';  nb.textContent='→ £3,735 from Apr · G15'; }
 
   // Net worth composition
   const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
@@ -907,7 +909,7 @@ function nwSliderChange(yrs) {
   const FX  = gNwBases.fx;
   const fvc = (pmt, mo, r) => r > 0 ? pmt * ((Math.pow(1+r,mo) - 1) / r) : pmt * mo;
   const ukSav     = gNwBases.ukSav + 200 * months;
-  const pensionFV = gNwBases.pension * Math.pow(1+r55, months) + fvc(986.25, months, r55);
+  const pensionFV = gNwBases.pension * Math.pow(1+r55, months) + fvc(1020, months, r55);
   const sipLeft   = Math.max(0, 60 - gNwBases.sipCompleted);
   const sip       = gNwBases.sip + 300 * Math.min(months, sipLeft);
   const fidFV     = Math.round((gNwBases.fidelityUSD * Math.pow(1+r7, months) + fvc(475, months, r7)) * FX);
