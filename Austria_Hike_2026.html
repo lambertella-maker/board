@@ -355,6 +355,31 @@ li { margin-bottom: 4px; }
 .wx-card h4 { font-size: 0.88em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px; }
 .temp-main { font-size: 1.5em; font-weight: 700; color: var(--green); line-height: 1.1; margin-bottom: 2px; }
 .temp-sub { font-size: 0.8em; color: var(--muted); }
+.essentials-grid { display: grid; grid-template-columns: 1.05fr 1.35fr; gap: 16px; margin: 16px 0; }
+.ess-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.ess-card h4 { font-size: 0.88em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--green); margin-bottom: 8px; }
+.weather-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0 10px; }
+.weather-stat { background: #F7FAF8; border: 1px solid var(--border); border-radius: 10px; padding: 10px 8px; text-align: center; }
+.weather-stat strong { display: block; color: var(--green); font-size: 1.02em; line-height: 1.15; }
+.weather-stat span { display: block; color: var(--muted); font-size: 0.74em; margin-top: 2px; }
+.ess-list { list-style: none; padding: 0; margin: 0; }
+.ess-list li { font-size: 0.86em; padding: 5px 0; border-bottom: 1px solid #F0F0F0; }
+.ess-list li:last-child { border-bottom: none; }
+.gear-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.gear-chipbox {
+  background: #F7FAF8;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 11px;
+}
+.gear-chipbox h5 { font-size: 0.76em; text-transform: uppercase; letter-spacing: 0.45px; color: var(--muted); margin-bottom: 6px; }
+.gear-chipbox p { font-size: 0.84em; line-height: 1.45; margin: 0; }
 
 /* ─── COSTS ─── */
 .cost-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 12px 0; }
@@ -513,6 +538,9 @@ li { margin-bottom: 4px; }
   .hero { padding: 44px 20px 40px; }
   .hero h1 { font-size: 2.1em; }
   .weather-grid { grid-template-columns: 1fr; }
+  .essentials-grid { grid-template-columns: 1fr; }
+  .weather-stats { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .gear-groups { grid-template-columns: 1fr; }
   .cost-grid { grid-template-columns: 1fr; }
   .cost-card li { grid-template-columns: 1fr; gap: 4px; }
   .cv { text-align: left; }
@@ -532,7 +560,6 @@ li { margin-bottom: 4px; }
   .hut-overview-grid .travel-card:last-child { grid-column: 1 / -1; }
   .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
   .hut-header { flex-direction: column; }
-  .pack-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -561,8 +588,7 @@ li { margin-bottom: 4px; }
   <a href="#route">Route</a>
   <a href="#travel">Getting There</a>
   <a href="#costs">Costs</a>
-  <a href="#weather">Weather</a>
-  <a href="#packing">Packing</a>
+  <a href="#weather">Weather + Gear</a>
   <a href="#checklist">Checklist</a>
 </div>
 
@@ -1010,84 +1036,46 @@ li { margin-bottom: 4px; }
   <div class="tt-row total"><span>All-in estimate per person</span><span class="tt-val">Ella ~£465–555 · Dina ~$1,010–1,560 · Janek + Maya ~$1,340–2,240</span></div>
 </div>
 
-<h2 id="weather">July Weather on the Carnic Ridge</h2>
+<h2 id="weather">Weather + Gear</h2>
 
-<div class="weather-grid">
-  <div class="wx-card">
-    <h4>Ridge Weather</h4>
+<div class="essentials-grid">
+  <div class="ess-card">
+    <h4>Ridge Window</h4>
     <div class="temp-main">50–64°F</div>
-    <div class="temp-sub">Cool huts · warm days · storms build later</div>
-    <ul style="margin-top: 10px; font-size: 0.87em;">
-      <li>Hut nights: 39–50°F</li>
-      <li>Best window: roughly 06:00–13:00</li>
-      <li>Afternoon storms can build fast on the ridge</li>
-      <li>Check: <a href="https://www.zamg.ac.at" target="_blank">ZAMG</a> (Austrian weather) + <a href="https://www.meteo.it" target="_blank">meteo.it</a></li>
+    <div class="temp-sub">Cool huts, warm afternoons, storms later in the day</div>
+    <div class="weather-stats">
+      <div class="weather-stat"><strong>39–50°F</strong><span>Hut nights</span></div>
+      <div class="weather-stat"><strong>06:00–13:00</strong><span>Best moving window</span></div>
+      <div class="weather-stat"><strong>Fast build</strong><span>PM storms on ridge</span></div>
+    </div>
+    <ul class="ess-list">
+      <li>Check <a href="https://www.zamg.ac.at" target="_blank">ZAMG</a> + <a href="https://www.meteo.it" target="_blank">meteo.it</a> each evening and before departure</li>
+      <li>If thunder looks likely, start early and keep summit add-ons optional</li>
+      <li>Sun exposure is strong on the ridge even when air feels cool</li>
     </ul>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     GEAR
-══════════════════════════════════════════════════════════════ -->
-<h2 id="packing">Packing List</h2>
-
-<p>T3 grade — stiff boots and poles are non-negotiable. No trail runners on this route. Day packs only (~30L): everything else stays at Hotel Schwarzer Adler.</p>
-
-<div class="pack-grid">
-  <div class="pack-col">
-    <h4>Boots &amp; Poles</h4>
-    <ul>
-      <li>Stiff hiking boots, ankle support</li>
-      <li>Broken in before the trip</li>
-      <li>Trekking poles (both hands for cable sections)</li>
-      <li>Gaiters (optional, useful if wet)</li>
-      <li>Spare laces</li>
-    </ul>
-  </div>
-  <div class="pack-col">
-    <h4>Clothing</h4>
-    <ul>
-      <li>Merino base layer × 2</li>
-      <li>Fleece or light down jacket</li>
-      <li>Waterproof shell (not just windshell)</li>
-      <li>Hiking trousers × 2</li>
-      <li>Warm hat + gloves</li>
-      <li>Hut slippers / camp shoes</li>
-      <li>Merino socks × 3</li>
-    </ul>
-  </div>
-  <div class="pack-col">
-    <h4>Day Pack</h4>
-    <ul>
-      <li>2L water + purification tabs</li>
-      <li>Packed lunch (order night before)</li>
-      <li>Headlamp + spare batteries</li>
-      <li>Sun cream + lip balm (ridge = full exposure)</li>
-      <li>Emergency space blanket</li>
-      <li>Rain cover for pack</li>
-    </ul>
-  </div>
-  <div class="pack-col">
-    <h4>Overnight</h4>
-    <ul>
-      <li>Sleep sack / liner (huts require it)</li>
-      <li>Small towel</li>
-      <li>First aid: blister pads, Compeed, pain relief, tape</li>
-      <li>Toothbrush + minimal toiletries</li>
-      <li>Earplugs (dorms)</li>
-      <li>Phone charger + power bank</li>
-    </ul>
-  </div>
-  <div class="pack-col">
-    <h4>Docs &amp; Admin</h4>
-    <ul>
-      <li>Passport</li>
-      <li>Travel insurance card</li>
-      <li>€200+ cash per person</li>
-      <li>Kompass map Sheet 47 (buy in Sillian)</li>
-      <li>Komoot / Outdooractive downloaded offline</li>
-      <li>Hut ref numbers saved offline</li>
-    </ul>
+  <div class="ess-card">
+    <h4>Trail Kit</h4>
+    <div class="temp-sub">T3 route. Day packs only. Big bags stay at Hotel Schwarzer Adler.</div>
+    <div class="gear-groups" style="margin-top: 12px;">
+      <div class="gear-chipbox">
+        <h5>Non-Negotiable</h5>
+        <p>Stiff boots, trekking poles, waterproof shell, warm layer, 2L water, headlamp, hut liner, €200+ cash, passport.</p>
+      </div>
+      <div class="gear-chipbox">
+        <h5>Good Additions</h5>
+        <p>Gloves, hat, spare socks, blister kit, power bank, rain cover, lip balm, small towel, earplugs.</p>
+      </div>
+      <div class="gear-chipbox">
+        <h5>Each Day</h5>
+        <p>Order lunch at the hut the night before, carry sun cream, and keep one dry layer sealed in the pack.</p>
+      </div>
+      <div class="gear-chipbox">
+        <h5>Skip</h5>
+        <p>No trail runners, no big luggage on route, no assumption that huts will take cards.</p>
+      </div>
+    </div>
   </div>
 </div>
 
