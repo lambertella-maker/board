@@ -620,7 +620,7 @@
 
     <div class="toggle-row" style="margin-bottom:1.4rem;">
       <label class="toggle"><input type="checkbox" id="goalsBruceToggle" onchange="updateGoals()"><span class="toggle-slider"></span></label>
-      <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts (+£16k/yr from summer 2026)</strong>Conservative plan keeps this OFF — toggle to see accelerated timelines.</div>
+      <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts (+£16k/yr from 2029)</strong>Conservative plan keeps this OFF — toggle to see accelerated timelines.</div>
     </div>
 
     <div class="goals-grid">
@@ -1254,7 +1254,7 @@
 
         <div class="toggle-row">
           <label class="toggle"><input type="checkbox" id="bruceToggle" onchange="updateFire()"><span class="toggle-slider"></span></label>
-          <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts</strong>+$20,000/yr from summer 2026 · conservative plan: OFF</div>
+          <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts</strong>+$20,000/yr from 2029 · conservative plan: OFF</div>
         </div>
 
         <div class="control-group">
@@ -1726,7 +1726,7 @@ function updateGoals() {
   if (b) {
     // With Bruce: project to Jun 2027 midpoint of move window
     const moveDate    = new Date(2027, 5, 1);
-    const bruceStart  = new Date(2026, 6, 1);
+    const bruceStart  = new Date(2029, 0, 1);
     const bruceMoProj = Math.max(0, (moveDate.getFullYear() - bruceStart.getFullYear()) * 12 + (moveDate.getMonth() - bruceStart.getMonth()));
     const flatProj    = potFV(potPayments(moveDate));
     const bruceProj   = bruceMoProj * Math.round(16000 / 12);
