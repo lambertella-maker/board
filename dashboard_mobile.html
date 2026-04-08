@@ -352,7 +352,7 @@
   </div>
   <div style="display:flex;align-items:center;gap:4px">
     <div class="date-pill" id="live-date"></div>
-    <button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button>
+    <button class="refresh-btn" onclick="refreshDashboard()" title="Refresh">↺</button>
   </div>
 </nav>
 
@@ -1875,6 +1875,23 @@ function mdToHtml(raw) {
 }
 
 // ── BIOMETRIC LOCK ────────────────────────────────────────────────────────────
+function refreshDashboard() {
+  sessionStorage.setItem('dash_scroll_y', String(window.scrollY || window.pageYOffset || 0));
+  window.location.reload();
+}
+
+(() => {
+  const y = sessionStorage.getItem('dash_scroll_y');
+  if (y !== null) {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        window.scrollTo(0, parseInt(y, 10) || 0);
+        sessionStorage.removeItem('dash_scroll_y');
+      }, 80);
+    }, { once: true });
+  }
+})();
+
 (async () => {
   const CRED_KEY = 'dash_biometric_cred';
   const RP_ID   = 'lambertella-maker.github.io';
