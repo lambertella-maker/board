@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charlie DC Finance Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c18;
+    --card: #0f1629;
+    --card2: #161e35;
+    --border: #1e2d50;
+    --indigo: #818cf8;
+    --cyan: #22d3ee;
+    --amber: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+    --pink: #f472b6;
+    --text: #f1f5f9;
+    --muted: #64748b;
+    --soft: #94a3b8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+  nav {
+    display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.4rem;
+    background: rgba(8,12,24,0.92); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-size: 1.05rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--indigo), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nav-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  .nav-links button {
+    color: var(--soft); font-size: 0.82rem; font-weight: 500; cursor: pointer;
+    background: none; border: none; padding: 0; font-family: inherit;
+  }
+  .nav-links button:hover { color: var(--text); }
+  .date-pill {
+    background: var(--card2); border: 1px solid var(--border); border-radius: 20px;
+    padding: 0.3rem 1rem; font-size: 0.75rem; color: var(--soft);
+  }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 2.6rem 0; }
+  h2.section-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 1.2rem; color: var(--text); }
+  h2.section-title span { color: var(--indigo); }
+  .hero { padding: 3.35rem 0 1.65rem; text-align: center; }
+  .hero h1 {
+    font-size: 2.9rem; font-weight: 800; line-height: 1.12; margin-bottom: 0.7rem;
+    background: linear-gradient(135deg, var(--text) 0%, var(--indigo) 55%, var(--cyan) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    color: var(--soft); font-size: 1rem; line-height: 1.65; max-width: 860px;
+    margin: 0 auto 1.35rem;
+  }
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-items: stretch; }
+  .metric-card, .chart-card, .pillar, .system-card, .rule-card, .account-card, .scenario-card, .goal-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  }
+  .metric-card {
+    padding: 1.05rem 1.05rem 0.9rem;
+    text-align: left;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.16rem;
+    min-height: 146px;
+  }
+  .metric-label {
+    font-size: 0.75rem; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 0.14rem;
+  }
+  .metric-value {
+    font-size: clamp(1.7rem, 2vw, 2rem);
+    font-weight: 800;
+    line-height: 0.98;
+    max-width: 100%;
+    word-break: break-word;
+  }
+  .metric-sub {
+    font-size: 0.78rem;
+    color: var(--soft);
+    margin-top: 0.08rem;
+    line-height: 1.28;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    min-height: 2em;
+  }
+  .metric-badge {
+    display: inline-block; font-size: 0.7rem; padding: 0.18rem 0.58rem; border-radius: 20px;
+    margin-top: 0.08rem; font-weight: 600; max-width: 100%;
+    line-height: 1.2;
+  }
+  .badge-green { background: rgba(52,211,153,0.15); color: var(--green); }
+  .badge-amber { background: rgba(251,191,36,0.15); color: var(--amber); }
+  .badge-indigo { background: rgba(129,140,248,0.15); color: var(--indigo); }
+  .badge-cyan { background: rgba(34,211,238,0.15); color: var(--cyan); }
+  .helper-banner, .prompt-banner {
+    border-radius: 14px; padding: 0.88rem 1rem; line-height: 1.48; font-size: 0.84rem; margin-top: 0.62rem;
+  }
+  .helper-banner {
+    background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.22); color: var(--soft);
+  }
+  .prompt-banner {
+    background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.22); color: var(--soft);
+  }
+  .helper-banner strong, .prompt-banner strong { color: var(--text); }
+  .charts-2, .goal-grid, .tax-grid, .scenario-grid, .accounts-grid, .system-grid, .rules-grid {
+    display: grid; gap: 1rem;
+  }
+  .charts-2 { grid-template-columns: 1fr 1fr; }
+  .goal-grid { grid-template-columns: 1.1fr 1fr; }
+  .tax-grid { grid-template-columns: 1fr 1fr; }
+  .scenario-grid { grid-template-columns: repeat(4, 1fr); }
+  .accounts-grid, .system-grid, .rules-grid { grid-template-columns: repeat(3, 1fr); }
+  .chart-card, .goal-card { padding: 1.35rem; min-width: 0; }
+  .chart-card h3, .goal-title {
+    font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem;
+  }
+  .chart-sub, .goal-sub { color: var(--soft); font-size: 0.8rem; line-height: 1.5; margin-bottom: 1rem; }
+  .chart-plot {
+    display: grid; grid-template-columns: 360px 220px; align-items: start; justify-content: center; gap: 1rem;
+  }
+  .canvas-wrap {
+    position: relative; width: 360px; min-width: 360px; height: 320px;
+    display: flex; align-items: flex-start; justify-content: center;
+  }
+  canvas {
+    display: block; width: 320px !important; height: 320px !important; max-width: 320px; max-height: 320px;
+  }
+  .legend-box { display: flex; flex-direction: column; gap: 0.55rem; padding-top: 1.5rem; min-width: 0; }
+  .legend-item {
+    display: flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; color: var(--soft); line-height: 1.3;
+  }
+  .legend-swatch { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+  .chart-note, .mini-note {
+    font-size: 0.78rem; color: var(--muted); line-height: 1.5; margin-top: 0.9rem;
+    padding-top: 0.9rem; border-top: 1px solid var(--border);
+  }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .pillar { padding: 1.45rem; position: relative; overflow: hidden; }
+  .pillar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .pillar.p-indigo { border-color: rgba(129,140,248,0.3); }
+  .pillar.p-indigo::before { background: var(--indigo); }
+  .pillar.p-cyan { border-color: rgba(34,211,238,0.3); }
+  .pillar.p-cyan::before { background: var(--cyan); }
+  .pillar.p-amber { border-color: rgba(251,191,36,0.3); }
+  .pillar.p-amber::before { background: var(--amber); }
+  .pillar.p-green { border-color: rgba(52,211,153,0.3); }
+  .pillar.p-green::before { background: var(--green); }
+  .pillar.p-pink { border-color: rgba(244,114,182,0.3); }
+  .pillar.p-pink::before { background: var(--pink); }
+  .pillar-icon { font-size: 1.7rem; margin-bottom: 0.8rem; }
+  .pillar-name {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); margin-bottom: 0.35rem;
+  }
+  .pillar-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem; }
+  .pillar-stat {
+    display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; margin-bottom: 0.38rem;
+  }
+  .pillar-stat-label { font-size: 0.75rem; color: var(--muted); }
+  .pillar-stat-value { font-size: 0.79rem; font-weight: 700; text-align: right; }
+  .pillar-why {
+    font-size: 0.75rem; color: var(--soft); line-height: 1.5; margin-top: 0.9rem; padding-top: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  .account-card, .system-card, .rule-card, .scenario-card { padding: 1.2rem; }
+  .account-name, .system-kicker, .rule-kicker, .scenario-kicker {
+    font-size: 0.74rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .07em;
+    margin-bottom: 0.35rem;
+  }
+  .account-balance, .system-title, .rule-title, .scenario-value { font-size: 1.05rem; font-weight: 700; }
+  .account-note, .system-copy, .rule-copy, .scenario-copy {
+    color: var(--soft); font-size: 0.78rem; line-height: 1.5; margin-top: 0.55rem;
+  }
+  .account-rate { font-size: 0.76rem; color: var(--green); font-weight: 600; margin-top: 0.35rem; }
+  .system-card { position: relative; overflow: hidden; }
+  .system-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .system-card.indigo::before { background: var(--indigo); }
+  .system-card.cyan::before { background: var(--cyan); }
+  .system-card.amber::before { background: var(--amber); }
+  .system-card.green::before { background: var(--green); }
+  .goal-row, .tax-row {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 0.82rem;
+  }
+  .goal-row:last-child, .tax-row:last-child { border-bottom: none; }
+  .goal-label, .tax-row-label { color: var(--muted); }
+  .goal-value, .tax-row-value { font-weight: 700; text-align: right; }
+  .progress-bar { background: var(--border); border-radius: 8px; height: 10px; overflow: hidden; margin: 0.8rem 0 0.4rem; }
+  .progress-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--indigo), var(--cyan)); }
+  .progress-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); }
+  .allocation-stack { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1rem; }
+  .allocation-row {
+    display: grid; grid-template-columns: 160px 1fr auto; gap: 0.8rem; align-items: center; font-size: 0.8rem;
+  }
+  .allocation-label { color: var(--soft); font-weight: 600; }
+  .allocation-bar { height: 10px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .allocation-fill { height: 100%; border-radius: 999px; }
+  .allocation-value { font-weight: 700; white-space: nowrap; }
+  footer {
+    text-align: center; padding: 3rem; color: var(--muted); font-size: 0.78rem; border-top: 1px solid var(--border);
+  }
+  @media (max-width: 1100px) {
+    .metrics, .pillars, .accounts-grid, .system-grid, .rules-grid, .scenario-grid { grid-template-columns: repeat(2, 1fr); }
+    .charts-2, .goal-grid, .tax-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.2rem; }
+    .container { padding: 0 1rem; }
+    .chart-plot { grid-template-columns: 1fr; }
+    .canvas-wrap { width: 100%; min-width: 0; }
+    .legend-box { padding-top: 0.25rem; }
+  }
+  @media (max-width: 700px) {
+    .hero h1 { font-size: 2.2rem; }
+    .metrics, .pillars, .accounts-grid, .system-grid, .rules-grid, .scenario-grid { grid-template-columns: 1fr; }
+    .allocation-row { grid-template-columns: 120px 1fr auto; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Charlie DC Finance Dashboard</div>
+  <div class="nav-links">
+    <button onclick="scrollToSection('overview')">Overview</button>
+    <button onclick="scrollToSection('pillars')">Priorities</button>
+    <button onclick="scrollToSection('paycheck')">Paycheck</button>
+    <button onclick="scrollToSection('tax')">Tax</button>
+    <button onclick="scrollToSection('actions')">Actions</button>
+    <button onclick="scrollToSection('net-worth')">Net Worth</button>
+  </div>
+  <div class="date-pill" id="live-date"></div>
+</nav>
+
+<div class="container">
+  <section class="hero" id="overview">
+    <h1>Charlie's DC Landing Dashboard</h1>
+    <p>
+      Built for Charlie's first year in DC: know take-home, keep rent under control, respect the real cost of the car, start the
+      401(k), and leave room for travel without letting the month get away from him.
+    </p>
+
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Gross Salary</div>
+        <div class="metric-value" style="color:var(--green)" id="hero-salary">$0</div>
+        <div class="metric-sub">Base salary assumption.</div>
+        <span class="metric-badge badge-green">Starting point is strong</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Est. Monthly Take-Home</div>
+        <div class="metric-value" style="color:var(--cyan)" id="hero-net">$0</div>
+        <div class="metric-sub" id="hero-net-sub">After 10% 401(k) and tax.</div>
+        <span class="metric-badge badge-cyan">Before health premiums</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Solo DC Burn Rate</div>
+        <div class="metric-value" style="color:var(--amber)" id="hero-burn">$0</div>
+        <div class="metric-sub" id="hero-burn-sub">Core monthly spend.</div>
+        <span class="metric-badge badge-amber">Solo DC is expensive</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Left After Core Plan</div>
+        <div class="metric-value" style="color:var(--indigo)" id="hero-leftover">$0</div>
+        <div class="metric-sub" id="hero-leftover-sub">What is still free to use.</div>
+        <span class="metric-badge badge-indigo" id="hero-leftover-badge">Needs protecting</span>
+      </div>
+    </div>
+
+    <div class="helper-banner">
+      <strong>Draft assumptions:</strong> single filer, full-year DC resident, no itemizing, no pre-tax health premium modeled,
+      <strong style="color:var(--text);">$2,000–2,200 rent</strong>, and a
+      <strong style="color:var(--text);">real ongoing car cost</strong> that includes insurance, gas,
+      parking, maintenance, and the other ownership friction. The car is already owned.
+    </div>
+    <div class="prompt-banner">
+      <strong>Best use of this page:</strong> replace rent, real insurance, parking, and employer match once he has them.
+      But this is already strong enough to answer the main question: can he live alone, keep the car, save, and travel without getting sloppy?
+    </div>
+
+  </section>
+
+  <section id="pillars">
+    <h2 class="section-title">First-Year <span>Priorities</span></h2>
+    <div class="pillars">
+      <div class="pillar p-indigo">
+        <div class="pillar-icon">🏠</div>
+        <div class="pillar-name">Priority 1 · Housing</div>
+        <div class="pillar-title">Keep Solo Living Affordable</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Rent target</span><span class="pillar-stat-value">$2,000-2,200</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Bills buffer goal</span><span class="pillar-stat-value" id="acct-checking">$0</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Housing share of take-home</span><span class="pillar-stat-value" id="pillar-housing-share">0%</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Main rule</span><span class="pillar-stat-value">No apartment creep</span></div>
+        <div class="pillar-why">
+          DC can make an $89k salary feel bigger than it is. Living alone is fine, but only if rent stays in the disciplined range.
+          His first win is preserving room, not chasing the nicest building with the best lobby.
+        </div>
+      </div>
+
+      <div class="pillar p-cyan">
+        <div class="pillar-icon">🚗</div>
+        <div class="pillar-name">Priority 2 · Car</div>
+        <div class="pillar-title">Count the Real Ownership Cost</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Insurance + gas</span><span class="pillar-stat-value">$270/mo</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Parking + upkeep</span><span class="pillar-stat-value">$205/mo</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Car reserve goal</span><span class="pillar-stat-value" style="color:var(--cyan)">$1,500</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">True monthly cost</span><span class="pillar-stat-value" style="color:var(--cyan)" id="pillar-car-total">$0</span></div>
+        <div class="pillar-why">
+          The car is where a young professional can accidentally leak hundreds every month. Parking, registration, oil changes,
+          tires, and insurance are not “surprises.” They are part of owning the car.
+        </div>
+      </div>
+
+      <div class="pillar p-amber">
+        <div class="pillar-icon">📈</div>
+        <div class="pillar-name">Priority 3 · Retirement</div>
+        <div class="pillar-title">Get the Match, Then Build Up</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Default contribution</span><span class="pillar-stat-value">10%</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Annual 401(k)</span><span class="pillar-stat-value" id="pillar-401k">$0</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Immediate rule</span><span class="pillar-stat-value">Full match first</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Next investing goal</span><span class="pillar-stat-value">$300/mo later</span></div>
+        <div class="pillar-why">
+          At 22, the compounding matters more than perfect optimization. He does not need a fancy investing personality yet.
+          He needs automated payroll investing and the discipline to leave it alone.
+        </div>
+      </div>
+
+      <div class="pillar p-green">
+        <div class="pillar-icon">🛡️</div>
+        <div class="pillar-name">Priority 4 · Cash</div>
+        <div class="pillar-title">Build the Right Buffers</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Move-in / setup target</span><span class="pillar-stat-value">$5,500</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Emergency fund target</span><span class="pillar-stat-value" id="pillar-ef">$0</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Build order</span><span class="pillar-stat-value">Move, then 1 month, then 3-4 months</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Why this matters</span><span class="pillar-stat-value">Avoid credit-card drift</span></div>
+        <div class="pillar-why">
+          The first expensive months are not failure. Deposit, furniture, parking permits, and random setup costs happen.
+          Separate buffers keep one awkward month from becoming revolving debt.
+        </div>
+      </div>
+
+      <div class="pillar p-pink">
+        <div class="pillar-icon">✈️</div>
+        <div class="pillar-name">Priority 5 · Travel</div>
+        <div class="pillar-title">Fund Travel On Purpose</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monthly travel goal</span><span class="pillar-stat-value">$250/mo</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Six-month travel pot</span><span class="pillar-stat-value">$1,500</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Credit card rule</span><span class="pillar-stat-value">Points yes, debt no</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">What this buys</span><span class="pillar-stat-value">Trips without guilt or drift</span></div>
+        <div class="pillar-why">
+          If travel matters, it should have a line in the plan. Otherwise it becomes the thing that quietly blows up the budget
+          while still feeling emotionally justified.
+        </div>
+      </div>
+
+      <div class="pillar p-indigo">
+        <div class="pillar-icon">🌱</div>
+        <div class="pillar-name">Priority 6 · Optionality</div>
+        <div class="pillar-title">Treat the First Six Months as Data</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Living setup</span><span class="pillar-stat-value">Solo for at least 6 months</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">What to evaluate</span><span class="pillar-stat-value">Roommate later or not</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Main question</span><span class="pillar-stat-value">Does solo DC feel worth the premium?</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Power move</span><span class="pillar-stat-value">Keep options open</span></div>
+        <div class="pillar-why">
+          He does not need to decide his forever setup immediately. A clean first six months gives him real data on commute,
+          social life, neighborhood fit, and how much living alone is actually worth.
+        </div>
+      </div>
+    </div>
+    <div class="helper-banner" style="margin-top:1rem;">
+      <strong>401(k) quick rule:</strong> if the employer matches, grab the full match immediately.
+      A clean progression is usually <strong style="color:var(--text);">match first</strong>,
+      then <strong style="color:var(--text);">~10%</strong> once the DC budget feels real.
+      On this salary, that means roughly <strong style="color:var(--text);" id="note-401k-match">$0</strong> at 6% and
+      <strong style="color:var(--text);" id="note-401k-default">$0</strong> at 10% per year.
+    </div>
+  </section>
+
+  <section id="paycheck">
+    <h2 class="section-title">Paycheck <span>Map</span></h2>
+    <div class="charts-2">
+      <div class="chart-card">
+        <h3>Where the Salary Goes</h3>
+        <div class="chart-sub">Modeled using a 10% 401(k) contribution and current federal, DC, and FICA assumptions.</div>
+        <div class="chart-plot">
+          <div class="canvas-wrap"><canvas id="paycheckChart" width="320" height="320"></canvas></div>
+          <div class="legend-box" id="paycheckLegend"></div>
+        </div>
+        <div class="chart-note">
+          The useful number is not salary. It is spendable monthly cash after tax and retirement contribution.
+          That is the number rent and the car must answer to.
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Base Solo Monthly Plan</h3>
+        <div class="chart-sub">Midpoint rent assumption with living-alone costs, travel, and separate savings included.</div>
+        <div class="chart-plot">
+          <div class="canvas-wrap"><canvas id="budgetChart" width="320" height="320"></canvas></div>
+          <div class="legend-box" id="budgetLegend"></div>
+        </div>
+        <div class="chart-note">
+          This budget is intentionally realistic, not punishing. It leaves some room, but not enough to tolerate sloppy apartment,
+          car, or nightlife decisions every month.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tax">
+    <h2 class="section-title">Tax <span>Profile</span></h2>
+
+    <div style="display:grid; grid-template-columns:1fr 28px 1fr 28px 1fr; gap:0; margin-bottom:1.4rem; align-items:center;">
+      <div style="background:rgba(129,140,248,0.07); border:1px solid rgba(129,140,248,0.25); border-radius:10px; padding:0.9rem 1.1rem;">
+        <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Gross Salary</div>
+        <div style="font-size:0.82rem; font-weight:700;" id="strip-salary">$0</div>
+        <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Chemical patent examiner · age 22</div>
+      </div>
+      <div style="text-align:center; color:var(--indigo); font-size:1rem; font-weight:700;">→</div>
+      <div style="background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.35); border-radius:10px; padding:0.9rem 1.1rem;">
+        <div style="font-size:0.62rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Default Setup</div>
+        <div style="font-size:0.82rem; font-weight:700;" id="strip-401k">10% 401(k)</div>
+        <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Good first-year balance</div>
+      </div>
+      <div style="text-align:center; color:var(--muted); font-size:1rem;">|</div>
+      <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.2); border-radius:10px; padding:0.9rem 1.1rem;">
+        <div style="font-size:0.62rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Spendable Pay</div>
+        <div style="font-size:0.82rem; font-weight:700;" id="strip-net">$0/mo</div>
+        <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Before health premium deductions</div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:1.4rem;">
+      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;">
+        <div style="font-size:0.72rem; padding:0.2rem 0.6rem; border-radius:12px; background:rgba(129,140,248,0.15); color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.06em;">US paycheck estimate</div>
+        <div style="font-size:0.75rem; color:var(--soft);">Single filer · federal + DC + FICA · 10% 401(k)</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+        <div>
+          <div style="font-size:0.65rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.5rem;">Gross → Taxable Income</div>
+          <div class="tax-row"><span class="tax-row-label">Base salary</span><span class="tax-row-value" id="tax-gross">$0</span></div>
+          <div class="tax-row"><span class="tax-row-label">401(k) contribution</span><span class="tax-row-value" id="tax-401k" style="color:var(--green)">$0</span></div>
+          <div class="tax-row"><span class="tax-row-label">Federal standard deduction</span><span class="tax-row-value" id="tax-fed-deduction" style="color:var(--green)">$0</span></div>
+          <div class="tax-row"><span class="tax-row-label">DC standard deduction</span><span class="tax-row-value" id="tax-dc-deduction" style="color:var(--green)">$0</span></div>
+          <div class="tax-row" style="border-top:2px solid var(--border); margin-top:0.3rem;"><span class="tax-row-label" style="font-weight:700; color:var(--text)">Federal taxable income</span><span class="tax-row-value" id="tax-fed-taxable" style="font-size:1rem;">$0</span></div>
+          <div class="tax-row"><span class="tax-row-label">DC taxable income</span><span class="tax-row-value" id="tax-dc-taxable">$0</span></div>
+        </div>
+        <div>
+          <div style="font-size:0.65rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.5rem;">Deductions → Take-Home</div>
+          <div class="tax-row"><span class="tax-row-label">Federal income tax</span><span class="tax-row-value" id="tax-fed" style="color:var(--red)">$0</span></div>
+          <div class="tax-row" style="padding-left:0.5rem;"><span class="tax-row-label" style="font-size:0.72rem; color:var(--muted)" id="tax-fed-detail">Bracket detail</span></div>
+          <div class="tax-row"><span class="tax-row-label">DC income tax</span><span class="tax-row-value" id="tax-dc" style="color:var(--red)">$0</span></div>
+          <div class="tax-row" style="padding-left:0.5rem;"><span class="tax-row-label" style="font-size:0.72rem; color:var(--muted)" id="tax-dc-detail">District brackets applied</span></div>
+          <div class="tax-row"><span class="tax-row-label">FICA</span><span class="tax-row-value" id="tax-fica" style="color:var(--red)">$0</span></div>
+          <div class="tax-row" style="padding-left:0.5rem;"><span class="tax-row-label" style="font-size:0.72rem; color:var(--muted)">6.2% Social Security + 1.45% Medicare</span></div>
+          <div class="tax-row" style="border-top:2px solid var(--border); margin-top:0.3rem;"><span class="tax-row-label" style="font-weight:700; color:var(--text)">Net take-home</span><span class="tax-row-value" id="tax-net-monthly" style="color:var(--green); font-size:1rem;">$0/mo</span></div>
+          <div class="tax-row"><span class="tax-row-label">Annual take-home</span><span class="tax-row-value" id="tax-net" style="color:var(--cyan)">$0</span></div>
+        </div>
+      </div>
+      <div style="font-size:0.72rem; background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2); border-radius:8px; padding:0.6rem 0.8rem; margin-top:1rem; line-height:1.5; color:var(--amber);">
+        This is meant to make the paycheck legible, not scary. If his real check is lower, the likely missing pieces are health insurance, HSA/FSA, or a different 401(k) rate.
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:1.4rem;" id="paye-checker">
+      <h3>Why The Paycheck Feels Smaller Than The Salary <span style="font-size:0.72rem; color:var(--muted); font-weight:400; margin-left:0.4rem;">· simple US version</span></h3>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; margin-bottom:1rem;">
+        <div style="background:rgba(129,140,248,0.07); border:1px solid rgba(129,140,248,0.2); border-radius:10px; padding:0.9rem 1rem;">
+          <div style="font-size:0.65rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.35rem;">1 · Gross pay</div>
+          <div style="font-size:1.1rem; font-weight:800; color:var(--text); margin-bottom:0.25rem;" id="explain-salary">$0</div>
+          <div style="font-size:0.76rem; color:var(--soft); line-height:1.5;">This is the headline number. It is not the number he gets to spend.</div>
+        </div>
+        <div style="background:rgba(52,211,153,0.07); border:1px solid rgba(52,211,153,0.2); border-radius:10px; padding:0.9rem 1rem;">
+          <div style="font-size:0.65rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.35rem;">2 · 401(k) first</div>
+          <div style="font-size:1.1rem; font-weight:800; color:var(--text); margin-bottom:0.25rem;" id="explain-401k">$0</div>
+          <div style="font-size:0.76rem; color:var(--soft); line-height:1.5;">Retirement money comes out before income tax, which is why it helps both long-term savings and current taxes.</div>
+        </div>
+        <div style="background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2); border-radius:10px; padding:0.9rem 1rem;">
+          <div style="font-size:0.65rem; color:var(--amber); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.35rem;">3 · Taxes still hit</div>
+          <div style="font-size:1.1rem; font-weight:800; color:var(--text); margin-bottom:0.25rem;" id="explain-tax">$0</div>
+          <div style="font-size:0.76rem; color:var(--soft); line-height:1.5;">Federal tax, DC tax, and FICA all matter. That is why a strong salary can still feel normal by payday.</div>
+        </div>
+      </div>
+
+      <div style="background:rgba(248,113,113,0.04); border:1px solid rgba(248,113,113,0.2); border-radius:10px; padding:1rem 1.2rem;">
+        <div style="font-size:0.65rem; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.7rem;">The Real Constraint</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; font-size:0.79rem;">
+          <div>
+            <div style="font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.35rem;">Rent</div>
+            <div><strong style="color:var(--green)">$2,000-2,200</strong> works</div>
+            <div style="font-size:0.72rem; color:var(--muted); margin-top:0.2rem; line-height:1.5;">Above that, living alone starts stealing flexibility fast.</div>
+          </div>
+          <div>
+            <div style="font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.35rem;">Car</div>
+            <div><strong style="color:var(--amber)" id="explain-car">$0/mo</strong> true cost</div>
+            <div style="font-size:0.72rem; color:var(--muted); margin-top:0.2rem; line-height:1.5;">Insurance, gas, parking, and upkeep are the real answer. Owned cars still cost real money.</div>
+          </div>
+          <div>
+            <div style="font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.35rem;">Bottom line</div>
+            <div><strong style="color:var(--cyan)" id="explain-left">$0/mo</strong> free after plan</div>
+            <div style="font-size:0.72rem; color:var(--muted); margin-top:0.2rem; line-height:1.5;">Enough to be solid, not enough to be careless.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="actions">
+    <h2 class="section-title">First-Year <span>Actions</span></h2>
+    <div style="margin-bottom:1rem; background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.22); border-radius:14px; padding:0.9rem 1rem;">
+      <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.7rem;">After Payday</div>
+      <div style="display:grid; grid-template-columns:1fr 1.1fr 0.75fr; gap:0.7rem;">
+        <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
+          <div style="font-size:0.6rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Payroll first</div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">401(k)</span><span class="tax-row-value" id="flow-401k" style="color:var(--green)">$0</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">Taxes + FICA</span><span class="tax-row-value" id="flow-tax" style="color:var(--red)">$0</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">Net check</span><span class="tax-row-value" id="flow-net" style="color:var(--cyan)">$0</span></div>
+        </div>
+        <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
+          <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Then the month happens</div>
+          <div style="display:flex; flex-direction:column; gap:0.45rem;">
+            <div style="font-size:0.78rem; color:var(--soft); line-height:1.45;"><strong style="color:var(--text)">1.</strong> Rent and ongoing car costs are already spoken for.</div>
+            <div style="font-size:0.78rem; color:var(--soft); line-height:1.45;"><strong style="color:var(--text)">2.</strong> Travel and emergency savings move automatically.</div>
+            <div style="font-size:0.78rem; color:var(--soft); line-height:1.45;"><strong style="color:var(--text)">3.</strong> The rest is just normal life spending, not guesswork.</div>
+          </div>
+        </div>
+        <div style="background:rgba(52,211,153,0.05); border:1px solid rgba(52,211,153,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
+          <div style="font-size:0.6rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Goal</div>
+          <div style="font-size:0.95rem; font-weight:800; color:var(--green);" id="flow-leftover">$0</div>
+          <div style="font-size:0.68rem; color:var(--soft); margin-top:0.15rem; line-height:1.4;">Left after the base plan</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>What To Check Once It Feels Real</h3>
+      <div class="progress-bar"><div class="progress-fill" id="launchProgress" style="width:0%"></div></div>
+      <div class="progress-labels"><span>Fixed obligations</span><span id="launchProgressLabel">0%</span><span>Flexible money</span></div>
+      <div class="allocation-stack" id="monthlyAllocation"></div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem; margin-bottom:0.9rem;">
+        <div style="background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Paycheck</div>
+          <div style="font-size:0.85rem; font-weight:700; color:var(--indigo);">Update actual net</div>
+          <div style="font-size:0.7rem; color:var(--muted); margin-top:0.2rem;">Health premiums and real withholding</div>
+        </div>
+        <div style="background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Car</div>
+          <div style="font-size:0.85rem; font-weight:700; color:var(--cyan);">Check the leak points</div>
+          <div style="font-size:0.7rem; color:var(--muted); margin-top:0.2rem;">Parking, gas, tolls, repairs</div>
+        </div>
+        <div style="background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Travel</div>
+          <div style="font-size:0.85rem; font-weight:700; color:var(--green);">Keep it funded</div>
+          <div style="font-size:0.7rem; color:var(--muted); margin-top:0.2rem;">Make trips planned, not reactive</div>
+        </div>
+        <div style="background:var(--card2); border-radius:8px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Housing</div>
+          <div style="font-size:0.85rem; font-weight:700; color:var(--amber);">Worth it or not?</div>
+          <div style="font-size:0.7rem; color:var(--muted); margin-top:0.2rem;">Living alone for 6 months is data</div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem;">
+        <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.18); border-radius:8px; padding:0.75rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Health / HSA</div>
+          <div style="font-size:0.78rem; color:var(--soft); line-height:1.45;">He is probably on your dad's health insurance until 26. If work offers an HSA-eligible plan later, that becomes worth learning.</div>
+        </div>
+        <div style="background:rgba(34,211,238,0.05); border:1px solid rgba(34,211,238,0.18); border-radius:8px; padding:0.75rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Move-In Cash</div>
+          <div style="font-size:0.78rem; color:var(--soft); line-height:1.45;">Deposit, first month, furniture, kitchen basics, DMV fees, and utility setup should be expected, not “random.”</div>
+        </div>
+        <div style="background:rgba(52,211,153,0.05); border:1px solid rgba(52,211,153,0.18); border-radius:8px; padding:0.75rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Credit Card</div>
+          <div style="font-size:0.78rem; color:var(--soft); line-height:1.45;">One simple card is enough. Put normal spending on it, autopay in full, and never finance the month.</div>
+        </div>
+        <div style="background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.18); border-radius:8px; padding:0.75rem 0.9rem;">
+          <div style="font-size:0.62rem; color:var(--amber); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.3rem;">Cash Setup</div>
+          <div style="font-size:0.78rem; color:var(--soft); line-height:1.45;">Checking for bills, HYSA for emergency savings, separate buckets for travel and car costs.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="net-worth">
+    <h2 class="section-title">Net Worth <span>Composition</span></h2>
+    <div class="chart-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;gap:1rem;flex-wrap:wrap;">
+        <h3 style="margin:0;">Net Worth Composition — Where Charlie's Money Lives</h3>
+        <div style="display:flex;align-items:center;gap:0.75rem;min-width:260px;">
+          <span style="font-size:0.68rem;font-weight:700;color:var(--muted);white-space:nowrap;">Project to</span>
+          <input type="range" id="nw-slider-charlie" min="1" max="6" step="1" value="1"
+            style="flex:1;accent-color:#818cf8;cursor:pointer;"
+            oninput="nwSliderChangeCharlie(this.value)">
+          <span id="nw-slider-charlie-lbl" style="font-size:0.78rem;font-weight:700;color:var(--indigo);min-width:56px;text-align:right;">Age 22</span>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:220px minmax(0,1fr); gap:2.5rem; align-items:start;">
+        <canvas id="nwChartCharlie" width="200" height="200"></canvas>
+        <div style="display:flex; flex-direction:column; gap:0.9rem; min-width:0; padding-top:0.15rem;">
+          <div>
+            <div id="nw-total-charlie" style="font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:2px;">$0 <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>
+            <div id="nw-label-charlie" style="font-size:0.7rem;color:var(--muted);">Projected at age 22</div>
+          </div>
+          <div id="nw-breakdown-charlie" style="display:flex; flex-direction:column; gap:0.75rem; min-width:0;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Charlie draft focused on first-year stability in DC: salary, taxes, solo rent, car reality, 401(k), buffers, and travel.
+</footer>
+
+<script>
+const DATA = {
+  annualSalary: 89102,
+  default401kPct: 0.10,
+  federalStandardDeduction: 16100,
+  dcStandardDeduction: 16100,
+  dcRentLow: 2000,
+  dcRentMid: 2100,
+  dcRentHigh: 2200,
+  housingOther: 180,
+  car: {
+    insurance: 180,
+    gas: 90,
+    parking: 125,
+    maintenance: 80,
+  },
+  monthlyBudget: {
+    groceries: 500,
+    fun: 375,
+    travel: 250,
+    emergencySavings: 300,
+    rothTaxable: 300,
+  },
+};
+
+function fmtUSD(value) {
+  return '$' + Math.round(value).toLocaleString();
+}
+
+function pct(part, total) {
+  if (!total) return 0;
+  return Math.max(0, Math.min(100, (part / total) * 100));
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  window.scrollTo({ top: el.offsetTop - 76, behavior: 'smooth' });
+}
+
+function calcFederalTax(taxable) {
+  if (taxable <= 0) return 0;
+  const brackets = [
+    [12400, 0.10],
+    [50400, 0.12],
+    [119950, 0.22],
+    [250525, 0.24],
+  ];
+  let tax = 0;
+  let previous = 0;
+  for (const [limit, rate] of brackets) {
+    if (taxable > previous) {
+      tax += (Math.min(taxable, limit) - previous) * rate;
+      previous = limit;
+    }
+  }
+  if (taxable > previous) tax += (taxable - previous) * 0.32;
+  return tax;
+}
+
+function calcDCTax(taxable) {
+  if (taxable <= 0) return 0;
+  let tax = 0;
+  if (taxable <= 10000) return taxable * 0.04;
+  tax += 10000 * 0.04;
+  if (taxable <= 40000) return tax + (taxable - 10000) * 0.06;
+  tax += 30000 * 0.06;
+  if (taxable <= 60000) return tax + (taxable - 40000) * 0.065;
+  tax += 20000 * 0.065;
+  if (taxable <= 250000) return tax + (taxable - 60000) * 0.085;
+  tax += 190000 * 0.085;
+  return tax + (taxable - 250000) * 0.0925;
+}
+
+function calcFica(gross) {
+  const socialSecurity = Math.min(gross, 184500) * 0.062;
+  const medicare = gross * 0.0145;
+  return socialSecurity + medicare;
+}
+
+function getCarMonthlyTotal() {
+  return Object.values(DATA.car).reduce((sum, value) => sum + value, 0);
+}
+
+function scenarioForRate(rate) {
+  const annual401k = DATA.annualSalary * rate;
+  const federalTaxable = Math.max(0, DATA.annualSalary - annual401k - DATA.federalStandardDeduction);
+  const dcTaxable = Math.max(0, DATA.annualSalary - annual401k - DATA.dcStandardDeduction);
+  const federalTax = calcFederalTax(federalTaxable);
+  const dcTax = calcDCTax(dcTaxable);
+  const fica = calcFica(DATA.annualSalary);
+  const annualNet = DATA.annualSalary - annual401k - federalTax - dcTax - fica;
+  const monthlyNet = annualNet / 12;
+  return {
+    rate,
+    annual401k,
+    federalTax,
+    dcTax,
+    fica,
+    annualNet,
+    monthlyNet,
+  };
+}
+
+function federalDetailText(taxable) {
+  const pieces = [];
+  const segments = [
+    [12400, 0.10],
+    [50400, 0.12],
+    [119950, 0.22],
+  ];
+  let previous = 0;
+  for (const [limit, rate] of segments) {
+    if (taxable <= previous) break;
+    const amount = Math.max(0, Math.min(taxable, limit) - previous);
+    if (amount > 0) pieces.push(`${Math.round(rate * 100)}% on ${fmtUSD(amount)}`);
+    previous = limit;
+  }
+  if (taxable > previous) pieces.push(`24%+ on ${fmtUSD(taxable - previous)}`);
+  return pieces.join(' · ');
+}
+
+function getMonthlyPlan(rent) {
+  const carTotal = getCarMonthlyTotal();
+  return {
+    housing: rent + DATA.housingOther,
+    car: carTotal,
+    food: DATA.monthlyBudget.groceries,
+    fun: DATA.monthlyBudget.fun,
+    travel: DATA.monthlyBudget.travel,
+    emergency: DATA.monthlyBudget.emergencySavings,
+    roth: DATA.monthlyBudget.rothTaxable,
+  };
+}
+
+function sumValues(obj) {
+  return Object.values(obj).reduce((sum, value) => sum + value, 0);
+}
+
+function renderMetrics(defaultScenario) {
+  const midpointPlan = getMonthlyPlan(DATA.dcRentMid);
+  const midpointSpend = sumValues(midpointPlan);
+  const midpointLeft = defaultScenario.monthlyNet - midpointSpend;
+  const emergencyTarget = (DATA.dcRentMid + DATA.housingOther + getCarMonthlyTotal() + 500 + 150) * 4;
+
+  document.getElementById('live-date').textContent =
+    new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  document.getElementById('hero-salary').textContent = fmtUSD(DATA.annualSalary);
+  document.getElementById('hero-net').textContent = fmtUSD(defaultScenario.monthlyNet);
+  document.getElementById('hero-burn').textContent = fmtUSD(midpointSpend);
+  document.getElementById('hero-leftover').textContent = fmtUSD(midpointLeft);
+  document.getElementById('flow-401k').textContent = '-' + fmtUSD(defaultScenario.annual401k / 12);
+  document.getElementById('flow-tax').textContent = '-' + fmtUSD((defaultScenario.federalTax + defaultScenario.dcTax + defaultScenario.fica) / 12);
+  document.getElementById('flow-net').textContent = fmtUSD(defaultScenario.monthlyNet);
+  document.getElementById('flow-leftover').textContent = fmtUSD(midpointLeft);
+  document.getElementById('hero-burn-sub').textContent =
+    `${fmtUSD(DATA.dcRentMid)} rent + ${fmtUSD(getCarMonthlyTotal())} car + life`;
+  document.getElementById('hero-leftover-sub').textContent =
+    `${fmtUSD(defaultScenario.monthlyNet)} net vs ${fmtUSD(midpointSpend)} spend`;
+  document.getElementById('hero-leftover-badge').textContent =
+    midpointLeft >= 300 ? 'Tight but workable' : 'Needs attention';
+
+  document.getElementById('pillar-housing-share').textContent =
+    Math.round(pct(DATA.dcRentMid + DATA.housingOther, defaultScenario.monthlyNet)) + '% of take-home';
+  document.getElementById('pillar-car-total').textContent = fmtUSD(getCarMonthlyTotal()) + '/mo';
+  document.getElementById('pillar-401k').textContent = fmtUSD(defaultScenario.annual401k) + '/yr';
+  document.getElementById('pillar-ef').textContent = fmtUSD(emergencyTarget);
+
+  document.getElementById('acct-checking').textContent = fmtUSD(midpointSpend);
+
+  document.getElementById('strip-salary').textContent = fmtUSD(DATA.annualSalary);
+  document.getElementById('strip-401k').textContent = `${Math.round(DATA.default401kPct * 100)}% 401(k) · ${fmtUSD(defaultScenario.annual401k)}/yr`;
+  document.getElementById('strip-net').textContent = `${fmtUSD(defaultScenario.monthlyNet)}/mo`;
+  document.getElementById('explain-salary').textContent = fmtUSD(DATA.annualSalary);
+  document.getElementById('explain-401k').textContent = fmtUSD(defaultScenario.annual401k) + '/yr';
+  document.getElementById('explain-tax').textContent =
+    fmtUSD(defaultScenario.federalTax + defaultScenario.dcTax + defaultScenario.fica) + '/yr';
+  document.getElementById('explain-car').textContent = fmtUSD(getCarMonthlyTotal()) + '/mo';
+  document.getElementById('explain-left').textContent = fmtUSD(midpointLeft);
+}
+
+function renderPaycheckChart(defaultScenario) {
+  const labels = ['401(k)', 'Federal tax', 'DC tax', 'FICA', 'Spendable pay'];
+  const colors = ['#34d399', '#f87171', '#fbbf24', '#f472b6', '#22d3ee'];
+  const values = [
+    defaultScenario.annual401k,
+    defaultScenario.federalTax,
+    defaultScenario.dcTax,
+    defaultScenario.fica,
+    defaultScenario.annualNet,
+  ];
+
+  renderLegend('paycheckLegend', labels, colors);
+
+  new Chart(document.getElementById('paycheckChart'), {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: colors,
+        borderWidth: 0,
+        hoverOffset: 8,
+        radius: '86%',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '64%',
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => `${c.label}: ${fmtUSD(c.raw)}` } }
+      }
+    }
+  });
+}
+
+function renderBudgetChart(defaultScenario) {
+  const plan = getMonthlyPlan(DATA.dcRentMid);
+  const leftover = Math.max(0, defaultScenario.monthlyNet - sumValues(plan));
+  const labels = ['Housing', 'Car', 'Food', 'Fun', 'Travel', 'Emergency', 'Roth / taxable', 'Leftover'];
+  const values = [
+    plan.housing,
+    plan.car,
+    plan.food,
+    plan.fun,
+    plan.travel,
+    plan.emergency,
+    plan.roth,
+    leftover,
+  ];
+  const colors = ['#818cf8', '#22d3ee', '#fbbf24', '#f472b6', '#34d399', '#f87171', '#94a3b8', '#64748b'];
+
+  renderLegend('budgetLegend', labels, colors);
+
+  new Chart(document.getElementById('budgetChart'), {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: colors,
+        borderWidth: 0,
+        hoverOffset: 8,
+        radius: '86%',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '64%',
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => `${c.label}: ${fmtUSD(c.raw)}` } }
+      }
+    }
+  });
+}
+
+function renderLaunchPlan(defaultScenario) {
+  const plan = getMonthlyPlan(DATA.dcRentMid);
+  const total = sumValues(plan);
+  const fixed = plan.housing + plan.car + plan.food;
+  document.getElementById('launchProgress').style.width = pct(fixed, defaultScenario.monthlyNet) + '%';
+  document.getElementById('launchProgressLabel').textContent =
+    `${Math.round(pct(fixed, defaultScenario.monthlyNet))}%`;
+
+  const rows = [
+    ['Housing', plan.housing, 'var(--indigo)'],
+    ['Car', plan.car, 'var(--cyan)'],
+    ['Food', plan.food, 'var(--amber)'],
+    ['Fun', plan.fun, 'var(--pink)'],
+    ['Travel', plan.travel, 'var(--green)'],
+    ['Emergency', plan.emergency, 'var(--red)'],
+    ['Roth / taxable', plan.roth, 'var(--soft)'],
+  ];
+
+  document.getElementById('monthlyAllocation').innerHTML = rows.map(([label, value, color]) => `
+    <div class="allocation-row">
+      <div class="allocation-label">${label}</div>
+      <div class="allocation-bar"><div class="allocation-fill" style="width:${pct(value, total)}%; background:${color};"></div></div>
+      <div class="allocation-value">${fmtUSD(value)}</div>
+    </div>
+  `).join('');
+}
+
+function renderTaxBreakdown(defaultScenario) {
+  const fedTaxable = Math.max(0, DATA.annualSalary - defaultScenario.annual401k - DATA.federalStandardDeduction);
+  const dcTaxable = Math.max(0, DATA.annualSalary - defaultScenario.annual401k - DATA.dcStandardDeduction);
+  document.getElementById('tax-gross').textContent = fmtUSD(DATA.annualSalary);
+  document.getElementById('tax-401k').textContent = '-' + fmtUSD(defaultScenario.annual401k);
+  document.getElementById('tax-fed-deduction').textContent = '-' + fmtUSD(DATA.federalStandardDeduction);
+  document.getElementById('tax-dc-deduction').textContent = '-' + fmtUSD(DATA.dcStandardDeduction);
+  document.getElementById('tax-fed-taxable').textContent = fmtUSD(fedTaxable);
+  document.getElementById('tax-dc-taxable').textContent = fmtUSD(dcTaxable);
+  document.getElementById('tax-fed').textContent = '-' + fmtUSD(defaultScenario.federalTax);
+  document.getElementById('tax-dc').textContent = '-' + fmtUSD(defaultScenario.dcTax);
+  document.getElementById('tax-fica').textContent = '-' + fmtUSD(defaultScenario.fica);
+  document.getElementById('tax-net').textContent = fmtUSD(defaultScenario.annualNet);
+  document.getElementById('tax-net-monthly').textContent = fmtUSD(defaultScenario.monthlyNet) + '/mo';
+  document.getElementById('tax-fed-detail').textContent = federalDetailText(fedTaxable);
+  document.getElementById('tax-dc-detail').textContent = '4% / 6% / 6.5% / 8.5% DC brackets';
+  document.getElementById('note-401k-match').textContent = fmtUSD(DATA.annualSalary * 0.06) + '/yr';
+  document.getElementById('note-401k-default').textContent = fmtUSD(DATA.annualSalary * 0.10) + '/yr';
+}
+
+let gCharlieNwBases = null;
+let gCharlieNwChart = null;
+
+function renderNwBreakdownCharlie(segs, label) {
+  const total = segs.reduce((s, x) => s + x.val, 0);
+  const totalEl = document.getElementById('nw-total-charlie');
+  const labelEl = document.getElementById('nw-label-charlie');
+  const breakdownEl = document.getElementById('nw-breakdown-charlie');
+  if (totalEl) totalEl.innerHTML = `${fmtUSD(total)} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span>`;
+  if (labelEl) labelEl.textContent = label;
+  if (!breakdownEl) return;
+  breakdownEl.innerHTML = segs.map(s => {
+      const pct = ((s.val / total) * 100).toFixed(1);
+      return `<div style="padding:0.75rem 1rem;background:var(--card2);border-radius:10px;border-left:3px solid ${s.color};display:flex;justify-content:space-between;align-items:center;">` +
+        `<div><div style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:0.15rem;">${s.label}</div>` +
+        `<div style="font-size:0.7rem;color:var(--muted);">${s.note}</div></div>` +
+        `<div style="text-align:right;"><div style="font-size:1rem;font-weight:700;color:${s.color};">${fmtUSD(s.val)}</div>` +
+        `<div style="font-size:0.7rem;color:var(--soft);">${pct}%</div></div></div>`;
+    }).join('');
+}
+
+function nwSliderChangeCharlie(yrs) {
+  const yr = parseInt(yrs);
+  const lbl = document.getElementById('nw-slider-charlie-lbl');
+  if (lbl) lbl.textContent = `Age ${21 + yr}`;
+  if (!gCharlieNwBases) return;
+  const years = yr;
+  const emergencyGoal = Math.round((DATA.dcRentMid + DATA.housingOther + getCarMonthlyTotal() + 500 + 150) * 4);
+  const segs = [
+    { label: 'Cash buffers', val: Math.round(Math.min(emergencyGoal, 5500 + (emergencyGoal - 5500) * (years / 3))), color: '#22d3ee', note: 'Bills + emergency savings' },
+    { label: '401(k)', val: Math.round(defaultScenario.annual401k * years * 1.05), color: '#34d399', note: 'Payroll retirement contributions' },
+    { label: 'Roth / taxable', val: Math.round(Math.max(0, years - 1) * DATA.monthlyBudget.rothTaxable * 12 * 1.03), color: '#818cf8', note: 'Next investing layer once stable' },
+    { label: 'Travel fund', val: Math.round(DATA.monthlyBudget.travel * 12), color: '#fbbf24', note: 'Trips funded on purpose' },
+    { label: 'Car reserve', val: Math.round(Math.min(1500, 500 * years)), color: '#f472b6', note: 'Repairs, tires, registration' },
+  ];
+  renderNwBreakdownCharlie(segs, `Projected at age ${21 + yr}`);
+  if (gCharlieNwChart) {
+    gCharlieNwChart.data.datasets[0].data = segs.map(s => s.val);
+    gCharlieNwChart.update();
+  }
+}
+
+function drawCharlieNetWorthChart(defaultScenario) {
+  const segs = [
+    { label: 'Cash buffers', val: 5500, color: '#22d3ee', note: 'Bills + emergency savings' },
+    { label: '401(k)', val: Math.round(defaultScenario.annual401k * 1.05), color: '#34d399', note: 'Payroll retirement contributions' },
+    { label: 'Roth / taxable', val: 0, color: '#818cf8', note: 'Next investing layer once stable' },
+    { label: 'Travel fund', val: Math.round(DATA.monthlyBudget.travel * 12), color: '#fbbf24', note: 'Trips funded on purpose' },
+    { label: 'Car reserve', val: 500, color: '#f472b6', note: 'Repairs, tires, registration' },
+  ];
+  gCharlieNwBases = { segs, label: 'Projected at age 22' };
+  renderNwBreakdownCharlie(segs, 'Projected at age 22');
+  gCharlieNwChart = new Chart(document.getElementById('nwChartCharlie'), {
+    type: 'doughnut',
+    data: {
+      labels: segs.map(s => s.label),
+      datasets: [{
+        data: segs.map(s => s.val),
+        backgroundColor: segs.map(s => s.color + 'cc'),
+        borderColor: '#080c18',
+        borderWidth: 3,
+        hoverOffset: 10,
+      }]
+    },
+    options: {
+      responsive: false,
+      cutout: '62%',
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => `${c.label}: ${fmtUSD(c.raw)}` } }
+      }
+    }
+  });
+  nwSliderChangeCharlie(1);
+}
+
+function renderLegend(id, labels, colors) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = labels.map((label, i) => `
+    <div class="legend-item">
+      <span class="legend-swatch" style="background:${colors[i]}"></span>
+      <span>${label}</span>
+    </div>
+  `).join('');
+}
+
+const defaultScenario = scenarioForRate(DATA.default401kPct);
+renderMetrics(defaultScenario);
+renderPaycheckChart(defaultScenario);
+renderBudgetChart(defaultScenario);
+renderLaunchPlan(defaultScenario);
+renderTaxBreakdown(defaultScenario);
+drawCharlieNetWorthChart(defaultScenario);
+</script>
+</body>
+</html>
