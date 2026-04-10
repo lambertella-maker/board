@@ -1061,15 +1061,6 @@ const RECIPES = [
     ingredients:['300g ground chicken','3 tbsp lime juice','1 tbsp fish sauce','1 tsp chilli flakes','Large handful fresh mint and coriander','2 spring onion greens, sliced','1 tbsp garlic-infused oil','Lettuce cups or rice to serve'],
     method:['Heat oil, cook ground chicken until done, breaking up.','Off heat, stir in lime juice, fish sauce, chilli.','Fold in herbs and spring onion greens.','Serve in lettuce cups or over rice.'],
     macros:{cal:320,protein:30,carbs:8}},
-
-
-
-  {id:'v7',name:'Bun Cha Pork Bowl',cuisine:'Vietnamese',emoji:'🍖',time:'30 min',protein:'28g',
-    flavors:['citrus','umami','herby'],meal:['lunch','dinner'],
-    ingredients:['300g ground pork','1 tbsp fish sauce','1 tsp brown sugar','200g rice vermicelli','Bean sprouts, cucumber, herbs','Dipping broth: 200ml water + 2 tbsp fish sauce + 1 tbsp rice vinegar + 1 tsp sugar + chilli + lime'],
-    method:['Mix pork with fish sauce and sugar. Shape into small patties.','Grill or pan-fry patties 3–4 min per side until charred.','Cook noodles per packet. Rinse cold.','Make dipping broth: combine all ingredients, taste and adjust.','Serve patties in broth alongside noodles, bean sprouts and fresh herbs. Dip everything in.'],
-    macros:{cal:440,protein:28,carbs:50}},
-
   // ── MEXICAN (7) ─────────────────────────────────────────────────────────────
   {id:'m1',name:'Prawn Ceviche',cuisine:'Mexican',emoji:'🍤',time:'25 min',protein:'24g',
     flavors:['citrus','herby'],meal:['lunch'],
@@ -1384,13 +1375,6 @@ const RECIPES = [
     ingredients:['4 chicken breasts, pounded thin','80g GF breadcrumbs or almond flour','2 eggs, beaten','40g Parmesan, finely grated','1 tsp dried oregano','Garlic-infused olive oil for frying','Lemon wedges, rocket, cherry tomatoes to serve','Salt, pepper'],
     method:['Mix breadcrumbs, Parmesan, oregano, salt and pepper on a plate.','Dip chicken in egg then press into breadcrumb mix.','Heat generous glug of garlic oil in a pan over medium-high. Fry chicken 3–4 min per side until golden and cooked through.','Drain on paper towel.','Serve with rocket, cherry tomatoes and a big squeeze of lemon.'],
     macros:{cal:430,protein:34,carbs:20}},
-
-  {id:'y8',name:'Ginger Chicken Meatballs',cuisine:'Everyday',emoji:'🍡',time:'30 min',protein:'32g',
-    flavors:['umami','herby'],meal:['lunch','dinner'],
-    ingredients:['500g chicken mince','3cm fresh ginger, grated','Spring onion greens (2 stalks), finely chopped','2 tbsp gluten-free soy sauce','1 tbsp sesame oil','1 egg','40g GF breadcrumbs','1 tbsp rice vinegar','Sesame seeds, chilli oil, steamed rice to serve'],
-    method:['Mix chicken mince with ginger, spring onion greens, 1 tbsp soy, sesame oil, egg and breadcrumbs. Season.','Roll into golf-ball-sized balls — makes about 16.','Fry in a lightly oiled pan over medium heat 8–10 min, turning, until golden and cooked through. Or bake 200°C for 18 min.','Mix remaining soy and rice vinegar for dipping sauce.','Serve over rice with sesame seeds and chilli oil.'],
-    macros:{cal:420,protein:32,carbs:28}},
-
   {id:'y9',name:'Blackened Fish Tacos',cuisine:'Mexican',emoji:'🌮',time:'20 min',protein:'28g',
     flavors:['heat','citrus'],meal:['lunch','dinner'],
     ingredients:['400g firm white fish (cod, hake or snapper)','1 tsp smoked paprika','1 tsp cumin','½ tsp cayenne','½ tsp dried oregano','Salt','Garlic-infused oil','6 corn tortillas','¼ red cabbage, finely shredded','1 lime, juice','Sour cream or lactose-free crema','Small bunch fresh coriander, pickled jalapeños'],
@@ -1620,7 +1604,6 @@ const RECIPE_IMGS = {
   'v3':'https://www.recipetineats.com/tachyon/2017/01/Vietnamese-Noodles-with-Lemongrass-Chicken_7.jpg',
   'v4':'https://thewoksoflife.com/wp-content/uploads/2019/08/chicken-larb-13.jpg',
   'v6':'https://www.recipetineats.com/tachyon/2021/06/Prawn-Stir-Fry-Shrimp_8.jpg',
-  'v7':'https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg',
   // Mexican
   'm1':'https://www.inspiredtaste.net/wp-content/uploads/2019/05/Easy-Shrimp-Ceviche-Recipe-3-1200.jpg',
   'm2':'https://tastesbetterfromscratch.com/wp-content/uploads/2023/05/Grilled-Chicken-Street-Tacos-1.jpg',
@@ -1688,7 +1671,6 @@ const RECIPE_IMGS = {
   'y5':'https://www.halfbakedharvest.com/wp-content/uploads/2025/09/Marry-Me-Chicken-Gnocchi-Soup-1-scaled.jpg',
   'y6':'https://static01.nyt.com/images/2024/07/12/multimedia/12GRILLED-CHICKENREX2-gpmj/GRILLED-CHICKENREX2-gpmj-threeByTwoMediumAt2X.jpg?quality=75&auto=webp',
   'y7':'https://www.skinnytaste.com/wp-content/uploads/2012/08/Chicken-Milanese-2.jpg',
-  'y8':'https://www.halfbakedharvest.com/wp-content/uploads/2019/10/Weeknight-Sticky-Ginger-Sesame-Chicken-Meatballs-5.jpg',
   'y9':'https://www.recipetineats.com/tachyon/2015/10/Blackened-Fish-Tacos1-Featured.jpg',
   'y10':'https://dishedbykate.com/wp-content/uploads/2022/07/Sticky-gochujang-chicken-featured.jpg',
   'y11':'https://www.halfbakedharvest.com/wp-content/uploads/2018/05/Oven-Fried-Southern-Hot-Honey-Chicken-1.jpg',
@@ -1776,6 +1758,120 @@ let currentFilter = 'All';
 let customRecipes = JSON.parse(localStorage.getItem('custom_recipes') || '[]');
 let arPhotoData = null; // base64 or URL string for the recipe being added
 let arGeneratedRecipe = null;
+const REMOVED_RECIPE_IDS = new Set(['v7', 'y8']);
+const REMOVED_RECIPE_NAME_RE = /\bmeatballs?\b/i;
+const IMPORT_CUISINE_HINTS = [
+  ['Vietnamese', /\b(vietnamese|pho|nuoc cham|lemongrass|rice paper|bun|goi|larb)\b/i],
+  ['Mexican', /\b(mexican|taco|quesadilla|enchilada|birria|ceviche|salsa|tortilla)\b/i],
+  ['Thai', /\b(thai|tom kha|pad thai|pad see ew|larb|basil chicken|green curry|red curry)\b/i],
+  ['Korean', /\b(korean|gochujang|kimchi|bibimbap|bulgogi|gyeran|sesame cucumber)\b/i],
+  ['Shabbat', /\b(challah|kugel|latke|brisket|shabbat|schnitzel)\b/i],
+  ['Dessert', /\b(cake|cookie|brownie|dessert|pudding|tart|crumble|scone|muffin)\b/i],
+];
+
+function cleanImportedLine(line) {
+  return line.trim()
+    .replace(/^[•*\-]\s*/, '')
+    .replace(/^\d+\s*[\.)-]\s*/, '')
+    .replace(/^[a-z]\)\s+/i, '')
+    .trim();
+}
+
+function sectionIndex(lines, patterns) {
+  return lines.findIndex(line => patterns.some(re => re.test(line.trim())));
+}
+
+function parseImportedRecipeText(text) {
+  const lines = text.replace(/\r/g, '').split('\n');
+  const ingredientsIdx = sectionIndex(lines, [/^ingredients?[:]?$/i, /^ingredient list[:]?$/i]);
+  const methodIdx = sectionIndex(lines, [/^(method|instructions|directions|preparation)[:]?$/i]);
+  if (ingredientsIdx === -1 || methodIdx === -1 || methodIdx <= ingredientsIdx) return null;
+  const tipsIdx = sectionIndex(lines, [/^(notes?|tips?|serving notes?)[:]?$/i]);
+  const title = lines.slice(0, ingredientsIdx).map(s => s.trim()).find(Boolean) || 'Imported Recipe';
+  const ingredientsEnd = methodIdx;
+  const methodEnd = tipsIdx > methodIdx ? tipsIdx : lines.length;
+  const ingredients = lines.slice(ingredientsIdx + 1, ingredientsEnd).map(cleanImportedLine).filter(Boolean);
+  const method = lines.slice(methodIdx + 1, methodEnd).map(cleanImportedLine).filter(Boolean);
+  const tips = tipsIdx > methodIdx ? lines.slice(tipsIdx + 1).map(cleanImportedLine).filter(Boolean) : [];
+  if (!ingredients.length || !method.length) return null;
+  return { title, ingredients, method, tips };
+}
+
+function inferImportedCuisine(text) {
+  for (const [name, pattern] of IMPORT_CUISINE_HINTS) {
+    if (pattern.test(text)) return name;
+  }
+  return 'Everyday';
+}
+
+function inferImportedMeal(name, text) {
+  const haystack = `${name}\n${text}`.toLowerCase();
+  if (/\b(cookie|cake|brownie|dessert|tart|ice cream|crisp|scone|muffin)\b/.test(haystack)) return ['dessert'];
+  if (/\b(breakfast|pancake|omelette|oat|porridge|toast|granola)\b/.test(haystack)) return ['breakfast'];
+  if (/\b(snack|bar|bite|ball|dip)\b/.test(haystack)) return ['snack'];
+  if (/\b(salad|roll|wrap|sandwich)\b/.test(haystack)) return ['lunch'];
+  return ['dinner'];
+}
+
+function inferImportedEmoji(cuisine, meal) {
+  if (meal.includes('dessert')) return '🍰';
+  if (meal.includes('breakfast')) return '🍳';
+  const map = { Vietnamese:'🍜', Mexican:'🌮', Thai:'🥥', Korean:'🍚', Shabbat:'🍽️', Dessert:'🍰', Everyday:'🍽️' };
+  return map[cuisine] || '🍽️';
+}
+
+function inferImportedTime(text) {
+  const m = text.match(/\b(\d+)\s*(min|mins|minutes|hour|hours|hr|hrs)\b/i);
+  if (!m) return '30 min';
+  return `${m[1]} ${m[2].toLowerCase().startsWith('h') ? 'hr' : 'min'}`;
+}
+
+function inferImportedServings(text) {
+  const m = text.match(/\b(serves?|makes?)\s+(\d{1,2})\b/i) || text.match(/\b(\d{1,2})\s+(servings|people)\b/i);
+  return m ? parseInt(m[2] || m[1], 10) : 2;
+}
+
+function fodmapSwapTips(ingredients) {
+  const joined = ingredients.join('\n').toLowerCase();
+  const tips = [];
+  if (/\bgarlic\b/.test(joined)) tips.push('FODMAP swap: use garlic-infused oil instead of garlic cloves or chopped garlic.');
+  if (/\bonion|shallot|leek\b/.test(joined)) tips.push('FODMAP swap: replace onion, shallot, or leek with spring onion greens or chives.');
+  if (/\bmilk\b/.test(joined)) tips.push('FODMAP swap: use lactose-free milk.');
+  if (/\bcream\b/.test(joined)) tips.push('FODMAP swap: use lactose-free cream or a tolerated lactose-free yogurt.');
+  if (/\bcream cheese|ricotta|cottage cheese|mascarpone\b/.test(joined)) tips.push('FODMAP swap: use a lactose-free version of the dairy component.');
+  if (/\bhoney\b/.test(joined)) tips.push('FODMAP swap: use maple syrup instead of honey.');
+  if (/\bwheat flour|plain flour\b/.test(joined)) tips.push('FODMAP swap: use a gluten-free plain flour blend if the flour is likely to push the portion high-FODMAP.');
+  if (/\bchickpeas?\b/.test(joined)) tips.push('FODMAP swap: if using chickpeas, keep to a small canned-and-rinsed portion or swap for firm tofu.');
+  if (/\bbeans?\b/.test(joined) && !/\bgreen beans?\b/.test(joined)) tips.push('FODMAP swap: use canned lentils in a small portion or firm tofu instead of larger bean servings.');
+  if (/\bcauliflower\b/.test(joined)) tips.push('FODMAP swap: use broccoli tops or a small amount of oyster mushrooms instead of cauliflower.');
+  return tips;
+}
+
+function buildExactImportedRecipe(text) {
+  const parsed = parseImportedRecipeText(text);
+  if (!parsed) return null;
+  const cuisine = inferImportedCuisine(text);
+  const meal = inferImportedMeal(parsed.title, text);
+  return {
+    id: 'c_' + Date.now(),
+    name: parsed.title,
+    cuisine,
+    emoji: inferImportedEmoji(cuisine, meal),
+    time: inferImportedTime(text),
+    protein: '0g',
+    flavors: [],
+    meal,
+    servings: inferImportedServings(text),
+    ingredients: parsed.ingredients,
+    method: parsed.method,
+    tips: [...parsed.tips, ...fodmapSwapTips(parsed.ingredients)],
+    macros: { cal: 0, protein: 0, carbs: 0 }
+  };
+}
+
+function isRemovedRecipe(recipe) {
+  return !!recipe && (REMOVED_RECIPE_IDS.has(recipe.id) || REMOVED_RECIPE_NAME_RE.test(recipe.name || ''));
+}
 
 // ─── TABS ────────────────────────────────────────────────────────────────────
 function showTab(id) {
@@ -2853,8 +2949,6 @@ async function generateRecipe() {
   const text = document.getElementById('ar-text-input').value.trim();
   if (!text) { alert('Paste something first — a dish name, URL, or recipe text.'); return; }
 
-  const apiKey = getApiKey();
-
   // Reset any photo from a previous generation
   arPhotoData = null;
 
@@ -2865,6 +2959,14 @@ async function generateRecipe() {
   // Show loading
   document.getElementById('ar-step-input').style.display = 'none';
   document.getElementById('ar-loading').style.display = 'block';
+
+  const exactImportedRecipe = !/^https?:\/\//i.test(text) ? buildExactImportedRecipe(text) : null;
+  if (exactImportedRecipe) {
+    arGeneratedRecipe = exactImportedRecipe;
+    document.getElementById('ar-loading').style.display = 'none';
+    showRecipePreview(arGeneratedRecipe);
+    return;
+  }
 
   const isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
   const proxyUrl = localStorage.getItem('ar_proxy_url') || (isLocal ? 'http://localhost:8766' : 'https://mealplan-proxy.lambert-ella.workers.dev/');
@@ -2897,6 +2999,8 @@ async function generateRecipe() {
   const prompt = `You are a recipe assistant for a personal low-FODMAP meal planning app. Generate a recipe from the source below.
 
 Rules:
+- If the source is only a partial idea, title, short note, or URL, you should fill in the blanks and create a complete recipe.
+- If the source already looks like a complete recipe with ingredients and instructions, preserve the original recipe structure and wording as closely as possible. Only add FODMAP-safe substitution suggestions in the "tips" array when useful.
 - Low FODMAP: use garlic-infused oil (not raw garlic/onion), spring onion greens OK, lactose-free dairy
 - Bread: sourdough only (2-slice limit). Pasta: regular rigatoni is fine. Never suggest GF alternatives unless the dish is traditionally GF (e.g. rice noodles in pho). Do not add GF notes.
 - Use intuitive UK measurements for savoury: handfuls, cans (400g), pieces (e.g. "2 chicken thighs") not grams — EXCEPT keep grams for baking/desserts
@@ -3114,6 +3218,14 @@ document.addEventListener('DOMContentLoaded', () => {
   ['topbar-date-recipes','topbar-date-ideas','topbar-date-tips','topbar-date-friends']
     .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = dateStr; });
 
+  for (let i = RECIPES.length - 1; i >= 0; i--) {
+    if (isRemovedRecipe(RECIPES[i])) RECIPES.splice(i, 1);
+  }
+  customRecipes = customRecipes.filter(r => !isRemovedRecipe(r));
+  Object.keys(photoOverrides).forEach(id => {
+    if (REMOVED_RECIPE_IDS.has(id)) delete photoOverrides[id];
+  });
+
   // Merge custom recipes saved to localStorage
   customRecipes.forEach(r => {
     if (!RECIPES.find(x => x.id === r.id)) RECIPES.push(r);
@@ -3144,12 +3256,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Purge any API key that was previously stored in browser — key now lives only in Cloudflare Worker secret
   localStorage.removeItem('ar_api_key');
   document.cookie = 'ar_ak=;max-age=0;path=/;SameSite=Strict';
+  localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+  localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
 
-  // Restore last active tab (prevents iOS PWA reload jumping to home)
-  const lastTab = localStorage.getItem('lastTab');
-  if (lastTab && ['home','recipes','ideas','tips','friends'].includes(lastTab) && lastTab !== 'home') {
-    showTab(lastTab);
-  }
+  // Always open on Home when the app loads.
+  localStorage.removeItem('lastTab');
+  showTab('home');
 
   // Desktop: click backdrop to close Add Recipe dialog
   document.getElementById('add-recipe-screen').addEventListener('click', e => {
