@@ -1657,7 +1657,6 @@ const RECIPE_IMGS = {
   't3':'https://thewoksoflife.com/wp-content/uploads/2025/03/tom-kha-gai-thai-coconut-soup-recipe.jpg',
   't4':'https://www.recipetineats.com/tachyon/2016/03/Pad-See-Ew-Thai-Noodles_3.jpg',
   't5':'https://www.recipetineats.com/tachyon/2021/08/Green-Papaya-Salad_54.jpg',
-  't6':'https://www.recipetineats.com/tachyon/2021/01/12-Minute-Thai-Chicken-Noodles_2.jpg',
   // Korean
   'k1':'https://www.recipetineats.com/tachyon/2025/09/Easy-Korean-Bulgogi-Beef-Bowls_7.jpg',
   'k2':'https://www.recipetineats.com/tachyon/2019/05/Bibimbap_5.jpg',
@@ -3291,7 +3290,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderHome();
   updateDeletedCount();
 
-  const filters = ['All','Plant Based','Breakfast','Lunch','Dinner','Dessert','Snacks'];
+  const filters = ['All','Breakfast','Lunch','Dinner','Dessert','Snacks'];
   document.getElementById('recipe-filters').innerHTML = filters.map(f =>
     `<div class="filter-chip ${f === 'All' ? 'active' : ''}" data-filter="${f}" onclick="setFilter('${f}')">${f}</div>`
   ).join('');
