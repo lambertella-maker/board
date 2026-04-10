@@ -2059,6 +2059,7 @@ function renderHome() {
     </div>
     <div class="home-section-hdr home-browse-hdr">Browse</div>
     <div class="home-cuisines home-browse">
+      <button class="home-cuisine-chip" onclick="jumpToPlantBased()">🌿 Plant Based</button>
       ${cuisines.map(c =>
         `<button class="home-cuisine-chip" onclick="jumpToCuisine('${c.name}')">${c.emoji} ${c.name}</button>`
       ).join('')}
