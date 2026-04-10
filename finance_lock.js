@@ -4,6 +4,16 @@
   const RP_ID = window.location.hostname;
   const BIOMETRIC_KEY = `ella_finance_biometric_cred:${RP_ID}`;
 
+  function getNavigationType() {
+    const navEntry = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if (navEntry && navEntry.type) return navEntry.type;
+    if (performance.navigation) {
+      if (performance.navigation.type === 1) return 'reload';
+      if (performance.navigation.type === 2) return 'back_forward';
+    }
+    return 'navigate';
+  }
+
   function injectLock() {
     if (document.getElementById('finance-lock')) return;
     document.body.insertAdjacentHTML('afterbegin', `
@@ -89,6 +99,9 @@
 
   function init() {
     if (!document.body) return;
+    if (getNavigationType() !== 'reload') {
+      sessionStorage.removeItem(SESSION_KEY);
+    }
     if (sessionStorage.getItem(SESSION_KEY) === '1') return;
 
     injectLock();

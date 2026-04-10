@@ -343,7 +343,7 @@
         <div class="metric-label">Monthly Net</div>
         <div class="metric-value" id="hero-net-value" style="color:var(--green)">£3,735</div>
         <div class="metric-sub" id="hero-net-sub">£68,000 salary · payday 24th</div>
-        <span class="metric-badge badge-green" id="hero-net-badge">12 Jul: cash available +£125/mo from lower rent</span>
+        <span class="metric-badge badge-green" id="hero-net-badge">+£125/mo · 12 Jul rent drop</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Net Worth (total)</div>
@@ -627,29 +627,29 @@
         </div>
       </div>
 
-      <!-- Goal 2: Move to nicer flat — Mar–Apr 2027 -->
+      <!-- Goal 2: Move to nicer flat — Mar 2027 -->
       <div class="goal-card">
         <div class="goal-header">
           <div class="goal-icon">🗝️</div>
           <div>
-            <div class="goal-name">Goal 2 · Mar–Apr 2027</div>
+            <div class="goal-name">Goal 2 · Mar 2027</div>
             <div class="goal-title">Upgrade to a Nicer Flat <button class="info-btn" onclick="document.getElementById('rent-modal').classList.add('open')">ℹ rent rules</button></div>
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£120/mo now → £245/mo from 24 Jul 2026, using the rent saving</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£230/mo now · keep the July rent drop for breathing room</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
           <div class="progress-labels"><span>£136</span><span id="move-saved-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">All-in target</span><span class="goal-row-value">~£4,900 · deposit + first month + AnyVan + buffer</span></div>
-        <div class="goal-row"><span class="goal-row-label">Pot at Mar 2027</span><span class="goal-row-value" style="color:var(--green)">~£2,720 before bonus · pre-bonus target hit</span></div>
-        <div class="goal-row"><span class="goal-row-label">Mar 2027 bonus</span><span class="goal-row-value" style="color:var(--indigo)">~£2,170 net cash with 50% SALX</span></div>
-        <div class="goal-row"><span class="goal-row-label">Combined by Apr 2027</span><span class="goal-row-value" style="color:var(--green)">~£4,890 · basically the full move</span></div>
-        <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">~£70,040 with a 3% merit rise assumption</span></div>
+        <div class="goal-row"><span class="goal-row-label">All-in target</span><span class="goal-row-value">£4,900 · deposit + first month + AnyVan + buffer</span></div>
+        <div class="goal-row"><span class="goal-row-label">Pot at Mar 2027</span><span class="goal-row-value" style="color:var(--green)">£2,690 before bonus · pre-bonus target essentially hit</span></div>
+        <div class="goal-row"><span class="goal-row-label">Mar 2027 bonus</span><span class="goal-row-value" style="color:var(--indigo)">£2,170 net cash with 50% SALX</span></div>
+        <div class="goal-row"><span class="goal-row-label">Combined by Apr 2027</span><span class="goal-row-value" style="color:var(--green)">£4,860 · basically the full move</span></div>
+        <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">£70,040 with a 3% merit rise assumption</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
-            <div class="gp-label" id="move-pill-label">£120 now, then £245 from Jul, gets the move funded by spring 2027</div>
-            <span id="move-timeline">Mar–Apr 2027</span>
+            <div class="gp-label" id="move-pill-label">£230 now keeps July flexible and gets the move fund ready by Mar 2027</div>
+            <span id="move-timeline">Mar 2027</span>
           </div>
         </div>
       </div>
@@ -1639,15 +1639,15 @@ function liveEstimates() {
     if (isJulOnwards) {
       heroNetEl.textContent  = '~£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = 'Cash available +£125/mo from lower rent';
+      heroBadgeEl.textContent = '+£125/mo · rent drop from 12 Jul';
     } else if (isAprilOnwards) {
       heroNetEl.textContent  = '~£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul: cash available +£125/mo from lower rent';
+      heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
     } else if (isAprilPrePayday) {
       heroNetEl.textContent  = '~£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul: cash available +£125/mo from lower rent';
+      heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
     } else if (isMarchPayday) {
       heroNetEl.textContent  = '~£5,136';
       heroSubEl.textContent  = 'Bonus month · March 24 payday';
@@ -1655,7 +1655,7 @@ function liveEstimates() {
     } else {
       heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul: cash available +£125/mo from lower rent';
+      heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
     }
   }
 
@@ -1689,12 +1689,12 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
   document.getElementById('csp-months-lbl').textContent = cspMonths === 1 ? `1 month in` : `${cspMonths} months in`;
 
-  // Move pot — £120/mo through Jun 2026, then £245/mo from Jul 24 2026 once the rent drop is diverted here.
+  // Move pot — £230/mo from Apr 24 2026 onward. July rent relief stays in cashflow for flexibility.
   const r        = 0.02 / 12;
   const potStart = new Date(2026, 3, 24);
   const potAnchor = 136;
   function potContribution(d) {
-    return d >= new Date(2026, 6, 24) ? 245 : 120;
+    return d >= potStart ? 230 : 0;
   }
   function potFV(asOf) {
     let total = potAnchor;
@@ -1722,11 +1722,11 @@ function updateGoals() {
     b ? "Gifts start 2029, so CSP timing stays unchanged" : `Building history · ${cspMonthsLeft} months to go`,
     "Late 2026");
   setPill('move',   b,
-    b ? "Move still self-funds before 2029 gifts start" : "£120 now, then £245 from Jul, gets the move funded by spring 2027",
-    "Mar–Apr 2027");
+    b ? "Move still self-funds before 2029 gifts start" : "£230 now keeps July flexible and gets the move fund ready by Mar 2027",
+    "Mar 2027");
   setPill('avios',  b,
     b ? "Gifts do not affect this pre-2029 goal" : "Waiting on CSP · book once bonus lands",
-    "~Early 2027");
+    "Early 2027");
 }
 
 function setPill(id, withBruce, label, value) {
