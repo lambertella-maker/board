@@ -286,8 +286,8 @@
   /* CHAT BAR */
   .chatbar { padding:1.4rem 2rem; display:flex; justify-content:center; }
   .chatbar-inner { width:100%; max-width:680px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem 1.4rem 1.7rem; position:relative; transition:box-shadow .2s,border-color .2s,transform .2s; }
-  .chatbar-inner.is-expanded { position:fixed; right:24px; bottom:24px; width:min(900px, calc(100vw - 48px)); max-width:none; z-index:1200;
-    box-shadow:0 24px 80px rgba(15,23,42,0.38); border-color:rgba(129,140,248,0.35); transform:translateY(0); }
+  .chatbar-inner.is-expanded { width:min(900px, 100%); max-width:none;
+    box-shadow:0 24px 80px rgba(15,23,42,0.22); border-color:rgba(129,140,248,0.35); transform:translateY(0); }
   .chatbar-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.65rem; }
   .chatbar-greeting { font-size:0.92rem; font-weight:600; background:linear-gradient(135deg,var(--indigo),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
   .chatbar-meta { display:flex; align-items:center; gap:0.75rem; }
@@ -352,7 +352,7 @@
   .chat-offline-msg code { background:var(--bg); padding:0.1rem 0.3rem; border-radius:3px; font-size:0.7rem; }
   @media(max-width:900px){
     .chatbar { padding:1rem; }
-    .chatbar-inner.is-expanded { left:12px; right:12px; bottom:12px; width:auto; }
+    .chatbar-inner.is-expanded { width:100%; }
     .chatbar-top { align-items:flex-start; gap:0.8rem; }
     .chatbar-meta { flex-direction:column; align-items:flex-end; }
   }
