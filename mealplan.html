@@ -1674,7 +1674,7 @@ const RECIPE_IMGS = {
   'y9':'https://www.recipetineats.com/tachyon/2015/10/Blackened-Fish-Tacos1-Featured.jpg',
   'y10':'https://dishedbykate.com/wp-content/uploads/2022/07/Sticky-gochujang-chicken-featured.jpg',
   'y11':'https://www.halfbakedharvest.com/wp-content/uploads/2018/05/Oven-Fried-Southern-Hot-Honey-Chicken-1.jpg',
-  'y13':'https://minimalistbaker.com/wp-content/uploads/2015/12/CHICKPEA-SHAWARMA-SALAD-in-30-minutes-Healthy-flavorful-filling-and-fast-plantbased-vegan-salad-recipe.jpg',
+  'y13':'https://minimalistbaker.com/wp-content/uploads/2015/12/CHickpea-SHawarma-SALAD-SQUARE.jpg',
   'y14':'https://www.recipetineats.com/tachyon/2023/08/Cobb-Salad_0.jpg',
   'y15':'https://www.halfbakedharvest.com/wp-content/uploads/2022/01/Buffalo-Cauliflower-with-Spicy-Tahini-Ranch-1.jpg',
   'y16':'https://www.recipetineats.com/tachyon/2018/02/Crispy-Smashed-Potatoes_4a_1500px.jpg',
@@ -1682,10 +1682,10 @@ const RECIPE_IMGS = {
   'y18':'y18-panang.png',
   // Ottolenghi
   'o1':'https://ottolenghi.co.uk/cdn/shop/files/Roast_chicken_with_dates_olives_and_capers_recipe.jpg?v=1718278547&width=1000',
-  'o3':'https://ottolenghi.co.uk/cdn/shop/files/Grilled-carrots-and-tofu-with-harissa.jpg?v=1716838523&width=1000',
+  'o3':'https://ottolenghi.co.uk/cdn/shop/files/Grilled-carrots-and-tofu-with-harissa_1.jpg?v=1716838404',
   // Elly's Plate
-  'ep2':'https://choosingchia.com/jessh-jessh/uploads/2019/02/vietnamese-noodle-bowl-with-lemongrass-tofu-5.jpg',
-  'ep3':'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhL2hyphenhyphen7jmsQaLrY_ggH2PbEJiujH30z2YrCPKrZpDt8PgWqiFxH1-GcEI0jZ7wxWuDa5c0M3ZUnb9aOc4L3-IVWNthlLxUwEmZERa4JqOtncYpJviUZuK2cPyWvGPQXbyvGK09sSdZlcV0a/s1600/vegan+coconut+milk+ramen.jpg',
+  'ep2':'https://www.usarice.com/images/default-source/think-rice/recipes/lemongrass-tofu-rice-bowl.jpg',
+  'ep3':'https://www.marystestkitchen.com/wp-content/uploads/2018/02/vegan-coconut-miso-soup-ft.jpg',
   'ep6':'ep6-burger.png',
   // American
   'a1':'https://gimmesomeoven.com/wp-content/uploads/2025/09/Smash-Burgers-3.jpg',
@@ -1759,6 +1759,7 @@ let customRecipes = JSON.parse(localStorage.getItem('custom_recipes') || '[]');
 let arPhotoData = null; // base64 or URL string for the recipe being added
 let arGeneratedRecipe = null;
 const REMOVED_RECIPE_IDS = new Set(['v7', 'y8']);
+const PLANT_BASED_IDS = new Set(['y13', 'y15', 'y16', 'y17', 'o3', 'ep2', 'ep3', 'ep6']);
 const REMOVED_RECIPE_NAME_RE = /\bmeatballs?\b/i;
 const IMPORT_CUISINE_HINTS = [
   ['Vietnamese', /\b(vietnamese|pho|nuoc cham|lemongrass|rice paper|bun|goi|larb)\b/i],
@@ -1775,6 +1776,10 @@ function cleanImportedLine(line) {
     .replace(/^\d+\s*[\.)-]\s*/, '')
     .replace(/^[a-z]\)\s+/i, '')
     .trim();
+}
+
+function isPlantBasedRecipe(r) {
+  return !!r && PLANT_BASED_IDS.has(r.id);
 }
 
 function sectionIndex(lines, patterns) {
@@ -2153,6 +2158,7 @@ function renderIdeas() {
 function ideaCard(r, mealType, index) {
   const src = photoOverrides[r.id] || RECIPE_IMGS[r.id];
   const pc = cuisinePlaceholder(r.cuisine);
+  const cuisineLabel = isPlantBasedRecipe(r) ? `Plant Based · ${r.cuisine}` : r.cuisine;
   const img = src
     ? `<img src="${src}" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="this.outerHTML='<div class=\\'idea-photo-placeholder ${pc}\\'>${r.emoji}</div>'">`
     : `<div class="idea-photo-placeholder ${pc}">${r.emoji}</div>`;
@@ -2165,7 +2171,7 @@ function ideaCard(r, mealType, index) {
       <button class="idea-swap" onclick="event.stopPropagation();swapIdea('${mealType}',${index})" title="Swap">↺</button>
     </div>
     <div class="idea-info">
-      <div class="idea-cuisine">${r.cuisine}</div>
+      <div class="idea-cuisine">${cuisineLabel}</div>
       <div class="idea-title">${r.name}</div>
       <div class="idea-stats">${r.time} · 🥩 ${r.protein}</div>
     </div>
@@ -2376,6 +2382,8 @@ function pickRandom(pool, used) {
 // ─── RECIPES TAB ─────────────────────────────────────────────────────────────
 function recipeCard(r) {
   const tc = cuisineTop(r.cuisine);
+  const cuisineLine = isPlantBasedRecipe(r) ? `🌿 Plant Based · ${r.cuisine} · ${r.time}` : `${r.cuisine} · ${r.time}`;
+  const plantBadge = isPlantBasedRecipe(r) ? `<span class="meal-tag f-herby">🌿 plant based</span>` : '';
   const badges = r.flavors.slice(0, 3).map(f => `<span class="meal-tag f-${f}">${flavorEmoji(f)} ${f}</span>`).join('');
   return `<div class="recipe-card ${tc}" onclick="openModal('${r.id}')">
     ${recipeImgEl(r, 'banner')}
@@ -2383,12 +2391,12 @@ function recipeCard(r) {
       <div class="recipe-header">
         <div style="flex:1">
           <div class="recipe-title">${r.name}</div>
-          <div class="recipe-cuisine">${r.cuisine} · ${r.time}</div>
+          <div class="recipe-cuisine">${cuisineLine}</div>
         </div>
         <button class="card-photo-btn-inline" onclick="event.stopPropagation();triggerPhotoUpload('${r.id}')" title="Change photo">📷</button>
         <button class="delete-btn" onclick="event.stopPropagation();deleteRecipe('${r.id}')" title="Remove">✕</button>
       </div>
-      <div class="recipe-chips"><span class="meal-tag meal-protein">🥩 ${r.protein}</span>${badges}</div>
+      <div class="recipe-chips"><span class="meal-tag meal-protein">🥩 ${r.protein}</span>${plantBadge}${badges}</div>
     </div>
   </div>`;
 }
@@ -2411,6 +2419,7 @@ function renderRecipes(filter) {
   const base = active();
   let list;
   if (filter === 'All')            list = base;
+  else if (filter === 'Plant Based') list = base.filter(isPlantBasedRecipe);
   else if (filter === 'Breakfast') list = base.filter(r => r.meal.includes('breakfast'));
   else if (filter === 'Lunch')     list = base.filter(r => r.meal.includes('lunch'));
   else if (filter === 'Dinner')    list = base.filter(r => r.meal.includes('dinner'));
@@ -2510,6 +2519,7 @@ function openModal(id) {
   heroWrap.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); heroWrap.style.opacity=''; const f = e.dataTransfer.files[0]; if (f) readAndSavePhoto(id, f); });
   document.getElementById('modal-body').innerHTML = `
     <div class="modal-meta-row">
+      ${isPlantBasedRecipe(r) ? '<span class="meal-tag f-herby">🌿 Plant Based</span>' : ''}
       <span class="meal-tag meal-protein">🥩 ${r.protein}</span>
       <span class="meal-tag f-herby">⏱ ${r.time}</span>
       <span class="meal-tag f-salty">🍽 ${r.cuisine}</span>
@@ -3241,7 +3251,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderHome();
   updateDeletedCount();
 
-  const filters = ['All','Breakfast','Lunch','Dinner','Dessert','Snacks'];
+  const filters = ['All','Plant Based','Breakfast','Lunch','Dinner','Dessert','Snacks'];
   document.getElementById('recipe-filters').innerHTML = filters.map(f =>
     `<div class="filter-chip ${f === 'All' ? 'active' : ''}" data-filter="${f}" onclick="setFilter('${f}')">${f}</div>`
   ).join('');
