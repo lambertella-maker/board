@@ -820,7 +820,7 @@ function liveEstimates() {
   else if (isApr)      { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: cash available +£125/mo from lower rent'; }
   else if (isAprPre)   { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: cash available +£125/mo from lower rent'; }
   else if (isMarch)    { nv.textContent='~£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
-  else                 { nv.textContent='£3,417';  ns.textContent='Pre-raise net · payday 24th';  nb.textContent='From Apr: ~£3,735 net at £68,000'; }
+  else                 { nv.textContent='£3,735';  ns.textContent='£68,000 salary · payday 24th';  nb.textContent='12 Jul: cash available +£125/mo from lower rent'; }
 
   // Net worth composition
   const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
