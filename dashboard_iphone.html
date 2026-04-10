@@ -9,6 +9,8 @@
 <meta name="theme-color" content="#080c18">
 <link rel="apple-touch-icon" href="./finance-apple-touch-icon.png">
 <link rel="icon" type="image/png" href="./finance-icon-512.png">
+<link rel="stylesheet" href="./finance_lock.css">
+<script defer src="./finance_lock.js"></script>
 <title>Ella Lambert — Finance</title>
 <style>
   :root {
@@ -198,31 +200,9 @@
     #tab-goals .card { max-width:none; }
   }
 
-/* ── BIOMETRIC LOCK ── */
-#lock{position:fixed;inset:0;z-index:9999;background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:0;text-align:center;padding:2rem;}
-#lock.gone{display:none;}
-#lock-icon{font-size:3rem;margin-bottom:1rem;}
-#lock-title{font-size:1.3rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-.02em;}
-#lock-sub{font-size:.8rem;color:var(--muted);margin-bottom:2rem;line-height:1.6;max-width:240px;}
-#lock-btn{background:var(--indigo);color:white;border:none;border-radius:14px;
-  padding:.85rem 2.2rem;font-size:.95rem;font-weight:700;cursor:pointer;
-  font-family:inherit;letter-spacing:-.01em;transition:opacity .15s;}
-#lock-btn:active{opacity:.7;}
-#lock-msg{margin-top:1rem;font-size:.75rem;color:var(--muted);min-height:1.2em;}
 </style>
 </head>
 <body>
-
-<!-- ── Biometric lock overlay ── -->
-<div id="lock">
-  <div id="lock-icon">💰</div>
-  <div id="lock-title">Finance Dashboard</div>
-  <div id="lock-sub">Authenticate to continue</div>
-  <button id="lock-btn" onclick="window._lockAuth()">🔓 Unlock with Face ID</button>
-  <div id="lock-msg"></div>
-</div>
 
 <div id="app">
 
@@ -282,7 +262,7 @@
   <!-- Grade 15 confirmed banner -->
   <div style="margin:8px 0 12px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.35);border-radius:10px;padding:8px 12px;">
     <div style="font-size:0.6rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">Grade 15 · confirmed</div>
-    <div style="font-size:0.72rem;color:var(--muted);">£68,000 · G14→G15 single jump · double jumps possible → next could be G17 (14% bonus)</div>
+    <div style="font-size:0.72rem;color:var(--muted);">£68,000 · G14→G15 jump confirmed · 45% savings rate</div>
   </div>
 
   <div class="section-title">Accounts — live estimates</div>
@@ -441,13 +421,15 @@
       <span style="font-size:1.4rem;">🗝️</span>
       <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 2 · May–Jul 2027</div><div style="font-size:0.95rem; font-weight:700;">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
-    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">£120/mo pot from Mar 2026 · covers ~£2,000 managed move by Jul 2027</div>
+    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">Recommended: £225/mo from Apr 2026 + March bonus cash</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
-    <div class="prog-labels"><span>£0</span><span id="m-move-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,000</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Move cost</span><span style="font-weight:600;">~£2,000 · professional managed service</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Bonus buffer</span><span style="color:var(--indigo); font-weight:600;">~£3,600–£4,100 net · Mar 2027</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Promotion upside</span><span style="color:var(--amber); font-weight:600;">8–15% if grade up · ~£66–71k</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Pot self-funds · bonus + COL as buffer</span><span>May–Jul 2027</span></div>
+    <div class="prog-labels"><span>£136</span><span id="m-move-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">All-in target</span><span style="font-weight:600;">~£4,900 · deposit + first month + AnyVan + buffer</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Pot at Mar 2027</span><span style="color:var(--green); font-weight:600;">~£2,700 before bonus</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Mar 2027 bonus</span><span style="color:var(--indigo); font-weight:600;">~£2,170 net cash · 50% SALX</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Combined by Apr 2027</span><span style="color:var(--green); font-weight:600;">~£4,870 · basically the full move</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Apr 2027 salary</span><span style="color:var(--green); font-weight:600;">~£70,040 with a 3% merit rise</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£225/mo + March bonus gets the move done</span><span>May–Jul 2027</span></div>
   </div>
 
   <div class="card">
@@ -936,14 +918,15 @@ liveEstimates();
   document.getElementById('m-csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
   document.getElementById('m-csp-lbl').textContent  = cspMonths === 1 ? `1mo in` : `${cspMonths}mo in`;
 
-  // Move pot — £120/mo after salary hits (24th), earns ~2% AER in Monzo
+  // Move pot — recommended £225/mo from Apr 24 2026 onward; current pot is £136.
   const r = 0.02 / 12;
-  const potStart = new Date(2026, 2, 24);
+  const potStart = new Date(2026, 3, 24);
+  const potAnchor = 136;
   const potMonths = today >= potStart
-    ? Math.max(0, (today.getFullYear() - 2026) * 12 + (today.getMonth() - 2) + (today.getDate() >= 24 ? 1 : 0))
+    ? Math.max(0, (today.getFullYear() - 2026) * 12 + (today.getMonth() - 3) + (today.getDate() >= 24 ? 1 : 0))
     : 0;
-  const flatSaved = potMonths > 0 ? Math.round(120 * ((Math.pow(1 + r, potMonths) - 1) / r)) : 0;
-  document.getElementById('m-move-prog').style.width = Math.min(100, flatSaved / 2000 * 100) + '%';
+  const flatSaved = Math.round(potAnchor * Math.pow(1 + r, potMonths + 1)) + (potMonths > 0 ? Math.round(225 * ((Math.pow(1 + r, potMonths) - 1) / r)) : 0);
+  document.getElementById('m-move-prog').style.width = Math.min(100, flatSaved / 2700 * 100) + '%';
   document.getElementById('m-move-lbl').textContent  = `£${flatSaved.toLocaleString()} saved`;
 
   const ilrDeadline = new Date(2029, 8, 1);
@@ -1032,90 +1015,6 @@ function mCalcFire() {
   document.getElementById('m-fire-yrs').textContent = Math.max(0, fireAge - Math.round(currentAge))+' years';
 }
 mCalcFire();
-
-// ── BIOMETRIC LOCK ────────────────────────────────────────────────────────────
-(async () => {
-  const CRED_KEY = 'dash_biometric_cred';
-  const RP_ID   = 'lambertella-maker.github.io';
-  const lock    = document.getElementById('lock');
-  const msg     = document.getElementById('lock-msg');
-  const btn     = document.getElementById('lock-btn');
-
-  function showDash() { lock.classList.add('gone'); }
-
-  // Skip on non-HTTPS (local file / localhost on Mac — WebAuthn requires HTTPS)
-  if (!window.PublicKeyCredential || location.protocol !== 'https:') { showDash(); return; }
-
-  // Already unlocked this browser session
-  if (sessionStorage.getItem('dash_unlocked')) { showDash(); return; }
-
-  async function authenticate() {
-    const stored = localStorage.getItem(CRED_KEY);
-    if (!stored) return false;
-    try {
-      const credIdBytes = Uint8Array.from(atob(stored), c => c.charCodeAt(0));
-      await navigator.credentials.get({
-        publicKey: {
-          challenge: crypto.getRandomValues(new Uint8Array(32)),
-          rpId: RP_ID,
-          allowCredentials: [{ type: 'public-key', id: credIdBytes, transports: ['internal'] }],
-          userVerification: 'required',
-          timeout: 60000
-        }
-      });
-      return true;
-    } catch(e) {
-      if (e.name !== 'NotAllowedError') console.warn('biometric:', e);
-      return false;
-    }
-  }
-
-  async function setup() {
-    try {
-      const cred = await navigator.credentials.create({
-        publicKey: {
-          challenge: crypto.getRandomValues(new Uint8Array(32)),
-          rp: { name: 'Finance Dashboard', id: RP_ID },
-          user: { id: crypto.getRandomValues(new Uint8Array(16)), name: 'ella', displayName: 'Ella' },
-          pubKeyCredParams: [
-            { type: 'public-key', alg: -7 },
-            { type: 'public-key', alg: -257 }
-          ],
-          authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
-          timeout: 60000
-        }
-      });
-      localStorage.setItem(CRED_KEY, btoa(String.fromCharCode(...new Uint8Array(cred.rawId))));
-      return true;
-    } catch(e) {
-      msg.textContent = 'Setup failed — make sure Face ID is enabled in Settings.';
-      return false;
-    }
-  }
-
-  window._lockAuth = async function() {
-    msg.textContent = '';
-    btn.disabled = true;
-    const ok = localStorage.getItem(CRED_KEY) ? await authenticate() : await setup();
-    if (ok) {
-      sessionStorage.setItem('dash_unlocked', '1');
-      showDash();
-    } else {
-      msg.textContent = 'Authentication failed — tap to try again.';
-      btn.textContent = '🔓 Try again';
-      btn.disabled = false;
-    }
-  };
-
-  const credId = localStorage.getItem(CRED_KEY);
-  if (!credId) {
-    document.getElementById('lock-sub').textContent = 'Set up Face ID to protect this app.';
-    btn.textContent = '⚙️ Set up Face ID';
-  } else {
-    // Auto-trigger on open
-    await window._lockAuth();
-  }
-})();
 
 </script>
 

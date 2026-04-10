@@ -7,6 +7,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="tax_data.js" onerror="void 0"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./finance_lock.css">
+<script defer src="./finance_lock.js"></script>
 <style>
   :root {
     --bg: #080c18;
@@ -176,12 +178,6 @@
   .tag-us { background:rgba(34,211,238,0.15); color:var(--cyan); }
   .tag-alert { background:rgba(251,191,36,0.15); color:var(--amber); }
   .filed-returns { display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem; margin-top:1rem; }
-  .filed-year { background:var(--card2); border:1px solid var(--border); border-radius:8px; padding:0.55rem 0.75rem; text-align:center; transition:border-color .2s; }
-  .filed-year:hover { border-color:var(--indigo); }
-  .filed-year-num { font-size:0.9rem; font-weight:800; color:var(--text); }
-  .filed-year-status { font-size:0.62rem; font-weight:700; margin-top:0.2rem; }
-  .filed-year-note { font-size:0.6rem; color:var(--muted); margin-top:0.25rem; line-height:1.35; }
-
   /* SUPERPLAN */
   .superplan-intro { background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.2); border-radius:16px; padding:2rem; margin-bottom:2rem; text-align:center; }
   .superplan-intro h3 { font-size:1.6rem; font-weight:800; background:linear-gradient(135deg,var(--amber),var(--pink),var(--indigo)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.6rem; }
@@ -637,7 +633,7 @@
         <div class="jc-card" style="border-color:rgba(52,211,153,0.4);">
           <div class="jc-year" style="color:var(--green)">Apr 2026 · Now</div>
           <div class="jc-title">Promoted to Grade 15</div>
-          <div class="jc-desc">£6,371 bonus paid. G14 → G15 single jump. Double jumps confirmed possible → next could be G17. 45% savings rate.</div>
+          <div class="jc-desc">£6,371 bonus paid. G14 → G15 jump confirmed. 45% savings rate.</div>
           <div class="jc-salary">→ £68,000 · Grade 15 · confirmed</div>
         </div>
       </div>
@@ -702,18 +698,18 @@
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£120/mo pot from Mar 2026 · covers ~£2,000 managed move cost by Jul 2027</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Recommended: £225/mo from Apr 2026 + March 2027 bonus cash</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
-          <div class="progress-labels"><span>£0</span><span id="move-saved-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,000 move cost</span></div>
+          <div class="progress-labels"><span>£136</span><span id="move-saved-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">Move cost</span><span class="goal-row-value">~£2,000 · professional managed service, all-in</span></div>
-        <div class="goal-row"><span class="goal-row-label">Pot at window</span><span class="goal-row-value" style="color:var(--green)">~£1,920 by Jul 2027 · fully covered hands-off</span></div>
-        <div class="goal-row"><span class="goal-row-label">Mar 2027 bonus</span><span class="goal-row-value" style="color:var(--indigo)">~£3,600–£4,100 net · comfortable buffer above move cost</span></div>
-        <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">£68,000 current (G15) · ~£70–73k at move time</span></div>
-        <div class="goal-row"><span class="goal-row-label">Promotion upside</span><span class="goal-row-value" style="color:var(--amber)">8–15% if grade up · ~£66–71k · makes it very comfortable</span></div>
+        <div class="goal-row"><span class="goal-row-label">All-in target</span><span class="goal-row-value">~£4,900 · deposit + first month + AnyVan + buffer</span></div>
+        <div class="goal-row"><span class="goal-row-label">Pot at Mar 2027</span><span class="goal-row-value" style="color:var(--green)">~£2,700 before bonus · mostly deposit-ready</span></div>
+        <div class="goal-row"><span class="goal-row-label">Mar 2027 bonus</span><span class="goal-row-value" style="color:var(--indigo)">~£2,170 net cash with 50% SALX</span></div>
+        <div class="goal-row"><span class="goal-row-label">Combined by Apr 2027</span><span class="goal-row-value" style="color:var(--green)">~£4,870 · basically the full move</span></div>
+        <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">~£70,040 with a 3% merit rise assumption</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
-            <div class="gp-label" id="move-pill-label">Pot self-funds move · bonus + COL rise as buffer</div>
+            <div class="gp-label" id="move-pill-label">£225/mo + March bonus gets the move done</div>
             <span id="move-timeline">May–Jul 2027</span>
           </div>
         </div>
@@ -938,6 +934,35 @@
         Verify against your April 2026 payslip. If net differs, likely reflects pension timing or HMRC adjustment for Grade 15 mid-year.</div>
     </div>
 
+    <div style="margin-bottom:1.4rem; background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.22); border-radius:14px; padding:0.9rem 1rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:0.7rem;">
+        <div>
+          <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em;">After Payday</div>
+          <div style="font-size:0.98rem; font-weight:700; margin-top:0.15rem;">What gets deducted and where the cash goes after the 24th</div>
+        </div>
+        <div style="font-size:0.74rem; color:var(--soft);">Gross ~£5,667 → net ~£3,735 in Chase UK</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:0.7rem;">
+        <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
+          <div style="font-size:0.6rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Payroll deductions</div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">Pension salary sacrifice</span><span class="tax-row-value" style="color:var(--green)">−£340</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">AbbVie SIP shares</span><span class="tax-row-value" style="color:var(--green)">−£150</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">GymFlex</span><span class="tax-row-value" style="color:var(--amber)">−£97</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">PAYE + NI</span><span class="tax-row-value" style="color:var(--red)">−~£1,344</span></div>
+          <div style="font-size:0.65rem; color:var(--muted); line-height:1.35; margin-top:0.45rem;">PMI and dental stay folded into PAYE rather than appearing as separate bank deductions.</div>
+        </div>
+        <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
+          <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Post-payday flow</div>
+          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> ~£3,735 lands in Chase UK. <strong style="color:var(--text)">£124</strong> goes to the Move Pot.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> <strong style="color:var(--text)">£850</strong> goes via Wise to Chase US, then Fidelity.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> ~<strong style="color:var(--text)">£56</strong> goes out for flatmate bills.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot amber"></span><div><strong style="color:var(--text)">~Month-end:</strong> BA Amex autopay clears, usually <strong style="color:var(--text)">~£1,100-1,400</strong>.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot muted"></span><div><strong style="color:var(--text)">1st:</strong> Octopus hits at <strong style="color:var(--text)">~£55 net</strong> after reimbursement.</div></div>
+          <div class="action-item" style="padding:0.45rem 0 0.1rem;"><span class="action-dot muted"></span><div><strong style="color:var(--text)">12th:</strong> Rent goes out at <strong style="color:var(--text)">£1,250</strong>, dropping to <strong style="color:var(--text)">£1,125</strong> from Jul 2026.</div></div>
+        </div>
+      </div>
+    </div>
+
     <!-- PAYE EXPLAINER — all UK info together -->
     <div class="chart-card" style="margin-bottom:1.4rem;" id="paye-checker">
       <h3>Why You Pay The Tax You Do <span style="font-size:0.72rem; color:var(--muted); font-weight:400; margin-left:0.4rem;">· PAYE breakdown · 2025/26</span></h3>
@@ -1031,18 +1056,6 @@
         <div class="tax-rule"><div class="tax-rule-icon">📋</div><div class="tax-rule-text"><strong>FBAR every year</strong>File FinCEN 114 by Oct 15. Free via <a href="https://bsaefiling.fincen.treas.gov" target="_blank" style="color:var(--cyan); text-decoration:none;">BSA E-Filing →</a> All UK accounts over $10k aggregate.</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">💰</div><div class="tax-rule-text"><strong>Sacrifice rules — know your benefit</strong>Pension + SIP save IT + NI (£133/yr combined NI saving, all at 2% above UEL). GymFlex (from Apr 2026) saves NI only — £97.40/mo gross − £1.95 NI saving (2% above UEL) = <span style="color:var(--text);font-weight:700;">~£95/mo net cost</span>. Not income-tax deductible (HMRC OpRA).</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">🤝</div><div class="tax-rule-text"><strong>Totalization Agreement</strong>UK NI + US SS credits can combine for Social Security eligibility. Separate question from FTC vs FEIE.</div></div>
-      </div>
-    </div>
-
-    <!-- Filed returns — auto-populated from tax_data.js -->
-    <div class="chart-card" style="margin-top:1.4rem;">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem; flex-wrap:wrap; gap:0.5rem;">
-        <h3 style="margin:0;">Filed Returns Archive</h3>
-        <div id="tax-data-badge" style="font-size:0.68rem; padding:0.2rem 0.6rem; border-radius:10px; background:rgba(100,116,139,0.15); color:var(--muted);">static fallback</div>
-      </div>
-      <div style="font-size:0.78rem; color:var(--muted); margin-bottom:1rem;">Folder: <code style="background:var(--card2); padding:0.2rem 0.5rem; border-radius:4px; font-size:0.75rem;">Desktop/Finances/Tax Returns/</code> · Drop PDFs here — dashboard updates automatically via <code style="background:var(--card2); padding:0.2rem 0.4rem; border-radius:4px; font-size:0.72rem;">update_dashboard.py</code></div>
-      <div class="filed-returns" id="filed-returns-grid">
-        <!-- Populated by renderFiledReturns() — reads window.TAX_RETURNS_DATA if available -->
       </div>
     </div>
 
@@ -1755,50 +1768,6 @@ function liveEstimates() {
 liveEstimates();
 updateFire();
 
-// ── FILED RETURNS RENDERER ─────────────────────────────────────────────────────
-// Reads window.TAX_RETURNS_DATA written by update_dashboard.py.
-// Falls back to static defaults if file not present.
-function renderFiledReturns() {
-  const grid  = document.getElementById('filed-returns-grid');
-  const badge = document.getElementById('tax-data-badge');
-  if (!grid) return;
-
-  const defaults = [
-    { year: 2023, status: 'empty',    statusLabel: '⚠ No docs on file', note: '1040 · Form 1116 · Schedule B · FBAR',                             color: 'var(--muted)',  border: '' },
-    { year: 2024, status: 'filed',    statusLabel: 'Filed — 2 docs',    note: 'Filed in 2025 · 1040 · Form 1116 · Schedule B · FBAR',             color: 'var(--green)',  border: 'rgba(52,211,153,0.4)' },
-    { year: 2025, status: 'filed',    statusLabel: 'Filed — 2 docs',    note: 'Filed in 2026 · 1040 · Form 1116 · Schedule B · FBAR',             color: 'var(--green)',  border: 'rgba(52,211,153,0.4)' },
-    { year: 2026, status: 'progress', statusLabel: 'Current year',      note: 'Filing due Jun/Oct 2027 · year in progress',                       color: 'var(--amber)',  border: 'rgba(251,191,36,0.4)' },
-  ];
-
-  const data = (typeof window.TAX_RETURNS_DATA !== 'undefined') ? window.TAX_RETURNS_DATA : defaults;
-  if (typeof window.TAX_RETURNS_DATA !== 'undefined') {
-    badge.textContent = 'auto-updated · ' + (window.TAX_DATA_UPDATED || 'synced');
-    badge.style.background = 'rgba(52,211,153,0.12)';
-    badge.style.color = 'var(--green)';
-  }
-
-  grid.innerHTML = data.map(d => {
-    const borderStyle = d.border ? `style="border-color:${d.border}"` : '';
-    const fileLinks = d.files && d.files.length
-      ? d.files.map(f => {
-          const url = d.folderPath
-            ? `file://${d.folderPath.replace(/ /g,'%20')}/${f.replace(/ /g,'%20')}`
-            : null;
-          return url
-            ? `<a href="${url}" target="_blank" style="display:block; color:var(--green); font-size:0.67rem; margin-top:0.3rem; text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${f}">${f} →</a>`
-            : `<div style="font-size:0.67rem; color:var(--green); margin-top:0.2rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${f}">${f}</div>`;
-        }).join('')
-      : '';
-    return `<div class="filed-year" ${borderStyle}>
-      <div class="filed-year-num">${d.year}</div>
-      <div class="filed-year-status" style="color:${d.color}">${d.statusLabel}</div>
-      <div class="filed-year-note">${d.note}</div>
-      ${fileLinks}
-    </div>`;
-  }).join('');
-}
-renderFiledReturns();
-
 // ── LIFE GOALS ────────────────────────────────────────────────────────────────
 function updateGoals() {
   const b = document.getElementById('goalsBruceToggle').checked;
@@ -1810,18 +1779,23 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
   document.getElementById('csp-months-lbl').textContent = cspMonths === 1 ? `1 month in` : `${cspMonths} months in`;
 
-  // Move pot — £120/mo after salary hits (24th), earns ~2%/yr in Monzo
+  // Move pot — recommended £225/mo from Apr 24 2026 onward; current pot is £136.
   const r        = 0.02 / 12;
-  const potStart = new Date(2026, 2, 24); // first deposit: March 24, 2026
+  const potStart = new Date(2026, 3, 24); // recommended higher rate starts Apr 24 2026
+  const potAnchor = 136;
   function potPayments(d) {
     if (d < potStart) return 0;
-    return Math.max(0, (d.getFullYear() - 2026) * 12 + (d.getMonth() - 2) + (d.getDate() >= 24 ? 1 : 0));
+    return Math.max(0, (d.getFullYear() - 2026) * 12 + (d.getMonth() - 3) + (d.getDate() >= 24 ? 1 : 0));
   }
-  function potFV(n) { return n > 0 ? Math.round(120 * ((Math.pow(1 + r, n) - 1) / r)) : 0; }
+  function potFV(n) {
+    const anchorGrown = Math.round(potAnchor * Math.pow(1 + r, n + 1));
+    const futureAdds = n > 0 ? Math.round(225 * ((Math.pow(1 + r, n) - 1) / r)) : 0;
+    return anchorGrown + futureAdds;
+  }
   const flatSaved = potFV(potPayments(today));
 
-  // Goal 2: Move to nicer flat (£2,000 managed move target)
-  const moveTarget = 2000;
+  // Goal 2: Move to nicer flat (~£2,700 pre-bonus target; bonus handles the rest)
+  const moveTarget = 2700;
   document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100).toFixed(1) + '%';
   document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
 
@@ -1837,7 +1811,7 @@ function updateGoals() {
     b ? "Gifts start 2029, so CSP timing stays unchanged" : `Building history · ${cspMonthsLeft} months to go`,
     "Late 2026");
   setPill('move',   b,
-    b ? "Move still self-funds before 2029 gifts start" : "Pot self-funds move · bonus + COL rise as buffer",
+    b ? "Move still self-funds before 2029 gifts start" : "£225/mo + March bonus gets the move done",
     "May–Jul 2027");
   setPill('avios',  b,
     b ? "Gifts do not affect this pre-2029 goal" : "Waiting on CSP · book once bonus lands",
