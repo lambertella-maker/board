@@ -720,7 +720,7 @@
         <div style="margin-bottom:1rem;">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£230/mo now · keep the July rent drop for breathing room</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
-          <div class="progress-labels"><span>£136</span><span id="move-saved-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
+          <div class="progress-labels"><span>£136.47</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">All-in target</span><span class="goal-row-value">£4,900 · deposit + first month + AnyVan + buffer</span></div>
         <div class="goal-row"><span class="goal-row-label">Pot at Mar 2027</span><span class="goal-row-value" style="color:var(--green)">£2,690 before bonus · pre-bonus target essentially hit</span></div>
@@ -855,6 +855,29 @@
       </div>
     </div>
   </section>
+
+<script>
+(function() {
+  const label = document.getElementById('move-saved-lbl');
+  const bar = document.getElementById('move-prog');
+  if (!label || !bar) return;
+
+  const today = new Date();
+  const r = 0.02 / 12;
+  const potStart = new Date(2026, 3, 24);
+  const potAnchor = 136.47;
+  const moveTarget = 2700;
+  let total = potAnchor;
+
+  for (let d = new Date(potStart); d <= today; d = new Date(d.getFullYear(), d.getMonth() + 1, 24)) {
+    total = total * (1 + r) + 230;
+  }
+
+  total = Math.round(total * 100) / 100;
+  label.textContent = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
+  bar.style.width = Math.min(100, total / moveTarget * 100).toFixed(1) + '%';
+})();
+</script>
 
   <!-- IMMIGRATION -->
   <section>
@@ -1795,15 +1818,16 @@ function updateGoals() {
   // Move pot — £230/mo from Apr 24 2026 onward. July rent relief stays in cashflow for flexibility.
   const r        = 0.02 / 12;
   const potStart = new Date(2026, 3, 24);
-  const potAnchor = 136;
+  const potAnchor = 136.47;
   function potContribution(d) {
     return d >= potStart ? 230 : 0;
   }
   function potFV(asOf) {
     let total = potAnchor;
     for (let d = new Date(potStart); d <= asOf; d = new Date(d.getFullYear(), d.getMonth() + 1, 24)) {
-      total = Math.round(total * (1 + r) + potContribution(d));
+      total = total * (1 + r) + potContribution(d);
     }
+    total = Math.round(total * 100) / 100;
     return total;
   }
   const flatSaved = potFV(today);
@@ -1811,7 +1835,7 @@ function updateGoals() {
   // Goal 2: Move to nicer flat (£2,700 pre-bonus target; bonus handles the rest)
   const moveTarget = 2700;
   document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100).toFixed(1) + '%';
-  document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString()} saved`;
+  document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
 
   // Goal 3: ILR — time-to-prepare progress bar
   const ilrDeadline = new Date(2029, 8, 1);
