@@ -237,13 +237,13 @@
       <div class="metric-label">Monthly Net</div>
       <div class="metric-value" id="m-net-value" style="color:var(--green)">£3,417</div>
       <div class="metric-sub" id="m-net-sub">£68,000 salary · payday 24th</div>
-      <div class="metric-badge badge-green" id="m-net-badge">12 Jul: ~£3,860 (+£125/mo rent)</div>
+      <div class="metric-badge badge-green" id="m-net-badge">12 Jul: cash available +£125/mo from lower rent</div>
     </div>
     <div class="metric">
       <div class="metric-label">Net Worth</div>
       <div class="metric-value" id="m-nw-hero" style="color:var(--indigo)">—</div>
-      <div class="metric-sub" id="m-pension-sub">Liquid + pension</div>
-      <div class="metric-badge badge-indigo">+£13.8k/yr · all channels</div>
+      <div class="metric-sub" id="m-pension-sub">Cash + investments + pension</div>
+      <div class="metric-badge badge-indigo">UK + US combined</div>
     </div>
     <div class="metric">
       <div class="metric-label">Emergency Fund</div>
@@ -262,7 +262,7 @@
   <!-- Grade 15 confirmed banner -->
   <div style="margin:8px 0 12px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.35);border-radius:10px;padding:8px 12px;">
     <div style="font-size:0.6rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">Grade 15 · confirmed</div>
-    <div style="font-size:0.72rem;color:var(--muted);">£68,000 · G14→G15 jump confirmed · 45% savings rate</div>
+    <div style="font-size:0.72rem;color:var(--muted);">£68,000 · +18% increase · negotiated</div>
   </div>
 
   <div class="section-title">Accounts — live estimates</div>
@@ -419,17 +419,17 @@
   <div class="card">
     <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
       <span style="font-size:1.4rem;">🗝️</span>
-      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 2 · May–Jul 2027</div><div style="font-size:0.95rem; font-weight:700;">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
+      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 2 · Mar–Apr 2027</div><div style="font-size:0.95rem; font-weight:700;">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
-    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">Recommended: £225/mo from Apr 2026 + March bonus cash</div>
+    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">£120/mo now → £245/mo from 24 Jul 2026, using the rent saving</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
     <div class="prog-labels"><span>£136</span><span id="m-move-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
     <div class="goal-row-m"><span class="goal-row-k">All-in target</span><span style="font-weight:600;">~£4,900 · deposit + first month + AnyVan + buffer</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Pot at Mar 2027</span><span style="color:var(--green); font-weight:600;">~£2,700 before bonus</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Pot at Mar 2027</span><span style="color:var(--green); font-weight:600;">~£2,720 before bonus</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Mar 2027 bonus</span><span style="color:var(--indigo); font-weight:600;">~£2,170 net cash · 50% SALX</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Combined by Apr 2027</span><span style="color:var(--green); font-weight:600;">~£4,870 · basically the full move</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Combined by Apr 2027</span><span style="color:var(--green); font-weight:600;">~£4,890 · basically the full move</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Apr 2027 salary</span><span style="color:var(--green); font-weight:600;">~£70,040 with a 3% merit rise</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£225/mo + March bonus gets the move done</span><span>May–Jul 2027</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£120 now, then £245 from Jul, gets the move funded by spring 2027</span><span>Mar–Apr 2027</span></div>
   </div>
 
   <div class="card">
@@ -709,7 +709,7 @@ function liveEstimates() {
     const anchorMs = ANCHOR_DATE.getTime();
     const todayMs  = today.getTime();
     function monthSchedule(y, m) {
-      const salary = (y === 2026 && m === 2) ? 5012 : 3615;
+      const salary = (y === 2026 && m === 2) ? 5012 : ((y > 2026 || (y === 2026 && m >= 6)) ? 3490 : 3615);
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus
         { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
@@ -744,6 +744,7 @@ function liveEstimates() {
   const PENSION_ANCHOR = new Date(2026, 2, 3);
   const PENSION_VAL    = 18440;
   const SALX_DATE      = new Date(2026, 2, 24);
+  const PROMO_START    = new Date(2026, 3, 13);
   const APR_PAYDAY     = new Date(2026, 3, 24);
   const salxAdded      = today >= SALX_DATE ? 3186 : 0;
   const daysPension    = daysSince(PENSION_ANCHOR);
@@ -766,7 +767,7 @@ function liveEstimates() {
   if (pf) pf.textContent = '~$' + fidelityEst.toLocaleString('en-GB');
   const pr = document.getElementById('m-pillar-roth');
   if (pr) pr.textContent = '~$' + rothEst.toLocaleString('en-GB');
-  document.getElementById('m-pension-sub').textContent = 'Liquid ~£23k + pension ~' + fmt(pensionEst);
+  document.getElementById('m-pension-sub').textContent = 'Cash, investments, pension';
 
   // Invest tab
   const invPension = document.getElementById('m-inv-pension');
@@ -809,15 +810,15 @@ function liveEstimates() {
   }
 
   const isMarch      = today >= new Date(2026,2,24) && today < new Date(2026,3,1);
-  const isAprPre     = today >= new Date(2026,3,1)  && today < APR_PAYDAY;
+  const isAprPre     = today >= PROMO_START && today < APR_PAYDAY;
   const isApr        = today >= APR_PAYDAY;
   const isJul        = today >= new Date(2026,6,12);
   const nv = document.getElementById('m-net-value');
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
-  if (isJul)           { nv.textContent='~£3,860'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='Includes £125/mo rent'; }
-  else if (isApr)      { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: ~£3,860 (+£125/mo rent)'; }
-  else if (isAprPre)   { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: ~£3,860 (+£125/mo rent)'; }
+  if (isJul)           { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='Cash available +£125/mo from lower rent'; }
+  else if (isApr)      { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: cash available +£125/mo from lower rent'; }
+  else if (isAprPre)   { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: cash available +£125/mo from lower rent'; }
   else if (isMarch)    { nv.textContent='~£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
   else                 { nv.textContent='£3,417';  ns.textContent='Pre-raise net · payday 24th';  nb.textContent='From Apr: ~£3,735 net at £68,000'; }
 
@@ -918,14 +919,21 @@ liveEstimates();
   document.getElementById('m-csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
   document.getElementById('m-csp-lbl').textContent  = cspMonths === 1 ? `1mo in` : `${cspMonths}mo in`;
 
-  // Move pot — recommended £225/mo from Apr 24 2026 onward; current pot is £136.
+  // Move pot — £120/mo through Jun 2026, then £245/mo from Jul 24 2026 once the rent drop is diverted here.
   const r = 0.02 / 12;
   const potStart = new Date(2026, 3, 24);
   const potAnchor = 136;
-  const potMonths = today >= potStart
-    ? Math.max(0, (today.getFullYear() - 2026) * 12 + (today.getMonth() - 3) + (today.getDate() >= 24 ? 1 : 0))
-    : 0;
-  const flatSaved = Math.round(potAnchor * Math.pow(1 + r, potMonths + 1)) + (potMonths > 0 ? Math.round(225 * ((Math.pow(1 + r, potMonths) - 1) / r)) : 0);
+  function potContribution(d) {
+    return d >= new Date(2026, 6, 24) ? 245 : 120;
+  }
+  function potFV(asOf) {
+    let total = potAnchor;
+    for (let d = new Date(potStart); d <= asOf; d = new Date(d.getFullYear(), d.getMonth() + 1, 24)) {
+      total = Math.round(total * (1 + r) + potContribution(d));
+    }
+    return total;
+  }
+  const flatSaved = potFV(today);
   document.getElementById('m-move-prog').style.width = Math.min(100, flatSaved / 2700 * 100) + '%';
   document.getElementById('m-move-lbl').textContent  = `£${flatSaved.toLocaleString()} saved`;
 
@@ -1052,7 +1060,7 @@ mCalcFire();
     <div class="modal-rule"><div class="modal-rule-label">Your security</div><div class="modal-rule-value">Section 21 abolished — no eviction without a legal reason.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Rent increases</div><div class="modal-rule-value">Annual only · 2 months notice · challenge at tribunal if above market rate.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Your notice to leave</div><div class="modal-rule-value">2 months from you. You control when you go.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Vancsi → Hungary</div><div class="modal-rule-value">When she gives 2 months notice, that's your trigger — aligns with May–Jul 2027 move pot plan.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Vancsi → Hungary</div><div class="modal-rule-value">When she gives 2 months notice, that's your trigger — aligns with the Mar–Apr 2027 move pot plan.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">If landlord sells</div><div class="modal-rule-value">Ground 1A · 4 months notice · only after 12 months tenancy. Low risk.</div></div>
   </div>
 </div>
