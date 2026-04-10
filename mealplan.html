@@ -1942,6 +1942,13 @@ function jumpToCuisine(name) {
   renderRecipes(name);
 }
 
+function jumpToPlantBased() {
+  currentFilter = 'Plant Based';
+  showTab('recipes');
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  renderRecipes('Plant Based');
+}
+
 const VIBES = ['Quick','Fresh','Cosy','Spicy','Comfort','Light','Impressive'];
 
 function getVibes(r) {
