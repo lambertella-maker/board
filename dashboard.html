@@ -466,7 +466,7 @@
 
     <div class="superplan-intro">
       <h3>You built this without realising.</h3>
-      <p>Most people pick one: a pension, a savings account, maybe some stocks. You've accidentally constructed one of the most diversified, tax-efficient, cross-continent wealth portfolios of your generation. Eight distinct pillars. Two currencies. Two countries. Inflation-linked state income on both sides of the Atlantic. And you're 25.</p>
+      <p>Most people pick one: a pension, a savings account, maybe some stocks. You've accidentally constructed one of the most diversified, tax-efficient, cross-continent wealth portfolios of your generation. Nine distinct pillars. Two currencies. Two countries. Inflation-linked state income on both sides of the Atlantic. And you're 25.</p>
     </div>
 
     <div class="pillars">
@@ -506,12 +506,12 @@
       <div class="pillar p-green">
         <div class="pillar-icon">📈</div>
         <div class="pillar-name">Pillar 4 · US Investing</div>
-        <div class="pillar-title">Fidelity Index Funds</div>
+        <div class="pillar-title">Fidelity Taxable</div>
         <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--green)">$3,948 (£3,100)</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475/mo taxable + $625/mo Roth brokerage</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475/mo taxable brokerage</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target allocation</span><span class="pillar-stat-value">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">£1.1M (taxable, after-tax)</span></div>
-        <div class="pillar-why">$475/mo taxable + $625/mo Roth brokerage = same active $1,100 pipeline via Wise → Chase US → Fidelity. Those two active brokerage accounts buy identical 85/10/5 allocation. Legacy Advisor holdings stay untouched.</div>
+        <div class="pillar-why">This is the taxable sleeve only: $475/mo via Wise → Chase US → Fidelity into the 85/10/5 mix. It is your bridge capital and flexible optionality layer. Roth stays separate in Pillar 5.</div>
       </div>
 
       <div class="pillar p-pink">
@@ -757,7 +757,7 @@
         <div style="margin-bottom:1rem;">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from Sep 2019 · application window Sep 2029 · no more visa renewals</div>
           <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
-          <div class="progress-labels"><span>Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>Sep 2029</span></div>
+          <div class="progress-labels"><span>Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">3.4 years left</span><span>Sep 2029</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises 5%/yr · £3,340 by 2029</span></div>
         <div class="goal-row"><span class="goal-row-label">Total all-in</span><span class="goal-row-value" style="color:var(--indigo)">£3,400 fee + £50 Life in the UK test · DIY application</span></div>
@@ -1801,9 +1801,9 @@ function updateGoals() {
   const ilrDeadline = new Date(2029, 8, 1);
   const ilrStart    = new Date(2019, 8, 1); // UK arrival — full 10-year journey
   const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
-  const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
+  const ilrYearsLeft = Math.max(0, (ilrDeadline - today) / (365.25 * 24 * 3600 * 1000));
   document.getElementById('ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
-  document.getElementById('ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
+  document.getElementById('ilr-lbl').textContent  = `${ilrYearsLeft.toFixed(1)} years left`;
 
   setPill('csp',    b,
     b ? "Gifts start 2029, so CSP timing stays unchanged" : `Building history · ${cspMonthsLeft} months to go`,
