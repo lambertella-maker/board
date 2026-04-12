@@ -407,7 +407,7 @@
         <div class="metric-label">Monthly Net</div>
         <div class="metric-value" id="hero-net-value" style="color:var(--green)">£3,735</div>
         <div class="metric-sub" id="hero-net-sub">£68,000 salary · payday 24th</div>
-        <span class="metric-badge badge-green" id="hero-net-badge">12 Jul: cash available +£125/mo from lower rent</span>
+        <span class="metric-badge badge-green" id="hero-net-badge">Lower rent: +£125/mo</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Net Worth (total)</div>
@@ -1718,15 +1718,15 @@ function liveEstimates() {
     if (isJulOnwards) {
       heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = 'Cash available +£125/mo from lower rent';
+      heroBadgeEl.textContent = 'Lower rent: +£125/mo';
     } else if (isAprilOnwards) {
       heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul: cash available +£125/mo from lower rent';
+      heroBadgeEl.textContent = 'Lower rent: +£125/mo';
     } else if (isAprilPrePayday) {
       heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul: cash available +£125/mo from lower rent';
+      heroBadgeEl.textContent = 'Lower rent: +£125/mo';
     } else if (isMarchPayday) {
       heroNetEl.textContent  = '£5,136';
       heroSubEl.textContent  = 'Bonus month · March 24 payday';
@@ -1734,7 +1734,7 @@ function liveEstimates() {
     } else {
       heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul: cash available +£125/mo from lower rent';
+      heroBadgeEl.textContent = 'Lower rent: +£125/mo';
     }
   }
 

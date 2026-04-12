@@ -253,7 +253,7 @@
       <div class="metric-label">Monthly Net</div>
       <div class="metric-value" id="m-net-value" style="color:var(--green)">£3,735</div>
       <div class="metric-sub" id="m-net-sub">£68,000 salary · payday 24th</div>
-      <div class="metric-badge badge-green" id="m-net-badge">12 Jul: cash available +£125/mo from lower rent</div>
+      <div class="metric-badge badge-green" id="m-net-badge">Lower rent: +£125/mo</div>
     </div>
     <div class="metric">
       <div class="metric-label">Net Worth</div>
@@ -854,11 +854,11 @@ function liveEstimates() {
   const nv = document.getElementById('m-net-value');
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
-  if (isJul)           { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='Cash available +£125/mo from lower rent'; }
-  else if (isApr)      { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: cash available +£125/mo from lower rent'; }
-  else if (isAprPre)   { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: cash available +£125/mo from lower rent'; }
+  if (isJul)           { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='Lower rent: +£125/mo'; }
+  else if (isApr)      { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='Lower rent: +£125/mo'; }
+  else if (isAprPre)   { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='Lower rent: +£125/mo'; }
   else if (isMarch)    { nv.textContent='£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
-  else                 { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='12 Jul: cash available +£125/mo from lower rent'; }
+  else                 { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='Lower rent: +£125/mo'; }
 
   // Net worth composition
   const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
