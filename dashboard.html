@@ -371,7 +371,6 @@
     <button onclick="scrollToSection('journey')">Journey</button>
     <button onclick="scrollToSection('goals')">Goals</button>
     <button onclick="scrollToSection('tax')">Tax</button>
-    <button onclick="scrollToSection('paye-checker')">PAYE</button>
     <button onclick="scrollToSection('investments')">Invest</button>
     <button onclick="scrollToSection('fire')">Optionality</button>
   </div>
@@ -406,7 +405,7 @@
     <div class="metrics">
       <div class="metric-card">
         <div class="metric-label">Monthly Net</div>
-        <div class="metric-value" id="hero-net-value" style="color:var(--green)">£3,417</div>
+        <div class="metric-value" id="hero-net-value" style="color:var(--green)">£3,735</div>
         <div class="metric-sub" id="hero-net-sub">£68,000 salary · payday 24th</div>
         <span class="metric-badge badge-green" id="hero-net-badge">12 Jul: cash available +£125/mo from lower rent</span>
       </div>
@@ -698,11 +697,6 @@
   <!-- LIFE GOALS -->
   <section id="goals">
     <h2 class="section-title">Life <span>Goals</span></h2>
-
-    <div class="toggle-row" style="margin-bottom:1.4rem;">
-      <label class="toggle"><input type="checkbox" id="goalsBruceToggle" onchange="updateGoals()"><span class="toggle-slider"></span></label>
-      <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts (+$20,000/yr from 2029)</strong>Conservative plan keeps this OFF — toggle to see accelerated timelines.</div>
-    </div>
 
     <div class="goals-grid">
 
@@ -1765,8 +1759,6 @@ updateFire();
 
 // ── LIFE GOALS ────────────────────────────────────────────────────────────────
 function updateGoals() {
-  const b = document.getElementById('goalsBruceToggle').checked;
-
   // CSP progress — clean Amex history since Feb 2026 (count month you're IN, not completed)
   const cspStart    = new Date(2026, 1, 1);
   const cspMonths   = Math.max(1, (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth()) + 1);
@@ -1804,21 +1796,15 @@ function updateGoals() {
   document.getElementById('ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
   document.getElementById('ilr-lbl').textContent  = `${ilrYearsLeft.toFixed(1)} years left`;
 
-  setPill('csp',    b,
-    b ? "Gifts start 2029, so CSP timing stays unchanged" : `Building history · ${cspMonthsLeft} months to go`,
-    "Late 2026");
-  setPill('move',   b,
-    b ? "Move still self-funds before 2029 gifts start" : "£230 now keeps July flexible and gets the move fund ready by Mar 2027",
-    "Mar 2027");
-  setPill('avios',  b,
-    b ? "Gifts do not affect this pre-2029 goal" : "Waiting on CSP · book once bonus lands",
-    "Early 2027");
+  setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Late 2026");
+  setPill('move', "£230 now keeps July flexible and gets the move fund ready by Mar 2027", "Mar 2027");
+  setPill('avios', "Waiting on CSP · book once bonus lands", "Early 2027");
 }
 
-function setPill(id, withBruce, label, value) {
+function setPill(id, label, value) {
   const pill = document.getElementById(id + '-pill');
   if (!pill) return;
-  pill.className = 'goal-pill ' + (withBruce ? 'with-bruce' : 'no-bruce');
+  pill.className = 'goal-pill no-bruce';
   document.getElementById(id + '-pill-label').textContent = label;
   document.getElementById(id + '-timeline').textContent   = value;
 }
