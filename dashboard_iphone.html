@@ -123,14 +123,30 @@
   .pillar-mobile.p-pink   { border-top:3px solid var(--pink);   }
 
   /* ── GOALS ── */
-  .goal-row-m { display:flex; justify-content:space-between; padding:6px 0;
-                border-bottom:1px solid var(--border); font-size:0.76rem; }
+  .goal-card-head { display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
+  .goal-card-meta { flex:1; min-width:0; }
+  .goal-card-label { font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase; }
+  .goal-card-title { font-size:0.95rem; font-weight:700; line-height:1.3; }
+  .goal-row-m { display:flex; justify-content:space-between; align-items:flex-start; gap:0.85rem;
+                padding:7px 0; border-bottom:1px solid var(--border); font-size:0.76rem; }
   .goal-row-m:last-of-type { border-bottom:none; }
-  .goal-row-k { color:var(--muted); }
+  .goal-row-k { color:var(--muted); flex:1; min-width:0; line-height:1.35; }
+  .goal-row-m > span:last-child { flex:0 0 56%; text-align:right; line-height:1.35; }
   .goal-pill-m { background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.2);
                  border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between;
-                 align-items:center; margin-top:10px; font-size:0.75rem; }
+                 align-items:flex-start; gap:0.75rem; margin-top:10px; font-size:0.75rem; }
+  .goal-pill-m span:first-child { flex:1; line-height:1.35; }
   .goal-pill-m span { color:var(--indigo); font-weight:700; }
+  .goal-subcopy { font-size:0.68rem; color:var(--muted); margin-bottom:4px; line-height:1.45; }
+
+  /* ── INVEST REMINDERS ── */
+  .mini-note-card { background:rgba(129,140,248,0.05); border-color:rgba(129,140,248,0.22); }
+  .mini-note-head { display:flex; justify-content:space-between; align-items:flex-start; gap:0.75rem; margin-bottom:6px; }
+  .mini-note-title { font-size:0.82rem; font-weight:700; line-height:1.3; }
+  .mini-note-badge { flex-shrink:0; font-size:0.58rem; font-weight:700; color:var(--indigo);
+                     text-transform:uppercase; letter-spacing:.06em; padding:0.22rem 0.45rem;
+                     border-radius:999px; border:1px solid rgba(129,140,248,0.22); background:rgba(129,140,248,0.1); }
+  .mini-note-copy { font-size:0.68rem; color:var(--soft); line-height:1.55; margin-bottom:8px; }
 
   /* ── FIRE ── */
   .fire-result-big { text-align:center; padding:20px 0 14px; }
@@ -342,17 +358,13 @@
   <div class="pillar-mobile p-indigo">
     <div class="pillar-header"><div class="pillar-ico">💼</div><div><div class="pillar-label">Pillar 6 · UK Shares</div><div class="pillar-name">ABBV Share Incentive Plan</div></div></div>
     <div class="pillar-body">
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Your sacrifice</span><span class="pillar-stat-v">£150/mo = £1,800/yr pre-tax</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">AbbVie match</span><span class="pillar-stat-v">1:1 — +£150/mo = £1,800 free</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Your sacrifice</span><span class="pillar-stat-v">£150/mo = ~£87 net cost</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">AbbVie match</span><span class="pillar-stat-v">1:1 · +£150/mo free</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Effective total</span><span class="pillar-stat-v" style="color:var(--green)">£300/mo · £3,600/yr</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Vested (yours to keep)</span><span class="pillar-stat-v" style="color:var(--muted)">November 2027</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">First tax-free sweep</span><span class="pillar-stat-v" style="color:var(--amber)">Nov/Dec 2029</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Sell strategy</span><span class="pillar-stat-v">Annual sweep · Nov/Dec from 2029</span></div>
-      <div style="margin:8px 0 6px; border-top:1px solid rgba(255,255,255,0.06); padding-top:8px; font-size:0.65rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.04em;">Annual sweep steady state (Nov/Dec 2030+) · 12 batches · £3,600</div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV flat → account</span><span class="pillar-stat-v" style="color:var(--green)">£3,600 · £0 tax</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV +20% → account</span><span class="pillar-stat-v" style="color:var(--indigo)">~£4,212 (after ~£108 US CGT)</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">ABBV −20% → account</span><span class="pillar-stat-v" style="color:var(--amber)">£2,880 · £0 tax</span></div>
-      <div class="pillar-why-text">Your £150/mo costs ~£87 in take-home (save ~42% via 40% higher-rate IT + 2% NI salary sacrifice) = ~£1,044/yr actual cash. AbbVie matches 1:1 free. Wait for the 5-year mark — that's when zero income tax and zero NI apply on withdrawal. Don't sell each batch as it unlocks. Instead: every Nov/Dec, log in and sell everything that's cleared 5 years — ~10 min, one transaction. UK: no income tax or NI after 5 years, CGT exempt at this scale. US: report long-term capital gain on Schedule D in your normal filing. Even with US CGT, every scenario returns 2.8–4× your real cash. Check now that your SIP platform stores purchase prices for every batch since Nov 2024 — you'll need them in 2029.</div>
+      <div class="pillar-why-text">Keep this simple on mobile: hold each batch for 5 years, then do one Nov/Dec sweep each year. UK tax stays effectively nil at this scale; just make sure the platform still shows purchase prices for each batch from Nov 2024 onward for US filing.</div>
     </div>
   </div>
 
@@ -403,57 +415,61 @@
   <div class="topbar"><div class="topbar-logo">Life Goals</div><button class="refresh-btn" onclick="window.location.reload()" title="Refresh">↺</button></div>
 
   <div class="card" style="margin-top:10px;">
-    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <div class="goal-card-head">
       <span style="font-size:1.4rem;">💳</span>
-      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 1 · Most Imminent</div><div style="font-size:0.95rem; font-weight:700;">Chase Sapphire Preferred</div></div>
+      <div class="goal-card-meta"><div class="goal-card-label">Goal 1 · Most Imminent · Late 2026</div><div class="goal-card-title">Chase Sapphire Preferred</div></div>
     </div>
-    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">6–9 months clean Amex history needed · started Feb 2026</div>
+    <div class="goal-subcopy">6-9 months clean Amex history needed · started Feb 2026</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-csp-prog" style="background:linear-gradient(90deg,var(--indigo),var(--pink)); width:11%"></div></div>
     <div class="prog-labels"><span>Feb 2026</span><span id="m-csp-lbl" style="color:var(--indigo)">1mo in</span><span>Aug–Oct 2026</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--green); font-weight:600;">60k UR → business class on any airline</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Transfer partners</span><span style="font-weight:600;">United · Virgin · BA · Hyatt</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Application window</span><span style="color:var(--amber); font-weight:600;">Aug-Oct 2026 · don't apply before 6 months</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--green); font-weight:600;">60k Chase UR · $4k spend in first 3 months</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Transfer partners</span><span style="font-weight:600;">United · BA · Virgin · Hyatt</span></div>
     <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Building clean history</span><span>Late 2026</span></div>
   </div>
 
   <div class="card">
-    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <div class="goal-card-head">
       <span style="font-size:1.4rem;">🗝️</span>
-      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 2 · Mar–Apr 2027</div><div style="font-size:0.95rem; font-weight:700;">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
+      <div class="goal-card-meta"><div class="goal-card-label">Goal 2 · Mar 2027</div><div class="goal-card-title">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
-    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">£120/mo now → £245/mo from 24 Jul 2026, using the rent saving</div>
+    <div class="goal-subcopy">£230/mo now · keep the July rent drop for breathing room</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
-    <div class="prog-labels"><span>£136</span><span id="m-move-lbl" style="color:var(--green)">£0 saved</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">All-in target</span><span style="font-weight:600;">~£4,900 · deposit + first month + AnyVan + buffer</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Pot at Mar 2027</span><span style="color:var(--green); font-weight:600;">~£2,720 before bonus</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Mar 2027 bonus</span><span style="color:var(--indigo); font-weight:600;">~£2,170 net cash · 50% SALX</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Combined by Apr 2027</span><span style="color:var(--green); font-weight:600;">~£4,890 · basically the full move</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Apr 2027 salary</span><span style="color:var(--green); font-weight:600;">~£70,040 with a 3% merit rise</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£120 now, then £245 from Jul, gets the move funded by spring 2027</span><span>Mar–Apr 2027</span></div>
+    <div class="prog-labels"><span>£136.47</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">All-in target</span><span style="font-weight:600;">£4,900 · deposit + first month + AnyVan + buffer</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Pot at Mar 2027</span><span style="color:var(--green); font-weight:600;">£2,690 before bonus</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Mar 2027 bonus</span><span style="color:var(--indigo); font-weight:600;">£2,170 net cash · 50% SALX</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Combined by Apr 2027</span><span style="color:var(--green); font-weight:600;">£4,860 · basically the full move</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Apr 2027 salary</span><span style="color:var(--green); font-weight:600;">£70,040 with a 3% merit rise</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£230 now keeps July flexible and gets the move fund ready by Mar 2027</span><span>Mar 2027</span></div>
   </div>
 
   <div class="card">
-    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <div class="goal-card-head">
       <span style="font-size:1.4rem;">✈️</span>
-      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 3 · Travel</div><div style="font-size:0.95rem; font-weight:700;">Business Class LHR → ORD</div></div>
+      <div class="goal-card-meta"><div class="goal-card-label">Goal 3 · Travel · Early 2027</div><div class="goal-card-title">Business Class LHR → ORD</div></div>
     </div>
-    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">UR → United MileagePlus · Polaris LHR→ORD · ~£220 cash (APD only)</div>
+    <div class="goal-subcopy">UR → United MileagePlus · Polaris LHR→ORD · ~£220 cash (APD only)</div>
     <div class="prog-wrap"><div class="prog-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
     <div class="prog-labels"><span>0 UR</span><span style="color:var(--amber)">CSP solves it</span><span>70k United miles</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Points needed</span><span style="font-weight:600;">70-75k UR → United MileagePlus</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--green); font-weight:600;">60k UR covers ~85% · top up via 3x spend</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Cash out of pocket</span><span style="font-weight:600;">~£220 · UK APD only · United = zero surcharges</span></div>
     <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Waiting on CSP</span><span>~Early 2027</span></div>
   </div>
 
   <div class="card">
-    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <div class="goal-card-head">
       <span style="font-size:1.4rem;">🇬🇧</span>
-      <div><div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Goal 4 · Sep 2029</div><div style="font-size:0.95rem; font-weight:700;">ILR — Permanent Residency</div></div>
+      <div class="goal-card-meta"><div class="goal-card-label">Goal 4 · Sep 2029</div><div class="goal-card-title">ILR — Permanent Residency</div></div>
     </div>
-    <div style="font-size:0.68rem; color:var(--muted); margin-bottom:4px;">10-yr long residence from Sep 2019 · no more visa renewals after Sep 2029</div>
+    <div class="goal-subcopy">10-yr long residence from Sep 2019 · no more visa renewals after Sep 2029</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
-    <div class="prog-labels"><span>Sep 2019</span><span id="m-ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>Sep 2029</span></div>
+    <div class="prog-labels"><span>Sep 2019</span><span id="m-ilr-lbl" style="color:var(--cyan)">~3.5 years left</span><span>Sep 2029</span></div>
     <div class="goal-row-m"><span class="goal-row-k">ILR fee</span><span style="color:var(--amber); font-weight:600;">£2,885 now · ~£3,340 by 2029</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Total all-in</span><span style="color:var(--indigo); font-weight:600;">~£3,400 fee + £50 Life in the UK test · DIY</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Funded by</span><span style="color:var(--green); font-weight:600;">~£4k net bonus · fully covered · DIY application</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">What it unlocks</span><span style="font-weight:600;">Live and work in UK permanently</span></div>
     <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Track absences · Life in UK test</span><span>Sep 2029</span></div>
   </div>
 
@@ -628,6 +644,29 @@
   <div class="section-title">Monthly buy amounts — Fidelity</div>
   <div class="card"><div id="m-fund-rows"><div style="color:var(--muted);font-size:0.75rem;">Loading…</div></div></div>
 
+  <div class="section-title">SIP reminder</div>
+  <div class="card mini-note-card">
+    <div class="mini-note-head">
+      <div>
+        <div class="mini-note-title">AbbVie SIP stays in investments, not goals</div>
+        <div class="mini-note-copy">Quick reminder so the iPhone dashboard matches desktop and iPad: let it run automatically, then sweep matured shares once a year.</div>
+      </div>
+      <div class="mini-note-badge">SIP</div>
+    </div>
+    <div class="fire-stat-row">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Real monthly cost</div><div style="font-size:0.64rem;color:var(--muted);">£150 sacrifice less 40% IT + 2% NI saved</div></div>
+      <span class="fire-stat-val" style="color:var(--green)">~£87</span>
+    </div>
+    <div class="fire-stat-row">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">What to do</div><div style="font-size:0.64rem;color:var(--muted);">Wait for the 5-year mark, then annual sweep</div></div>
+      <span class="fire-stat-val" style="color:var(--amber)">Nov/Dec 2029</span>
+    </div>
+    <div class="fire-stat-row" style="border-bottom:none;">
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Admin check</div><div style="font-size:0.64rem;color:var(--muted);">Confirm purchase prices still show for each batch since Nov 2024</div></div>
+      <span class="fire-stat-val" style="color:var(--indigo)">Needed</span>
+    </div>
+  </div>
+
   <div class="section-title">Key Rules</div>
   <div class="card">
     <div style="font-size:0.75rem;color:var(--muted);line-height:1.8;">
@@ -708,7 +747,7 @@ function liveEstimates() {
     const anchorMs = ANCHOR_DATE.getTime();
     const todayMs  = today.getTime();
     function monthSchedule(y, m) {
-      const salary = (y === 2026 && m === 2) ? 5012 : ((y > 2026 || (y === 2026 && m >= 6)) ? 3490 : 3615);
+      const salary = (y === 2026 && m === 2) ? 5012 : 3505;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus
         { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
@@ -918,30 +957,31 @@ liveEstimates();
   document.getElementById('m-csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
   document.getElementById('m-csp-lbl').textContent  = cspMonths === 1 ? `1mo in` : `${cspMonths}mo in`;
 
-  // Move pot — £120/mo through Jun 2026, then £245/mo from Jul 24 2026 once the rent drop is diverted here.
+  // Move pot — £230/mo from Apr 24 2026 onward. July rent relief stays in cashflow for flexibility.
   const r = 0.02 / 12;
   const potStart = new Date(2026, 3, 24);
-  const potAnchor = 136;
+  const potAnchor = 136.47;
   function potContribution(d) {
-    return d >= new Date(2026, 6, 24) ? 245 : 120;
+    return d >= potStart ? 230 : 0;
   }
   function potFV(asOf) {
     let total = potAnchor;
     for (let d = new Date(potStart); d <= asOf; d = new Date(d.getFullYear(), d.getMonth() + 1, 24)) {
-      total = Math.round(total * (1 + r) + potContribution(d));
+      total = total * (1 + r) + potContribution(d);
     }
+    total = Math.round(total * 100) / 100;
     return total;
   }
   const flatSaved = potFV(today);
   document.getElementById('m-move-prog').style.width = Math.min(100, flatSaved / 2700 * 100) + '%';
-  document.getElementById('m-move-lbl').textContent  = `£${flatSaved.toLocaleString()} saved`;
+  document.getElementById('m-move-lbl').textContent  = `£${flatSaved.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
 
   const ilrDeadline = new Date(2029, 8, 1);
   const ilrStart    = new Date(2019, 8, 1); // UK arrival — full 10-year journey
   const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
-  const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
+  const ilrYearsLeft = Math.max(0, (ilrDeadline - today) / (365.25 * 24 * 3600 * 1000));
   document.getElementById('m-ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
-  document.getElementById('m-ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
+  document.getElementById('m-ilr-lbl').textContent  = `~${ilrYearsLeft.toFixed(1)} years left`;
 })();
 
 // ── FIRE CALCULATOR ───────────────────────────────────────────────────────────
@@ -1059,7 +1099,7 @@ mCalcFire();
     <div class="modal-rule"><div class="modal-rule-label">Your security</div><div class="modal-rule-value">Section 21 abolished — no eviction without a legal reason.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Rent increases</div><div class="modal-rule-value">Annual only · 2 months notice · challenge at tribunal if above market rate.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Your notice to leave</div><div class="modal-rule-value">2 months from you. You control when you go.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Vancsi → Hungary</div><div class="modal-rule-value">When she gives 2 months notice, that's your trigger — aligns with the Mar–Apr 2027 move pot plan.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Vancsi → Hungary</div><div class="modal-rule-value">When she gives 2 months notice, that's your trigger — aligns with the Mar 2027 move fund plan.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">If landlord sells</div><div class="modal-rule-value">Ground 1A · 4 months notice · only after 12 months tenancy. Low risk.</div></div>
   </div>
 </div>
