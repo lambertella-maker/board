@@ -1855,7 +1855,7 @@ async function checkChatStatus() {
     if (r.ok) {
       chatOnline = true;
       document.getElementById('chat-status-dot').classList.add('online');
-      document.getElementById('chat-status-text').textContent = 'claude-sonnet-4-6';
+      document.getElementById('chat-status-text').textContent = 'assistant online';
     } else throw new Error();
   } catch {
     chatOnline = false;
