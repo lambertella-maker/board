@@ -458,6 +458,47 @@
         <div class="chart-wrap"><canvas id="budgetChart" height="180"></canvas></div>
       </div>
     </div>
+    <div style="margin-top:1.2rem; background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.22); border-radius:14px; padding:0.9rem 1rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:0.7rem;">
+        <div>
+          <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em;">After Payday</div>
+          <div style="font-size:0.98rem; font-weight:700; margin-top:0.15rem;">What gets deducted and where the cash goes after the 24th</div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:0.7rem;">
+        <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.8rem; margin-bottom:0.55rem;">
+            <div>
+              <div style="font-size:0.6rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Gross Pay</div>
+              <div style="font-size:1.35rem; font-weight:800; color:var(--indigo); margin-top:0.1rem;">£5,667/mo</div>
+            </div>
+            <div style="font-size:0.72rem; font-weight:700; color:var(--indigo); background:rgba(129,140,248,0.12); border:1px solid rgba(129,140,248,0.2); border-radius:999px; padding:0.25rem 0.55rem;">Before payroll cuts</div>
+          </div>
+          <div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.35rem;">Payroll deductions</div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">Pension salary sacrifice</span><span class="tax-row-value" style="color:var(--green)">−£340</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">AbbVie SIP shares</span><span class="tax-row-value" style="color:var(--green)">−£150</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">GymFlex</span><span class="tax-row-value" style="color:var(--amber)">−£97</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">PAYE + NI</span><span class="tax-row-value" style="color:var(--red)">−£1,344</span></div>
+          <div style="font-size:0.65rem; color:var(--muted); line-height:1.35; margin-top:0.45rem;">PMI and dental stay folded into PAYE rather than appearing as separate bank deductions.</div>
+        </div>
+        <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.8rem; margin-bottom:0.55rem;">
+            <div>
+              <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Net Pay</div>
+              <div style="font-size:1.35rem; font-weight:800; color:var(--cyan); margin-top:0.1rem;">£3,735/mo</div>
+            </div>
+            <div style="font-size:0.72rem; font-weight:700; color:var(--cyan); background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.2); border-radius:999px; padding:0.25rem 0.55rem;">Hits Chase UK</div>
+          </div>
+          <div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.35rem;">Post-payday flow</div>
+          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,735 lands in Chase UK. <strong style="color:var(--text)">£230</strong> goes to the Move Pot.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> <strong style="color:var(--text)">£850</strong> goes via Wise to Chase US, then Fidelity.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> <strong style="color:var(--text)">£56</strong> goes out for flatmate bills.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Month-end:</strong> BA Amex autopay clears, usually <strong style="color:var(--text)">£1,100-1,400</strong>.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot muted"></span><div><strong style="color:var(--text)">1st:</strong> Octopus hits at <strong style="color:var(--text)">£55 net</strong> after reimbursement.</div></div>
+          <div class="action-item" style="padding:0.45rem 0 0.1rem;"><span class="action-dot muted"></span><div><strong style="color:var(--text)">12th:</strong> Rent goes out at <strong style="color:var(--text)">£1,250</strong>, dropping to <strong style="color:var(--text)">£1,125</strong> from Jul 2026.</div></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- SUPERPLAN -->
@@ -936,48 +977,6 @@
       </div>
       <div style="font-size:0.72rem; background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2); border-radius:8px; padding:0.6rem 0.8rem; margin-top:1rem; line-height:1.5; color:var(--amber);">
         Verify against your 24 April 2026 payslip. If net differs, likely reflects pension timing or HMRC adjustment.</div>
-    </div>
-
-    <div style="margin-bottom:1.4rem; background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.22); border-radius:14px; padding:0.9rem 1rem;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:0.7rem;">
-        <div>
-          <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em;">After Payday</div>
-          <div style="font-size:0.98rem; font-weight:700; margin-top:0.15rem;">What gets deducted and where the cash goes after the 24th</div>
-        </div>
-      </div>
-      <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:0.7rem;">
-        <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.8rem; margin-bottom:0.55rem;">
-            <div>
-              <div style="font-size:0.6rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Gross Pay</div>
-              <div style="font-size:1.35rem; font-weight:800; color:var(--indigo); margin-top:0.1rem;">£5,667/mo</div>
-            </div>
-            <div style="font-size:0.72rem; font-weight:700; color:var(--indigo); background:rgba(129,140,248,0.12); border:1px solid rgba(129,140,248,0.2); border-radius:999px; padding:0.25rem 0.55rem;">Before payroll cuts</div>
-          </div>
-          <div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.35rem;">Payroll deductions</div>
-          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">Pension salary sacrifice</span><span class="tax-row-value" style="color:var(--green)">−£340</span></div>
-          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">AbbVie SIP shares</span><span class="tax-row-value" style="color:var(--green)">−£150</span></div>
-          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">GymFlex</span><span class="tax-row-value" style="color:var(--amber)">−£97</span></div>
-          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">PAYE + NI</span><span class="tax-row-value" style="color:var(--red)">−£1,344</span></div>
-          <div style="font-size:0.65rem; color:var(--muted); line-height:1.35; margin-top:0.45rem;">PMI and dental stay folded into PAYE rather than appearing as separate bank deductions.</div>
-        </div>
-        <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.8rem; margin-bottom:0.55rem;">
-            <div>
-              <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Net Pay</div>
-              <div style="font-size:1.35rem; font-weight:800; color:var(--cyan); margin-top:0.1rem;">£3,735/mo</div>
-            </div>
-            <div style="font-size:0.72rem; font-weight:700; color:var(--cyan); background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.2); border-radius:999px; padding:0.25rem 0.55rem;">Hits Chase UK</div>
-          </div>
-          <div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.35rem;">Post-payday flow</div>
-          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,735 lands in Chase UK. <strong style="color:var(--text)">£230</strong> goes to the Move Pot.</div></div>
-          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> <strong style="color:var(--text)">£850</strong> goes via Wise to Chase US, then Fidelity.</div></div>
-          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> <strong style="color:var(--text)">£56</strong> goes out for flatmate bills.</div></div>
-          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Month-end:</strong> BA Amex autopay clears, usually <strong style="color:var(--text)">£1,100-1,400</strong>.</div></div>
-          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot muted"></span><div><strong style="color:var(--text)">1st:</strong> Octopus hits at <strong style="color:var(--text)">£55 net</strong> after reimbursement.</div></div>
-          <div class="action-item" style="padding:0.45rem 0 0.1rem;"><span class="action-dot muted"></span><div><strong style="color:var(--text)">12th:</strong> Rent goes out at <strong style="color:var(--text)">£1,250</strong>, dropping to <strong style="color:var(--text)">£1,125</strong> from Jul 2026.</div></div>
-        </div>
-      </div>
     </div>
 
     <!-- PAYE EXPLAINER — all UK info together -->
