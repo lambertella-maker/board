@@ -282,6 +282,11 @@
   .goal-name { font-size:0.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.2rem; }
   .goal-title { font-size:1rem; font-weight:700; }
   .goal-card.goal-travel .goal-name { white-space:nowrap; font-size:0.66rem; }
+  .goal-card.goal-travel .goal-header,
+  .goal-card.goal-ilr .goal-header { min-height:3rem; }
+  .goal-progress-meta { margin-bottom:1rem; }
+  .goal-card.goal-travel .goal-progress-meta,
+  .goal-card.goal-ilr .goal-progress-meta { min-height:4.25rem; }
   .goal-row { display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0; border-bottom:1px solid var(--border); font-size:0.8rem; }
   .goal-row:last-of-type { border-bottom:none; }
   .goal-row-label { color:var(--muted); }
@@ -658,7 +663,7 @@
             <div class="goal-title">Business class LHR → ORD</div>
           </div>
         </div>
-        <div style="margin-bottom:1rem;">
+        <div class="goal-progress-meta">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Transfer UR → United MileagePlus for Polaris LHR→ORD · ~£220 cash (APD only)</div>
           <div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
           <div class="progress-labels"><span>Feb 2026</span><span style="color:var(--amber)">CSP unlocks this</span><span>Early 2027</span></div>
@@ -676,7 +681,7 @@
       </div>
 
       <!-- Goal 4: ILR — Permanent Residency -->
-      <div class="goal-card">
+      <div class="goal-card goal-ilr">
         <div class="goal-header">
           <div class="goal-icon">🇬🇧</div>
           <div>
@@ -684,7 +689,7 @@
             <div class="goal-title">ILR — Permanent Residency</div>
           </div>
         </div>
-        <div style="margin-bottom:1rem;">
+        <div class="goal-progress-meta">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from Sep 2019 · application window Sep 2029 · no more visa renewals</div>
           <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
           <div class="progress-labels"><span>Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">3.4 years left</span><span>Sep 2029</span></div>
