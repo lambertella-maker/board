@@ -60,11 +60,8 @@
   .metric-value { font-size:2rem; font-weight:800; line-height:1; }
   .metric-sub { font-size:0.75rem; color:var(--soft); margin-top:0.4rem; }
   .metric-badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:20px; margin-top:0.5rem; font-weight:600; }
-  .invest-metrics .metric-card { display:flex; flex-direction:column; }
-  .invest-metrics .metric-sub { min-height:2.4em; line-height:1.2; }
-  .invest-metrics .metric-badge { margin-top:auto; align-self:flex-start; }
   .badge-green { background:rgba(52,211,153,0.15); color:var(--green); }
-  .badge-cyan { background:rgba(34,211,238,0.15); color:var(--cyan); }
+  .badge-cyan  { background:rgba(34,211,238,0.15); color:var(--cyan); }
   .badge-amber { background:rgba(251,191,36,0.15); color:var(--amber); }
   .badge-indigo { background:rgba(129,140,248,0.15); color:var(--indigo); }
 
@@ -253,15 +250,15 @@
   .cost-badge { display:inline-flex; align-items:center; gap:0.3rem; background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.2); border-radius:6px; padding:0.2rem 0.5rem; font-size:0.68rem; font-weight:700; color:var(--green); margin-bottom:0.6rem; }
 
   /* COMPACT JOURNEY */
-  .journey-compact { display:grid; grid-template-columns:repeat(7,1fr); gap:0.6rem; position:relative; padding-top:2.2rem; }
+  .journey-compact { display:grid; grid-template-columns:repeat(7,1fr); gap:0.6rem; position:relative; padding-top:2.2rem; align-items:stretch; }
   .journey-compact::before { content:''; position:absolute; top:6px; left:calc(100%/14); right:calc(100%/14); height:2px;
     background:linear-gradient(90deg,var(--green),var(--indigo),var(--indigo),var(--amber),var(--amber),var(--amber),var(--cyan)); z-index:0; }
-  .jc-item { display:flex; flex-direction:column; align-items:center; }
+  .jc-item { display:flex; flex-direction:column; align-items:center; flex:1; }
   .jc-dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; position:relative; z-index:1; margin-bottom:0.8rem; border:2px solid var(--bg); }
   .jc-dot.done  { background:var(--green);  box-shadow:0 0 0 3px rgba(52,211,153,0.25); }
   .jc-dot.now   { background:var(--amber);  box-shadow:0 0 0 4px rgba(251,191,36,0.3); width:16px; height:16px; }
   .jc-dot.ahead { background:var(--indigo); box-shadow:0 0 0 3px rgba(129,140,248,0.2); }
-  .jc-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:0.75rem 0.6rem; text-align:center; width:100%; transition:border-color .2s; }
+  .jc-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:0.75rem 0.6rem; text-align:center; width:100%; transition:border-color .2s; flex:1; }
   .jc-card:hover { border-color:var(--indigo); }
   .jc-year { font-size:0.62rem; font-weight:700; color:var(--indigo); margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:.04em; }
   .jc-title { font-size:0.75rem; font-weight:700; margin-bottom:0.2rem; line-height:1.3; }
@@ -289,15 +286,22 @@
 
   /* CHAT BAR */
   .chatbar { padding:1.4rem 2rem; display:flex; justify-content:center; }
-  .chatbar-inner { width:100%; max-width:680px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem 1.4rem; }
+  .chatbar-inner { width:100%; max-width:680px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem 1.4rem 1.7rem; position:relative; transition:box-shadow .2s,border-color .2s,transform .2s; }
+  .chatbar-inner.is-expanded { width:min(900px, 100%); max-width:none;
+    box-shadow:0 24px 80px rgba(15,23,42,0.22); border-color:rgba(129,140,248,0.35); transform:translateY(0); }
   .chatbar-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.65rem; }
   .chatbar-greeting { font-size:0.92rem; font-weight:600; background:linear-gradient(135deg,var(--indigo),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-  .chatbar-meta { display:flex; align-items:center; gap:0.5rem; }
+  .chatbar-meta { display:flex; align-items:center; gap:0.75rem; }
+  .chatbar-actions { display:flex; align-items:center; gap:0.45rem; }
+  .chatbar-action { border:1px solid var(--border); background:var(--card2); color:var(--soft); border-radius:999px; padding:0.28rem 0.7rem;
+    font-size:0.67rem; font-weight:700; letter-spacing:.02em; cursor:pointer; transition:.18s; }
+  .chatbar-action:hover { border-color:var(--indigo); color:var(--text); }
   .chat-status-dot { width:7px; height:7px; border-radius:50%; background:var(--muted); flex-shrink:0; }
   .chat-status-dot.online { background:var(--green); box-shadow:0 0 0 3px rgba(52,211,153,0.2); }
   .chatbar-status-text { font-size:0.7rem; color:var(--muted); }
   .chatbar-messages { display:none; flex-direction:column; gap:0.6rem; max-height:480px; overflow-y:auto;
     margin-bottom:0.75rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border); }
+  .chatbar-inner.is-expanded .chatbar-messages { max-height:min(68vh, 820px); }
   .chatbar-messages.visible { display:flex; }
   .chatbar-messages::-webkit-scrollbar { width:3px; }
   .chatbar-messages::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
@@ -339,9 +343,20 @@
     padding:0.1rem 0.3rem; opacity:0.6; transition:opacity .2s; flex-shrink:0; }
   .chatbar-send:hover { opacity:1; }
   .chatbar-send:disabled { opacity:0.25; cursor:not-allowed; }
+  .chatbar-corner-toggle { position:absolute; right:10px; bottom:8px; width:28px; height:28px; border:none; background:transparent; color:var(--muted);
+    cursor:nwse-resize; display:flex; align-items:center; justify-content:center; padding:0; transition:color .18s, transform .18s; }
+  .chatbar-corner-toggle:hover { color:var(--indigo); }
+  .chatbar-corner-toggle svg { width:18px; height:18px; }
+  .chatbar-inner.is-expanded .chatbar-corner-toggle { color:var(--indigo); }
   .chat-offline-msg { font-size:0.75rem; color:var(--muted); background:rgba(251,191,36,0.05);
     border:1px solid rgba(251,191,36,0.15); border-radius:7px; padding:0.5rem 0.8rem; line-height:1.5; }
   .chat-offline-msg code { background:var(--bg); padding:0.1rem 0.3rem; border-radius:3px; font-size:0.7rem; }
+  @media(max-width:900px){
+    .chatbar { padding:1rem; }
+    .chatbar-inner.is-expanded { width:100%; }
+    .chatbar-top { align-items:flex-start; gap:0.8rem; }
+    .chatbar-meta { flex-direction:column; align-items:flex-end; }
+  }
 
   /* PAYE CHECKER */
   .paye-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem; }
@@ -367,13 +382,14 @@
 <nav>
   <div class="logo">Ella Lambert — Finance Hub</div>
   <div class="nav-links">
-    <button onclick="scrollToSection('overview')">Home</button>
+    <button onclick="scrollToSection('overview')">Overview</button>
     <button onclick="scrollToSection('superplan')">Superplan</button>
     <button onclick="scrollToSection('journey')">Journey</button>
     <button onclick="scrollToSection('goals')">Goals</button>
     <button onclick="scrollToSection('tax')">Tax</button>
-    <button onclick="scrollToSection('investments')">Invest</button>
-    <button onclick="scrollToSection('fire')">Optionality</button>
+    <button onclick="scrollToSection('paye-checker')">PAYE</button>
+    <button onclick="scrollToSection('investments')">Investments</button>
+    <button onclick="scrollToSection('fire')">FIRE</button>
   </div>
   <div class="date-pill" id="live-date"></div>
 </nav>
@@ -384,8 +400,13 @@
     <div class="chatbar-top">
       <div class="chatbar-greeting" id="chat-greeting"></div>
       <div class="chatbar-meta">
-        <div class="chat-status-dot" id="chat-status-dot"></div>
-        <span class="chatbar-status-text" id="chat-status-text">Checking…</span>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <div class="chat-status-dot" id="chat-status-dot"></div>
+          <span class="chatbar-status-text" id="chat-status-text">Checking…</span>
+        </div>
+        <div class="chatbar-actions">
+          <button type="button" class="chatbar-action" onclick="openChatPopout()">Pop out</button>
+        </div>
       </div>
     </div>
     <div class="chatbar-messages" id="chat-messages"></div>
@@ -393,6 +414,13 @@
       <textarea class="chatbar-input" id="chat-input" rows="1" placeholder="Ask me anything about your finances…"></textarea>
       <button class="chatbar-send" id="chat-send" onclick="sendChat()">↵</button>
     </div>
+    <button type="button" class="chatbar-corner-toggle" id="chat-corner-toggle" aria-label="Expand chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 16L16 8"></path>
+        <path d="M10 8h6v6"></path>
+        <path d="M14 20h6v-6"></path>
+      </svg>
+    </button>
   </div>
 </div>
 
@@ -408,7 +436,7 @@
         <div class="metric-label">Monthly Net</div>
         <div class="metric-value" id="hero-net-value" style="color:var(--green)">£3,735</div>
         <div class="metric-sub" id="hero-net-sub">£68,000 salary · payday 24th</div>
-        <span class="metric-badge badge-green" id="hero-net-badge">12 Jul · +125/mo from rent</span>
+        <span class="metric-badge badge-green" id="hero-net-badge">+£125/mo · 12 Jul rent drop</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Net Worth (total)</div>
@@ -420,7 +448,7 @@
         <div class="metric-label">Emergency Fund</div>
         <div class="metric-value" style="color:var(--cyan)">£13,143</div>
         <div class="metric-sub">Atom £11,143 + Monzo £2k</div>
-        <span class="metric-badge badge-cyan">6 mo bare-bones funded</span>
+        <span class="metric-badge badge-cyan">6 months bare-bones covered</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Savings Rate</div>
@@ -458,47 +486,6 @@
         <div class="chart-wrap"><canvas id="budgetChart" height="180"></canvas></div>
       </div>
     </div>
-    <div style="margin-top:1.2rem; background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.22); border-radius:14px; padding:0.9rem 1rem;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:0.7rem;">
-        <div>
-          <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em;">After Payday</div>
-          <div style="font-size:0.98rem; font-weight:700; margin-top:0.15rem;">What gets deducted and where the cash goes after the 24th</div>
-        </div>
-      </div>
-      <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:0.7rem;">
-        <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.8rem; margin-bottom:0.55rem;">
-            <div>
-              <div style="font-size:0.6rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Gross Pay</div>
-              <div style="font-size:1.35rem; font-weight:800; color:var(--indigo); margin-top:0.1rem;">£5,667/mo</div>
-            </div>
-            <div style="font-size:0.72rem; font-weight:700; color:var(--indigo); background:rgba(129,140,248,0.12); border:1px solid rgba(129,140,248,0.2); border-radius:999px; padding:0.25rem 0.55rem;">Before payroll cuts</div>
-          </div>
-          <div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.35rem;">Payroll deductions</div>
-          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">Pension salary sacrifice</span><span class="tax-row-value" style="color:var(--green)">−£340</span></div>
-          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">AbbVie SIP shares</span><span class="tax-row-value" style="color:var(--green)">−£150</span></div>
-          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">GymFlex</span><span class="tax-row-value" style="color:var(--amber)">−£97</span></div>
-          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">PAYE + NI</span><span class="tax-row-value" style="color:var(--red)">−£1,344</span></div>
-          <div style="font-size:0.65rem; color:var(--muted); line-height:1.35; margin-top:0.45rem;">PMI and dental stay folded into PAYE rather than appearing as separate bank deductions.</div>
-        </div>
-        <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.8rem; margin-bottom:0.55rem;">
-            <div>
-              <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Net Pay</div>
-              <div style="font-size:1.35rem; font-weight:800; color:var(--cyan); margin-top:0.1rem;">£3,735/mo</div>
-            </div>
-            <div style="font-size:0.72rem; font-weight:700; color:var(--cyan); background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.2); border-radius:999px; padding:0.25rem 0.55rem;">Hits Chase UK</div>
-          </div>
-          <div style="font-size:0.6rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.35rem;">Post-payday flow</div>
-          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,735 lands in Chase UK. <strong style="color:var(--text)">£230</strong> goes to the Move Pot.</div></div>
-          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> <strong style="color:var(--text)">£850</strong> goes via Wise to Chase US, then Fidelity.</div></div>
-          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> <strong style="color:var(--text)">£56</strong> goes out for flatmate bills.</div></div>
-          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Month-end:</strong> BA Amex autopay clears, usually <strong style="color:var(--text)">£1,100-1,400</strong>.</div></div>
-          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot muted"></span><div><strong style="color:var(--text)">1st:</strong> Octopus hits at <strong style="color:var(--text)">£55 net</strong> after reimbursement.</div></div>
-          <div class="action-item" style="padding:0.45rem 0 0.1rem;"><span class="action-dot muted"></span><div><strong style="color:var(--text)">12th:</strong> Rent goes out at <strong style="color:var(--text)">£1,250</strong>, dropping to <strong style="color:var(--text)">£1,125</strong> from Jul 2026.</div></div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- SUPERPLAN -->
@@ -507,7 +494,7 @@
 
     <div class="superplan-intro">
       <h3>You built this without realising.</h3>
-      <p>Most people pick one: a pension, a savings account, maybe some stocks. You've accidentally constructed one of the most diversified, tax-efficient, cross-continent wealth portfolios of your generation. Nine distinct pillars. Two currencies. Two countries. Inflation-linked state income on both sides of the Atlantic. And you're 25.</p>
+      <p>Most people pick one: a pension, a savings account, maybe some stocks. You've accidentally constructed one of the most diversified, tax-efficient, cross-continent wealth portfolios of your generation. Eight distinct pillars. Two currencies. Two countries. Inflation-linked state income on both sides of the Atlantic. And you're 25.</p>
     </div>
 
     <div class="pillars">
@@ -547,12 +534,12 @@
       <div class="pillar p-green">
         <div class="pillar-icon">📈</div>
         <div class="pillar-name">Pillar 4 · US Investing</div>
-        <div class="pillar-title">Fidelity Taxable</div>
+        <div class="pillar-title">Fidelity Index Funds</div>
         <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--green)">$3,948 (£3,100)</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475/mo taxable brokerage</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475/mo taxable + $625/mo Roth brokerage</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target allocation</span><span class="pillar-stat-value">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">£1.1M (taxable, after-tax)</span></div>
-        <div class="pillar-why">This is the taxable sleeve only: $475/mo via Wise → Chase US → Fidelity into the 85/10/5 mix. It is your bridge capital and flexible optionality layer. Roth stays separate in Pillar 5.</div>
+        <div class="pillar-why">$475/mo taxable + $625/mo Roth brokerage = same active $1,100 pipeline via Wise → Chase US → Fidelity. Those two active brokerage accounts buy identical 85/10/5 allocation. Legacy Advisor holdings stay untouched.</div>
       </div>
 
       <div class="pillar p-pink">
@@ -615,7 +602,7 @@
 
     <div class="superplan-total">
       <div><div class="st-label">Total wealth today</div><div id="sp-nw-value" class="st-value" style="color:var(--amber)">—</div><div class="st-note">Liquid + pension · Age 25</div></div>
-      <div><div class="st-label">Annual wealth creation</div><div class="st-value" style="color:var(--green)">£30.7k+</div><div class="st-note">£30,700/yr · all pillars · £68k confirmed</div></div>
+      <div><div class="st-label">Annual wealth creation</div><div class="st-value" style="color:var(--green)">£30.7k+</div><div class="st-note">£30,700/yr · all pillars · £68k base</div></div>
       <div><div class="st-label">Projected at 67</div><div class="st-value" style="color:var(--indigo)">£4M+</div><div class="st-note">Conservative 7% return</div></div>
       <div><div class="st-label">State income at 67</div><div class="st-value" style="color:var(--pink)">£41k+</div><div class="st-note">Full UK + salary-scaled US estimate</div></div>
     </div>
@@ -676,7 +663,7 @@
       <div class="jc-item">
         <div class="jc-dot now"></div>
         <div class="jc-card">
-          <div class="jc-year" style="color:var(--soft)">Apr 2026 · Now</div>
+          <div class="jc-year" style="color:var(--amber)">Apr 2026 · Now</div>
           <div class="jc-title">Promoted to Grade 15</div>
           <div class="jc-desc">+18% increase · negotiated</div>
           <div class="jc-salary">→ £68,000</div>
@@ -793,7 +780,7 @@
         <div style="margin-bottom:1rem;">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from Sep 2019 · application window Sep 2029 · no more visa renewals</div>
           <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
-          <div class="progress-labels"><span>Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">3.4 years left</span><span>Sep 2029</span></div>
+          <div class="progress-labels"><span>Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>Sep 2029</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises 5%/yr · £3,340 by 2029</span></div>
         <div class="goal-row"><span class="goal-row-label">Total all-in</span><span class="goal-row-value" style="color:var(--indigo)">£3,400 fee + £50 Life in the UK test · DIY application</span></div>
@@ -876,6 +863,29 @@
     </div>
   </section>
 
+<script>
+(function() {
+  const label = document.getElementById('move-saved-lbl');
+  const bar = document.getElementById('move-prog');
+  if (!label || !bar) return;
+
+  const today = new Date();
+  const r = 0.02 / 12;
+  const potStart = new Date(2026, 3, 24);
+  const potAnchor = 136.47;
+  const moveTarget = 2700;
+  let total = potAnchor;
+
+  for (let d = new Date(potStart); d <= today; d = new Date(d.getFullYear(), d.getMonth() + 1, 24)) {
+    total = total * (1 + r) + 230;
+  }
+
+  total = Math.round(total * 100) / 100;
+  label.textContent = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
+  bar.style.width = Math.min(100, total / moveTarget * 100).toFixed(1) + '%';
+})();
+</script>
+
   <!-- IMMIGRATION -->
   <section>
     <h2 class="section-title">UK <span>Immigration</span> Timeline</h2>
@@ -928,7 +938,7 @@
       <div style="text-align:center; color:var(--indigo); font-size:1rem; font-weight:700;">→</div>
       <div style="background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.35); border-radius:10px; padding:0.9rem 1.1rem;">
         <div style="font-size:0.62rem; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Starting Soon · UK 2026/27 · Primary</div>
-        <div style="font-size:0.82rem; font-weight:700;">13 Apr 2026 · Grade 15 starts · £68,000 confirmed</div>
+        <div style="font-size:0.82rem; font-weight:700;">13 Apr 2026 · Grade 15 starts · £68,000 base</div>
         <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Full breakdown below · <span id="tax-yr-countdown"></span></div>
       </div>
       <div style="text-align:center; color:var(--muted); font-size:1rem;">|</div>
@@ -972,6 +982,35 @@
       </div>
       <div style="font-size:0.72rem; background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2); border-radius:8px; padding:0.6rem 0.8rem; margin-top:1rem; line-height:1.5; color:var(--amber);">
         Verify against your 24 April 2026 payslip. If net differs, likely reflects pension timing or HMRC adjustment.</div>
+    </div>
+
+    <div style="margin-bottom:1.4rem; background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.22); border-radius:14px; padding:0.9rem 1rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:0.7rem;">
+        <div>
+          <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em;">After Payday</div>
+          <div style="font-size:0.98rem; font-weight:700; margin-top:0.15rem;">What gets deducted and where the cash goes after the 24th</div>
+        </div>
+        <div style="font-size:0.74rem; color:var(--soft);">Gross £5,667 → net £3,735 in Chase UK</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:0.7rem;">
+        <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
+          <div style="font-size:0.6rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Payroll deductions</div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">Pension salary sacrifice</span><span class="tax-row-value" style="color:var(--green)">−£340</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">AbbVie SIP shares</span><span class="tax-row-value" style="color:var(--green)">−£150</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">GymFlex</span><span class="tax-row-value" style="color:var(--amber)">−£97</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">PAYE + NI</span><span class="tax-row-value" style="color:var(--red)">−£1,344</span></div>
+          <div style="font-size:0.65rem; color:var(--muted); line-height:1.35; margin-top:0.45rem;">PMI and dental stay folded into PAYE rather than appearing as separate bank deductions.</div>
+        </div>
+        <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
+          <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Post-payday flow</div>
+          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,735 lands in Chase UK. <strong style="color:var(--text)">£120</strong> goes to the Move Pot now, rising to <strong style="color:var(--text)">£245</strong> from 24 Jul 2026.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> <strong style="color:var(--text)">£850</strong> goes via Wise to Chase US, then Fidelity.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> <strong style="color:var(--text)">£56</strong> goes out for flatmate bills.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Month-end:</strong> BA Amex autopay clears, usually <strong style="color:var(--text)">£1,100-1,400</strong>.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot muted"></span><div><strong style="color:var(--text)">1st:</strong> Octopus hits at <strong style="color:var(--text)">£55 net</strong> after reimbursement.</div></div>
+          <div class="action-item" style="padding:0.45rem 0 0.1rem;"><span class="action-dot muted"></span><div><strong style="color:var(--text)">12th:</strong> Rent goes out at <strong style="color:var(--text)">£1,250</strong>, dropping to <strong style="color:var(--text)">£1,125</strong> from Jul 2026.</div></div>
+        </div>
+      </div>
     </div>
 
     <!-- PAYE EXPLAINER — all UK info together -->
@@ -1085,30 +1124,30 @@
     <h2 class="section-title">Investment <span>Engine</span> <button class="info-btn" onclick="document.getElementById('invest-modal').classList.add('open')">ℹ strategy</button></h2>
 
     <!-- Overview cards -->
-    <div class="metrics invest-metrics" style="margin-bottom:1.4rem;">
+    <div class="metrics" style="margin-bottom:1.4rem;">
       <div class="metric-card">
         <div class="metric-label">Roth IRA</div>
         <div class="metric-value" style="color:var(--amber)">$2,667</div>
-        <div class="metric-sub">$591 active + $2,076 legacy</div>
-        <span class="metric-badge badge-amber">$625/mo · $7,500 cap</span>
+        <div class="metric-sub">$590.72 active brokerage + $2,075.91 Advisor legacy</div>
+        <span class="metric-badge badge-amber">$625/mo active · $7,500/yr limit</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Fidelity Taxable</div>
         <div class="metric-value" style="color:var(--green)">$3,948</div>
-        <div class="metric-sub">$475/mo into 85 / 10 / 5</div>
-        <span class="metric-badge badge-green">Active account only</span>
+        <div class="metric-sub">+$475/mo → FSKAX/FTIHX/FXNAX</div>
+        <span class="metric-badge badge-green">+$475/mo active · Advisor legacy separate</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Annual investing</div>
         <div class="metric-value" style="color:var(--indigo)">£13,800</div>
-        <div class="metric-sub">£10,200 Fidelity + £3,600 SIP</div>
-        <span class="metric-badge badge-indigo">SIP £1,800 + £1,800 match</span>
+        <div class="metric-sub">Fidelity £10,200 + SIP effective £3,600</div>
+        <span class="metric-badge badge-indigo">SIP: £1,800 own + £1,800 AbbVie match</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Projected at 67 (7%)</div>
-        <div class="metric-value" style="color:var(--cyan)">£4M+</div>
-        <div class="metric-sub">Full retirement stack at 67</div>
-        <span class="metric-badge badge-green">Pension + SIP + US investing</span>
+        <div class="metric-value" style="color:var(--cyan)">£2.3M+</div>
+        <div class="metric-sub">Taxable + Roth combined · 42 yr compound</div>
+        <span class="metric-badge badge-green">incl. Roth · excl. pension</span>
       </div>
     </div>
 
@@ -1166,7 +1205,13 @@
         </div>
         <div class="cost-badge">0.015% expense ratio</div>
         <div class="fund-amount">$935/mo total <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">$404 taxable · $531 Roth</span></div>
-        <div class="fund-why">Your core engine. A single fund that owns a proportional slice of every publicly traded US company — mega-caps to micro-caps. Maximum diversification at near-zero cost. The foundation of every serious passive portfolio.</div>
+        <div class="fund-stats">
+          <div class="fund-stat"><span>Index tracked</span><span>Dow Jones US Total Stock Market</span></div>
+          <div class="fund-stat"><span>Holdings</span><span>3,500+ US companies</span></div>
+          <div class="fund-stat"><span>What you own</span><span>Apple, Nvidia, Amazon + everything</span></div>
+          <div class="fund-stat"><span>Type</span><span>US total market</span></div>
+        </div>
+        <div class="fund-why">$404 taxable + $531 Roth is smart. This is the core fund, so it should keep getting most of the money: cheap, broad, simple.</div>
       </div>
 
       <div class="fund-card" style="border-color:rgba(34,211,238,0.3);">
@@ -1179,7 +1224,13 @@
         </div>
         <div class="cost-badge">0.06% expense ratio</div>
         <div class="fund-amount">$110/mo total <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">$47 taxable · $63 Roth</span></div>
-        <div class="fund-why">The world outside the US. UK, Europe, Japan, China, India, Korea — all of it. Historically, international and US stocks trade leadership over time. This is your insurance that you're not purely US-dependent. Also ironic: you live here.</div>
+        <div class="fund-stats">
+          <div class="fund-stat"><span>Index tracked</span><span>MSCI ACWI ex USA IMI</span></div>
+          <div class="fund-stat"><span>Holdings</span><span>4,700 international stocks</span></div>
+          <div class="fund-stat"><span>Regions</span><span>Europe · Asia · Emerging Markets</span></div>
+          <div class="fund-stat"><span>Type</span><span>Global ex-US diversifier</span></div>
+        </div>
+        <div class="fund-why">$47 taxable + $63 Roth is sensible. It gives you enough international exposure without dragging the portfolio away from its US core.</div>
       </div>
 
       <div class="fund-card" style="border-color:rgba(251,191,36,0.3);">
@@ -1192,7 +1243,13 @@
         </div>
         <div class="cost-badge">0.025% expense ratio</div>
         <div class="fund-amount">$55/mo total <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">$24 taxable · $31 Roth</span></div>
-        <div class="fund-why">At 25, you don't need much. This 5% acts as ballast — when equities crash 40%, bonds typically fall far less. It keeps your portfolio from feeling like a rollercoaster. Small enough not to drag returns. Big enough to reduce panic.</div>
+        <div class="fund-stats">
+          <div class="fund-stat"><span>Index tracked</span><span>Bloomberg US Aggregate Bond</span></div>
+          <div class="fund-stat"><span>Contents</span><span>US govt + investment-grade corp bonds</span></div>
+          <div class="fund-stat"><span>Role</span><span>Volatility dampener</span></div>
+          <div class="fund-stat"><span>At age 25</span><span>Small ballast — correct size</span></div>
+        </div>
+        <div class="fund-why">$24 taxable + $31 Roth is a fine small ballast. At 25 you do not need more than this, but a little bond exposure makes the mix steadier.</div>
       </div>
 
     </div>
@@ -1215,28 +1272,24 @@
       <div style="font-size:0.72rem;color:var(--muted);margin-top:0.6rem;line-height:1.6;">Existing holding from Fidelity Advisor platform. No new contributions going here. Separate from the legacy Roth that also sits at Fidelity Advisor. Actively managed fund with 1% annual fee creates slow drag vs index funds. No urgent action — selling triggers LTCG (15% on gains).</div>
     </div>
 
-    <!-- Roth IRA + Actions -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; margin-bottom:1.4rem;">
-      <div class="chart-card">
-        <h3>Roth IRA — Tax-Free Vault</h3>
-        <div class="tax-row"><span class="tax-row-label">Current balance</span><span class="tax-row-value" style="color:var(--amber);">$2,666.63</span></div>
-        <div class="tax-row"><span class="tax-row-label">Brokerage + legacy split</span><span class="tax-row-value">$590.72 + $2,075.91</span></div>
-        <div class="tax-row"><span class="tax-row-label">Monthly contribution</span><span class="tax-row-value" style="color:var(--amber);">$625/mo · $7,500/yr on pace</span></div>
-        <div class="tax-row"><span class="tax-row-label">Access rule</span><span class="tax-row-value" style="color:var(--green)">Contributions anytime · leave earnings till 59½</span></div>
-        <div style="font-size:0.73rem; color:var(--muted); margin-top:0.7rem; line-height:1.5;">FTC keeps you eligible, the UK-US treaty keeps withdrawals tax-free, and the account still projects to £1.3M tax-free at 67.</div>
-      </div>
-
-      <div class="chart-card">
-        <h3>Monthly Actions</h3>
-        <div style="display:flex; flex-direction:column; gap:0.7rem;">
-          <div class="action-item"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Transfer £850 via Wise (one shot, no fragments)</div></div>
-          <div class="action-item"><span class="action-dot green"></span><div><strong style="color:var(--text)">Taxable ($475):</strong> Recurring — $404 FSKAX · $47 FTIHX · $24 FXNAX</div></div>
-          <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Roth brokerage ($625):</strong> Recurring — $531 FSKAX · $63 FTIHX · $31 FXNAX</div></div>
-          <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Annually:</strong> Rebalance if allocation drifts more than 5%</div></div>
-          <div class="action-item"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">At £75k salary:</strong> Increase pension AVCs (the trigger)</div></div>
-          <div class="action-item"><span class="action-dot muted"></span><div><strong style="color:var(--text)">Never:</strong> Sell in a downturn. Never sell Roth. Never pick stocks.</div></div>
+    <!-- Roth IRA -->
+    <div class="chart-card" style="margin-bottom:1.4rem;">
+      <h3>Roth IRA — Tax-Free Vault</h3>
+      <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.4rem;">
+        <div>
+          <div class="tax-row"><span class="tax-row-label">Current balance</span><span class="tax-row-value" style="color:var(--amber);">$2,666.63</span></div>
+          <div class="tax-row"><span class="tax-row-label">Brokerage Roth</span><span class="tax-row-value" style="color:var(--amber);">$590.72</span></div>
+          <div class="tax-row"><span class="tax-row-label">Legacy Roth</span><span class="tax-row-value">$2,075.91</span></div>
+          <div class="tax-row"><span class="tax-row-label">Monthly contribution</span><span class="tax-row-value" style="color:var(--amber);">$625/mo</span></div>
+        </div>
+        <div>
+          <div class="tax-row"><span class="tax-row-label">2026 annual limit</span><span class="tax-row-value" style="color:var(--green)">$7,500 · on pace</span></div>
+          <div class="tax-row"><span class="tax-row-label">Tax on growth</span><span class="tax-row-value" style="color:var(--green)">Zero</span></div>
+          <div class="tax-row"><span class="tax-row-label">Contributions access</span><span class="tax-row-value" style="color:var(--green)">Anytime if truly needed</span></div>
+          <div class="tax-row"><span class="tax-row-label">Earnings before 59½</span><span class="tax-row-value" style="color:var(--red)">Leave them alone</span></div>
         </div>
       </div>
+      <div style="font-size:0.73rem; color:var(--muted); margin-top:0.85rem; line-height:1.55;">$625/mo is the right move. It keeps you on pace to max the Roth, preserves your best long-term tax shelter, and still leaves contributions as a real emergency backstop. Keep using the same FSKAX / FTIHX / FXNAX split inside it.</div>
     </div>
 
     <!-- SIP explainer -->
@@ -1719,15 +1772,15 @@ function liveEstimates() {
     if (isJulOnwards) {
       heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul · +125/mo from rent';
+      heroBadgeEl.textContent = '+£125/mo · rent drop from 12 Jul';
     } else if (isAprilOnwards) {
       heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul · +125/mo from rent';
+      heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
     } else if (isAprilPrePayday) {
       heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul · +125/mo from rent';
+      heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
     } else if (isMarchPayday) {
       heroNetEl.textContent  = '£5,136';
       heroSubEl.textContent  = 'Bonus month · March 24 payday';
@@ -1735,7 +1788,7 @@ function liveEstimates() {
     } else {
       heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '12 Jul · +125/mo from rent';
+      heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
     }
   }
 
@@ -1748,9 +1801,9 @@ function liveEstimates() {
   if (chaseEl) { chaseEl.textContent = '£1,200 avg'; chaseEl.style.color = 'var(--indigo)'; }
   document.getElementById('bal-fid').textContent     = '$' + fidelityEst.toLocaleString('en-GB');
   document.getElementById('bal-roth').textContent    = '$' + rothEst.toLocaleString('en-GB');
-  document.getElementById('bal-pension').textContent = '' + fmt(pensionEst);
+  document.getElementById('bal-pension').textContent = fmt(pensionEst);
   const pillarEl = document.getElementById('pillar-pension-val');
-  if (pillarEl) pillarEl.textContent = '' + fmt(pensionEst);
+  if (pillarEl) pillarEl.textContent = fmt(pensionEst);
   const pensionSubEl = document.getElementById('hero-pension-sub');
   if (pensionSubEl) pensionSubEl.textContent = 'Cash, investments, pension';
   drawNetWorthChart(atomEst, monzoEst, chaseEst, pensionEst, fidelityEst, rothEst, chaseUSEst, liveFX, mktLabel, sipEst, sipCompleted);
@@ -1793,9 +1846,9 @@ function updateGoals() {
   const ilrDeadline = new Date(2029, 8, 1);
   const ilrStart    = new Date(2019, 8, 1); // UK arrival — full 10-year journey
   const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
-  const ilrYearsLeft = Math.max(0, (ilrDeadline - today) / (365.25 * 24 * 3600 * 1000));
+  const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
   document.getElementById('ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
-  document.getElementById('ilr-lbl').textContent  = `${ilrYearsLeft.toFixed(1)} years left`;
+  document.getElementById('ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Late 2026");
   setPill('move', "£230 now keeps July flexible and gets the move fund ready by Mar 2027", "Mar 2027");
@@ -1825,6 +1878,10 @@ updateGoals();
 // ── CHAT BAR ──────────────────────────────────────────────────────────────────
 let chatHistory = [];
 let chatOnline  = false;
+let chatExpanded = false;
+let chatPopout = null;
+let chatResizeState = null;
+const CHAT_BASE_URL = 'http://localhost:5001';
 
 // Greeting
 (function() {
@@ -1837,17 +1894,22 @@ let chatOnline  = false;
 
 async function checkChatStatus() {
   try {
-    const r = await fetch('http://localhost:5001/status', {signal: AbortSignal.timeout(2500)});
+    const r = await fetch(`${CHAT_BASE_URL}/status`, {signal: AbortSignal.timeout(2500)});
     if (r.ok) {
       chatOnline = true;
       document.getElementById('chat-status-dot').classList.add('online');
-      document.getElementById('chat-status-text').textContent = 'assistant online';
+      document.getElementById('chat-status-text').textContent = 'online';
     } else throw new Error();
   } catch {
     chatOnline = false;
     document.getElementById('chat-status-dot').classList.remove('online');
     document.getElementById('chat-status-text').textContent = 'server offline';
   }
+  syncPopout();
+}
+
+function escapeHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function mdToHtml(raw) {
@@ -1941,11 +2003,12 @@ function appendMsg(role, content) {
   const bubble = document.createElement('div');
   bubble.className = 'chat-bubble';
   bubble.innerHTML = role === 'user'
-    ? content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')
+    ? escapeHtml(content).replace(/\n/g,'<br>')
     : mdToHtml(content);
   wrap.appendChild(bubble);
   msgs.appendChild(wrap);
   msgs.scrollTop = msgs.scrollHeight;
+  syncPopout();
 }
 
 function appendUpdateBanner(desc) {
@@ -1956,16 +2019,181 @@ function appendUpdateBanner(desc) {
   div.innerHTML = `<strong>Update logged</strong>${desc}`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
+  syncPopout();
 }
 
-async function sendChat() {
-  const input = document.getElementById('chat-input');
-  const btn   = document.getElementById('chat-send');
-  const msg   = input.value.trim();
-  if (!msg || btn.disabled) return;
+function appendChatNotice(html) {
+  const msgs = document.getElementById('chat-messages');
+  msgs.classList.add('visible');
+  const note = document.createElement('div');
+  note.className = 'chat-offline-msg';
+  note.innerHTML = html;
+  msgs.appendChild(note);
+  msgs.scrollTop = msgs.scrollHeight;
+  syncPopout();
+}
 
-  input.value = '';
-  input.style.height = 'auto';
+function toggleChatExpand(forceState, options = {}) {
+  const panel = document.querySelector('.chatbar-inner');
+  const preserveSize = !!options.preserveSize;
+  chatExpanded = typeof forceState === 'boolean' ? forceState : !chatExpanded;
+  panel.classList.toggle('is-expanded', chatExpanded);
+  if (chatExpanded) document.getElementById('chat-messages').classList.add('visible');
+  if (!chatExpanded) {
+    panel.style.width = '';
+    panel.style.height = '';
+  } else if (!panel.style.height && !preserveSize) {
+    panel.style.height = '640px';
+  }
+  syncPopout();
+}
+
+function startChatResize(event) {
+  const panel = document.querySelector('.chatbar-inner');
+  const initialRect = panel.getBoundingClientRect();
+  if (!chatExpanded) {
+    panel.style.width = `${Math.round(initialRect.width)}px`;
+    panel.style.height = `${Math.round(initialRect.height)}px`;
+    toggleChatExpand(true, {preserveSize: true});
+  }
+  const rect = panel.getBoundingClientRect();
+  chatResizeState = {
+    startX: event.clientX,
+    startY: event.clientY,
+    startWidth: rect.width,
+    startHeight: rect.height,
+  };
+  document.addEventListener('mousemove', onChatResizeMove);
+  document.addEventListener('mouseup', stopChatResize);
+  event.preventDefault();
+}
+
+function onChatResizeMove(event) {
+  if (!chatResizeState) return;
+  const panel = document.querySelector('.chatbar-inner');
+  const width = Math.max(520, chatResizeState.startWidth + (event.clientX - chatResizeState.startX));
+  const height = Math.max(420, chatResizeState.startHeight + (event.clientY - chatResizeState.startY));
+  panel.style.width = `${Math.min(window.innerWidth - 48, width)}px`;
+  panel.style.height = `${Math.min(window.innerHeight - 48, height)}px`;
+}
+
+function stopChatResize() {
+  chatResizeState = null;
+  document.removeEventListener('mousemove', onChatResizeMove);
+  document.removeEventListener('mouseup', stopChatResize);
+}
+
+function getChatState() {
+  const msgs = document.getElementById('chat-messages').innerHTML;
+  return {
+    html: msgs,
+    online: chatOnline,
+    expanded: chatExpanded,
+    statusText: document.getElementById('chat-status-text').textContent,
+  };
+}
+
+function syncPopout() {
+  if (!chatPopout || chatPopout.closed || !chatPopout.applyState) return;
+  try {
+    chatPopout.applyState(getChatState());
+  } catch {}
+}
+
+function openChatPopout() {
+  if (chatPopout && !chatPopout.closed) {
+    chatPopout.focus();
+    syncPopout();
+    return;
+  }
+
+  chatPopout = window.open('', 'ella-finance-chat', 'width=560,height=760,resizable=yes,scrollbars=no');
+  if (!chatPopout) return;
+
+  chatPopout.document.write(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ella Finance Chat</title>
+  <style>
+    :root { color-scheme: light; --bg:#f5f7fb; --panel:#ffffff; --panel2:#eef2ff; --border:#d9e0ee; --text:#0f172a; --muted:#64748b; --indigo:#6366f1; --green:#22c55e; --amber:#d97706; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,sans-serif; background:linear-gradient(180deg,#eef2ff 0%,#f8fafc 100%); color:var(--text); display:flex; flex-direction:column; height:100vh; }
+    .top { display:flex; justify-content:space-between; align-items:center; padding:16px 18px; border-bottom:1px solid var(--border); background:rgba(255,255,255,0.88); backdrop-filter:blur(12px); }
+    .title { font-size:14px; font-weight:800; letter-spacing:.02em; }
+    .status { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:8px; }
+    .dot { width:8px; height:8px; border-radius:50%; background:#94a3b8; }
+    .dot.online { background:var(--green); box-shadow:0 0 0 4px rgba(34,197,94,0.14); }
+    .msgs { flex:1; overflow:auto; padding:16px; display:flex; flex-direction:column; gap:10px; }
+    .inputbar { display:flex; gap:10px; padding:14px 16px 16px; border-top:1px solid var(--border); background:rgba(255,255,255,0.92); }
+    textarea { flex:1; resize:none; min-height:52px; max-height:140px; border:1px solid var(--border); border-radius:14px; padding:12px 14px; font:inherit; color:var(--text); background:var(--panel); outline:none; }
+    textarea:focus { border-color:var(--indigo); }
+    button { border:none; border-radius:12px; background:var(--indigo); color:white; padding:0 16px; font:inherit; font-weight:700; cursor:pointer; }
+    button:disabled { opacity:.45; cursor:not-allowed; }
+    .chat-msg { max-width:88%; }
+    .chat-msg.user { align-self:flex-end; }
+    .chat-msg.assistant { align-self:flex-start; }
+    .chat-bubble { padding:11px 14px; border-radius:14px; line-height:1.55; font-size:13px; }
+    .chat-msg.user .chat-bubble { background:rgba(99,102,241,0.14); border:1px solid rgba(99,102,241,0.2); }
+    .chat-msg.assistant .chat-bubble { background:var(--panel); border:1px solid var(--border); }
+    .chat-update-banner,.chat-offline-msg { font-size:12px; line-height:1.5; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:rgba(217,119,6,0.08); color:#92400e; }
+    .chat-update-banner strong { display:block; margin-bottom:2px; font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
+    .chat-bubble code { background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.15); border-radius:4px; padding:1px 5px; }
+    .chat-bubble pre { background:#0f172a; color:#e2e8f0; overflow:auto; padding:10px 12px; border-radius:10px; }
+    .chat-bubble table { width:100%; border-collapse:collapse; }
+    .chat-bubble th,.chat-bubble td { border:1px solid var(--border); padding:5px 7px; text-align:left; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="title">Ella Finance Chat</div>
+    <div class="status"><span class="dot" id="status-dot"></span><span id="status-text">Checking…</span></div>
+  </div>
+  <div class="msgs" id="msgs"></div>
+  <div class="inputbar">
+    <textarea id="input" placeholder="Ask me anything about your finances..."></textarea>
+    <button id="send">Send</button>
+  </div>
+  <script>
+    const openerBridge = window.opener && window.opener.dashboardChatBridge;
+    const msgs = document.getElementById('msgs');
+    const input = document.getElementById('input');
+    const send = document.getElementById('send');
+    window.applyState = state => {
+      msgs.innerHTML = state.html || '';
+      msgs.scrollTop = msgs.scrollHeight;
+      document.getElementById('status-text').textContent = state.statusText || 'Checking…';
+      document.getElementById('status-dot').classList.toggle('online', !!state.online);
+    };
+    send.addEventListener('click', async () => {
+      const msg = input.value.trim();
+      if (!msg || !openerBridge) return;
+      send.disabled = true;
+      await openerBridge.sendMessageFromPopout(msg);
+      input.value = '';
+      send.disabled = false;
+      input.focus();
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send.click(); }
+    });
+    setInterval(() => {
+      if (!window.opener || window.opener.closed || !window.opener.dashboardChatBridge) return;
+      window.applyState(window.opener.dashboardChatBridge.getState());
+    }, 800);
+    if (openerBridge) window.applyState(openerBridge.getState());
+    input.focus();
+  <\/script>
+</body>
+</html>`);
+  chatPopout.document.close();
+  syncPopout();
+}
+
+async function sendChatMessage(msg) {
+  const btn = document.getElementById('chat-send');
+  if (!msg || btn.disabled) return false;
+
   appendMsg('user', msg);
   chatHistory.push({role: 'user', content: msg});
   btn.disabled = true;
@@ -1979,7 +2207,7 @@ async function sendChat() {
   msgs.scrollTop = msgs.scrollHeight;
 
   try {
-    const resp = await fetch('http://localhost:5001/chat', {
+    const resp = await fetch(`${CHAT_BASE_URL}/chat`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({message: msg, history: chatHistory}),
@@ -1994,17 +2222,27 @@ async function sendChat() {
     }
   } catch {
     document.getElementById('chat-thinking-indicator')?.remove();
-    const offline = document.createElement('div');
-    offline.className = 'chat-offline-msg';
-    offline.innerHTML = `⚠️ Server offline — run <code>python3 /Desktop/Finances/chatbot_server.py</code> in Terminal`;
-    msgs.appendChild(offline);
-    msgs.classList.add('visible');
-    msgs.scrollTop = msgs.scrollHeight;
+    appendChatNotice(`⚠️ Server offline — run <code>python3 /Desktop/Finances/chatbot_server.py</code> in Terminal`);
   }
 
   btn.disabled = false;
-  input.focus();
+  document.getElementById('chat-input').focus();
+  return true;
 }
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg   = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  input.style.height = 'auto';
+  await sendChatMessage(msg);
+}
+
+window.dashboardChatBridge = {
+  getState: () => getChatState(),
+  sendMessageFromPopout: msg => sendChatMessage(msg),
+};
 
 document.getElementById('chat-input').addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
@@ -2012,6 +2250,12 @@ document.getElementById('chat-input').addEventListener('keydown', e => {
 document.getElementById('chat-input').addEventListener('input', function() {
   this.style.height = 'auto';
   this.style.height = Math.min(this.scrollHeight, 72) + 'px';
+});
+document.getElementById('chat-corner-toggle').addEventListener('mousedown', startChatResize);
+document.getElementById('chat-corner-toggle').addEventListener('click', e => {
+  if (chatExpanded) return;
+  toggleChatExpand(true);
+  e.preventDefault();
 });
 
 checkChatStatus();
@@ -2042,7 +2286,7 @@ setInterval(checkChatStatus, 30000);
     <div class="modal-rule"><div class="modal-rule-label">Your security</div><div class="modal-rule-value">Section 21 abolished — landlord can no longer end your tenancy without a legal reason. Much harder to evict.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Rent increases</div><div class="modal-rule-value">Annual only · landlord must give 2 months notice · you can challenge at tribunal if above market rate. No surprise mid-tenancy hikes.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Your notice to leave</div><div class="modal-rule-value">2 months notice from you to end the tenancy. You control when you go.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Vancsi moving to Hungary</div><div class="modal-rule-value">When Vancsi gives her 2 months notice, that's your natural trigger to move too — aligns with your Mar 2027 move fund timeline.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Vancsi moving to Hungary</div><div class="modal-rule-value">When Vancsi gives her 2 months notice, that's your natural trigger to move too — aligns with your Mar–Apr 2027 move pot timeline.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">If landlord wants to sell</div><div class="modal-rule-value">Ground 1A · only after 12 months into tenancy · 4 months notice required. Low risk — landlords rarely sell quickly, and your move window handles it.</div></div>
   </div>
 </div>
