@@ -67,10 +67,11 @@
   .metric-label { font-size:0.75rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.5rem; }
   .metric-value { font-size:2rem; font-weight:800; line-height:1; }
   .metric-sub { font-size:0.75rem; color:var(--soft); margin-top:0.4rem; }
-  .metric-badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:20px; margin-top:0.5rem; font-weight:600; }
+  .metric-badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:20px; margin-top:0.5rem; font-weight:600; line-height:1.2; }
   .badge-green { background:rgba(52,211,153,0.15); color:var(--green); }
   .badge-amber { background:rgba(251,191,36,0.15); color:var(--amber); }
   .badge-indigo { background:rgba(129,140,248,0.15); color:var(--indigo); }
+  #hero-ef-badge { white-space:nowrap; }
 
   /* CHARTS GRID */
   .charts-2 { display:grid; grid-template-columns:1.4fr 1fr; gap:1.4rem; }
@@ -280,6 +281,7 @@
   .goal-icon { font-size:1.8rem; flex-shrink:0; }
   .goal-name { font-size:0.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.2rem; }
   .goal-title { font-size:1rem; font-weight:700; }
+  .goal-card.goal-travel .goal-name { white-space:nowrap; font-size:0.66rem; }
   .goal-row { display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0; border-bottom:1px solid var(--border); font-size:0.8rem; }
   .goal-row:last-of-type { border-bottom:none; }
   .goal-row-label { color:var(--muted); }
@@ -353,7 +355,7 @@
         <div class="metric-label">Emergency Fund</div>
         <div class="metric-value" style="color:var(--cyan)">£13,143</div>
         <div class="metric-sub">Atom £11,143 + Monzo £2k</div>
-        <span class="metric-badge badge-cyan">6 mo bare-bones funded</span>
+        <span class="metric-badge badge-cyan" id="hero-ef-badge">6 mo bare-bones funded</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Savings Rate</div>
@@ -648,7 +650,7 @@
       </div>
 
       <!-- Goal 3: Business class LHR → ORD -->
-      <div class="goal-card">
+      <div class="goal-card goal-travel">
         <div class="goal-header">
           <div class="goal-icon">✈️</div>
           <div>
@@ -657,7 +659,7 @@
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Transfer UR → United MileagePlus · Polaris LHR→ORD · £220 cash (APD only) · zero BA surcharges</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Transfer UR → United MileagePlus for Polaris LHR→ORD · ~£220 cash (APD only)</div>
           <div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
           <div class="progress-labels"><span>Feb 2026</span><span style="color:var(--amber)">CSP unlocks this</span><span>Early 2027</span></div>
         </div>
@@ -666,9 +668,9 @@
         <div class="goal-row"><span class="goal-row-label">Cash out of pocket</span><span class="goal-row-value">£220 · UK APD only · United has zero carrier surcharges</span></div>
         <div class="goal-row"><span class="goal-row-label">Ongoing</span><span class="goal-row-value">3× travel & dining · no FX fees · UR for any flight, any airline</span></div>
         <div class="goal-timeline">
-          <div class="goal-pill no-bruce" id="avios-pill">
-            <div class="gp-label" id="avios-pill-label">Waiting on CSP · book once bonus lands</div>
-            <span id="avios-timeline">Early 2027</span>
+          <div class="goal-pill no-bruce" id="travel-pill">
+            <div class="gp-label" id="travel-pill-label">CSP first · then book Polaris with UR</div>
+            <span id="travel-timeline">Early 2027</span>
           </div>
         </div>
       </div>
@@ -1691,7 +1693,7 @@ function updateGoals() {
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Late 2026");
   setPill('move', "£230 now keeps July flexible and gets the move fund ready by Mar 2027", "Mar 2027");
-  setPill('avios', "Waiting on CSP · book once bonus lands", "Early 2027");
+  setPill('travel', "CSP first · then book Polaris with UR", "Early 2027");
 }
 
 function setPill(id, label, value) {
