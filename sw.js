@@ -1,4 +1,4 @@
-const CACHE = 'mealplan-v1776100447';
+const CACHE = 'mealplan-v1776100480';
 const ASSETS = ['./ep6-burger.png', './y18-panang.png'];
 
 self.addEventListener('install', e => {
