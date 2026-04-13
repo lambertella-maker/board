@@ -3,6 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="finance-build" content="2026-04-13T12:52:00Z">
+<script>
+(() => {
+  try {
+    const build = '2026-04-13T12:52:00Z';
+    const key = 'finance-build:' + location.pathname;
+    const seen = localStorage.getItem(key);
+    if (seen !== build) {
+      localStorage.setItem(key, build);
+      if (seen) location.reload();
+    }
+  } catch (_) {}
+})();
+</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Ella Finance">

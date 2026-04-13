@@ -3,6 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="finance-build" content="2026-04-13T12:52:00Z">
+<script>
+(() => {
+  try {
+    const build = '2026-04-13T12:52:00Z';
+    const key = 'finance-build:' + location.pathname;
+    const seen = localStorage.getItem(key);
+    if (seen !== build) {
+      localStorage.setItem(key, build);
+      if (seen) location.reload();
+    }
+  } catch (_) {}
+})();
+</script>
 <title>Ella Lambert — Finance Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="tax_data.js" onerror="void 0"></script>
