@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-04-14T12:00:00Z">
+<meta name="finance-build" content="2026-04-14T15:30:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-04-14T12:00:00Z';
+    const build = '2026-04-14T15:30:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -72,7 +72,7 @@
   .metric-card:hover { transform:translateY(-2px); border-color:var(--indigo); }
   .metric-label { font-size:0.75rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.5rem; }
   .metric-value { font-size:2rem; font-weight:800; line-height:1; }
-  .metric-sub { font-size:0.75rem; color:var(--soft); margin-top:0.4rem; }
+  .metric-sub { font-size:0.75rem; color:var(--soft); margin-top:0.4rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .metric-badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:20px; margin-top:0.5rem; font-weight:600; white-space:nowrap; }
   .badge-green { background:rgba(52,211,153,0.15); color:var(--green); }
   .badge-cyan  { background:rgba(34,211,238,0.15); color:var(--cyan); }
@@ -1152,9 +1152,9 @@
       </div>
       <div class="metric-card">
         <div class="metric-label">Projected at 67 (7%)</div>
-        <div class="metric-value" style="color:var(--cyan)">£2.3M+</div>
-        <div class="metric-sub">Taxable + Roth combined · 42 yr compound</div>
-        <span class="metric-badge badge-green">incl. Roth · excl. pension</span>
+        <div class="metric-value" style="color:var(--cyan)">£4.5M+</div>
+        <div class="metric-sub">All pillars · pension + US investing</div>
+        <span class="metric-badge badge-green">pension + taxable + Roth</span>
       </div>
     </div>
 
