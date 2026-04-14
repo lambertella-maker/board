@@ -1417,8 +1417,8 @@
         <div class="fire-stat"><span class="fire-stat-label">Already funded vs target</span><span class="fire-stat-value" id="fire-funded" style="color:var(--pink)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">State cover at 67</span><span class="fire-stat-value" id="fire-state-cover" style="color:var(--cyan)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">Portfolio draw still needed after 67</span><span class="fire-stat-value" id="fire-post67-gap" style="color:var(--indigo)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">New money arriving at 67</span><span class="fire-stat-value" id="fire-state-cover" style="color:var(--cyan)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">Portfolio still needs to fund</span><span class="fire-stat-value" id="fire-post67-gap" style="color:var(--indigo)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">State income at 67</span><span class="fire-stat-value" id="fire-state" style="color:var(--cyan)">—</span></div>
         <div class="fire-stage-strip">
           <div class="fire-stage">
@@ -1797,7 +1797,6 @@ function updateFire() {
   const fundedPct = Math.max(0, Math.min(999, (baseTotal / fireNum) * 100));
   const progressPct = Math.max(0, Math.min(100, ((fireAge - currentAge) / Math.max(0.1, 67 - currentAge)) * 100));
   const giftImpactYears = Math.max(0, (monthsWithoutGift - monthsWithGift) / 12);
-  const stateCoverPct = sp > 0 ? Math.min(100, (stateIncome / sp) * 100) : 0;
   const post67Gap = Math.max(0, sp - stateIncome);
 
   const fmtBig = v => v >= 1e6
@@ -1829,7 +1828,7 @@ function updateFire() {
         ? `£${stateIncome.toLocaleString()}/yr · UK only`
         : `£${stateIncome.toLocaleString()}/yr · US only`;
 
-  let story = `At this spend level, work becomes optional around age ${fireAge}, roughly ${yearsBefore67} years before 67. The bridge still runs liquid assets first, then pension at 57, Roth at 59.5, and ${stateIncome === 0 ? 'no state-income support is counted from 67.' : `from 67 the selected state sources cover about ${stateCoverPct.toFixed(0)}% of the target spend, leaving roughly £${post67Gap.toLocaleString()}/yr for the portfolio to fund.`}`;
+  let story = `At this spend level, work becomes optional around age ${fireAge}, roughly ${yearsBefore67} years before 67. The bridge still runs liquid assets first, then pension at 57, Roth at 59.5, and ${stateIncome === 0 ? 'no state-income support is counted from 67.' : `from 67, £${stateIncome.toLocaleString()}/yr starts arriving from the selected state sources, so the portfolio only needs to cover about £${post67Gap.toLocaleString()}/yr after that.`}`;
   if (bruce) story += ` With the gift bridge switched on, the model lets those 2029 onward gifts absorb part of the early drawdown.`;
 
   document.getElementById('fire-mode-copy').textContent = modeCopy;
@@ -1837,14 +1836,14 @@ function updateFire() {
   document.getElementById('fire-gift-copy').textContent = giftCopy;
   document.getElementById('fire-left-note').textContent = stateIncome === 0
     ? 'In the self-funded scenario, nothing steps in at 67, so the portfolio must keep covering the full annual spend target.'
-    : `In this scenario, state income starts at 67 and covers about ${stateCoverPct.toFixed(0)}% of the target spend, reducing the draw pressure on the portfolio from that point onward.`;
+    : `In this scenario, state income starts at 67 and adds £${stateIncome.toLocaleString()}/yr, so the portfolio draw falls to about £${post67Gap.toLocaleString()}/yr from that age onward.`;
 
   document.getElementById('fire-age').textContent   = fireAge;
   document.getElementById('fire-num').textContent   = fmtBig(fireNum);
   document.getElementById('fire-funded').textContent = fundedPct.toFixed(0) + '%';
   document.getElementById('fire-67').textContent    = fmtBig(p67);
   document.getElementById('fire-years').textContent = yearsToFire.toFixed(1) + ' years';
-  document.getElementById('fire-state-cover').textContent = stateIncome === 0 ? '0%' : stateCoverPct.toFixed(0) + '% of spend';
+  document.getElementById('fire-state-cover').textContent = stateIncome === 0 ? '£0/yr' : '£' + stateIncome.toLocaleString() + '/yr from age 67';
   document.getElementById('fire-post67-gap').textContent = '£' + post67Gap.toLocaleString() + '/yr';
   document.getElementById('fire-state').textContent = stateLabel;
   document.getElementById('fire-headstart').textContent = stateLiftYears > 0.05 ? stateLiftYears.toFixed(1) + ' years earlier than self-funded' : yearsBefore67 + ' years before 67';
