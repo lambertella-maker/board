@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-04-13T15:07:00Z">
+<meta name="finance-build" content="2026-04-14T12:00:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-04-13T15:07:00Z';
+    const build = '2026-04-14T12:00:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -81,7 +81,7 @@
   .metric-label { font-size:0.75rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.5rem; }
   .metric-value { font-size:2rem; font-weight:800; line-height:1; }
   .metric-sub { font-size:0.75rem; color:var(--soft); margin-top:0.4rem; }
-  .metric-badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:20px; margin-top:0.5rem; font-weight:600; line-height:1.2; }
+  .metric-badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:20px; margin-top:0.5rem; font-weight:600; line-height:1.2; white-space:nowrap; }
   .badge-green { background:rgba(52,211,153,0.15); color:var(--green); }
   .badge-cyan  { background:rgba(34,211,238,0.15); color:var(--cyan); }
   .badge-amber { background:rgba(251,191,36,0.15); color:var(--amber); }
@@ -244,11 +244,6 @@
   .fund-name { font-size:0.72rem; color:var(--muted); margin-top:0.2rem; line-height:1.4; }
   .fund-alloc { border-radius:8px; padding:0.4rem 0.8rem; font-size:1rem; font-weight:800; }
   .fund-amount { font-size:1.1rem; font-weight:700; color:var(--green); margin-bottom:1rem; }
-  .fund-stats { margin-bottom:1rem; }
-  .fund-stat { display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid var(--border); font-size:0.78rem; }
-  .fund-stat:last-child { border-bottom:none; }
-  .fund-stat span:first-child { color:var(--muted); }
-  .fund-stat span:last-child { font-weight:600; color:var(--text); }
   .fund-why { font-size:0.75rem; color:var(--soft); line-height:1.5; padding-top:0.8rem; border-top:1px solid var(--border); }
 
   .milestone-list { display:flex; flex-direction:column; gap:0.5rem; }
@@ -382,7 +377,7 @@
         <div class="metric-label">Savings Rate</div>
         <div class="metric-value" style="color:var(--amber)">45%</div>
         <div class="metric-sub">vs gross income · all pillars</div>
-        <span class="metric-badge badge-amber">~£30,700/yr total saving</span>
+        <span class="metric-badge badge-amber">£30,700/yr total saving</span>
       </div>
     </div>
 
@@ -395,10 +390,10 @@
     <div class="accounts-grid">
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£11,144</div><div class="account-rate">3.49% AER · interest daily-compounded</div><div class="account-note">Emergency fund · No withdrawals</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo</div><div class="account-balance" id="bal-monzo" style="color:var(--cyan)">£2,000</div><div class="account-rate">2.75% AER · interest daily-compounded</div><div class="account-note">Instant liquidity buffer</div></div>
-      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">~£1,200 avg</div><div class="account-rate">Current account · typical float</div><div class="account-note">Salary hub · min £1,000 · varies by day</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">£1,200 avg</div><div class="account-rate">Current account · typical float</div><div class="account-note">Salary hub · min £1,000 · varies by day</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$3,948</div><div class="account-rate">+$475/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Active brokerage · Advisor holdings separate</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$2,667</div><div class="account-rate">+$625/mo to brokerage Roth · $7,500/yr limit</div><div class="account-note">Split: $590.72 active + $2,075.91 legacy at Fidelity Advisor</div></div>
-      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">~£18,440</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">+£3,186 SALX (Mar 2026) · £1,020/mo (G15)</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">£18,440</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">+£3,186 SALX (Mar 2026) · £1,020/mo (G15)</div></div>
     </div>
   </section>
 
@@ -459,10 +454,10 @@
         <div class="pillar-icon">🏦</div>
         <div class="pillar-name">Pillar 1 · UK Workplace</div>
         <div class="pillar-title">AbbVie Pension</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-pension-val" style="color:var(--indigo)">~£18,440</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-pension-val" style="color:var(--indigo)">£18,440</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Annual input</span><span class="pillar-stat-value">£12,240 (18% total)</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Your contribution</span><span class="pillar-stat-value">6% · AbbVie matches 12%</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">~£2.1M</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">£2.1M</span></div>
         <div class="pillar-why">AbbVie's 12% match is a 200% return on your 6% contribution before a single penny of growth. One of the most powerful employer benefits in the UK market. You're fully utilising it.</div>
       </div>
 
@@ -470,8 +465,8 @@
         <div class="pillar-icon">🇬🇧</div>
         <div class="pillar-name">Pillar 2 · UK State</div>
         <div class="pillar-title">UK State Pension</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Qualifying progress</span><span class="pillar-stat-value" style="color:var(--cyan)">~3 / 35 years</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Current earned amount</span><span class="pillar-stat-value">~£1,076/yr</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Qualifying progress</span><span class="pillar-stat-value" style="color:var(--cyan)">3 / 35 years</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current earned amount</span><span class="pillar-stat-value">£1,076/yr</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Full pension value</span><span class="pillar-stat-value">£12,548/yr (today's money)</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">State pension age</span><span class="pillar-stat-value">67 (rising)</span></div>
         <div class="pillar-why">Triple-lock protected. Current earned amount is a simple 3/35 estimate using today's full rate. 35 qualifying years unlock the full amount. Inflation-linked for life.</div>
@@ -482,8 +477,8 @@
         <div class="pillar-name">Pillar 3 · US State</div>
         <div class="pillar-title">US Social Security</div>
         <div class="pillar-stat"><span class="pillar-stat-label">Eligibility path</span><span class="pillar-stat-value">40 credits or UK-US totalization</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Full salary-scaled est.</span><span class="pillar-stat-value">~$37,000/yr</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Estimate basis</span><span class="pillar-stat-value">~3 equivalent years at current pay</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Full salary-scaled est.</span><span class="pillar-stat-value">$37,000/yr</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Estimate basis</span><span class="pillar-stat-value">3 equivalent years at current pay</span></div>
         <div class="pillar-why">UK-US totalization can help with eligibility. Dollar figures here are salary-scaled heuristics, not an SSA quote, because the real benefit depends on your eventual SSA earnings record.</div>
       </div>
 
@@ -491,23 +486,23 @@
         <div class="pillar-icon">📈</div>
         <div class="pillar-name">Pillar 4 · US Investing</div>
         <div class="pillar-title">Fidelity Index Funds</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--green)">~$3,948 (~£3,100)</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475 taxable + $625 Roth brokerage</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--green)">$3,948 (£3,100)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monthly input</span><span class="pillar-stat-value">$475/mo taxable + $625/mo Roth brokerage</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target allocation</span><span class="pillar-stat-value">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">~£1.1M (taxable, after-tax)</span></div>
-        <div class="pillar-why">$475 taxable + $625 Roth brokerage = active $1,100/mo. Both buy identical 85/10/5 and execute on the 30th.</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--green)">£1.1M (taxable, after-tax)</span></div>
+        <div class="pillar-why">$475/mo taxable + $625/mo Roth brokerage = same active $1,100 pipeline via Wise → Chase US → Fidelity. Those two active brokerage accounts buy identical 85/10/5 allocation. Legacy Advisor holdings stay untouched.</div>
       </div>
 
       <div class="pillar p-pink">
         <div class="pillar-icon">🌱</div>
         <div class="pillar-name">Pillar 5 · US Retirement</div>
         <div class="pillar-title">Roth IRA</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--pink)">~$2,667 (~£2,100)</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Monthly contribution</span><span class="pillar-stat-value" style="color:var(--pink)">$625/mo</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">2026 annual limit</span><span class="pillar-stat-value">$7,500 · on pace ✓</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" style="color:var(--pink)">$2,667 (£2,100)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monthly contribution</span><span class="pillar-stat-value" style="color:var(--pink)">$625/mo to brokerage Roth</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">2026 annual limit</span><span class="pillar-stat-value">$7,500 · on pace at $625/mo</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Tax on growth</span><span class="pillar-stat-value" style="color:var(--green)">Zero. Ever.</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--pink)">~£1.3M tax-free</span></div>
-        <div class="pillar-why">Max-pace 2026 Roth at $7,500/yr. UK-US treaty (Art.17): tax-free in both countries. Contributions always accessible penalty-free.</div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" style="color:var(--pink)">£1.3M tax-free</span></div>
+        <div class="pillar-why">Combined Roth = $590.72 active brokerage + $2,075.91 legacy Roth at Fidelity Advisor. Only the brokerage Roth gets new monthly 85/10/5 buys. UK-US treaty (Article 17): tax-free in both US and UK.</div>
       </div>
 
       <div class="pillar p-indigo">
@@ -547,8 +542,8 @@
         <div class="pillar-icon">🌍</div>
         <div class="pillar-name">Pillar 9 · Optionality</div>
         <div class="pillar-title">Dual-Continent Architecture</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">UK assets</span><span class="pillar-stat-value" style="color:var(--green)">~£31k + pension</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">US assets</span><span class="pillar-stat-value">~$9,800 (~£7.8k)</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">UK assets</span><span class="pillar-stat-value" style="color:var(--green)">£31k + pension</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">US assets</span><span class="pillar-stat-value">$9,800 (£7.8k)</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">ILR target</span><span class="pillar-stat-value">Sep 2029</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Citizenship eligible</span><span class="pillar-stat-value">Sep 2030+ · optional</span></div>
         <div class="pillar-why">The rarest pillar: genuine optionality. You can retire in the UK, the US, or Europe. You have assets, pensions, and credit in both major Anglophone economies. ILR locks in the right to live and work here permanently. This is not normal. This is exceptional.</div>
@@ -558,7 +553,7 @@
 
     <div class="superplan-total">
       <div><div class="st-label">Total wealth today</div><div id="sp-nw-value" class="st-value" style="color:var(--amber)">—</div><div class="st-note">Liquid + pension · Age 25</div></div>
-      <div><div class="st-label">Annual wealth creation</div><div class="st-value" style="color:var(--green)">£30.7k+</div><div class="st-note">~£30,700/yr · all pillars · £68k base</div></div>
+      <div><div class="st-label">Annual wealth creation</div><div class="st-value" style="color:var(--green)">£30.7k+</div><div class="st-note">£30,700/yr · all pillars · £68k base</div></div>
       <div><div class="st-label">Projected at 67</div><div class="st-value" style="color:var(--indigo)">£4M+</div><div class="st-note">Conservative 7% return</div></div>
       <div><div class="st-label">State income at 67</div><div class="st-value" style="color:var(--pink)">£41k+</div><div class="st-note">Full UK + salary-scaled US estimate</div></div>
     </div>
@@ -876,7 +871,7 @@
         </div>
       </div>
       <div style="margin-top:1.2rem; font-size:0.78rem; color:var(--muted);">
-        10-year long residence route (Sep 2019 → Sep 2029) is ~10 months faster than Skilled Worker 5-year route (Jul 2030). ILR is the primary goal — citizenship remains optional. No ISAs until CLN, regardless of ILR status.
+        10-year long residence route (Sep 2019 → Sep 2029) is 10 months faster than Skilled Worker 5-year route (Jul 2030). ILR is the primary goal — citizenship remains optional. No ISAs until CLN, regardless of ILR status.
       </div>
     </div>
   </section>
@@ -900,7 +895,7 @@
       </div>
       <div style="text-align:center; color:var(--muted); font-size:1rem;">|</div>
       <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.2); border-radius:10px; padding:0.9rem 1.1rem;">
-        <div style="font-size:0.62rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Filing Now · US 2025</div>
+        <div style="font-size:0.62rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.3rem;">Filed · US 2025</div>
         <div style="font-size:0.82rem; font-weight:700;">$0 owed · OLT · Free</div>
         <div style="font-size:0.73rem; color:var(--soft); margin-top:0.15rem;">Jun 15 / Oct 15 deadline · Details below</div>
       </div>
@@ -997,7 +992,7 @@
     <!-- US 2025 — COMPACT SECONDARY -->
     <div class="chart-card" style="margin-bottom:1.4rem; border-color:rgba(34,211,238,0.2); background:rgba(34,211,238,0.015);">
       <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;">
-        <div class="tax-year-tag tag-us" style="margin:0;">US Tax Year 2025 · Filing Now</div>
+        <div class="tax-year-tag tag-us" style="margin:0;">US Tax Year 2025 · Filed</div>
         <div style="font-size:0.75rem; color:var(--muted);">Convert salary at IRS 2025 avg rate (irs.gov) · Mar 2026 bonus falls in US <strong style="color:var(--text);">2026</strong>, not 2025</div>
       </div>
       <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem;">
@@ -1055,15 +1050,15 @@
     <div class="metrics" style="margin-bottom:1.4rem;">
       <div class="metric-card">
         <div class="metric-label">Roth IRA</div>
-        <div class="metric-value" style="color:var(--amber)">$1,931</div>
-        <div class="metric-sub">+$625/mo · tax-free growth forever</div>
-        <span class="metric-badge badge-amber">$625/mo · $7,500/yr limit</span>
+        <div class="metric-value" style="color:var(--amber)">$2,667</div>
+        <div class="metric-sub">$590.72 active brokerage + $2,075.91 Advisor legacy</div>
+        <span class="metric-badge badge-amber">$625/mo active · $7,500/yr limit</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Fidelity Taxable</div>
         <div class="metric-value" style="color:var(--green)">$3,948</div>
         <div class="metric-sub">+$475/mo → FSKAX/FTIHX/FXNAX</div>
-        <span class="metric-badge badge-green">+$475/mo active · Class C legacy</span>
+        <span class="metric-badge badge-green">+$475/mo active · Advisor legacy separate</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Annual investing</div>
@@ -1087,7 +1082,7 @@
           <div class="pipe-icon">🇬🇧</div>
           <div class="pipe-label">Chase UK</div>
           <div class="pipe-amount">£850</div>
-          <div class="pipe-note">Salary hub · comfort float £1,300+ · ~£293/mo flexible</div>
+          <div class="pipe-note">Salary hub · comfort float £1,300+ · £293/mo flexible</div>
         </div>
         <div class="pipe-arrow">→</div>
         <div class="pipe-step">
@@ -1100,7 +1095,7 @@
         <div class="pipe-step">
           <div class="pipe-icon">🇺🇸</div>
           <div class="pipe-label">Chase US</div>
-          <div class="pipe-amount">~$1,600</div>
+          <div class="pipe-amount">$1,600</div>
           <div class="pipe-note">$1,500 min (account fee floor) · funds Amex Blue</div>
         </div>
         <div class="pipe-arrow">→</div>
@@ -1133,13 +1128,7 @@
         </div>
         <div class="cost-badge">0.015% expense ratio</div>
         <div class="fund-amount">$935/mo total <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">$404 taxable · $531 Roth</span></div>
-        <div class="fund-stats">
-          <div class="fund-stat"><span>Index tracked</span><span>Dow Jones US Total Stock Market</span></div>
-          <div class="fund-stat"><span>Holdings</span><span>~3,500+ US companies</span></div>
-          <div class="fund-stat"><span>What you own</span><span>Apple, Nvidia, Amazon + everything</span></div>
-          <div class="fund-stat"><span>Type</span><span>US total market</span></div>
-        </div>
-        <div class="fund-why">Your core engine. Owns a slice of every publicly traded US company — mega-cap to micro-cap. Maximum diversification at near-zero cost.</div>
+        <div class="fund-why">$404 taxable + $531 Roth is smart. This is the core fund, so it should keep getting most of the money: cheap, broad, simple.</div>
       </div>
 
       <div class="fund-card" style="border-color:rgba(34,211,238,0.3);">
@@ -1152,13 +1141,7 @@
         </div>
         <div class="cost-badge">0.06% expense ratio</div>
         <div class="fund-amount">$110/mo total <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">$47 taxable · $63 Roth</span></div>
-        <div class="fund-stats">
-          <div class="fund-stat"><span>Index tracked</span><span>MSCI ACWI ex USA IMI</span></div>
-          <div class="fund-stat"><span>Holdings</span><span>~4,700 international stocks</span></div>
-          <div class="fund-stat"><span>Regions</span><span>Europe · Asia · Emerging Markets</span></div>
-          <div class="fund-stat"><span>Type</span><span>Global ex-US diversifier</span></div>
-        </div>
-        <div class="fund-why">The world outside the US. Europe, Japan, Canada, Australia, emerging markets. Insurance against being 100% US-only.</div>
+        <div class="fund-why">$47 taxable + $63 Roth is sensible. It gives you enough international exposure without dragging the portfolio away from its US core.</div>
       </div>
 
       <div class="fund-card" style="border-color:rgba(251,191,36,0.3);">
@@ -1171,13 +1154,7 @@
         </div>
         <div class="cost-badge">0.025% expense ratio</div>
         <div class="fund-amount">$55/mo total <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">$24 taxable · $31 Roth</span></div>
-        <div class="fund-stats">
-          <div class="fund-stat"><span>Index tracked</span><span>Bloomberg US Aggregate Bond</span></div>
-          <div class="fund-stat"><span>Contents</span><span>US govt + investment-grade corp bonds</span></div>
-          <div class="fund-stat"><span>Role</span><span>Volatility dampener</span></div>
-          <div class="fund-stat"><span>At age 25</span><span>Small ballast — correct size</span></div>
-        </div>
-        <div class="fund-why">5% ballast. When equities crash, this usually falls far less. Small enough not to drag returns. Big enough to reduce panic.</div>
+        <div class="fund-why">$24 taxable + $31 Roth is a fine small ballast. At 25 you do not need more than this, but a little bond exposure makes the mix steadier.</div>
       </div>
 
     </div>
@@ -1189,15 +1166,15 @@
           <div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:0.25rem;">Legacy · No new contributions</div>
           <div style="font-size:0.95rem;font-weight:700;color:var(--soft);">Fidelity Advisor Growth Opportunities Fund · Class C</div>
         </div>
-        <div style="font-size:0.72rem;font-weight:600;color:var(--amber);background:rgba(251,191,36,0.1);padding:0.25rem 0.6rem;border-radius:6px;white-space:nowrap;">~1% ER · review</div>
+        <div style="font-size:0.72rem;font-weight:600;color:var(--amber);background:rgba(251,191,36,0.1);padding:0.25rem 0.6rem;border-radius:6px;white-space:nowrap;">1% ER · review</div>
       </div>
       <div style="display:flex;gap:2rem;margin-top:0.7rem;font-size:0.77rem;color:var(--muted);">
         <div><span style="color:var(--soft);">Balance</span>&nbsp;&nbsp;$3,948</div>
         <div><span style="color:var(--soft);">New money</span>&nbsp;&nbsp;$0/mo</div>
-        <div><span style="color:var(--soft);">Expense ratio</span>&nbsp;&nbsp;~1% (~65× FSKAX)</div>
+        <div><span style="color:var(--soft);">Expense ratio</span>&nbsp;&nbsp;1% (65× FSKAX)</div>
         <div><span style="color:var(--soft);">Type</span>&nbsp;&nbsp;Actively managed</div>
       </div>
-      <div style="font-size:0.72rem;color:var(--muted);margin-top:0.6rem;line-height:1.6;">No new contributions. ~1% annual fee creates slow drag vs index funds. No urgent action — selling triggers LTCG (15% on gains). Review migration to FSKAX when the gain is small.</div>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:0.6rem;line-height:1.6;">Existing holding from Fidelity Advisor platform. No new contributions going here. Separate from the legacy Roth that also sits at Fidelity Advisor. Actively managed fund with 1% annual fee creates slow drag vs index funds. No urgent action — selling triggers LTCG (15% on gains).</div>
     </div>
 
     <!-- Roth IRA + Actions -->
@@ -1207,19 +1184,17 @@
         <div class="tax-row" style="padding:0.5rem 0;"><span class="tax-row-label">Current balance</span><span class="tax-row-value" style="color:var(--amber);">$2,666.63</span></div>
         <div class="tax-row" style="padding:0.5rem 0;"><span class="tax-row-label">Brokerage Roth</span><span class="tax-row-value" style="color:var(--amber);">$590.72</span></div>
         <div class="tax-row" style="padding:0.5rem 0;"><span class="tax-row-label">Legacy Roth</span><span class="tax-row-value" style="color:var(--soft)">$2,075.91</span></div>
-        <div class="tax-row" style="padding:0.5rem 0;"><span class="tax-row-label">2026 annual limit</span><span class="tax-row-value" style="color:var(--green)">$7,500 · on pace ✓</span></div>
+        <div class="tax-row" style="padding:0.5rem 0;"><span class="tax-row-label">2026 annual limit</span><span class="tax-row-value" style="color:var(--green)">$7,500 · on pace</span></div>
         <div class="tax-row" style="padding:0.5rem 0;"><span class="tax-row-label">Tax on growth</span><span class="tax-row-value" style="color:var(--green)">Zero</span></div>
         <div class="tax-row" style="padding:0.5rem 0;"><span class="tax-row-label">Contributions</span><span class="tax-row-value" style="color:var(--green)">Withdraw anytime</span></div>
         <div class="tax-row" style="padding:0.5rem 0;"><span class="tax-row-label">Earnings before 59½</span><span class="tax-row-value" style="color:var(--red)">Leave them alone</span></div>
-        <div style="font-size:0.71rem; color:var(--muted); margin-top:0.6rem; line-height:1.45;">FTC (not FEIE) preserves Roth eligibility on UK income. UK-US treaty (Art.17) exempts Roth withdrawals from UK tax — tax-free in both countries. Contributions = liquidity backstop. Projected ~£1.3M tax-free at 67.</div>
+        <div style="font-size:0.71rem; color:var(--muted); margin-top:0.6rem; line-height:1.45;">FTC (not FEIE) preserves Roth eligibility on UK income. UK-US treaty (Art.17) exempts Roth withdrawals from UK tax — tax-free in both countries. Contributions = liquidity backstop. Projected £1.3M tax-free at 67.</div>
       </div>
 
       <div class="chart-card" style="padding:1.15rem 1.2rem;">
         <h3>Monthly Actions</h3>
         <div style="display:flex; flex-direction:column; gap:0.5rem;">
           <div class="action-item"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Transfer £850 via Wise (one shot, no fragments)</div></div>
-          <div class="action-item"><span class="action-dot green"></span><div><strong style="color:var(--text)">Taxable ($475):</strong> Recurring — $404 FSKAX · $47 FTIHX · $24 FXNAX</div></div>
-          <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Roth IRA ($625):</strong> Recurring — $531 FSKAX · $63 FTIHX · $31 FXNAX</div></div>
           <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Annually:</strong> Rebalance if allocation drifts more than 5%</div></div>
           <div class="action-item"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">At £75k salary:</strong> Increase pension AVCs (the trigger)</div></div>
           <div class="action-item"><span class="action-dot muted"></span><div><strong style="color:var(--text)">Never:</strong> Sell in a downturn. Never sell Roth. Never pick stocks.</div></div>
@@ -1231,13 +1206,13 @@
     <div class="chart-card" style="margin-bottom:1.4rem; border-color:rgba(129,140,248,0.2); background:rgba(129,140,248,0.02);">
       <h3>ABBV Share Incentive Plan · How it works</h3>
       <div style="display:flex; flex-direction:column; gap:0.55rem; font-size:0.81rem; color:var(--soft); line-height:1.6;">
-        <div><span style="color:var(--indigo); font-weight:700;">Why this is good · </span>£150/mo comes out of your salary <em>before</em> income tax and NI — so at your rate, ~£63 of every £150 is tax you never hand over. You effectively pay ~£87 in take-home for £150 of shares. AbbVie then matches 1:1, adding another free £150/mo. Total: £300/mo · £3,600/yr accumulating with zero action needed from you.</div>
+        <div><span style="color:var(--indigo); font-weight:700;">Why this is good · </span>£150/mo comes out of your salary <em>before</em> income tax and NI — so at your rate, £63 of every £150 is tax you never hand over. You effectively pay £87 in take-home for £150 of shares. AbbVie then matches 1:1, adding another free £150/mo. Total: £300/mo · £3,600/yr accumulating with zero action needed from you.</div>
         <div><span style="color:var(--amber); font-weight:700;">While you wait · </span>Shares sit in a trustee account on a platform (check your AbbVie benefit portal). Nothing to do — just let them accumulate. Each batch has two milestones: a <strong style="color:var(--text);">3-year vesting mark</strong> (shares unconditionally yours even if you leave AbbVie) and a <strong style="color:var(--text);">5-year tax-free mark</strong> (withdraw with zero income tax, zero NI). Nov 2024 batch → vested Nov 2027, tax-free Nov 2029. The 5-year mark is the target.</div>
-        <div><span style="color:var(--green); font-weight:700;">When to sell · </span>Don't sell each batch as it clears — you'd be logging in monthly forever. Do an <strong style="color:var(--text);">annual sweep</strong> instead: once a year in Nov/Dec, log in and sell everything that's cleared its 5-year mark since your last sweep. ~10 minutes, one transaction per year. Move proceeds to Fidelity via Wise as usual. Sell most or all each time — you're already AbbVie-exposed through your salary and pension, so no need to hold extra here.</div>
+        <div><span style="color:var(--green); font-weight:700;">When to sell · </span>Don't sell each batch as it clears — you'd be logging in monthly forever. Do an <strong style="color:var(--text);">annual sweep</strong> instead: once a year in Nov/Dec, log in and sell everything that's cleared its 5-year mark since your last sweep. 10 minutes, one transaction per year. Move proceeds to Fidelity via Wise as usual. Sell most or all each time — you're already AbbVie-exposed through your salary and pension, so no need to hold extra here.</div>
       </div>
       <div style="margin-top:1rem; border-top:1px solid var(--border); padding-top:0.9rem;">
         <div style="font-size:0.8rem; font-weight:700; color:var(--text); margin-bottom:0.15rem;">First annual sweep: <span style="color:var(--amber)">Nov/Dec 2029</span></div>
-        <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.85rem;">1 batch will have cleared its 5-year mark by then (Nov 2024 · ~£300 at acquisition). From <strong style="color:var(--soft);">Nov/Dec 2030</strong> it's steady state: 12 batches · £3,600 per sweep, every Nov/Dec.</div>
+        <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.85rem;">1 batch will have cleared its 5-year mark by then (Nov 2024 · £300 at acquisition). From <strong style="color:var(--soft);">Nov/Dec 2030</strong> it's steady state: 12 batches · £3,600 per sweep, every Nov/Dec.</div>
 
         <div style="font-size:0.68rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-bottom:0.35rem;">Per annual sweep — steady state (Nov/Dec 2030+) · 12 batches · £3,600 at acquisition</div>
         <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden; font-size:0.76rem; margin-bottom:0.8rem;">
@@ -1459,7 +1434,7 @@ function nwSliderChange(yrs) {
   const fvc = (pmt, mo, r) => r > 0 ? pmt * ((Math.pow(1+r,mo)-1)/r) : pmt*mo;
   const segs = [
     { label:'UK Savings',     val: Math.round(gNwBases.ukSav + 200*months),                                                              color:'#22d3ee', note:'Atom · Monzo · Chase UK — liquid' },
-    { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(986.25,months,r55)),                         color:'#818cf8', note:'Aviva workplace pension · 5.5% CAGR est.' },
+    { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(1020,months,r55)),                         color:'#818cf8', note:'Aviva workplace pension · 5.5% CAGR est.' },
     { label:'ABBV SIP Shares',val: Math.round(gNwBases.sip + 300*Math.min(months, Math.max(0,60-gNwBases.sipCompleted))),                color:'#f472b6', note:'Locked 5yr · acquisition cost est.' },
     { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+r7,months) + fvc(475,months,r7))*FX),                         color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
     { label:'Roth IRA',       val: Math.round((gNwBases.rothUSD*Math.pow(1+r7,months) + fvc(625,months,r7))*FX),                        color:'#fbbf24', note:'Tax-free retirement · never touch' },
@@ -1481,7 +1456,7 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
     { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * fx),color: '#6366f1', note: 'Chase US — pipeline hub · $1,500 min' },
   ];
   const total = segments.reduce((s, x) => s + x.val, 0);
-  const nwFmt = `~£${Math.round(total / 1000).toLocaleString()}k`;
+  const nwFmt = `£${Math.round(total / 1000).toLocaleString()}k`;
   const heroNw = document.getElementById('hero-nw-value');
   const spNw   = document.getElementById('sp-nw-value');
   if (heroNw) heroNw.textContent = nwFmt;
@@ -1705,19 +1680,19 @@ function liveEstimates() {
   const heroBadgeEl = document.getElementById('hero-net-badge');
   if (heroNetEl) {
     if (isJulOnwards) {
-      heroNetEl.textContent  = '~£3,735';
+      heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
       heroBadgeEl.textContent = '+£125/mo · rent drop from 12 Jul';
     } else if (isAprilOnwards) {
-      heroNetEl.textContent  = '~£3,735';
+      heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
       heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
     } else if (isAprilPrePayday) {
-      heroNetEl.textContent  = '~£3,735';
+      heroNetEl.textContent  = '£3,735';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
       heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
     } else if (isMarchPayday) {
-      heroNetEl.textContent  = '~£5,136';
+      heroNetEl.textContent  = '£5,136';
       heroSubEl.textContent  = 'Bonus month · March 24 payday';
       heroBadgeEl.textContent = 'SALX + regular salary · big month';
     } else {
@@ -1733,9 +1708,9 @@ function liveEstimates() {
   document.getElementById('bal-monzo').textContent   = fmt(monzoEst);
   // Chase UK: static display (schedule estimate too volatile; kept for NW calc only)
   const chaseEl = document.getElementById('bal-chase');
-  if (chaseEl) { chaseEl.textContent = '~£1,200 avg'; chaseEl.style.color = 'var(--indigo)'; }
-  document.getElementById('bal-fid').textContent     = '~$' + fidelityEst.toLocaleString('en-GB');
-  document.getElementById('bal-roth').textContent    = '~$' + rothEst.toLocaleString('en-GB');
+  if (chaseEl) { chaseEl.textContent = '£1,200 avg'; chaseEl.style.color = 'var(--indigo)'; }
+  document.getElementById('bal-fid').textContent     = '$' + fidelityEst.toLocaleString('en-GB');
+  document.getElementById('bal-roth').textContent    = '$' + rothEst.toLocaleString('en-GB');
   document.getElementById('bal-pension').textContent = '~' + fmt(pensionEst);
   const pillarEl = document.getElementById('pillar-pension-val');
   if (pillarEl) pillarEl.textContent = '~' + fmt(pensionEst);
