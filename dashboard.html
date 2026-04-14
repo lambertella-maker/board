@@ -78,6 +78,11 @@
   .badge-cyan  { background:rgba(34,211,238,0.15); color:var(--cyan); }
   .badge-amber { background:rgba(251,191,36,0.15); color:var(--amber); }
   .badge-indigo { background:rgba(129,140,248,0.15); color:var(--indigo); }
+  .invest-top-metrics { grid-template-columns:repeat(4,minmax(0,1fr)); gap:0.9rem; }
+  .invest-top-metrics .metric-card { min-width:0; padding:1.25rem 1.1rem; }
+  .invest-top-metrics .metric-value { font-size:1.75rem; }
+  .invest-top-metrics .metric-sub,
+  .invest-top-metrics .metric-badge { white-space:normal; overflow:visible; text-overflow:clip; line-height:1.35; }
 
   /* CHARTS GRID */
   .charts-2 { display:grid; grid-template-columns:1.4fr 1fr; gap:1.4rem; }
@@ -1131,7 +1136,7 @@
     <h2 class="section-title">Investment <span>Engine</span> <button class="info-btn" onclick="document.getElementById('invest-modal').classList.add('open')">ℹ strategy</button></h2>
 
     <!-- Overview cards -->
-    <div class="metrics" style="margin-bottom:1.4rem;">
+    <div class="metrics invest-top-metrics" style="margin-bottom:1.4rem;">
       <div class="metric-card">
         <div class="metric-label">Roth IRA</div>
         <div class="metric-value" style="color:var(--amber)">$2,667</div>
