@@ -203,6 +203,7 @@
   .fire-stage-m em { display:block; font-style:normal; font-size:0.58rem; line-height:1.35; color:var(--soft); }
   .fire-story-m { margin-top:10px; padding-top:10px; border-top:1px solid var(--border); font-size:0.67rem; color:var(--soft); line-height:1.6; }
   .fire-story-m strong { color:var(--text); }
+  .fire-scenario-row-m { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:12px; }
   .ctrl-group { margin-bottom:16px; }
   .ctrl-label { display:flex; justify-content:space-between; font-size:0.78rem;
                 color:var(--soft); margin-bottom:6px; }
@@ -643,7 +644,7 @@
     <div class="fire-stat-row"><span class="fire-stat-lbl">Already funded vs target</span><span class="fire-stat-val" id="m-fire-funded" style="color:var(--pink)">—</span></div>
     <div class="fire-stat-row"><span class="fire-stat-lbl">Portfolio at 67 (work to normal)</span><span class="fire-stat-val" id="m-fire-67" style="color:var(--green)">—</span></div>
     <div class="fire-stat-row"><span class="fire-stat-lbl">Years to FIRE</span><span class="fire-stat-val" id="m-fire-yrs" style="color:var(--indigo)">—</span></div>
-    <div class="fire-stat-row" style="border-bottom:none;"><span class="fire-stat-lbl">Full state income at 67</span><span class="fire-stat-val" style="color:var(--cyan)">£41k+/yr</span></div>
+    <div class="fire-stat-row" style="border-bottom:none;"><span class="fire-stat-lbl">State income at 67</span><span class="fire-stat-val" id="m-fire-state" style="color:var(--cyan)">—</span></div>
     <div class="fire-stage-grid-m">
       <div class="fire-stage-m">
         <span>Stage 1</span>
@@ -687,6 +688,12 @@
       <button class="fire-chip-m" type="button" data-m-fire-spend="60000" onclick="mSetFireSpend(60000)"><strong>Comfort</strong><span>Higher-spend flexibility</span></button>
       <button class="fire-chip-m" type="button" data-m-fire-spend="75000" onclick="mSetFireSpend(75000)"><strong>Stretch</strong><span>Expensive-city version</span></button>
     </div>
+    <div class="fire-scenario-row-m">
+      <button class="fire-chip-m" type="button" data-m-fire-state="self" onclick="mSetStateScenario('self')"><strong>Self</strong><span>No state income</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-state="uk" onclick="mSetStateScenario('uk')"><strong>UK only</strong><span>£12.5k/yr</span></button>
+      <button class="fire-chip-m active" type="button" data-m-fire-state="dual" onclick="mSetStateScenario('dual')"><strong>Dual</strong><span>UK + US state</span></button>
+    </div>
+    <input type="hidden" id="m-fire-state-mode" value="dual">
     <div class="fire-slider-shell-m">
       <div class="fire-slider-top-m">
         <div>

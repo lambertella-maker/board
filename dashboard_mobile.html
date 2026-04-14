@@ -164,6 +164,14 @@
   .fire-stage em { display:block; font-style:normal; font-size:0.68rem; line-height:1.4; color:var(--soft); }
   .fire-story { margin-top:0.9rem; padding-top:0.9rem; border-top:1px solid var(--border); font-size:0.77rem; color:var(--soft); line-height:1.6; }
   .fire-story strong { color:var(--text); }
+  .fire-scenario-box { margin-top:1rem; padding:0.95rem 1rem; border-radius:14px; background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.14); }
+  .fire-scenario-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.55rem; margin-bottom:0.8rem; }
+  .fire-source-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.55rem; }
+  .fire-source-card { padding:0.75rem 0.8rem; border-radius:12px; border:1px solid var(--border); background:var(--card2); }
+  .fire-source-head { display:flex; justify-content:space-between; align-items:flex-start; gap:0.6rem; margin-bottom:0.35rem; }
+  .fire-source-name { font-size:0.76rem; font-weight:700; color:var(--text); }
+  .fire-source-note { font-size:0.66rem; color:var(--soft); line-height:1.4; }
+  .fire-source-amt { font-size:0.78rem; font-weight:700; color:var(--cyan); }
 
   /* TOGGLE */
   .toggle-row { display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem; padding:1rem; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.2); border-radius:10px; }
@@ -1342,6 +1350,46 @@
             <span id="fire-gift-copy">Keep this off for the self-funded plan. If switched on, it adds Dad's £16k/yr gifts from 2029.</span>
           </div>
         </div>
+
+        <div class="fire-scenario-box">
+          <div class="control-label">State income at 67 <span>Scenario + source toggles</span></div>
+          <div class="fire-scenario-grid">
+            <button class="fire-chip" type="button" data-fire-state="self" onclick="setFireStateScenario('self')">
+              <span class="fire-chip-title">Self-funded</span>
+              <span class="fire-chip-copy">Ignore both state systems</span>
+            </button>
+            <button class="fire-chip" type="button" data-fire-state="uk" onclick="setFireStateScenario('uk')">
+              <span class="fire-chip-title">UK only</span>
+              <span class="fire-chip-copy">Assume UK pension only</span>
+            </button>
+            <button class="fire-chip active" type="button" data-fire-state="dual" onclick="setFireStateScenario('dual')">
+              <span class="fire-chip-title">Dual-state</span>
+              <span class="fire-chip-copy">Current full model</span>
+            </button>
+          </div>
+          <div class="fire-source-grid">
+            <div class="fire-source-card">
+              <div class="fire-source-head">
+                <div>
+                  <div class="fire-source-name">UK State Pension</div>
+                  <div class="fire-source-note">Triple-lock baseline at 67</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="ukStateToggle" checked onchange="syncFireStateScenario(); updateFire()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="fire-source-amt">£12,548/yr</div>
+            </div>
+            <div class="fire-source-card">
+              <div class="fire-source-head">
+                <div>
+                  <div class="fire-source-name">US Social Security</div>
+                  <div class="fire-source-note">Salary-scaled estimate in GBP</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="usStateToggle" checked onchange="syncFireStateScenario(); updateFire()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="fire-source-amt">~£28.5k/yr</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="fire-result-card">
@@ -1369,7 +1417,7 @@
         <div class="fire-stat"><span class="fire-stat-label">Already funded vs target</span><span class="fire-stat-value" id="fire-funded" style="color:var(--pink)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">Full state income at 67</span><span class="fire-stat-value" style="color:var(--cyan)">£41k+/yr · not counted above</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">State income at 67</span><span class="fire-stat-value" id="fire-state" style="color:var(--cyan)">—</span></div>
         <div class="fire-stage-strip">
           <div class="fire-stage">
             <span>Stage 1</span>
