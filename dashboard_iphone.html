@@ -642,32 +642,24 @@
       </div>
     </div>
     <div class="fire-stat-row"><span class="fire-stat-lbl">FIRE number needed</span><span class="fire-stat-val" id="m-fire-num" style="color:var(--amber)">—</span></div>
-    <div class="fire-stat-row"><span class="fire-stat-lbl">Already funded vs target</span><span class="fire-stat-val" id="m-fire-funded" style="color:var(--pink)">—</span></div>
     <div class="fire-stat-row"><span class="fire-stat-lbl">Portfolio at 67 (work to normal)</span><span class="fire-stat-val" id="m-fire-67" style="color:var(--green)">—</span></div>
-    <div class="fire-stat-row"><span class="fire-stat-lbl">67 cushion vs self-funded</span><span class="fire-stat-val" id="m-fire-67-lift" style="color:var(--green)">—</span></div>
-    <div class="fire-stat-row"><span class="fire-stat-lbl">Years to FIRE</span><span class="fire-stat-val" id="m-fire-yrs" style="color:var(--indigo)">—</span></div>
-    <div class="fire-stat-row"><span class="fire-stat-lbl">Boost from state income</span><span class="fire-stat-val" id="m-fire-state-boost" style="color:var(--indigo)">—</span></div>
-    <div class="fire-stat-row" style="border-bottom:none;"><span class="fire-stat-lbl">State income at 67</span><span class="fire-stat-val" id="m-fire-state" style="color:var(--cyan)">—</span></div>
+    <div class="fire-stat-row"><span class="fire-stat-lbl">New money starting at 67</span><span class="fire-stat-val" id="m-fire-state" style="color:var(--cyan)">—</span></div>
+    <div class="fire-stat-row" style="border-bottom:none;"><span class="fire-stat-lbl">Portfolio still needs to deliver</span><span class="fire-stat-val" id="m-fire-post67" style="color:var(--indigo)">—</span></div>
     <div class="fire-stage-grid-m">
       <div class="fire-stage-m">
-        <span>Stage 1</span>
-        <strong>Liquid bridge</strong>
-        <em>Cash, SIP, taxable, and US cash first.</em>
+        <span>Now to 57</span>
+        <strong>Accessible money</strong>
+        <em>Cash and taxable money do the early bridge work.</em>
       </div>
       <div class="fire-stage-m">
         <span>57</span>
         <strong>UK pension</strong>
-        <em>Another draw source opens.</em>
-      </div>
-      <div class="fire-stage-m">
-        <span>59.5</span>
-        <strong>Roth access</strong>
-        <em>Tax-free bridge support appears.</em>
+        <em>Your pension pot becomes available for the middle years.</em>
       </div>
       <div class="fire-stage-m">
         <span>67</span>
         <strong>State income</strong>
-        <em>Portfolio burden drops again.</em>
+        <em>UK and US state income can reduce the yearly draw from your portfolio.</em>
       </div>
     </div>
     <div class="fire-story-m" id="m-fire-story">
@@ -677,30 +669,28 @@
 
   <div class="card">
     <div class="fire-kicker-m">Try scenarios</div>
-    <div class="fire-intro-m">Play with spend levels and decide whether to count the future gift bridge. The locked backbone stays visible, but quiet.</div>
+    <div class="fire-intro-m">Pick the lifestyle, then decide what later support you actually want to count.</div>
     <div class="fire-backbone-m">
       <div class="fire-pill-m">Accessible <strong id="m-acc-lbl">£666/mo</strong></div>
       <div class="fire-pill-m">UK pension <strong id="m-pen-lbl">£1,020/mo</strong></div>
       <div class="fire-pill-m">US Roth <strong id="m-roth-lbl">£481/mo</strong></div>
-      <div class="fire-pill-m">Return <strong id="m-ret-lbl">7.0%</strong></div>
-      <div class="fire-pill-m">Withdrawal <strong id="m-wr-lbl">4.00%</strong></div>
     </div>
     <div class="fire-chip-row-m">
-      <button class="fire-chip-m active" type="button" data-m-fire-spend="45000" onclick="mSetFireSpend(45000)"><strong>Base</strong><span>Current planning case</span></button>
-      <button class="fire-chip-m" type="button" data-m-fire-spend="60000" onclick="mSetFireSpend(60000)"><strong>Comfort</strong><span>Higher-spend flexibility</span></button>
-      <button class="fire-chip-m" type="button" data-m-fire-spend="75000" onclick="mSetFireSpend(75000)"><strong>Luxe</strong><span>High-spend city version</span></button>
+      <button class="fire-chip-m active" type="button" data-m-fire-spend="45000" onclick="mSetFireSpend(45000)"><strong>Base</strong><span>£45k/yr</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-spend="60000" onclick="mSetFireSpend(60000)"><strong>Comfort</strong><span>£60k/yr</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-spend="75000" onclick="mSetFireSpend(75000)"><strong>Luxe</strong><span>£75k/yr</span></button>
     </div>
     <div class="fire-scenario-row-m">
-      <button class="fire-chip-m" type="button" data-m-fire-state="self" onclick="mSetStateScenario('self')"><strong>Self</strong><span>No state income</span></button>
-      <button class="fire-chip-m" type="button" data-m-fire-state="uk" onclick="mSetStateScenario('uk')"><strong>UK only</strong><span>£12.5k/yr</span></button>
-      <button class="fire-chip-m active" type="button" data-m-fire-state="dual" onclick="mSetStateScenario('dual')"><strong>Dual</strong><span>UK + US state</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-state="self" onclick="mSetStateScenario('self')"><strong>Self</strong><span>Nothing starts at 67</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-state="uk" onclick="mSetStateScenario('uk')"><strong>UK only</strong><span>UK state pension</span></button>
+      <button class="fire-chip-m active" type="button" data-m-fire-state="dual" onclick="mSetStateScenario('dual')"><strong>Dual</strong><span>UK + US state income</span></button>
     </div>
     <input type="hidden" id="m-fire-state-mode" value="dual">
     <div class="fire-slider-shell-m">
       <div class="fire-slider-top-m">
         <div>
           <div class="ctrl-label" style="margin-bottom:2px;">Retirement spending/yr <span id="m-sp-lbl">£45,000</span></div>
-          <div class="fire-slider-copy-m" id="m-fire-mode-copy">Current modeled spend target with more lifestyle room and a later optionality date.</div>
+          <div class="fire-slider-copy-m" id="m-fire-mode-copy">Current spend target and stop-work path.</div>
         </div>
         <div class="fire-slider-big-m" id="m-fire-slider-big">£45k</div>
       </div>
@@ -714,6 +704,7 @@
         <span id="m-fire-gift-copy">Keep this off for the self-funded plan. If switched on, it adds Dad's £16k/yr gifts from 2029.</span>
       </div>
     </div>
+    <div class="fire-note-m" id="m-fire-left-note">State income does not help before 67. It only matters later by reducing how much the portfolio has to send each year.</div>
   </div>
   </div><!-- /fire-ipad-grid -->
 
