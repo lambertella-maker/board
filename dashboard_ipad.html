@@ -134,9 +134,42 @@
   .fire-stat:last-child { border-bottom:none; }
   .fire-stat-label { font-size:0.82rem; color:var(--soft); }
   .fire-stat-value { font-size:1rem; font-weight:700; }
+  .fire-kicker { font-size:0.72rem; font-weight:700; color:var(--indigo); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.65rem; }
+  .fire-intro { font-size:0.84rem; color:var(--soft); line-height:1.6; margin-bottom:1rem; }
+  .fire-backbone { display:flex; flex-wrap:wrap; gap:0.55rem; margin-bottom:1rem; }
+  .fire-pill { display:inline-flex; align-items:center; gap:0.38rem; padding:0.45rem 0.75rem; border-radius:999px; background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.18); font-size:0.72rem; color:var(--soft); }
+  .fire-pill strong { color:var(--text); font-size:0.76rem; }
+  .fire-preset-row { display:grid; grid-template-columns:repeat(4,1fr); gap:0.55rem; margin-bottom:0.9rem; }
+  .fire-chip { border:1px solid var(--border); background:var(--card2); color:var(--soft); border-radius:12px; padding:0.7rem 0.55rem; text-align:left; cursor:pointer; transition:border-color .18s, transform .18s, background .18s; }
+  .fire-chip:hover { border-color:rgba(129,140,248,0.35); transform:translateY(-1px); }
+  .fire-chip.active { background:rgba(129,140,248,0.12); border-color:rgba(129,140,248,0.38); color:var(--text); }
+  .fire-chip-title { display:block; font-size:0.76rem; font-weight:700; color:inherit; margin-bottom:0.18rem; }
+  .fire-chip-copy { display:block; font-size:0.66rem; color:var(--soft); line-height:1.35; }
+  .fire-slider-shell { padding:0.95rem 1rem 0.9rem; background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.05)); border:1px solid rgba(129,140,248,0.18); border-radius:14px; }
+  .fire-slider-top { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; margin-bottom:0.7rem; }
+  .fire-slider-value { font-size:1.35rem; font-weight:800; color:var(--text); }
+  .fire-slider-copy { font-size:0.74rem; color:var(--soft); line-height:1.5; }
+  .fire-scale { display:flex; justify-content:space-between; font-size:0.64rem; color:var(--muted); margin-top:0.4rem; }
+  .fire-status-line { display:flex; justify-content:space-between; align-items:center; gap:0.8rem; margin-bottom:0.8rem; flex-wrap:wrap; }
+  .fire-status-badge { display:inline-flex; align-items:center; gap:0.4rem; padding:0.35rem 0.65rem; border-radius:999px; background:rgba(34,211,238,0.08); border:1px solid rgba(34,211,238,0.22); color:var(--cyan); font-size:0.72rem; font-weight:700; }
+  .fire-progress-wrap { margin:0.9rem 0 1rem; }
+  .fire-progress-labels { display:flex; justify-content:space-between; gap:0.75rem; font-size:0.68rem; color:var(--muted); margin-bottom:0.45rem; }
+  .fire-progress-bar { position:relative; height:10px; border-radius:999px; background:rgba(255,255,255,0.04); border:1px solid var(--border); overflow:hidden; }
+  .fire-progress-fill { position:absolute; inset:0 auto 0 0; width:0%; border-radius:999px; background:linear-gradient(90deg,var(--amber),var(--pink)); transition:width .25s ease; }
+  .fire-progress-marker { position:absolute; top:-4px; width:2px; bottom:-4px; background:rgba(255,255,255,0.55); box-shadow:0 0 0 3px rgba(255,255,255,0.08); }
+  .fire-stage-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:0.55rem; margin:1rem 0 0.9rem; }
+  .fire-stage { border:1px solid var(--border); background:var(--card2); border-radius:12px; padding:0.75rem 0.7rem; min-width:0; }
+  .fire-stage span { display:block; font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.28rem; }
+  .fire-stage strong { display:block; font-size:0.76rem; margin-bottom:0.22rem; color:var(--text); }
+  .fire-stage em { display:block; font-style:normal; font-size:0.68rem; line-height:1.4; color:var(--soft); }
+  .fire-story { margin-top:0.9rem; padding-top:0.9rem; border-top:1px solid var(--border); font-size:0.77rem; color:var(--soft); line-height:1.6; }
+  .fire-story strong { color:var(--text); }
 
   /* TOGGLE */
   .toggle-row { display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem; padding:1rem; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.2); border-radius:10px; }
+  .fire-toggle-row { margin:0.9rem 0 0; }
+  .toggle-text { flex:1; min-width:0; font-size:0.78rem; color:var(--soft); line-height:1.5; }
+  .toggle-text strong { display:block; color:var(--text); margin-bottom:0.12rem; font-size:0.82rem; }
   .info-btn { background:none; border:none; color:var(--muted); cursor:pointer; font-size:0.68rem; font-family:inherit; padding:0; text-decoration:underline; line-height:1; }
   .info-btn:hover { color:var(--soft); }
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:9000; align-items:center; justify-content:center; padding:1.5rem; }
@@ -1255,43 +1288,110 @@
     <h2 class="section-title">Work <span>Optionality</span></h2>
     <div class="fire-grid">
       <div class="fire-controls">
-        <h3>Locked assumptions</h3>
+        <div class="fire-kicker">Try scenarios</div>
+        <div class="fire-intro">Drag your target spend, tap a lifestyle preset, and decide whether to count the future gift bridge. The backbone assumptions stay visible, but out of the way.</div>
 
-        <div class="toggle-row">
+        <div class="fire-backbone">
+          <div class="fire-pill">Investing <strong id="inv-label">£2,170/mo</strong></div>
+          <div class="fire-pill">Return <strong id="ret-label">7.0%</strong></div>
+          <div class="fire-pill">Withdrawal <strong id="wr-label">4.00%</strong></div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">Lifestyle presets <span>Tap to load</span></div>
+          <div class="fire-preset-row">
+            <button class="fire-chip" type="button" data-fire-spend="24000" onclick="setFireSpend(24000)">
+              <span class="fire-chip-title">Lean</span>
+              <span class="fire-chip-copy">Low fixed-cost life</span>
+            </button>
+            <button class="fire-chip active" type="button" data-fire-spend="30000" onclick="setFireSpend(30000)">
+              <span class="fire-chip-title">Base</span>
+              <span class="fire-chip-copy">Current planning case</span>
+            </button>
+            <button class="fire-chip" type="button" data-fire-spend="36000" onclick="setFireSpend(36000)">
+              <span class="fire-chip-title">Comfort</span>
+              <span class="fire-chip-copy">More breathing room</span>
+            </button>
+            <button class="fire-chip" type="button" data-fire-spend="42000" onclick="setFireSpend(42000)">
+              <span class="fire-chip-title">London+</span>
+              <span class="fire-chip-copy">City-heavy version</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="fire-slider-shell">
+            <div class="fire-slider-top">
+              <div>
+                <div class="control-label" style="margin-bottom:0.18rem;">Retirement spending target <span id="exp-label">£30,000</span></div>
+                <div class="fire-slider-copy" id="fire-mode-copy">Baseline optionality path with a comfortable but disciplined spend target.</div>
+              </div>
+              <div class="fire-slider-value" id="fire-slider-big">£30k</div>
+            </div>
+            <input type="range" id="exp-slider" min="15000" max="80000" step="1000" value="30000" oninput="updateFire()">
+            <div class="fire-scale"><span>£15k</span><span>£47.5k</span><span>£80k</span></div>
+          </div>
+        </div>
+
+        <div class="toggle-row fire-toggle-row">
           <label class="toggle"><input type="checkbox" id="bruceToggle" onchange="updateFire()"><span class="toggle-slider"></span></label>
-          <div class="toggle-text"><strong>Include Dad's "Die With Zero" gifts</strong>+$20,000/yr from 2029 · conservative plan: OFF</div>
-        </div>
-
-        <div class="control-group">
-          <div class="control-label">Monthly retirement investing <span id="inv-label">£2,170</span></div>
-          <div style="font-size:0.78rem;color:var(--soft);line-height:1.6;">Locked from your current system: pension + SIP + Fidelity taxable + Roth.</div>
-        </div>
-        <div class="control-group">
-          <div class="control-label">Annual return rate <span id="ret-label">7.0%</span></div>
-          <div style="font-size:0.78rem;color:var(--soft);line-height:1.6;">Locked planning assumption. Change this only if your whole framework changes.</div>
-        </div>
-        <div class="control-group">
-          <div class="control-label">Annual spending in retirement <span id="exp-label">£30,000</span></div>
-          <input type="range" id="exp-slider" min="15000" max="80000" step="1000" value="30000" oninput="updateFire()">
-        </div>
-        <div class="control-group" style="margin-bottom:0;">
-          <div class="control-label">Withdrawal rate <span id="wr-label">4.00%</span></div>
-          <div style="font-size:0.78rem;color:var(--soft);line-height:1.6;">Locked at 4% for comparability. This section is about when work becomes optional, not fine-tuning market theory.</div>
+          <div class="toggle-text">
+            <strong>Future gift bridge</strong>
+            <span id="fire-gift-copy">Keep this off for the self-funded plan. If switched on, it adds Dad's £16k/yr gifts from 2029.</span>
+          </div>
         </div>
       </div>
 
       <div class="fire-result-card">
         <h3>Your optionality projection</h3>
+        <div class="fire-status-line">
+          <span class="fire-status-badge" id="fire-band">Baseline path</span>
+          <span style="font-size:0.75rem;color:var(--soft);" id="fire-headstart">—</span>
+        </div>
         <div class="fire-age-big">
           <div class="fire-age-num" id="fire-age">51</div>
           <div class="fire-age-label">Earliest stop-work age under access rules</div>
         </div>
+        <div class="fire-progress-wrap">
+          <div class="fire-progress-labels">
+            <span>Now <span id="fire-now-age">25</span></span>
+            <span id="fire-gap">—</span>
+            <span>67 baseline</span>
+          </div>
+          <div class="fire-progress-bar">
+            <div class="fire-progress-fill" id="fire-progress-fill"></div>
+            <div class="fire-progress-marker" id="fire-progress-marker" style="left:0%;"></div>
+          </div>
+        </div>
         <div class="fire-stat"><span class="fire-stat-label">FIRE number (portfolio needed)</span><span class="fire-stat-value" id="fire-num" style="color:var(--amber)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">Already funded vs target</span><span class="fire-stat-value" id="fire-funded" style="color:var(--pink)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Full state income at 67</span><span class="fire-stat-value" style="color:var(--cyan)">£41k+/yr · not counted above</span></div>
-        <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border); font-size:0.76rem; color:var(--soft); line-height:1.6;">
-          <strong style="color:var(--text);">What this means:</strong> this is not a recommendation to retire early. It is the earliest age work becomes optional under your current system. The model bridges with liquid assets first, opens the UK pension from 57, opens Roth from 59.5, and reduces spending need from 67 when state income starts. Dad's gifts only count from 2029 if toggled on.
+        <div class="fire-stage-strip">
+          <div class="fire-stage">
+            <span>Stage 1</span>
+            <strong>Liquid bridge</strong>
+            <em>Cash, SIP, taxable, and US cash do the early work.</em>
+          </div>
+          <div class="fire-stage">
+            <span>Stage 2 · 57</span>
+            <strong>UK pension opens</strong>
+            <em>Pressure on liquid draw drops once pension access starts.</em>
+          </div>
+          <div class="fire-stage">
+            <span>Stage 3 · 59.5</span>
+            <strong>Roth joins</strong>
+            <em>Tax-free Roth becomes available as another bridge lever.</em>
+          </div>
+          <div class="fire-stage">
+            <span>Stage 4 · 67</span>
+            <strong>State income</strong>
+            <em>State benefits reduce how much the portfolio must cover.</em>
+          </div>
+        </div>
+        <div class="fire-story" id="fire-story">
+          <strong>What this means:</strong> this is the earliest age work becomes optional under your current structure, not a recommendation to stop.
         </div>
       </div>
     </div>
@@ -1489,6 +1589,19 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
 }
 
 // ── FIRE CALCULATOR ───────────────────────────────────────────────────────────
+function setFireRangeFill(el) {
+  const min = +el.min || 0;
+  const max = +el.max || 100;
+  const val = +el.value;
+  const pct = ((val - min) / (max - min)) * 100;
+  el.style.background = `linear-gradient(90deg, rgba(129,140,248,0.95) 0%, rgba(34,211,238,0.95) ${pct}%, var(--border) ${pct}%, var(--border) 100%)`;
+}
+
+function setFireSpend(value) {
+  document.getElementById('exp-slider').value = value;
+  updateFire();
+}
+
 function updateFire() {
   const mo    = 2170;
   const r     = 0.07;
@@ -1496,10 +1609,17 @@ function updateFire() {
   const wr    = 0.04;
   const bruce = document.getElementById('bruceToggle').checked;
 
-  document.getElementById('inv-label').textContent = '£' + mo.toLocaleString();
+  setFireRangeFill(document.getElementById('exp-slider'));
+
+  document.getElementById('inv-label').textContent = '£' + mo.toLocaleString() + '/mo';
   document.getElementById('ret-label').textContent = (r * 100).toFixed(1) + '%';
   document.getElementById('exp-label').textContent = '£' + sp.toLocaleString();
   document.getElementById('wr-label').textContent  = (wr * 100).toFixed(2) + '%';
+  document.getElementById('fire-slider-big').textContent = '£' + Math.round(sp / 1000) + 'k';
+
+  document.querySelectorAll('[data-fire-spend]').forEach(btn => {
+    btn.classList.toggle('active', +btn.dataset.fireSpend === sp);
+  });
 
   const fireNum = sp / wr;
   const rM = Math.pow(1 + r, 1 / 12) - 1;
@@ -1521,8 +1641,9 @@ function updateFire() {
     : 0;
   const basePension = gNwBases ? Math.round(gNwBases.pension) : 0;
   const baseRoth = gNwBases ? Math.round(gNwBases.rothUSD * gNwFx) : 0;
+  const baseTotal = baseAccessible + basePension + baseRoth;
 
-  function runProjection(retireMonths, stopAt67Only = false) {
+  function runProjection(retireMonths, giftMonthlyRun, stopAt67Only = false) {
     let accessible = baseAccessible;
     let pension = basePension;
     let roth = baseRoth;
@@ -1534,7 +1655,7 @@ function updateFire() {
       pension *= (1 + rM);
       roth *= (1 + rM);
 
-      if (simDate >= giftStart) accessible += giftMonthly;
+      if (simDate >= giftStart) accessible += giftMonthlyRun;
 
       const age = currentAge + m / 12;
       if (m < retireMonths) {
@@ -1566,20 +1687,65 @@ function updateFire() {
     return { ok: true, total: accessible + pension + roth };
   }
 
-  let months = 0;
-  while (months < 75 * 12 && !runProjection(months).ok) months++;
-  const fireAge = Math.min(Math.round(currentAge + months / 12), 90);
+  function findFireMonths(giftMonthlyRun) {
+    let months = 0;
+    while (months < 75 * 12 && !runProjection(months, giftMonthlyRun).ok) months++;
+    return months;
+  }
 
-  const p67 = Math.round(runProjection(Math.ceil(Math.max(0, (67 - currentAge) * 12)), true).total);
+  const months = findFireMonths(giftMonthly);
+  const monthsWithGift = findFireMonths(16000 / 12);
+  const monthsWithoutGift = findFireMonths(0);
+  const fireAge = Math.min(Math.round(currentAge + months / 12), 90);
+  const yearsToFire = Math.max(0, months / 12);
+  const yearsBefore67 = Math.max(0, 67 - fireAge);
+  const p67 = Math.round(runProjection(Math.ceil(Math.max(0, (67 - currentAge) * 12)), giftMonthly, true).total);
+  const fundedPct = Math.max(0, Math.min(999, (baseTotal / fireNum) * 100));
+  const progressPct = Math.max(0, Math.min(100, ((fireAge - currentAge) / Math.max(0.1, 67 - currentAge)) * 100));
+  const giftImpactYears = Math.max(0, (monthsWithoutGift - monthsWithGift) / 12);
 
   const fmtBig = v => v >= 1e6
     ? '£' + (v / 1e6).toFixed(1) + 'M'
     : '£' + Math.round(v / 1000).toLocaleString() + ',000';
 
+  let modeCopy = 'Baseline optionality path with a comfortable but disciplined spend target.';
+  let band = 'Baseline path';
+  if (sp <= 24000) {
+    modeCopy = 'Lean setup: this brings optionality forward fastest, but leaves less lifestyle room.';
+    band = 'Fast-track path';
+  } else if (sp <= 32000) {
+    modeCopy = 'Baseline optionality path with a comfortable but disciplined spend target.';
+    band = 'Balanced path';
+  } else if (sp <= 42000) {
+    modeCopy = 'Comfort-first version: more breathing room, with a slower optionality timeline.';
+    band = 'Comfort path';
+  } else {
+    modeCopy = 'High-spend city version: optionality still works, but only with a much larger portfolio.';
+    band = 'Stretch path';
+  }
+
+  const giftCopy = bruce
+    ? `Gift bridge is ON. Dad's £16k/yr from 2029 helps pull the optionality date forward by about ${giftImpactYears.toFixed(1)} years versus the self-funded path.`
+    : `Keep this off for the self-funded plan. If switched on, it adds Dad's £16k/yr gifts from 2029 and can pull the date forward by about ${giftImpactYears.toFixed(1)} years.`;
+
+  let story = `At this spend level, work becomes optional around age ${fireAge}, roughly ${yearsBefore67} years before 67. The bridge still runs liquid assets first, then pension at 57, Roth at 59.5, and state income from 67.`;
+  if (bruce) story += ` With the gift bridge switched on, the model lets those 2029 onward gifts absorb part of the early drawdown.`;
+
+  document.getElementById('fire-mode-copy').textContent = modeCopy;
+  document.getElementById('fire-band').textContent = band;
+  document.getElementById('fire-gift-copy').textContent = giftCopy;
+
   document.getElementById('fire-age').textContent   = fireAge;
   document.getElementById('fire-num').textContent   = fmtBig(fireNum);
+  document.getElementById('fire-funded').textContent = fundedPct.toFixed(0) + '%';
   document.getElementById('fire-67').textContent    = fmtBig(p67);
-  document.getElementById('fire-years').textContent = Math.max(0, fireAge - Math.round(currentAge)) + ' years';
+  document.getElementById('fire-years').textContent = yearsToFire.toFixed(1) + ' years';
+  document.getElementById('fire-headstart').textContent = yearsBefore67 + ' years before 67';
+  document.getElementById('fire-now-age').textContent = currentAge.toFixed(1);
+  document.getElementById('fire-gap').textContent = yearsToFire.toFixed(1) + ' years to optionality';
+  document.getElementById('fire-progress-fill').style.width = progressPct + '%';
+  document.getElementById('fire-progress-marker').style.left = progressPct + '%';
+  document.getElementById('fire-story').innerHTML = `<strong>What this means:</strong> ${story}`;
 }
 
 // ── LIVE BALANCE ESTIMATES ─────────────────────────────────────────────────────
