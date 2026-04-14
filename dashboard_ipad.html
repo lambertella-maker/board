@@ -1395,9 +1395,8 @@
         </div>
         <div class="fire-stat"><span class="fire-stat-label">FIRE number (portfolio needed)</span><span class="fire-stat-value" id="fire-num" style="color:var(--amber)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">New money arriving at 67</span><span class="fire-stat-value" id="fire-state-cover" style="color:var(--cyan)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">Still needs portfolio income after 67</span><span class="fire-stat-value" id="fire-post67-gap" style="color:var(--indigo)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">Extra yearly income still needed after 67</span><span class="fire-stat-value" id="fire-post67-gap" style="color:var(--indigo)">—</span></div>
         <div class="fire-stage-strip">
           <div class="fire-stage">
             <span>Now to 57</span>
@@ -1764,12 +1763,14 @@ function updateFire() {
   const monthsSelfFunded = findFireMonthsForState(giftMonthly, 0);
   const fireAge = Math.min(Math.round(currentAge + months / 12), 90);
   const yearsToFire = Math.max(0, months / 12);
+  const yearsToFireRounded = Math.max(0, Math.round(yearsToFire));
   const yearsBefore67 = Math.max(0, 67 - fireAge);
   const p67 = Math.round(runProjection(Math.ceil(Math.max(0, (67 - currentAge) * 12)), giftMonthly, stateIncome, true).total);
   const stateLiftYears = Math.max(0, (monthsSelfFunded - months) / 12);
   const fundedPct = Math.max(0, Math.min(999, (baseTotal / fireNum) * 100));
   const progressPct = Math.max(0, Math.min(100, ((fireAge - currentAge) / Math.max(0.1, 67 - currentAge)) * 100));
   const giftImpactYears = Math.max(0, (monthsWithoutGift - monthsWithGift) / 12);
+  const giftImpactYearsRounded = Math.round(giftImpactYears);
   const post67Gap = Math.max(0, sp - stateIncome);
 
   const fmtBig = v => v >= 1e6
@@ -1790,8 +1791,8 @@ function updateFire() {
   }
 
   const giftCopy = bruce
-    ? `Gift bridge is ON. Dad's £16k/yr from 2029 helps pull the optionality date forward by about ${giftImpactYears.toFixed(1)} years versus the self-funded path.`
-    : `Keep this off for the self-funded plan. If switched on, it adds Dad's £16k/yr gifts from 2029 and can pull the date forward by about ${giftImpactYears.toFixed(1)} years.`;
+    ? `Gift bridge is ON. Dad's £16k/yr from 2029 helps pull the optionality date forward by about ${giftImpactYearsRounded} years versus the self-funded path.`
+    : `Keep this off for the self-funded plan. If switched on, it adds Dad's £16k/yr gifts from 2029 and can pull the date forward by about ${giftImpactYearsRounded} years.`;
 
   const stateLabel = stateIncome === 0
     ? 'Self-funded only'
@@ -1815,12 +1816,11 @@ function updateFire() {
   document.getElementById('fire-num').textContent   = fmtBig(fireNum);
   document.getElementById('fire-funded').textContent = fundedPct.toFixed(0) + '%';
   document.getElementById('fire-67').textContent    = fmtBig(p67);
-  document.getElementById('fire-years').textContent = yearsToFire.toFixed(1) + ' years';
   document.getElementById('fire-state-cover').textContent = stateIncome === 0 ? '£0/yr' : '£' + stateIncome.toLocaleString() + '/yr from age 67';
   document.getElementById('fire-post67-gap').textContent = '£' + post67Gap.toLocaleString() + '/yr';
-  document.getElementById('fire-headstart').textContent = stateLiftYears > 0.05 ? stateLiftYears.toFixed(1) + ' years earlier than self-funded' : yearsBefore67 + ' years before 67';
+  document.getElementById('fire-headstart').textContent = stateLiftYears > 0.5 ? Math.round(stateLiftYears) + ' years earlier than self-funded' : yearsBefore67 + ' years before 67';
   document.getElementById('fire-now-age').textContent = currentAge.toFixed(1);
-  document.getElementById('fire-gap').textContent = yearsToFire.toFixed(1) + ' years to optionality';
+  document.getElementById('fire-gap').textContent = yearsToFireRounded + ' years to optionality';
   document.getElementById('fire-progress-fill').style.width = progressPct + '%';
   document.getElementById('fire-progress-marker').style.left = progressPct + '%';
   document.getElementById('fire-story').innerHTML = `<strong>What this means:</strong> ${story}`;
