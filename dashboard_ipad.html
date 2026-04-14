@@ -1300,20 +1300,16 @@
         <div class="fire-intro">Drag your target spend, tap a lifestyle preset, and decide whether to count the future gift bridge. The backbone assumptions stay visible, but out of the way.</div>
 
         <div class="fire-backbone">
-          <div class="fire-pill">Bridge now <strong id="acc-label">£666/mo</strong></div>
-          <div class="fire-pill">Pension track <strong id="pen-label">£1,020/mo</strong></div>
-          <div class="fire-pill">Roth track <strong id="roth-label">£481/mo</strong></div>
+          <div class="fire-pill">Accessible money <strong id="acc-label">£666/mo</strong></div>
+          <div class="fire-pill">UK pension saving <strong id="pen-label">£1,020/mo</strong></div>
+          <div class="fire-pill">US Roth saving <strong id="roth-label">£481/mo</strong></div>
           <div class="fire-pill">Return <strong id="ret-label">7.0%</strong></div>
           <div class="fire-pill">Withdrawal <strong id="wr-label">4.00%</strong></div>
         </div>
 
         <div class="control-group">
           <div class="control-label">Lifestyle presets <span>Tap to load</span></div>
-          <div class="fire-preset-row">
-            <button class="fire-chip" type="button" data-fire-spend="24000" onclick="setFireSpend(24000)">
-              <span class="fire-chip-title">Lean</span>
-              <span class="fire-chip-copy">Low fixed-cost life</span>
-            </button>
+          <div class="fire-preset-row" style="grid-template-columns:repeat(3,1fr);">
             <button class="fire-chip active" type="button" data-fire-spend="45000" onclick="setFireSpend(45000)">
               <span class="fire-chip-title">Base</span>
               <span class="fire-chip-copy">Current planning case</span>
@@ -1323,8 +1319,8 @@
               <span class="fire-chip-copy">Higher-spend flexibility</span>
             </button>
             <button class="fire-chip" type="button" data-fire-spend="75000" onclick="setFireSpend(75000)">
-              <span class="fire-chip-title">Stretch</span>
-              <span class="fire-chip-copy">Expensive-city version</span>
+              <span class="fire-chip-title">Luxe</span>
+              <span class="fire-chip-copy">High-spend city version</span>
             </button>
           </div>
         </div>
@@ -1416,7 +1412,9 @@
         <div class="fire-stat"><span class="fire-stat-label">FIRE number (portfolio needed)</span><span class="fire-stat-value" id="fire-num" style="color:var(--amber)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Already funded vs target</span><span class="fire-stat-value" id="fire-funded" style="color:var(--pink)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">67 cushion vs self-funded</span><span class="fire-stat-value" id="fire-67-lift" style="color:var(--green)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">Optionality boost from state income</span><span class="fire-stat-value" id="fire-state-boost" style="color:var(--indigo)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">State income at 67</span><span class="fire-stat-value" id="fire-state" style="color:var(--cyan)">—</span></div>
         <div class="fire-stage-strip">
           <div class="fire-stage">
@@ -1728,7 +1726,7 @@ function updateFire() {
   const baseRoth = gNwBases ? Math.round(gNwBases.rothUSD * gNwFx) : 0;
   const baseTotal = baseAccessible + basePension + baseRoth;
 
-  function runProjection(retireMonths, giftMonthlyRun, stopAt67Only = false) {
+  function runProjection(retireMonths, giftMonthlyRun, stateIncomeRun, stopAt67Only = false) {
     let accessible = baseAccessible;
     let pension = basePension;
     let roth = baseRoth;
@@ -1749,7 +1747,7 @@ function updateFire() {
         roth += moRoth;
       } else {
         let spend = sp / 12;
-        if (age >= 67) spend = Math.max(0, spend - stateIncome / 12);
+        if (age >= 67) spend = Math.max(0, spend - stateIncomeRun / 12);
 
         if (accessible < spend && age >= pensionAccessAge) {
           const draw = Math.min(pension, spend - accessible);
@@ -1774,17 +1772,26 @@ function updateFire() {
 
   function findFireMonths(giftMonthlyRun) {
     let months = 0;
-    while (months < 75 * 12 && !runProjection(months, giftMonthlyRun).ok) months++;
+    while (months < 75 * 12 && !runProjection(months, giftMonthlyRun, stateIncome).ok) months++;
     return months;
   }
 
   const months = findFireMonths(giftMonthly);
   const monthsWithGift = findFireMonths(16000 / 12);
   const monthsWithoutGift = findFireMonths(0);
+  function findFireMonthsForState(giftMonthlyRun, stateIncomeRun) {
+    let months = 0;
+    while (months < 75 * 12 && !runProjection(months, giftMonthlyRun, stateIncomeRun).ok) months++;
+    return months;
+  }
+  const monthsSelfFunded = findFireMonthsForState(giftMonthly, 0);
   const fireAge = Math.min(Math.round(currentAge + months / 12), 90);
   const yearsToFire = Math.max(0, months / 12);
   const yearsBefore67 = Math.max(0, 67 - fireAge);
-  const p67 = Math.round(runProjection(Math.ceil(Math.max(0, (67 - currentAge) * 12)), giftMonthly, true).total);
+  const p67 = Math.round(runProjection(Math.ceil(Math.max(0, (67 - currentAge) * 12)), giftMonthly, stateIncome, true).total);
+  const p67SelfFunded = Math.round(runProjection(Math.ceil(Math.max(0, (67 - currentAge) * 12)), giftMonthly, 0, true).total);
+  const stateLiftYears = Math.max(0, (monthsSelfFunded - months) / 12);
+  const p67Lift = p67 - p67SelfFunded;
   const fundedPct = Math.max(0, Math.min(999, (baseTotal / fireNum) * 100));
   const progressPct = Math.max(0, Math.min(100, ((fireAge - currentAge) / Math.max(0.1, 67 - currentAge)) * 100));
   const giftImpactYears = Math.max(0, (monthsWithoutGift - monthsWithGift) / 12);
@@ -1795,18 +1802,15 @@ function updateFire() {
 
   let modeCopy = 'Baseline optionality path with a comfortable but disciplined spend target.';
   let band = 'Baseline path';
-  if (sp <= 24000) {
-    modeCopy = 'Lean setup: this brings optionality forward fastest, but leaves less lifestyle room.';
-    band = 'Fast-track path';
-  } else if (sp <= 50000) {
+  if (sp <= 50000) {
     modeCopy = 'Baseline optionality path with a comfortable but disciplined spend target.';
     band = 'Balanced path';
   } else if (sp <= 65000) {
     modeCopy = 'Comfort-first version: more breathing room, with a slower optionality timeline.';
     band = 'Comfort path';
   } else {
-    modeCopy = 'Current modeled spend target with more lifestyle room and a later optionality date.';
-    band = 'Higher-spend path';
+    modeCopy = 'Luxe version: higher ongoing spend, later optionality, and a much larger required portfolio.';
+    band = 'Luxe path';
   }
 
   const giftCopy = bruce
@@ -1832,7 +1836,9 @@ function updateFire() {
   document.getElementById('fire-num').textContent   = fmtBig(fireNum);
   document.getElementById('fire-funded').textContent = fundedPct.toFixed(0) + '%';
   document.getElementById('fire-67').textContent    = fmtBig(p67);
+  document.getElementById('fire-67-lift').textContent = (p67Lift >= 0 ? '+' : '') + fmtBig(Math.abs(p67Lift));
   document.getElementById('fire-years').textContent = yearsToFire.toFixed(1) + ' years';
+  document.getElementById('fire-state-boost').textContent = stateLiftYears.toFixed(1) + ' years earlier';
   document.getElementById('fire-state').textContent = stateLabel;
   document.getElementById('fire-headstart').textContent = yearsBefore67 + ' years before 67';
   document.getElementById('fire-now-age').textContent = currentAge.toFixed(1);
