@@ -1652,12 +1652,43 @@ function setFireSpend(value) {
   updateFire();
 }
 
+function setFireStateScenario(mode) {
+  const uk = document.getElementById('ukStateToggle');
+  const us = document.getElementById('usStateToggle');
+  if (mode === 'self') {
+    uk.checked = false;
+    us.checked = false;
+  } else if (mode === 'uk') {
+    uk.checked = true;
+    us.checked = false;
+  } else {
+    uk.checked = true;
+    us.checked = true;
+  }
+  syncFireStateScenario();
+  updateFire();
+}
+
+function syncFireStateScenario() {
+  const ukOn = document.getElementById('ukStateToggle').checked;
+  const usOn = document.getElementById('usStateToggle').checked;
+  let mode = 'custom';
+  if (!ukOn && !usOn) mode = 'self';
+  else if (ukOn && !usOn) mode = 'uk';
+  else if (ukOn && usOn) mode = 'dual';
+  document.querySelectorAll('[data-fire-state]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.fireState === mode);
+  });
+}
+
 function updateFire() {
   const mo    = 2170;
   const r     = 0.07;
   const sp    = +document.getElementById('exp-slider').value;
   const wr    = 0.04;
   const bruce = document.getElementById('bruceToggle').checked;
+  const ukStateOn = document.getElementById('ukStateToggle').checked;
+  const usStateOn = document.getElementById('usStateToggle').checked;
 
   setFireRangeFill(document.getElementById('exp-slider'));
 
@@ -1680,7 +1711,9 @@ function updateFire() {
   const giftStart = new Date(2029, 0, 1);
   const pensionAccessAge = 57;
   const rothAccessAge = 59.5;
-  const stateIncome = 41000;
+  const ukStateIncome = 12548;
+  const usStateIncome = Math.round(37000 * 0.77);
+  const stateIncome = (ukStateOn ? ukStateIncome : 0) + (usStateOn ? usStateIncome : 0);
   const accShare = 666 / 2167;
   const penShare = 1020 / 2167;
   const rothShare = 481 / 2167;
@@ -1765,10 +1798,10 @@ function updateFire() {
   if (sp <= 24000) {
     modeCopy = 'Lean setup: this brings optionality forward fastest, but leaves less lifestyle room.';
     band = 'Fast-track path';
-  } else if (sp <= 32000) {
+  } else if (sp <= 50000) {
     modeCopy = 'Baseline optionality path with a comfortable but disciplined spend target.';
     band = 'Balanced path';
-  } else if (sp <= 42000) {
+  } else if (sp <= 65000) {
     modeCopy = 'Comfort-first version: more breathing room, with a slower optionality timeline.';
     band = 'Comfort path';
   } else {
@@ -1780,7 +1813,15 @@ function updateFire() {
     ? `Gift bridge is ON. Dad's £16k/yr from 2029 helps pull the optionality date forward by about ${giftImpactYears.toFixed(1)} years versus the self-funded path.`
     : `Keep this off for the self-funded plan. If switched on, it adds Dad's £16k/yr gifts from 2029 and can pull the date forward by about ${giftImpactYears.toFixed(1)} years.`;
 
-  let story = `At this spend level, work becomes optional around age ${fireAge}, roughly ${yearsBefore67} years before 67. The bridge still runs liquid assets first, then pension at 57, Roth at 59.5, and state income from 67.`;
+  const stateLabel = stateIncome === 0
+    ? 'Self-funded only'
+    : ukStateOn && usStateOn
+      ? `£${stateIncome.toLocaleString()}/yr · UK + US on`
+      : ukStateOn
+        ? `£${stateIncome.toLocaleString()}/yr · UK only`
+        : `£${stateIncome.toLocaleString()}/yr · US only`;
+
+  let story = `At this spend level, work becomes optional around age ${fireAge}, roughly ${yearsBefore67} years before 67. The bridge still runs liquid assets first, then pension at 57, Roth at 59.5, and ${stateIncome === 0 ? 'no state-income support is counted from 67.' : 'the selected state-income sources reduce the draw from 67.'}`;
   if (bruce) story += ` With the gift bridge switched on, the model lets those 2029 onward gifts absorb part of the early drawdown.`;
 
   document.getElementById('fire-mode-copy').textContent = modeCopy;
@@ -1792,6 +1833,7 @@ function updateFire() {
   document.getElementById('fire-funded').textContent = fundedPct.toFixed(0) + '%';
   document.getElementById('fire-67').textContent    = fmtBig(p67);
   document.getElementById('fire-years').textContent = yearsToFire.toFixed(1) + ' years';
+  document.getElementById('fire-state').textContent = stateLabel;
   document.getElementById('fire-headstart').textContent = yearsBefore67 + ' years before 67';
   document.getElementById('fire-now-age').textContent = currentAge.toFixed(1);
   document.getElementById('fire-gap').textContent = yearsToFire.toFixed(1) + ' years to optionality';

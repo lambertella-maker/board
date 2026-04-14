@@ -1134,6 +1134,11 @@ function mSetFireSpend(value) {
   mCalcFire();
 }
 
+function mSetStateScenario(mode) {
+  document.getElementById('m-fire-state-mode').value = mode;
+  mCalcFire();
+}
+
 function mCalcFire() {
   const r   = 0.07;
   const mo  = 2170;
@@ -1141,6 +1146,7 @@ function mCalcFire() {
   const wr  = 0.04;
   const bruce = document.getElementById('m-bruceToggle').checked;
   const giftMonthly = bruce ? 16000 / 12 : 0;
+  const stateMode = document.getElementById('m-fire-state-mode').value;
 
   mSetFireRangeFill(document.getElementById('m-sp'));
 
@@ -1159,7 +1165,9 @@ function mCalcFire() {
   const currentAge  = (today - new Date(2001,1,18)) / (365.25*24*3600*1000);
   const pensionAccessAge = 57;
   const rothAccessAge = 59.5;
-  const stateIncome = 41000;
+  const ukStateIncome = 12548;
+  const usStateIncome = Math.round(37000 * 0.77);
+  const stateIncome = stateMode === 'self' ? 0 : stateMode === 'uk' ? ukStateIncome : ukStateIncome + usStateIncome;
   const giftStart = new Date(2029, 0, 1);
   const accShare = 666 / 2167;
   const penShare = 1020 / 2167;
@@ -1239,10 +1247,10 @@ function mCalcFire() {
   if (sp <= 24000) {
     modeCopy = 'Lean setup: fastest optionality, with less lifestyle room.';
     band = 'Fast-track path';
-  } else if (sp <= 32000) {
+  } else if (sp <= 50000) {
     modeCopy = 'Baseline optionality path with a comfortable but disciplined spend target.';
     band = 'Balanced path';
-  } else if (sp <= 42000) {
+  } else if (sp <= 65000) {
     modeCopy = 'Comfort-first version: more breathing room, slower optionality.';
     band = 'Comfort path';
   } else {
@@ -1254,7 +1262,8 @@ function mCalcFire() {
     ? `Gift bridge is ON. Dad's £16k/yr from 2029 helps pull the date forward by about ${giftImpactYears.toFixed(1)} years.`
     : `Keep this off for the self-funded plan. If switched on, it adds Dad's £16k/yr gifts from 2029 and can pull the date forward by about ${giftImpactYears.toFixed(1)} years.`;
 
-  let story = `At this spend level, work becomes optional around age ${fireAge}, roughly ${yearsBefore67} years before 67. Liquid assets bridge first, then pension at 57, Roth at 59.5, and state income from 67.`;
+  const stateLabel = stateMode === 'self' ? 'Self-funded only' : stateMode === 'uk' ? '£12,548/yr · UK only' : `£${(ukStateIncome + usStateIncome).toLocaleString('en-GB')}/yr · UK + US`;
+  let story = `At this spend level, work becomes optional around age ${fireAge}, roughly ${yearsBefore67} years before 67. Liquid assets bridge first, then pension at 57, Roth at 59.5, and ${stateMode === 'self' ? 'no state-income support is counted from 67.' : 'the selected state-income scenario reduces the draw from 67.'}`;
   if (bruce) story += ` With the gift bridge on, the 2029 onward gifts absorb part of the early drawdown.`;
 
   document.getElementById('m-fire-age').textContent = fireAge;
@@ -1262,6 +1271,7 @@ function mCalcFire() {
   document.getElementById('m-fire-funded').textContent = fundedPct.toFixed(0)+'%';
   document.getElementById('m-fire-67').textContent  = fmtBig(p67);
   document.getElementById('m-fire-yrs').textContent = yearsToFire.toFixed(1)+' years';
+  document.getElementById('m-fire-state').textContent = stateLabel;
   document.getElementById('m-fire-band').textContent = band;
   document.getElementById('m-fire-headstart').textContent = yearsBefore67+' years before 67';
   document.getElementById('m-fire-now-age').textContent = currentAge.toFixed(1);
@@ -1271,6 +1281,9 @@ function mCalcFire() {
   document.getElementById('m-fire-mode-copy').textContent = modeCopy;
   document.getElementById('m-fire-gift-copy').textContent = giftCopy;
   document.getElementById('m-fire-story').innerHTML = `<strong>Meaning:</strong> ${story}`;
+  document.querySelectorAll('[data-m-fire-state]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mFireState === stateMode);
+  });
 }
 mCalcFire();
 
