@@ -927,9 +927,9 @@ function liveEstimates() {
   if (ce) { ce.textContent = '£1,200 avg'; ce.style.color = 'var(--indigo)'; }
   document.getElementById('m-bal-fid').textContent     = '$' + fidelityEst.toLocaleString('en-GB');
   document.getElementById('m-bal-roth').textContent    = '$' + rothEst.toLocaleString('en-GB');
-  document.getElementById('m-bal-pension').textContent = '~' + fmt(pensionEst);
+  document.getElementById('m-bal-pension').textContent = fmt(pensionEst);
   const pp = document.getElementById('m-pillar-pension');
-  if (pp) pp.textContent = '~' + fmt(pensionEst);
+  if (pp) pp.textContent = fmt(pensionEst);
   const pf = document.getElementById('m-pillar-fid');
   if (pf) pf.textContent = '$' + fidelityEst.toLocaleString('en-GB');
   const pr = document.getElementById('m-pillar-roth');
@@ -941,7 +941,7 @@ function liveEstimates() {
   const invFid     = document.getElementById('m-inv-fid');
   const invRoth    = document.getElementById('m-inv-roth');
   const invTotal   = document.getElementById('m-invest-total');
-  if (invPension) invPension.textContent = '~' + fmt(pensionEst);
+  if (invPension) invPension.textContent = fmt(pensionEst);
   if (invFid)     invFid.textContent     = '$' + fidelityEst.toLocaleString('en-GB');
   if (invRoth)    invRoth.textContent    = '$' + rothEst.toLocaleString('en-GB');
   if (invTotal) {
@@ -1172,7 +1172,6 @@ function mCalcFire() {
     : 0;
   const basePension = gNwBases ? Math.round(gNwBases.pension) : 0;
   const baseRoth = gNwBases ? Math.round(gNwBases.rothUSD * gNwBases.fx) : 0;
-  const baseTotal = baseAccessible + basePension + baseRoth;
 
   function runProjection(retireMonths, giftMonthlyRun, stateIncomeRun, stopAt67Only = false) {
     let accessible = baseAccessible;
