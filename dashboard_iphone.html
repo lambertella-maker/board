@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="2026-04-14T12:00:00Z">
+<meta name="finance-build" content="2026-04-14T15:30:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-04-14T12:00:00Z';
+    const build = '2026-04-14T15:30:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -91,7 +91,7 @@
   .metric-label { font-size:0.62rem; font-weight:600; text-transform:uppercase; letter-spacing:.07em;
                   color:var(--muted); margin-bottom:6px; }
   .metric-value { font-size:1.55rem; font-weight:800; line-height:1; margin-bottom:4px; }
-  .metric-sub { font-size:0.62rem; color:var(--muted); }
+  .metric-sub { font-size:0.62rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .metric-badge { display:inline-block; font-size:0.6rem; font-weight:700; margin-top:5px;
                   padding:2px 7px; border-radius:10px; white-space:nowrap; }
   .badge-green  { background:rgba(52,211,153,0.1); color:var(--green); border:1px solid rgba(52,211,153,0.25); }
@@ -299,7 +299,7 @@
   <div class="accounts-grid">
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Atom Bank</div><div class="acct-bal" id="m-bal-atom" style="color:var(--green)">—</div><div class="acct-note">3.49% AER · EF core</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Monzo</div><div class="acct-bal" id="m-bal-monzo" style="color:var(--cyan)">—</div><div class="acct-note">2.75% AER · liquid</div></div>
-    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">~£1,200 avg</div><div class="acct-note">Salary hub · varies by day</div></div>
+    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">£1,200 avg</div><div class="acct-note">Salary hub · varies by day</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$625/mo · active $590.72 + legacy $2,075.91</div></div>
@@ -322,7 +322,7 @@
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" id="m-pillar-pension" style="color:var(--indigo)">—</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Annual input</span><span class="pillar-stat-v">£12,240 (18% total)</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Your contribution</span><span class="pillar-stat-v">6% · AbbVie matches 12%</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">~£2.1M</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">£2.1M</span></div>
       <div class="pillar-why-text">AbbVie's 12% match is a 200% return on your 6% before a single penny of growth. Fully utilised.</div>
     </div>
   </div>
@@ -330,8 +330,8 @@
   <div class="pillar-mobile p-cyan">
     <div class="pillar-header"><div class="pillar-ico">🇬🇧</div><div><div class="pillar-label">Pillar 2 · UK State</div><div class="pillar-name">UK State Pension</div></div></div>
     <div class="pillar-body">
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Qualifying progress</span><span class="pillar-stat-v" style="color:var(--cyan)">~3 / 35 years</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Current earned amount</span><span class="pillar-stat-v">~£1,076/yr</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Qualifying progress</span><span class="pillar-stat-v" style="color:var(--cyan)">3 / 35 years</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Current earned amount</span><span class="pillar-stat-v">£1,076/yr</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Full value</span><span class="pillar-stat-v">£12,548/yr today</span></div>
       <div class="pillar-why-text">Triple-lock protected. Current earned amount is a simple 3/35 estimate using today's full rate.</div>
     </div>
@@ -341,8 +341,8 @@
     <div class="pillar-header"><div class="pillar-ico">🇺🇸</div><div><div class="pillar-label">Pillar 3 · US State</div><div class="pillar-name">US Social Security</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Eligibility path</span><span class="pillar-stat-v">40 credits or UK-US totalization</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Full value est.</span><span class="pillar-stat-v">~$37,000/yr</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Estimate basis</span><span class="pillar-stat-v">~3 equivalent years at current pay</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Full value est.</span><span class="pillar-stat-v">$37,000/yr</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Estimate basis</span><span class="pillar-stat-v">3 equivalent years at current pay</span></div>
       <div class="pillar-why-text">Eligibility may come via totalization. Dollar figures are salary-scaled heuristics, not an SSA quote.</div>
     </div>
   </div>
@@ -354,7 +354,7 @@
       <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly input</span><span class="pillar-stat-v">$475/mo taxable + $625/mo Roth = $1,100</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Target split</span><span class="pillar-stat-v">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Annual total (Fidelity)</span><span class="pillar-stat-v">£10,200/yr: taxable + Roth</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">~£1.1M (taxable, after-tax)</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">£1.1M (taxable, after-tax)</span></div>
       <div class="pillar-why-text">$475/mo taxable + $625/mo Roth = same $1,100 total. Both execute 30th, fully automated.</div>
     </div>
   </div>
@@ -365,7 +365,7 @@
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" style="color:var(--pink)" id="m-pillar-roth">—</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly contribution</span><span class="pillar-stat-v" style="color:var(--pink)">$625/mo</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Tax on growth</span><span class="pillar-stat-v" style="color:var(--green)">Zero. Ever.</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--pink)">~£1.3M tax-free</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--pink)">£1.3M tax-free</span></div>
       <div class="pillar-why-text">Max-pace 2026 at $7,500/yr. UK-US treaty (Art.17): tax-free in both countries. Contributions always accessible penalty-free.</div>
     </div>
   </div>
@@ -373,13 +373,11 @@
   <div class="pillar-mobile p-indigo">
     <div class="pillar-header"><div class="pillar-ico">💼</div><div><div class="pillar-label">Pillar 6 · UK Shares</div><div class="pillar-name">ABBV Share Incentive Plan</div></div></div>
     <div class="pillar-body">
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Your sacrifice</span><span class="pillar-stat-v">£150/mo = ~£87 net cost</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">AbbVie match</span><span class="pillar-stat-v">1:1 (£1,800 free shares)</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Effective total</span><span class="pillar-stat-v" style="color:var(--green)">£300/mo · £3,600/yr</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Vested (yours to keep)</span><span class="pillar-stat-v" style="color:var(--muted)">November 2027</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">First tax-free sweep</span><span class="pillar-stat-v" style="color:var(--amber)">Nov/Dec 2029</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Sell strategy</span><span class="pillar-stat-v">Annual sweep · Nov/Dec from 2029</span></div>
-      <div class="pillar-why-text">Keep this simple on mobile: hold each batch for 5 years, then do one Nov/Dec sweep each year. UK tax stays effectively nil at this scale; just make sure the platform still shows purchase prices for each batch from Nov 2024 onward for US filing.</div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Net cost</span><span class="pillar-stat-v">£87/mo (£150 pre-tax sacrifice)</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">AbbVie match</span><span class="pillar-stat-v">1:1 · £3,600/yr total</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Instant return</span><span class="pillar-stat-v" style="color:var(--green)">100% before growth</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">First sweep</span><span class="pillar-stat-v" style="color:var(--amber)">Nov/Dec 2029</span></div>
+      <div class="pillar-why-text">Hold 5 years, sweep Nov/Dec. UK tax nil at this scale. Keep acquisition dates for US filing.</div>
     </div>
   </div>
 
@@ -408,8 +406,8 @@
   <div class="pillar-mobile p-green">
     <div class="pillar-header"><div class="pillar-ico">🌍</div><div><div class="pillar-label">Pillar 9 · Optionality</div><div class="pillar-name">Dual-Continent Architecture</div></div></div>
     <div class="pillar-body">
-      <div class="pillar-stat-row"><span class="pillar-stat-k">UK assets</span><span class="pillar-stat-v" style="color:var(--green)">~£31k + pension</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">US assets</span><span class="pillar-stat-v">~$9,800</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">UK assets</span><span class="pillar-stat-v" style="color:var(--green)">£31k + pension</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">US assets</span><span class="pillar-stat-v">$9,800</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">ILR target</span><span class="pillar-stat-v">Sep 2029</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Citizenship eligible</span><span class="pillar-stat-v">Sep 2030+ · optional</span></div>
       <div class="pillar-why-text">Retire in the UK, the US, or Europe. After 2030 a British passport adds 186 visa-free countries. This is exceptional.</div>
@@ -419,7 +417,7 @@
   <div class="section-title">Total picture</div>
   <div class="superplan-total">
     <div class="st-box"><div id="m-sp-nw" class="st-val" style="color:var(--amber)">—</div><div class="st-lbl">Wealth today</div><div class="st-note">Age 25</div></div>
-    <div class="st-box"><div class="st-val" style="color:var(--green)">£31k+</div><div class="st-lbl">Annual creation</div><div class="st-note">~£31,600/yr total · promo min</div></div>
+    <div class="st-box"><div class="st-val" style="color:var(--green)">£31k+</div><div class="st-lbl">Annual creation</div><div class="st-note">£31,600/yr total · promo min</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--indigo)">£4M+</div><div class="st-lbl">At age 67</div><div class="st-note">7% CAGR</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--pink)">£41k+</div><div class="st-lbl">State income/yr</div><div class="st-note">Full UK + salary-scaled US</div></div>
   </div>
@@ -446,7 +444,7 @@
   <div class="card">
     <div class="goal-card-head">
       <span style="font-size:1.4rem;">🗝️</span>
-      <div class="goal-card-meta"><div class="goal-card-label">Goal 2 · Mar 2027</div><div class="goal-card-title">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
+      <div class="goal-card-meta"><div class="goal-card-label">Goal 2 · Jun–Jul 2027</div><div class="goal-card-title">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
     <div class="goal-subcopy">£230/mo now · keep the July rent drop for breathing room</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
@@ -456,7 +454,7 @@
     <div class="goal-row-m"><span class="goal-row-k">Mar 2027 bonus</span><span style="color:var(--indigo); font-weight:600;">£2,170 net cash · 50% SALX</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Combined by Apr 2027</span><span style="color:var(--green); font-weight:600;">£4,860 · basically the full move</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Apr 2027 salary</span><span style="color:var(--green); font-weight:600;">£70,040 with a 3% merit rise</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£230 now keeps July flexible and gets the move fund ready by Mar 2027</span><span>Mar 2027</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£230 now keeps July flexible and gets the move fund ready by Jun–Jul 2027</span><span>Jun–Jul 2027</span></div>
   </div>
 
 <script>
@@ -487,7 +485,7 @@
       <span style="font-size:1.4rem;">✈️</span>
       <div class="goal-card-meta"><div class="goal-card-label">Goal 3 · Travel · Early 2027</div><div class="goal-card-title">Business Class LHR → ORD</div></div>
     </div>
-    <div class="goal-subcopy">Transfer UR → United MileagePlus for Polaris LHR→ORD · ~£220 cash (APD only)</div>
+    <div class="goal-subcopy">Transfer UR → United MileagePlus for Polaris LHR→ORD · £220 cash (APD only)</div>
     <div class="prog-wrap"><div class="prog-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
     <div class="prog-labels"><span>Feb 2026</span><span style="color:var(--amber)">CSP unlocks this</span><span>Early 2027</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Points needed</span><span style="font-weight:600;">70-75k UR → United MileagePlus</span></div>
@@ -525,7 +523,7 @@
       </div>
       <div style="text-align:center; padding:0.45rem 0.2rem; background:rgba(251,191,36,0.06); border-radius:6px;">
         <div style="font-size:0.54rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Buy costs</div>
-        <div style="font-size:0.82rem; font-weight:700; color:var(--amber);">+~8%</div>
+        <div style="font-size:0.82rem; font-weight:700; color:var(--amber);">+8%</div>
       </div>
       <div style="text-align:center; padding:0.45rem 0.2rem; background:rgba(100,116,139,0.08); border-radius:6px;">
         <div style="font-size:0.54rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Running/yr</div>
@@ -590,7 +588,7 @@
     <div class="fire-stat-row"><span class="fire-stat-lbl">FIRE number needed</span><span class="fire-stat-val" id="m-fire-num" style="color:var(--amber)">—</span></div>
     <div class="fire-stat-row"><span class="fire-stat-lbl">Portfolio at 67 (work to normal)</span><span class="fire-stat-val" id="m-fire-67" style="color:var(--green)">—</span></div>
     <div class="fire-stat-row"><span class="fire-stat-lbl">Years to FIRE</span><span class="fire-stat-val" id="m-fire-yrs" style="color:var(--indigo)">—</span></div>
-    <div class="fire-stat-row" style="border-bottom:none;"><span class="fire-stat-lbl">Full state income at 67</span><span class="fire-stat-val" style="color:var(--cyan)">~£41k+/yr</span></div>
+    <div class="fire-stat-row" style="border-bottom:none;"><span class="fire-stat-lbl">Full state income at 67</span><span class="fire-stat-val" style="color:var(--cyan)">£41k+/yr</span></div>
     <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:0.7rem;color:var(--soft);line-height:1.6;">
       <strong style="color:var(--text);">Meaning:</strong> earliest stop-work age using accessible money first, UK pension from 57, Roth from 59.5, and state income from 67.
     </div>
@@ -655,7 +653,7 @@
       <div class="metric-label">Monthly Flow</div>
       <div class="metric-value" style="color:var(--indigo)">£850</div>
       <div class="metric-sub">Wise → Chase US → Fidelity</div>
-      <div class="metric-badge badge-indigo">~$1,100/mo ACH</div>
+      <div class="metric-badge badge-indigo">$1,100/mo ACH</div>
     </div>
   </div>
 
@@ -674,7 +672,7 @@
       <span class="fire-stat-val" id="m-inv-fid" style="color:var(--green)">—</span>
     </div>
     <div class="fire-stat-row" style="border-bottom:none;opacity:0.6;">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--muted);">Class C Legacy</div><div style="font-size:0.64rem;color:var(--muted);">$3,948 · ~1% ER · no new contributions</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--muted);">Class C Legacy</div><div style="font-size:0.64rem;color:var(--muted);">$3,948 · 1% ER · no new contributions</div></div>
       <span class="fire-stat-val" style="color:var(--muted);">review</span>
     </div>
   </div>
@@ -693,7 +691,7 @@
     </div>
     <div class="fire-stat-row">
       <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Real monthly cost</div><div style="font-size:0.64rem;color:var(--muted);">£150 sacrifice less 40% IT + 2% NI saved</div></div>
-      <span class="fire-stat-val" style="color:var(--green)">~£87</span>
+      <span class="fire-stat-val" style="color:var(--green)">£87</span>
     </div>
     <div class="fire-stat-row">
       <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">What to do</div><div style="font-size:0.64rem;color:var(--muted);">Wait for the 5-year mark, then annual sweep</div></div>
@@ -833,16 +831,16 @@ function liveEstimates() {
   document.getElementById('m-bal-monzo').textContent   = fmt(monzoEst);
   // Chase UK: static display (schedule estimate too volatile; kept for NW calc only)
   const ce = document.getElementById('m-bal-chase');
-  if (ce) { ce.textContent = '~£1,200 avg'; ce.style.color = 'var(--indigo)'; }
-  document.getElementById('m-bal-fid').textContent     = '~$' + fidelityEst.toLocaleString('en-GB');
-  document.getElementById('m-bal-roth').textContent    = '~$' + rothEst.toLocaleString('en-GB');
+  if (ce) { ce.textContent = '£1,200 avg'; ce.style.color = 'var(--indigo)'; }
+  document.getElementById('m-bal-fid').textContent     = '$' + fidelityEst.toLocaleString('en-GB');
+  document.getElementById('m-bal-roth').textContent    = '$' + rothEst.toLocaleString('en-GB');
   document.getElementById('m-bal-pension').textContent = '~' + fmt(pensionEst);
   const pp = document.getElementById('m-pillar-pension');
   if (pp) pp.textContent = '~' + fmt(pensionEst);
   const pf = document.getElementById('m-pillar-fid');
-  if (pf) pf.textContent = '~$' + fidelityEst.toLocaleString('en-GB');
+  if (pf) pf.textContent = '$' + fidelityEst.toLocaleString('en-GB');
   const pr = document.getElementById('m-pillar-roth');
-  if (pr) pr.textContent = '~$' + rothEst.toLocaleString('en-GB');
+  if (pr) pr.textContent = '$' + rothEst.toLocaleString('en-GB');
   document.getElementById('m-pension-sub').textContent = 'Cash, investments, pension';
 
   // Invest tab
@@ -851,11 +849,11 @@ function liveEstimates() {
   const invRoth    = document.getElementById('m-inv-roth');
   const invTotal   = document.getElementById('m-invest-total');
   if (invPension) invPension.textContent = '~' + fmt(pensionEst);
-  if (invFid)     invFid.textContent     = '~$' + fidelityEst.toLocaleString('en-GB');
-  if (invRoth)    invRoth.textContent    = '~$' + rothEst.toLocaleString('en-GB');
+  if (invFid)     invFid.textContent     = '$' + fidelityEst.toLocaleString('en-GB');
+  if (invRoth)    invRoth.textContent    = '$' + rothEst.toLocaleString('en-GB');
   if (invTotal) {
     const totalInvest = pensionEst + Math.round(fidelityEst * FX_M) + Math.round(rothEst * FX_M);
-    invTotal.textContent = '~£' + Math.round(totalInvest / 1000) + 'k';
+    invTotal.textContent = '£' + Math.round(totalInvest / 1000) + 'k';
   }
 
   // Fund allocation breakdown
@@ -892,10 +890,10 @@ function liveEstimates() {
   const nv = document.getElementById('m-net-value');
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
-  if (isJul)           { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='+£125/mo · rent drop from 12 Jul'; }
-  else if (isApr)      { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='+£125/mo · 12 Jul rent drop'; }
-  else if (isAprPre)   { nv.textContent='~£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='+£125/mo · 12 Jul rent drop'; }
-  else if (isMarch)    { nv.textContent='~£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
+  if (isJul)           { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='+£125/mo · rent drop from 12 Jul'; }
+  else if (isApr)      { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='+£125/mo · 12 Jul rent drop'; }
+  else if (isAprPre)   { nv.textContent='£3,735'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='+£125/mo · 12 Jul rent drop'; }
+  else if (isMarch)    { nv.textContent='£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
   else                 { nv.textContent='£3,735';  ns.textContent='£68,000 salary · payday 24th';  nb.textContent='+£125/mo · 12 Jul rent drop'; }
 
   // Net worth composition
@@ -910,7 +908,7 @@ function liveEstimates() {
     { label:'US Cash',        val: Math.round(chaseUSEst * FX_M),  color:'#6366f1', note:'Chase US — pipeline hub' },
   ];
   const mTotal  = mSegs.reduce((s, x) => s + x.val, 0);
-  const mNwFmt  = `~£${Math.round(mTotal / 1000).toLocaleString()}k`;
+  const mNwFmt  = `£${Math.round(mTotal / 1000).toLocaleString()}k`;
   const mNwHero = document.getElementById('m-nw-hero');
   const mSpNw   = document.getElementById('m-sp-nw');
   if (mNwHero) mNwHero.textContent = mNwFmt;
@@ -1122,9 +1120,9 @@ mCalcFire();
     <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">£850 Wise → Chase US → Fidelity. $625/mo Roth + $475/mo taxable. Fully automated.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Both accounts</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical allocation. No monthly rebalancing.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Roth · $625/mo</div><div class="modal-rule-value">Zero tax on growth or withdrawal — US and UK (treaty Art.17). $7,500/yr 2026 limit. Contributions = liquidity backstop.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Taxable · $475/mo</div><div class="modal-rule-value">~0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 · ~1% ER · no new money. Review migration when convenient.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET: salary sacrifice now, tax-free growth, 25% lump sum + 75% income at drawdown. ~£1.9M at 67. Retirement covered.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Taxable · $475/mo</div><div class="modal-rule-value">0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 · 1% ER · no new money. Review migration when convenient.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET: salary sacrifice now, tax-free growth, 25% lump sum + 75% income at drawdown. £1.9M at 67. Retirement covered.</div></div>
     <div class="modal-rule" style="border-bottom:none;"><div class="modal-rule-label">No ISAs</div><div class="modal-rule-value">Blocked while US citizen. Trigger = CLN only.</div></div>
   </div>
 </div>
@@ -1137,7 +1135,7 @@ mCalcFire();
     <div class="modal-rule"><div class="modal-rule-label">Your security</div><div class="modal-rule-value">Section 21 abolished — no eviction without a legal reason.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Rent increases</div><div class="modal-rule-value">Annual only · 2 months notice · challenge at tribunal if above market rate.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Your notice to leave</div><div class="modal-rule-value">2 months from you. You control when you go.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Vancsi → Hungary</div><div class="modal-rule-value">When she gives 2 months notice, that's your trigger — aligns with the Mar–Apr 2027 move pot plan.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Vancsi → Hungary</div><div class="modal-rule-value">When she gives 2 months notice, that's your trigger — target Jun–Jul 2027. Note: rent may increase May 2027.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">If landlord sells</div><div class="modal-rule-value">Ground 1A · 4 months notice · only after 12 months tenancy. Low risk.</div></div>
   </div>
 </div>
