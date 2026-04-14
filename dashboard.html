@@ -1382,7 +1382,9 @@
         <div class="fire-intro">Drag your target spend, tap a lifestyle preset, and decide whether to count the future gift bridge. The backbone assumptions stay visible, but out of the way.</div>
 
         <div class="fire-backbone">
-          <div class="fire-pill">Investing <strong id="inv-label">£2,170/mo</strong></div>
+          <div class="fire-pill">Bridge now <strong id="acc-label">£666/mo</strong></div>
+          <div class="fire-pill">Pension track <strong id="pen-label">£1,020/mo</strong></div>
+          <div class="fire-pill">Roth track <strong id="roth-label">£481/mo</strong></div>
           <div class="fire-pill">Return <strong id="ret-label">7.0%</strong></div>
           <div class="fire-pill">Withdrawal <strong id="wr-label">4.00%</strong></div>
         </div>
@@ -1701,7 +1703,9 @@ function updateFire() {
 
   setFireRangeFill(document.getElementById('exp-slider'));
 
-  document.getElementById('inv-label').textContent = '£' + mo.toLocaleString() + '/mo';
+  document.getElementById('acc-label').textContent = '£666/mo';
+  document.getElementById('pen-label').textContent = '£1,020/mo';
+  document.getElementById('roth-label').textContent = '£481/mo';
   document.getElementById('ret-label').textContent = (r * 100).toFixed(1) + '%';
   document.getElementById('exp-label').textContent = '£' + sp.toLocaleString();
   document.getElementById('wr-label').textContent  = (wr * 100).toFixed(2) + '%';

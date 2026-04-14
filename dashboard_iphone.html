@@ -675,7 +675,9 @@
     <div class="fire-kicker-m">Try scenarios</div>
     <div class="fire-intro-m">Play with spend levels and decide whether to count the future gift bridge. The locked backbone stays visible, but quiet.</div>
     <div class="fire-backbone-m">
-      <div class="fire-pill-m">Investing <strong id="m-mo-lbl">£2,170/mo</strong></div>
+      <div class="fire-pill-m">Bridge <strong id="m-acc-lbl">£666/mo</strong></div>
+      <div class="fire-pill-m">Pension <strong id="m-pen-lbl">£1,020/mo</strong></div>
+      <div class="fire-pill-m">Roth <strong id="m-roth-lbl">£481/mo</strong></div>
       <div class="fire-pill-m">Return <strong id="m-ret-lbl">7.0%</strong></div>
       <div class="fire-pill-m">Withdrawal <strong id="m-wr-lbl">4.00%</strong></div>
     </div>
@@ -1136,7 +1138,9 @@ function mCalcFire() {
   mSetFireRangeFill(document.getElementById('m-sp'));
 
   document.getElementById('m-ret-lbl').textContent = (r*100).toFixed(1)+'%';
-  document.getElementById('m-mo-lbl').textContent  = '£'+mo.toLocaleString('en-GB')+'/mo';
+  document.getElementById('m-acc-lbl').textContent  = '£666/mo';
+  document.getElementById('m-pen-lbl').textContent  = '£1,020/mo';
+  document.getElementById('m-roth-lbl').textContent = '£481/mo';
   document.getElementById('m-sp-lbl').textContent  = '£'+sp.toLocaleString('en-GB');
   document.getElementById('m-wr-lbl').textContent  = (wr*100).toFixed(2)+'%';
   document.getElementById('m-fire-slider-big').textContent = '£'+Math.round(sp/1000)+'k';
