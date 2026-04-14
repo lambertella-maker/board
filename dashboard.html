@@ -131,7 +131,8 @@
   .fire-stat-label { font-size:0.82rem; color:var(--soft); }
   .fire-stat-value { font-size:1rem; font-weight:700; }
   .fire-kicker { font-size:0.72rem; font-weight:700; color:var(--indigo); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.65rem; }
-  .fire-intro { font-size:0.84rem; color:var(--soft); line-height:1.6; margin-bottom:1rem; }
+  .fire-intro { font-size:0.82rem; color:var(--soft); line-height:1.55; margin-bottom:0.8rem; }
+  .fire-section-label { font-size:0.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin:0 0 0.55rem; }
   .fire-backbone { display:flex; flex-wrap:wrap; gap:0.55rem; margin-bottom:1rem; }
   .fire-pill { display:inline-flex; align-items:center; gap:0.38rem; padding:0.45rem 0.75rem; border-radius:999px; background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.18); font-size:0.72rem; color:var(--soft); }
   .fire-pill strong { color:var(--text); font-size:0.76rem; }
@@ -168,6 +169,7 @@
   .fire-source-name { font-size:0.76rem; font-weight:700; color:var(--text); }
   .fire-source-note { font-size:0.66rem; color:var(--soft); line-height:1.4; }
   .fire-source-amt { font-size:0.78rem; font-weight:700; color:var(--cyan); }
+  .fire-note-box { margin-top:0.9rem; padding:0.8rem 0.9rem; border-radius:12px; background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.14); font-size:0.72rem; color:var(--soft); line-height:1.55; }
 
   /* TOGGLE */
   .toggle-row { display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem; padding:1rem; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.2); border-radius:10px; }
@@ -1387,8 +1389,9 @@
     <div class="fire-grid">
       <div class="fire-controls">
         <div class="fire-kicker">Try scenarios</div>
-        <div class="fire-intro">Drag your target spend, tap a lifestyle preset, and decide whether to count the future gift bridge. The backbone assumptions stay visible, but out of the way.</div>
+        <div class="fire-intro">Set the retirement lifestyle first, then decide what support really exists later on. The calculator will show when work becomes optional and how much the portfolio still needs to do after age 67.</div>
 
+        <div class="fire-section-label">Monthly saving already in motion</div>
         <div class="fire-backbone">
           <div class="fire-pill">Accessible money <strong id="acc-label">£666/mo</strong></div>
           <div class="fire-pill">UK pension saving <strong id="pen-label">£1,020/mo</strong></div>
@@ -1398,7 +1401,7 @@
         </div>
 
         <div class="control-group">
-          <div class="control-label">Lifestyle presets <span>Tap to load</span></div>
+          <div class="fire-section-label">Choose retirement lifestyle</div>
           <div class="fire-preset-row" style="grid-template-columns:repeat(3,1fr);">
             <button class="fire-chip active" type="button" data-fire-spend="45000" onclick="setFireSpend(45000)">
               <span class="fire-chip-title">Base</span>
@@ -1432,13 +1435,13 @@
         <div class="toggle-row fire-toggle-row">
           <label class="toggle"><input type="checkbox" id="bruceToggle" onchange="updateFire()"><span class="toggle-slider"></span></label>
           <div class="toggle-text">
-            <strong>Future gift bridge</strong>
-            <span id="fire-gift-copy">Keep this off for the self-funded plan. If switched on, it adds Dad's £16k/yr gifts from 2029.</span>
+            <strong>Dad gift scenario</strong>
+            <span id="fire-gift-copy">Keep this off for the self-funded version. Switch it on only if you want to model the extra £16k/yr starting in 2029.</span>
           </div>
         </div>
 
         <div class="fire-scenario-box">
-          <div class="control-label">State income at 67 <span>Scenario + source toggles</span></div>
+          <div class="fire-section-label">State income scenarios from 67</div>
           <div class="fire-scenario-grid">
             <button class="fire-chip" type="button" data-fire-state="self" onclick="setFireStateScenario('self')">
               <span class="fire-chip-title">Self-funded</span>
@@ -1476,6 +1479,7 @@
             </div>
           </div>
         </div>
+        <div class="fire-note-box" id="fire-left-note">State income does not help before 67. Its job here is to shrink the portfolio draw later in life, which can pull optionality earlier if the gap after 67 gets meaningfully smaller.</div>
       </div>
 
       <div class="fire-result-card">
@@ -1502,9 +1506,9 @@
         <div class="fire-stat"><span class="fire-stat-label">FIRE number (portfolio needed)</span><span class="fire-stat-value" id="fire-num" style="color:var(--amber)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Already funded vs target</span><span class="fire-stat-value" id="fire-funded" style="color:var(--pink)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">67 cushion vs self-funded</span><span class="fire-stat-value" id="fire-67-lift" style="color:var(--green)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">Optionality boost from state income</span><span class="fire-stat-value" id="fire-state-boost" style="color:var(--indigo)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">State cover at 67</span><span class="fire-stat-value" id="fire-state-cover" style="color:var(--cyan)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">Portfolio draw still needed after 67</span><span class="fire-stat-value" id="fire-post67-gap" style="color:var(--indigo)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">State income at 67</span><span class="fire-stat-value" id="fire-state" style="color:var(--cyan)">—</span></div>
         <div class="fire-stage-strip">
           <div class="fire-stage">
@@ -1879,12 +1883,12 @@ function updateFire() {
   const yearsToFire = Math.max(0, months / 12);
   const yearsBefore67 = Math.max(0, 67 - fireAge);
   const p67 = Math.round(runProjection(Math.ceil(Math.max(0, (67 - currentAge) * 12)), giftMonthly, stateIncome, true).total);
-  const p67SelfFunded = Math.round(runProjection(Math.ceil(Math.max(0, (67 - currentAge) * 12)), giftMonthly, 0, true).total);
   const stateLiftYears = Math.max(0, (monthsSelfFunded - months) / 12);
-  const p67Lift = p67 - p67SelfFunded;
   const fundedPct = Math.max(0, Math.min(999, (baseTotal / fireNum) * 100));
   const progressPct = Math.max(0, Math.min(100, ((fireAge - currentAge) / Math.max(0.1, 67 - currentAge)) * 100));
   const giftImpactYears = Math.max(0, (monthsWithoutGift - monthsWithGift) / 12);
+  const stateCoverPct = sp > 0 ? Math.min(100, (stateIncome / sp) * 100) : 0;
+  const post67Gap = Math.max(0, sp - stateIncome);
 
   const fmtBig = v => v >= 1e6
     ? '£' + (v / 1e6).toFixed(1) + 'M'
@@ -1915,22 +1919,25 @@ function updateFire() {
         ? `£${stateIncome.toLocaleString()}/yr · UK only`
         : `£${stateIncome.toLocaleString()}/yr · US only`;
 
-  let story = `At this spend level, work becomes optional around age ${fireAge}, roughly ${yearsBefore67} years before 67. The bridge still runs liquid assets first, then pension at 57, Roth at 59.5, and ${stateIncome === 0 ? 'no state-income support is counted from 67.' : 'the selected state-income sources reduce the draw from 67.'}`;
+  let story = `At this spend level, work becomes optional around age ${fireAge}, roughly ${yearsBefore67} years before 67. The bridge still runs liquid assets first, then pension at 57, Roth at 59.5, and ${stateIncome === 0 ? 'no state-income support is counted from 67.' : `from 67 the selected state sources cover about ${stateCoverPct.toFixed(0)}% of the target spend, leaving roughly £${post67Gap.toLocaleString()}/yr for the portfolio to fund.`}`;
   if (bruce) story += ` With the gift bridge switched on, the model lets those 2029 onward gifts absorb part of the early drawdown.`;
 
   document.getElementById('fire-mode-copy').textContent = modeCopy;
   document.getElementById('fire-band').textContent = band;
   document.getElementById('fire-gift-copy').textContent = giftCopy;
+  document.getElementById('fire-left-note').textContent = stateIncome === 0
+    ? 'In the self-funded scenario, nothing steps in at 67, so the portfolio must keep covering the full annual spend target.'
+    : `In this scenario, state income starts at 67 and covers about ${stateCoverPct.toFixed(0)}% of the target spend, reducing the draw pressure on the portfolio from that point onward.`;
 
   document.getElementById('fire-age').textContent   = fireAge;
   document.getElementById('fire-num').textContent   = fmtBig(fireNum);
   document.getElementById('fire-funded').textContent = fundedPct.toFixed(0) + '%';
   document.getElementById('fire-67').textContent    = fmtBig(p67);
-  document.getElementById('fire-67-lift').textContent = (p67Lift >= 0 ? '+' : '') + fmtBig(Math.abs(p67Lift));
   document.getElementById('fire-years').textContent = yearsToFire.toFixed(1) + ' years';
-  document.getElementById('fire-state-boost').textContent = stateLiftYears.toFixed(1) + ' years earlier';
+  document.getElementById('fire-state-cover').textContent = stateIncome === 0 ? '0%' : stateCoverPct.toFixed(0) + '% of spend';
+  document.getElementById('fire-post67-gap').textContent = '£' + post67Gap.toLocaleString() + '/yr';
   document.getElementById('fire-state').textContent = stateLabel;
-  document.getElementById('fire-headstart').textContent = yearsBefore67 + ' years before 67';
+  document.getElementById('fire-headstart').textContent = stateLiftYears > 0.05 ? stateLiftYears.toFixed(1) + ' years earlier than self-funded' : yearsBefore67 + ' years before 67';
   document.getElementById('fire-now-age').textContent = currentAge.toFixed(1);
   document.getElementById('fire-gap').textContent = yearsToFire.toFixed(1) + ' years to optionality';
   document.getElementById('fire-progress-fill').style.width = progressPct + '%';
