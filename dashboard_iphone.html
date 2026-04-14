@@ -674,19 +674,19 @@
     </div>
     <div class="fire-chip-row-m">
       <button class="fire-chip-m" type="button" data-m-fire-spend="24000" onclick="mSetFireSpend(24000)"><strong>Lean</strong><span>Low fixed-cost life</span></button>
-      <button class="fire-chip-m active" type="button" data-m-fire-spend="30000" onclick="mSetFireSpend(30000)"><strong>Base</strong><span>Current planning case</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-spend="30000" onclick="mSetFireSpend(30000)"><strong>Base</strong><span>Disciplined planning case</span></button>
       <button class="fire-chip-m" type="button" data-m-fire-spend="36000" onclick="mSetFireSpend(36000)"><strong>Comfort</strong><span>More breathing room</span></button>
-      <button class="fire-chip-m" type="button" data-m-fire-spend="42000" onclick="mSetFireSpend(42000)"><strong>London+</strong><span>City-heavy version</span></button>
+      <button class="fire-chip-m active" type="button" data-m-fire-spend="45000" onclick="mSetFireSpend(45000)"><strong>Current</strong><span>Fuller lifestyle target</span></button>
     </div>
     <div class="fire-slider-shell-m">
       <div class="fire-slider-top-m">
         <div>
-          <div class="ctrl-label" style="margin-bottom:2px;">Retirement spending/yr <span id="m-sp-lbl">£30,000</span></div>
-          <div class="fire-slider-copy-m" id="m-fire-mode-copy">Baseline optionality path with a comfortable but disciplined spend target.</div>
+          <div class="ctrl-label" style="margin-bottom:2px;">Retirement spending/yr <span id="m-sp-lbl">£45,000</span></div>
+          <div class="fire-slider-copy-m" id="m-fire-mode-copy">Current modeled spend target with more lifestyle room and a later optionality date.</div>
         </div>
-        <div class="fire-slider-big-m" id="m-fire-slider-big">£30k</div>
+        <div class="fire-slider-big-m" id="m-fire-slider-big">£45k</div>
       </div>
-      <input type="range" id="m-sp" min="15000" max="80000" step="1000" value="30000" oninput="mCalcFire()">
+      <input type="range" id="m-sp" min="15000" max="80000" step="1000" value="45000" oninput="mCalcFire()">
       <div class="fire-scale-m"><span>£15k</span><span>£47.5k</span><span>£80k</span></div>
     </div>
     <div class="fire-toggle-m">
@@ -1228,8 +1228,8 @@ function mCalcFire() {
     modeCopy = 'Comfort-first version: more breathing room, slower optionality.';
     band = 'Comfort path';
   } else {
-    modeCopy = 'High-spend city version: optionality still works, but later.';
-    band = 'Stretch path';
+    modeCopy = 'Current modeled spend target with more lifestyle room and a later optionality date.';
+    band = 'Higher-spend path';
   }
 
   const giftCopy = bruce

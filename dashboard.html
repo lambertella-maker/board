@@ -1394,17 +1394,17 @@
               <span class="fire-chip-title">Lean</span>
               <span class="fire-chip-copy">Low fixed-cost life</span>
             </button>
-            <button class="fire-chip active" type="button" data-fire-spend="30000" onclick="setFireSpend(30000)">
+            <button class="fire-chip" type="button" data-fire-spend="30000" onclick="setFireSpend(30000)">
               <span class="fire-chip-title">Base</span>
-              <span class="fire-chip-copy">Current planning case</span>
+              <span class="fire-chip-copy">Disciplined planning case</span>
             </button>
             <button class="fire-chip" type="button" data-fire-spend="36000" onclick="setFireSpend(36000)">
               <span class="fire-chip-title">Comfort</span>
               <span class="fire-chip-copy">More breathing room</span>
             </button>
-            <button class="fire-chip" type="button" data-fire-spend="42000" onclick="setFireSpend(42000)">
-              <span class="fire-chip-title">London+</span>
-              <span class="fire-chip-copy">City-heavy version</span>
+            <button class="fire-chip active" type="button" data-fire-spend="45000" onclick="setFireSpend(45000)">
+              <span class="fire-chip-title">Current</span>
+              <span class="fire-chip-copy">Fuller lifestyle target</span>
             </button>
           </div>
         </div>
@@ -1413,12 +1413,12 @@
           <div class="fire-slider-shell">
             <div class="fire-slider-top">
               <div>
-                <div class="control-label" style="margin-bottom:0.18rem;">Retirement spending target <span id="exp-label">£30,000</span></div>
-                <div class="fire-slider-copy" id="fire-mode-copy">Baseline optionality path with a comfortable but disciplined spend target.</div>
+                <div class="control-label" style="margin-bottom:0.18rem;">Retirement spending target <span id="exp-label">£45,000</span></div>
+                <div class="fire-slider-copy" id="fire-mode-copy">Current modeled spend target with more lifestyle room and a later optionality date.</div>
               </div>
-              <div class="fire-slider-value" id="fire-slider-big">£30k</div>
+              <div class="fire-slider-value" id="fire-slider-big">£45k</div>
             </div>
-            <input type="range" id="exp-slider" min="15000" max="80000" step="1000" value="30000" oninput="updateFire()">
+            <input type="range" id="exp-slider" min="15000" max="80000" step="1000" value="45000" oninput="updateFire()">
             <div class="fire-scale"><span>£15k</span><span>£47.5k</span><span>£80k</span></div>
           </div>
         </div>
@@ -1810,8 +1810,8 @@ function updateFire() {
     modeCopy = 'Comfort-first version: more breathing room, with a slower optionality timeline.';
     band = 'Comfort path';
   } else {
-    modeCopy = 'High-spend city version: optionality still works, but only with a much larger portfolio.';
-    band = 'Stretch path';
+    modeCopy = 'Current modeled spend target with more lifestyle room and a later optionality date.';
+    band = 'Higher-spend path';
   }
 
   const giftCopy = bruce
