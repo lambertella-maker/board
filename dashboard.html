@@ -131,18 +131,18 @@
   .fire-stat-label { font-size:0.82rem; color:var(--soft); }
   .fire-stat-value { font-size:1rem; font-weight:700; }
   .fire-kicker { font-size:0.72rem; font-weight:700; color:var(--indigo); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.65rem; }
-  .fire-intro { font-size:0.82rem; color:var(--soft); line-height:1.55; margin-bottom:0.8rem; }
+  .fire-intro { font-size:0.8rem; color:var(--soft); line-height:1.5; margin-bottom:0.7rem; }
   .fire-section-label { font-size:0.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin:0 0 0.55rem; }
-  .fire-backbone { display:flex; flex-wrap:wrap; gap:0.55rem; margin-bottom:1rem; }
-  .fire-pill { display:inline-flex; align-items:center; gap:0.38rem; padding:0.45rem 0.75rem; border-radius:999px; background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.18); font-size:0.72rem; color:var(--soft); }
-  .fire-pill strong { color:var(--text); font-size:0.76rem; }
+  .fire-backbone { display:grid; grid-template-columns:repeat(3,1fr); gap:0.55rem; margin-bottom:0.9rem; }
+  .fire-pill { display:block; padding:0.7rem 0.8rem; border-radius:12px; background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.18); font-size:0.68rem; color:var(--soft); line-height:1.35; }
+  .fire-pill strong { display:block; color:var(--text); font-size:0.88rem; margin-top:0.12rem; }
   .fire-preset-row { display:grid; grid-template-columns:repeat(4,1fr); gap:0.55rem; margin-bottom:0.9rem; }
   .fire-chip { border:1px solid var(--border); background:var(--card2); color:var(--soft); border-radius:12px; padding:0.7rem 0.55rem; text-align:left; cursor:pointer; transition:border-color .18s, transform .18s, background .18s; }
   .fire-chip:hover { border-color:rgba(129,140,248,0.35); transform:translateY(-1px); }
   .fire-chip.active { background:rgba(129,140,248,0.12); border-color:rgba(129,140,248,0.38); color:var(--text); }
   .fire-chip-title { display:block; font-size:0.76rem; font-weight:700; color:inherit; margin-bottom:0.18rem; }
   .fire-chip-copy { display:block; font-size:0.66rem; color:var(--soft); line-height:1.35; }
-  .fire-slider-shell { padding:0.95rem 1rem 0.9rem; background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.05)); border:1px solid rgba(129,140,248,0.18); border-radius:14px; }
+  .fire-slider-shell { padding:0.85rem 0.95rem 0.8rem; background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.05)); border:1px solid rgba(129,140,248,0.18); border-radius:14px; }
   .fire-slider-top { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; margin-bottom:0.7rem; }
   .fire-slider-value { font-size:1.35rem; font-weight:800; color:var(--text); }
   .fire-slider-copy { font-size:0.74rem; color:var(--soft); line-height:1.5; }
@@ -154,22 +154,20 @@
   .fire-progress-bar { position:relative; height:10px; border-radius:999px; background:rgba(255,255,255,0.04); border:1px solid var(--border); overflow:hidden; }
   .fire-progress-fill { position:absolute; inset:0 auto 0 0; width:0%; border-radius:999px; background:linear-gradient(90deg,var(--amber),var(--pink)); transition:width .25s ease; }
   .fire-progress-marker { position:absolute; top:-4px; width:2px; bottom:-4px; background:rgba(255,255,255,0.55); box-shadow:0 0 0 3px rgba(255,255,255,0.08); }
-  .fire-stage-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:0.55rem; margin:1rem 0 0.9rem; }
+  .fire-stage-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:0.55rem; margin:0.9rem 0 0.75rem; }
   .fire-stage { border:1px solid var(--border); background:var(--card2); border-radius:12px; padding:0.75rem 0.7rem; min-width:0; }
   .fire-stage span { display:block; font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.28rem; }
   .fire-stage strong { display:block; font-size:0.76rem; margin-bottom:0.22rem; color:var(--text); }
   .fire-stage em { display:block; font-style:normal; font-size:0.68rem; line-height:1.4; color:var(--soft); }
   .fire-story { margin-top:0.9rem; padding-top:0.9rem; border-top:1px solid var(--border); font-size:0.77rem; color:var(--soft); line-height:1.6; }
   .fire-story strong { color:var(--text); }
-  .fire-scenario-box { margin-top:1rem; padding:0.95rem 1rem; border-radius:14px; background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.14); }
-  .fire-scenario-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.55rem; margin-bottom:0.8rem; }
-  .fire-source-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.55rem; }
+  .fire-source-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.55rem; margin-top:0.2rem; }
   .fire-source-card { padding:0.75rem 0.8rem; border-radius:12px; border:1px solid var(--border); background:var(--card2); }
   .fire-source-head { display:flex; justify-content:space-between; align-items:flex-start; gap:0.6rem; margin-bottom:0.35rem; }
   .fire-source-name { font-size:0.76rem; font-weight:700; color:var(--text); }
   .fire-source-note { font-size:0.66rem; color:var(--soft); line-height:1.4; }
   .fire-source-amt { font-size:0.78rem; font-weight:700; color:var(--cyan); }
-  .fire-note-box { margin-top:0.9rem; padding:0.8rem 0.9rem; border-radius:12px; background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.14); font-size:0.72rem; color:var(--soft); line-height:1.55; }
+  .fire-note-box { margin-top:0.7rem; padding:0.75rem 0.85rem; border-radius:12px; background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.14); font-size:0.71rem; color:var(--soft); line-height:1.5; }
 
   /* TOGGLE */
   .toggle-row { display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem; padding:1rem; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.2); border-radius:10px; }
@@ -1389,15 +1387,13 @@
     <div class="fire-grid">
       <div class="fire-controls">
         <div class="fire-kicker">Try scenarios</div>
-        <div class="fire-intro">Set the retirement lifestyle first, then decide what support really exists later on. The calculator will show when work becomes optional and how much the portfolio still needs to do after age 67.</div>
+        <div class="fire-intro">Choose the lifestyle, then decide what support you actually expect later. This is about when work becomes optional and what income arrives at each stage.</div>
 
         <div class="fire-section-label">Monthly saving already in motion</div>
         <div class="fire-backbone">
-          <div class="fire-pill">Accessible money <strong id="acc-label">£666/mo</strong></div>
-          <div class="fire-pill">UK pension saving <strong id="pen-label">£1,020/mo</strong></div>
-          <div class="fire-pill">US Roth saving <strong id="roth-label">£481/mo</strong></div>
-          <div class="fire-pill">Return <strong id="ret-label">7.0%</strong></div>
-          <div class="fire-pill">Withdrawal <strong id="wr-label">4.00%</strong></div>
+          <div class="fire-pill">Accessible now<strong id="acc-label">£666/mo</strong></div>
+          <div class="fire-pill">UK pension<strong id="pen-label">£1,020/mo</strong></div>
+          <div class="fire-pill">US Roth<strong id="roth-label">£481/mo</strong></div>
         </div>
 
         <div class="control-group">
@@ -1440,22 +1436,7 @@
           </div>
         </div>
 
-        <div class="fire-scenario-box">
-          <div class="fire-section-label">State income scenarios from 67</div>
-          <div class="fire-scenario-grid">
-            <button class="fire-chip" type="button" data-fire-state="self" onclick="setFireStateScenario('self')">
-              <span class="fire-chip-title">Self-funded</span>
-              <span class="fire-chip-copy">Ignore both state systems</span>
-            </button>
-            <button class="fire-chip" type="button" data-fire-state="uk" onclick="setFireStateScenario('uk')">
-              <span class="fire-chip-title">UK only</span>
-              <span class="fire-chip-copy">Assume UK pension only</span>
-            </button>
-            <button class="fire-chip active" type="button" data-fire-state="dual" onclick="setFireStateScenario('dual')">
-              <span class="fire-chip-title">Dual-state</span>
-              <span class="fire-chip-copy">Current full model</span>
-            </button>
-          </div>
+        <div class="fire-section-label">Income that starts at 67</div>
           <div class="fire-source-grid">
             <div class="fire-source-card">
               <div class="fire-source-head">
@@ -1478,7 +1459,6 @@
               <div class="fire-source-amt">~£28.5k/yr</div>
             </div>
           </div>
-        </div>
         <div class="fire-note-box" id="fire-left-note">State income does not help before 67. Its job here is to shrink the portfolio draw later in life, which can pull optionality earlier if the gap after 67 gets meaningfully smaller.</div>
       </div>
 
@@ -1504,31 +1484,25 @@
           </div>
         </div>
         <div class="fire-stat"><span class="fire-stat-label">FIRE number (portfolio needed)</span><span class="fire-stat-value" id="fire-num" style="color:var(--amber)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">Already funded vs target</span><span class="fire-stat-value" id="fire-funded" style="color:var(--pink)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">New money arriving at 67</span><span class="fire-stat-value" id="fire-state-cover" style="color:var(--cyan)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Still needs portfolio income after 67</span><span class="fire-stat-value" id="fire-post67-gap" style="color:var(--indigo)">—</span></div>
         <div class="fire-stage-strip">
           <div class="fire-stage">
-            <span>Stage 1</span>
-            <strong>Liquid bridge</strong>
-            <em>Cash, SIP, taxable, and US cash do the early work.</em>
+            <span>Now to 57</span>
+            <strong>Self-funded bridge</strong>
+            <em>Cash, SIP, taxable and gifts if you switch them on.</em>
           </div>
           <div class="fire-stage">
-            <span>Stage 2 · 57</span>
-            <strong>UK pension opens</strong>
-            <em>Pressure on liquid draw drops once pension access starts.</em>
+            <span>57 to 67</span>
+            <strong>Pension years</strong>
+            <em>UK pension opens, then Roth joins at 59.5.</em>
           </div>
           <div class="fire-stage">
-            <span>Stage 3 · 59.5</span>
-            <strong>Roth joins</strong>
-            <em>Tax-free Roth becomes available as another bridge lever.</em>
-          </div>
-          <div class="fire-stage">
-            <span>Stage 4 · 67</span>
+            <span>67+</span>
             <strong>State income</strong>
-            <em>State benefits reduce how much the portfolio must cover.</em>
+            <em>UK pension and/or US Social Security reduce the draw needed from investments.</em>
           </div>
         </div>
         <div class="fire-story" id="fire-story">
