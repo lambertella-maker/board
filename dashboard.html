@@ -1904,7 +1904,6 @@ function updateFire() {
 
   document.getElementById('fire-age').textContent   = fireAge;
   document.getElementById('fire-num').textContent   = fmtBig(fireNum);
-  document.getElementById('fire-funded').textContent = fundedPct.toFixed(0) + '%';
   document.getElementById('fire-67').textContent    = fmtBig(p67);
   document.getElementById('fire-state-cover').textContent = stateIncome === 0 ? '£0/yr' : '£' + stateIncome.toLocaleString() + '/yr from age 67';
   document.getElementById('fire-post67-gap').textContent = '£' + post67Gap.toLocaleString() + '/yr';
