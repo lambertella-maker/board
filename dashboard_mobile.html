@@ -1418,8 +1418,7 @@
         <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Years until FIRE</span><span class="fire-stat-value" id="fire-years" style="color:var(--indigo)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">New money arriving at 67</span><span class="fire-stat-value" id="fire-state-cover" style="color:var(--cyan)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">Portfolio still needs to fund</span><span class="fire-stat-value" id="fire-post67-gap" style="color:var(--indigo)">—</span></div>
-        <div class="fire-stat"><span class="fire-stat-label">State income at 67</span><span class="fire-stat-value" id="fire-state" style="color:var(--cyan)">—</span></div>
+        <div class="fire-stat"><span class="fire-stat-label">Still needs portfolio income after 67</span><span class="fire-stat-value" id="fire-post67-gap" style="color:var(--indigo)">—</span></div>
         <div class="fire-stage-strip">
           <div class="fire-stage">
             <span>Stage 1</span>
@@ -1845,7 +1844,6 @@ function updateFire() {
   document.getElementById('fire-years').textContent = yearsToFire.toFixed(1) + ' years';
   document.getElementById('fire-state-cover').textContent = stateIncome === 0 ? '£0/yr' : '£' + stateIncome.toLocaleString() + '/yr from age 67';
   document.getElementById('fire-post67-gap').textContent = '£' + post67Gap.toLocaleString() + '/yr';
-  document.getElementById('fire-state').textContent = stateLabel;
   document.getElementById('fire-headstart').textContent = stateLiftYears > 0.05 ? stateLiftYears.toFixed(1) + ' years earlier than self-funded' : yearsBefore67 + ' years before 67';
   document.getElementById('fire-now-age').textContent = currentAge.toFixed(1);
   document.getElementById('fire-gap').textContent = yearsToFire.toFixed(1) + ' years to optionality';
