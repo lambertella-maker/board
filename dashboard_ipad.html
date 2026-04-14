@@ -1774,7 +1774,7 @@ function updateFire() {
   const post67Gap = Math.max(0, sp - stateIncome);
 
   const fmtBig = v => v >= 1e6
-    ? '£' + (v / 1e6).toFixed(1) + 'M'
+    ? '£' + Math.round(v / 1e6).toLocaleString() + 'M'
     : '£' + Math.round(v / 1000).toLocaleString() + ',000';
 
   let modeCopy = 'Baseline optionality path with a comfortable but disciplined spend target.';
@@ -1818,7 +1818,7 @@ function updateFire() {
   document.getElementById('fire-state-cover').textContent = stateIncome === 0 ? '£0/yr' : '£' + stateIncome.toLocaleString() + '/yr from age 67';
   document.getElementById('fire-post67-gap').textContent = '£' + post67Gap.toLocaleString() + '/yr';
   document.getElementById('fire-headstart').textContent = stateLiftYears > 0.5 ? Math.round(stateLiftYears) + ' years earlier than self-funded' : yearsBefore67 + ' years before 67';
-  document.getElementById('fire-now-age').textContent = currentAge.toFixed(1);
+  document.getElementById('fire-now-age').textContent = Math.round(currentAge);
   document.getElementById('fire-gap').textContent = yearsToFireRounded + ' years to optionality';
   document.getElementById('fire-progress-fill').style.width = progressPct + '%';
   document.getElementById('fire-progress-marker').style.left = progressPct + '%';

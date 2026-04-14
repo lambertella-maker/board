@@ -644,7 +644,7 @@
     <div class="fire-stat-row"><span class="fire-stat-lbl">FIRE number needed</span><span class="fire-stat-val" id="m-fire-num" style="color:var(--amber)">—</span></div>
     <div class="fire-stat-row"><span class="fire-stat-lbl">Portfolio at 67 (work to normal)</span><span class="fire-stat-val" id="m-fire-67" style="color:var(--green)">—</span></div>
     <div class="fire-stat-row"><span class="fire-stat-lbl">New money starting at 67</span><span class="fire-stat-val" id="m-fire-state" style="color:var(--cyan)">—</span></div>
-    <div class="fire-stat-row" style="border-bottom:none;"><span class="fire-stat-lbl">Portfolio still needs to deliver</span><span class="fire-stat-val" id="m-fire-post67" style="color:var(--indigo)">—</span></div>
+    <div class="fire-stat-row" style="border-bottom:none;"><span class="fire-stat-lbl">Still needed from portfolio after 67</span><span class="fire-stat-val" id="m-fire-post67" style="color:var(--indigo)">—</span></div>
     <div class="fire-stage-grid-m">
       <div class="fire-stage-m">
         <span>Now to 57</span>
@@ -1239,7 +1239,7 @@ function mCalcFire() {
   const giftImpactYears = Math.max(0, (monthsWithoutGift - monthsWithGift) / 12);
   const giftImpactYearsRounded = Math.max(0, Math.round(giftImpactYears));
   const post67Gap = Math.max(0, Math.round(sp - stateIncome));
-  const fmtBig = v => v >= 1e6 ? '£'+(v/1e6).toFixed(1)+'M' : '£'+Math.round(v/1000).toLocaleString('en-GB')+'k';
+  const fmtBig = v => v >= 1e6 ? '£'+Math.round(v/1e6).toLocaleString('en-GB')+'M' : '£'+Math.round(v/1000).toLocaleString('en-GB')+'k';
 
   let modeCopy = 'Balanced path with a disciplined lifestyle target.';
   let band = 'Baseline path';
