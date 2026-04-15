@@ -780,11 +780,11 @@
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Clean Amex Blue Cash history — started Feb 2026 · need 6–9 months before applying</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Clean Amex Blue Cash history — opened Jan 30, 2026 · 2 prior rejections as AU · wait 8–9 months</div>
           <div class="progress-bar"><div class="progress-fill" id="csp-prog" style="background:linear-gradient(90deg,var(--indigo),var(--pink)); width:11%"></div></div>
-          <div class="progress-labels"><span>Feb 2026</span><span id="csp-months-lbl" style="color:var(--indigo)">1 month in</span><span>Apply Aug–Oct 2026</span></div>
+          <div class="progress-labels"><span>Jan 2026</span><span id="csp-months-lbl" style="color:var(--indigo)">1 month in</span><span>Apply Sep–Oct 2026</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">Application window</span><span class="goal-row-value" style="color:var(--amber)">Aug–Oct 2026 · don't apply before 6 months</span></div>
+        <div class="goal-row"><span class="goal-row-label">Application window</span><span class="goal-row-value" style="color:var(--amber)">Sep–Oct 2026 · 8–9mo needed (2 prior rejections as AU)</span></div>
         <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">60k Chase UR · $4k spend in first 3 months</span></div>
         <div class="goal-row"><span class="goal-row-label">60k UR bonus</span><span class="goal-row-value" style="color:var(--indigo)">any partner · United, BA, Virgin · or $750 via portal</span></div>
         <div class="goal-row"><span class="goal-row-label">Transfer partners</span><span class="goal-row-value">United · BA · Virgin · Hyatt · more</span></div>
@@ -836,7 +836,7 @@
         <div style="margin-bottom:1rem;">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Transfer UR → United MileagePlus for Polaris LHR→ORD · ~£220 cash (APD only)</div>
           <div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
-          <div class="progress-labels"><span>Feb 2026</span><span style="color:var(--amber)">CSP unlocks this</span><span>Early 2027</span></div>
+          <div class="progress-labels"><span>Jan 2026</span><span style="color:var(--amber)">CSP unlocks this</span><span>Early 2027</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Points needed</span><span class="goal-row-value">70–75k UR → United MileagePlus · Polaris one-way LHR→ORD</span></div>
         <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">60k UR covers 85% · top up via 3× spend · done in months</span></div>
@@ -2039,8 +2039,8 @@ updateFire();
 
 // ── LIFE GOALS ────────────────────────────────────────────────────────────────
 function updateGoals() {
-  // CSP progress — clean Amex history since Feb 2026 (count month you're IN, not completed)
-  const cspStart    = new Date(2026, 1, 1);
+  // CSP progress — clean Amex history since Jan 30 2026 (count month you're IN, not completed)
+  const cspStart    = new Date(2026, 0, 30);
   const cspMonths   = Math.max(1, (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth()) + 1);
   const cspMonthsLeft = Math.max(0, 9 - cspMonths);
   document.getElementById('csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
