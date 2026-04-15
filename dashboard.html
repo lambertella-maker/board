@@ -1415,7 +1415,6 @@
               <div class="fire-source-amt">~£28.5k/yr</div>
             </div>
           </div>
-        <div class="fire-note-box" id="fire-left-note">State income does not help before 67. Its job here is to shrink the portfolio draw later in life, which can pull optionality earlier if the gap after 67 gets meaningfully smaller.</div>
         <div class="toggle-row fire-toggle-row">
           <label class="toggle"><input type="checkbox" id="bruceToggle" onchange="updateFire()"><span class="toggle-slider"></span></label>
           <div class="toggle-text">
@@ -1449,6 +1448,7 @@
         <div class="fire-stat"><span class="fire-stat-label">FIRE number (portfolio needed)</span><span class="fire-stat-value" id="fire-num" style="color:var(--amber)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">Portfolio at 67 (work to normal retirement)</span><span class="fire-stat-value" id="fire-67" style="color:var(--green)">—</span></div>
         <div class="fire-stat"><span class="fire-stat-label">State income starting at 67</span><span class="fire-stat-value" id="fire-state-cover" style="color:var(--cyan)">—</span></div>
+        <div id="fire-right-note" style="display:none; font-size:0.71rem; color:var(--soft); line-height:1.5; padding:0.35rem 0 0.1rem;"></div>
         <div class="fire-stage-strip">
           <div class="fire-stage">
             <span>Now to 57</span>
@@ -1847,14 +1847,13 @@ function updateFire() {
   document.getElementById('fire-mode-copy').textContent = modeCopy;
   document.getElementById('fire-band').textContent = band;
   document.getElementById('fire-gift-copy').textContent = giftCopy;
-  document.getElementById('fire-left-note').textContent = stateIncome === 0
-    ? 'In the self-funded scenario, nothing steps in at 67, so the portfolio must keep covering the full annual spend target.'
-    : `In this scenario, state income starts at 67 and adds £${stateIncome.toLocaleString()}/yr, which supports the lifestyle target from that age onward.`;
-
   document.getElementById('fire-age').textContent   = fireAge;
   document.getElementById('fire-num').textContent   = fmtBig(fireNum);
   document.getElementById('fire-67').textContent    = fmtBig(p67);
   document.getElementById('fire-state-cover').textContent = stateIncome === 0 ? '£0/yr' : '£' + stateIncome.toLocaleString() + '/yr from age 67';
+  const rightNote = document.getElementById('fire-right-note');
+  if (stateIncome > 0) { rightNote.textContent = `In this scenario, state income starts at 67 and adds £${stateIncome.toLocaleString()}/yr, which supports the lifestyle target from that age onward.`; rightNote.style.display = ''; }
+  else { rightNote.style.display = 'none'; }
   document.getElementById('fire-headstart').textContent = stateLiftYears > 0.5 ? Math.round(stateLiftYears) + ' years earlier than self-funded' : yearsBefore67 + ' years before 67';
   document.getElementById('fire-now-age').textContent = Math.round(currentAge);
   document.getElementById('fire-gap').textContent = yearsToFireRounded + ' years to optionality';

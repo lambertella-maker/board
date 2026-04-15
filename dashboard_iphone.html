@@ -697,7 +697,6 @@
       <input type="range" id="m-sp" min="15000" max="80000" step="1000" value="45000" oninput="mCalcFire()">
       <div class="fire-scale-m"><span>£15k</span><span>£47.5k</span><span>£80k</span></div>
     </div>
-    <div class="fire-note-m" id="m-fire-left-note">State income does not help before 67. It only matters later by reducing how much the portfolio has to send each year.</div>
     <div class="fire-toggle-m" style="margin-top:10px;">
       <label class="toggle"><input type="checkbox" id="m-bruceToggle" onchange="mCalcFire()"><span class="toggle-slider"></span></label>
       <div class="fire-toggle-copy-m">
@@ -1276,9 +1275,6 @@ function mCalcFire() {
   document.getElementById('m-fire-progress-marker').style.left = progressPct+'%';
   document.getElementById('m-fire-mode-copy').textContent = modeCopy;
   document.getElementById('m-fire-gift-copy').textContent = giftCopy;
-  document.getElementById('m-fire-left-note').textContent = stateIncome === 0
-    ? 'In the self-funded version, nothing new starts at 67, so the portfolio keeps doing all the work.'
-    : `In this version, state income starts at 67 and adds £${stateIncome.toLocaleString('en-GB')}/yr, which reduces the portfolio income needed after that age.`;
   document.getElementById('m-fire-story').innerHTML = `<strong>Meaning:</strong> ${story}`;
   document.querySelectorAll('[data-m-fire-state]').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.mFireState === stateMode);
