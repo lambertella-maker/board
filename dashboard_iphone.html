@@ -457,7 +457,7 @@
 
   <div class="section-title">Total picture</div>
   <div class="superplan-total">
-    <div class="st-box"><div id="m-sp-nw" class="st-val" style="color:var(--amber)">—</div><div class="st-lbl">Wealth today</div><div class="st-note">Age 25</div></div>
+    <div class="st-box"><div id="m-sp-nw" class="st-val" style="color:var(--amber)">—</div><div class="st-lbl">Wealth today</div><div class="st-note" id="m-sp-nw-note">Total incl. pension</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--green)">£31k+</div><div class="st-lbl">Annual creation</div><div class="st-note">£31,600/yr total · promo min</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--indigo)">£4M+</div><div class="st-lbl">At age 67</div><div class="st-note">7% CAGR</div></div>
     <div class="st-box"><div class="st-val" style="color:var(--pink)">£41k+</div><div class="st-lbl">State income/yr</div><div class="st-note">Full UK + salary-scaled US</div></div>
@@ -830,6 +830,19 @@
 
 <script>
 const today = new Date();
+const US_SS_FULL_USD = 37000;
+const US_SS_BASE_EQ_YEARS = 3;
+const US_SS_FULL_EQ_YEARS = 35;
+
+function fmtCompactK(value) {
+  return `£${Math.round(value / 1000).toLocaleString('en-GB')}k`;
+}
+
+function projectedUsState(extraMonths = 0, fx = 0.77) {
+  const eqYears = Math.min(US_SS_FULL_EQ_YEARS, US_SS_BASE_EQ_YEARS + extraMonths / 12);
+  const usd = Math.round(US_SS_FULL_USD * (eqYears / US_SS_FULL_EQ_YEARS));
+  return { eqYears, usd, gbp: Math.round(usd * fx) };
+}
 
 // ── TAB NAVIGATION ────────────────────────────────────────────────────────────
 function showTab(name, el) {
@@ -1000,11 +1013,16 @@ function liveEstimates() {
     { label:'US Cash',        val: Math.round(chaseUSEst * FX_M),  color:'#6366f1', note:'Chase US — pipeline hub' },
   ];
   const mTotal  = mSegs.reduce((s, x) => s + x.val, 0);
+  const mLiquid = mSegs
+    .filter(s => ['UK Savings', 'US Brokerage', 'US Cash'].includes(s.label))
+    .reduce((sum, s) => sum + s.val, 0);
   const mNwFmt  = `£${Math.round(mTotal / 1000).toLocaleString()}k`;
   const mNwHero = document.getElementById('m-nw-hero');
   const mSpNw   = document.getElementById('m-sp-nw');
-  if (mNwHero) mNwHero.textContent = mNwFmt;
-  if (mSpNw)   mSpNw.textContent   = mNwFmt;
+  const mSpNwNote = document.getElementById('m-sp-nw-note');
+  if (mNwHero) mNwHero.innerHTML = `${mNwFmt} <span style="font-size:0.38em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(mLiquid)} liquid)</span>`;
+  if (mSpNw)   mSpNw.innerHTML   = `${mNwFmt} <span style="font-size:0.38em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(mLiquid)} liquid)</span>`;
+  if (mSpNwNote) mSpNwNote.textContent = 'Total incl. pension · liquid shown beside figure';
 
   // Store bases for projection slider
   gNwBases = {
@@ -1025,10 +1043,13 @@ let gNwBases = null;
 
 function renderNWSegs(segs) {
   const total = segs.reduce((s, x) => s + x.val, 0);
+  const liquid = segs
+    .filter(s => ['UK Savings', 'US Brokerage', 'US Cash'].includes(s.label))
+    .reduce((sum, s) => sum + s.val, 0);
   const nwTotalEl = document.getElementById('m-nw-total');
   const nwRowsEl  = document.getElementById('m-nw-rows');
   const rankEl    = document.getElementById('m-nw-rank');
-  if (nwTotalEl) nwTotalEl.textContent = '£' + total.toLocaleString();
+  if (nwTotalEl) nwTotalEl.innerHTML = `£${total.toLocaleString()} <span style="font-size:0.62em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
   if (nwRowsEl) nwRowsEl.innerHTML = segs.map((s, i) => {
     const pct = ((s.val / total) * 100).toFixed(1);
     const sep = i < segs.length - 1 ? `<div style="height:1px;background:var(--border);margin:0;"></div>` : '';
@@ -1044,6 +1065,7 @@ function renderNWSegs(segs) {
     const ukRank = total < 15000 ? 'around median' : total < 30000 ? 'top 30%' : total < 60000 ? 'top 20%' : total < 100000 ? 'top 10%' : 'top 5%';
     const usRank = totalUSD < 39000 ? 'below median' : totalUSD < 80000 ? 'above median' : totalUSD < 150000 ? 'top 30%' : 'top 15%';
     rankEl.innerHTML =
+      `<span>💧 <span style="color:var(--cyan);font-weight:600;">${fmtCompactK(liquid)}</span> liquid now</span>` +
       `<span>🇬🇧 <span style="color:var(--green);font-weight:600;">${ukRank}</span> · age 25, UK</span>` +
       `<span>🇺🇸 <span style="color:var(--green);font-weight:600;">${usRank}</span> · ages 25–34, US</span>`;
   }
@@ -1157,8 +1179,6 @@ function mCalcFire() {
   const pensionAccessAge = 57;
   const rothAccessAge = 59.5;
   const ukStateIncome = 12548;
-  const usStateIncome = Math.round(37000 * 0.77);
-  const stateIncome = stateMode === 'self' ? 0 : stateMode === 'uk' ? ukStateIncome : ukStateIncome + usStateIncome;
   const giftStart = new Date(2029, 0, 1);
   const accShare = 666 / 2167;
   const penShare = 1020 / 2167;
@@ -1214,21 +1234,38 @@ function mCalcFire() {
     return { ok:true, total: accessible + pension + roth };
   }
 
-  function findFireMonths(giftMonthlyRun) {
+  function findFireMonthsForScenario(giftMonthlyRun, includeUkState, includeUsState) {
+    let assumedMonths = 0;
     let months = 0;
-    while (months < 75*12 && !runProjection(months, giftMonthlyRun, stateIncome).ok) months++;
-    return months;
+    let usProjection = projectedUsState(assumedMonths, gNwBases?.fx || 0.77);
+    for (let i = 0; i < 6; i++) {
+      const stateIncomeRun = (includeUkState ? ukStateIncome : 0) + (includeUsState ? usProjection.gbp : 0);
+      months = 0;
+      while (months < 75 * 12 && !runProjection(months, giftMonthlyRun, stateIncomeRun).ok) months++;
+      const nextProjection = projectedUsState(months, gNwBases?.fx || 0.77);
+      if (Math.abs(months - assumedMonths) < 1 && Math.abs(nextProjection.gbp - usProjection.gbp) < 50) {
+        usProjection = nextProjection;
+        return { months, stateIncome: stateIncomeRun, usProjection };
+      }
+      assumedMonths = months;
+      usProjection = nextProjection;
+    }
+    return {
+      months,
+      stateIncome: (includeUkState ? ukStateIncome : 0) + (includeUsState ? usProjection.gbp : 0),
+      usProjection
+    };
   }
 
-  const months = findFireMonths(giftMonthly);
-  const monthsWithGift = findFireMonths(16000 / 12);
-  const monthsWithoutGift = findFireMonths(0);
-  function findFireMonthsForState(giftMonthlyRun, stateIncomeRun) {
-    let months = 0;
-    while (months < 75*12 && !runProjection(months, giftMonthlyRun, stateIncomeRun).ok) months++;
-    return months;
-  }
-  const monthsSelfFunded = findFireMonthsForState(giftMonthly, 0);
+  const includeUkState = stateMode === 'uk' || stateMode === 'dual';
+  const includeUsState = stateMode === 'dual';
+  const scenario = findFireMonthsForScenario(giftMonthly, includeUkState, includeUsState);
+  const months = scenario.months;
+  const stateIncome = scenario.stateIncome;
+  const usStateProjection = scenario.usProjection;
+  const monthsWithGift = findFireMonthsForScenario(16000 / 12, includeUkState, includeUsState).months;
+  const monthsWithoutGift = findFireMonthsForScenario(0, includeUkState, includeUsState).months;
+  const monthsSelfFunded = findFireMonthsForScenario(giftMonthly, false, false).months;
   const fireAge = Math.min(Math.round(currentAge + months/12), 90);
   const yearsToFire = Math.max(0, months / 12);
   const yearsToFireRounded = Math.max(0, Math.round(yearsToFire));
@@ -1260,6 +1297,7 @@ function mCalcFire() {
 
   const stateLabel = stateIncome === 0 ? '£0/yr' : '£' + stateIncome.toLocaleString('en-GB') + '/yr';
   let story = `At this spend level, work becomes optional around age ${fireAge}. Before 57 the bridge is accessible money, then the UK pension can help, and from 67 ${stateIncome === 0 ? 'the portfolio still has to cover the full spend target.' : `£${stateIncome.toLocaleString('en-GB')}/yr arrives from state income, so the portfolio only needs to deliver about £${post67Gap.toLocaleString('en-GB')}/yr.`}`;
+  if (includeUsState) story += ` The US slice scales to about £${usStateProjection.gbp.toLocaleString('en-GB')}/yr here, using ~${usStateProjection.eqYears.toFixed(1)} equivalent SSA years by stop-work.`;
   if (bruce) story += ` With the gift bridge on, the 2029 onward gifts absorb part of the early drawdown.`;
 
   document.getElementById('m-fire-age').textContent = fireAge;

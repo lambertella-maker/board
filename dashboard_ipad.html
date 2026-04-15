@@ -592,7 +592,7 @@
     </div>
 
     <div class="superplan-total">
-      <div><div class="st-label">Total wealth today</div><div id="sp-nw-value" class="st-value" style="color:var(--amber)">—</div><div class="st-note">Liquid + pension · Age 25</div></div>
+      <div><div class="st-label">Total wealth today</div><div id="sp-nw-value" class="st-value" style="color:var(--amber)">—</div><div class="st-note" id="sp-nw-note">Total incl. pension · Age 25</div></div>
       <div><div class="st-label">Annual wealth creation</div><div class="st-value" style="color:var(--green)">£30.7k+</div><div class="st-note">£30,700/yr · all pillars · £68k base</div></div>
       <div><div class="st-label">Projected at 67</div><div class="st-value" style="color:var(--indigo)">£4M+</div><div class="st-note">Conservative 7% return</div></div>
       <div><div class="st-label">State income at 67</div><div class="st-value" style="color:var(--pink)">£41k+</div><div class="st-note">Full UK + salary-scaled US estimate</div></div>
@@ -993,32 +993,20 @@
         </div>
       </div>
 
-      <!-- Higher Rate Reality — compact permanent reminder -->
-      <div style="background:rgba(248,113,113,0.04); border:1px solid rgba(248,113,113,0.2); border-radius:10px; padding:1rem 1.2rem; margin-bottom:1rem;">
-        <div style="font-size:0.65rem; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.7rem;">The Higher Rate Reality — why a raise feels smaller than it should</div>
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; font-size:0.79rem;">
+      <!-- Higher Rate Reality — smaller permanent reminder -->
+      <div style="background:rgba(248,113,113,0.035); border:1px solid rgba(248,113,113,0.16); border-radius:10px; padding:0.85rem 1rem; margin-bottom:1rem;">
+        <div style="font-size:0.62rem; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.55rem;">Higher-rate reminder</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; font-size:0.76rem;">
           <div>
-            <div style="font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.35rem;">Basic rate band ≤ £50,270</div>
-            <div>£1,000 raise → <strong style="color:var(--green);">+£60/mo net</strong></div>
-            <div style="font-size:0.72rem; color:var(--muted); margin-top:0.2rem; line-height:1.5;">20% IT + 8% NI = 28% gone<br>Keep 72p of every £1 gross</div>
+            <div style="font-size:0.66rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.28rem;">Tax drag intuition</div>
+            <div>Below £50,270: <strong style="color:var(--green);">£1k raise ≈ +£60/mo net</strong></div>
+            <div>Above £50,270: <strong style="color:var(--amber);">£1k raise ≈ +£48/mo net</strong></div>
           </div>
           <div>
-            <div style="font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.35rem;">Higher rate band > £50,270 · You</div>
-            <div>£1,000 raise → <strong style="color:var(--amber);">+£48/mo net</strong></div>
-            <div style="font-size:0.72rem; color:var(--muted); margin-top:0.2rem; line-height:1.5;">40% IT + 2% NI = 42% gone<br>Keep 58p of every £1 gross</div>
-          </div>
-          <div>
-            <div style="font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.35rem;">Your £2,645 raise · Apr 2026</div>
-            <div style="font-size:0.78rem; line-height:1.9;">
-              <span style="color:var(--soft);">+£220/mo gross</span><br>
-              <span style="color:var(--red);">−£88 IT (40%)</span><br>
-              <span style="color:var(--red);">−£13 pension (6%)</span><br>
-              <span style="color:var(--muted); font-size:0.7rem;">−£97 GymFlex gross · +£2 NI saving = −£95 net*</span><br>
-              <strong style="color:var(--green);">≈ +£20/mo net vs pre-GymFlex</strong>
-            </div>
+            <div style="font-size:0.66rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.28rem;">Why it still matters</div>
+            <div style="color:var(--soft); line-height:1.55;">Useful as a tax sanity check, but the bigger story now is the promotion itself: higher pension input, higher future raise baseline, and a stronger long-run earnings anchor.</div>
           </div>
         </div>
-        <div style="font-size:0.71rem; color:var(--soft); margin-top:0.7rem; line-height:1.5; border-top:1px solid var(--border); padding-top:0.6rem;">*GymFlex: £97.40/mo gross sacrifice − £1.95 NI saving = <strong style="color:var(--text);">£95.45/mo net cost</strong> — a separate choice starting April 2026. It offsets the apparent gain but it's not the raise's fault. Without it, the £2,645 raise alone gives <strong style="color:var(--text);">+£115/mo net</strong>. The 40% band is working as intended. The raise still matters: it grows your pension, your NI record, and your future raise baseline.</div>
       </div>
 
     </div>
@@ -1318,11 +1306,11 @@
               <div class="fire-source-head">
                 <div>
                   <div class="fire-source-name">US Social Security</div>
-                  <div class="fire-source-note">Salary-scaled estimate in GBP</div>
+                  <div class="fire-source-note" id="fire-us-source-note">Salary-scaled estimate in GBP</div>
                 </div>
                 <label class="toggle"><input type="checkbox" id="usStateToggle" checked onchange="syncFireStateScenario(); updateFire()"><span class="toggle-slider"></span></label>
               </div>
-              <div class="fire-source-amt">~£28.5k/yr</div>
+              <div class="fire-source-amt" id="fire-us-source-amt">~£28.5k/yr</div>
             </div>
           </div>
         <div class="toggle-row fire-toggle-row">
@@ -1485,16 +1473,36 @@ new Chart(document.getElementById('budgetChart'), {
 let gNwBases = null;
 let gNwChart = null;
 let gNwFx    = 0.77;
+const US_SS_FULL_USD = 37000;
+const US_SS_BASE_EQ_YEARS = 3;
+const US_SS_FULL_EQ_YEARS = 35;
+
+function liquidNetWorthFromSegments(segs) {
+  return segs
+    .filter(s => ['UK Savings', 'US Brokerage', 'US Cash'].includes(s.label))
+    .reduce((sum, s) => sum + s.val, 0);
+}
+
+function fmtCompactK(value) {
+  return `£${Math.round(value / 1000).toLocaleString()}k`;
+}
+
+function projectedUsState(extraMonths = 0, fx = gNwFx) {
+  const eqYears = Math.min(US_SS_FULL_EQ_YEARS, US_SS_BASE_EQ_YEARS + extraMonths / 12);
+  const usd = Math.round(US_SS_FULL_USD * (eqYears / US_SS_FULL_EQ_YEARS));
+  return { eqYears, usd, gbp: Math.round(usd * fx) };
+}
 
 function renderNwBreakdown(segs, label) {
   const total    = segs.reduce((s, x) => s + x.val, 0);
+  const liquid   = liquidNetWorthFromSegments(segs);
   const totalUSD = total / gNwFx;
   const ukRank = total < 15000 ? 'around median' : total < 30000 ? 'top 30%' : total < 60000 ? 'top 20%' : total < 100000 ? 'top 10%' : 'top 5%';
   const usRank = totalUSD < 39000 ? 'below median' : totalUSD < 80000 ? 'above median' : totalUSD < 150000 ? 'top 30%' : 'top 15%';
   document.getElementById('nw-breakdown').innerHTML =
     `<div style="font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:2px;">` +
     `£${total.toLocaleString()} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>` +
-    `<div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.9rem;">FX £${gNwFx.toFixed(3)}/$ · ${label}</div>` +
+    `<div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.9rem;">(${fmtCompactK(liquid)} liquid) · FX £${gNwFx.toFixed(3)}/$ · ${label}</div>` +
     segs.map(s => {
       const pct = ((s.val / total) * 100).toFixed(1);
       return `<div style="padding:0.75rem 1rem;background:var(--card2);border-radius:10px;border-left:3px solid ${s.color};display:flex;justify-content:space-between;align-items:center;">` +
@@ -1541,11 +1549,14 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
     { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * fx),color: '#6366f1', note: 'Chase US — pipeline hub · $1,500 min' },
   ];
   const total = segments.reduce((s, x) => s + x.val, 0);
+  const liquid = liquidNetWorthFromSegments(segments);
   const nwFmt = `£${Math.round(total / 1000).toLocaleString()}k`;
   const heroNw = document.getElementById('hero-nw-value');
   const spNw   = document.getElementById('sp-nw-value');
-  if (heroNw) heroNw.textContent = nwFmt;
-  if (spNw)   spNw.textContent   = nwFmt;
+  const spNwNote = document.getElementById('sp-nw-note');
+  if (heroNw) heroNw.innerHTML = `${nwFmt} <span style="font-size:0.38em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
+  if (spNw)   spNw.innerHTML   = `${nwFmt} <span style="font-size:0.38em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
+  if (spNwNote) spNwNote.textContent = 'Total incl. pension · liquid shown beside figure';
 
   gNwBases = { ukSav: atom+monzo+chase, pension, sip, sipCompleted, fidUSD, rothUSD, usCashUSD: chaseUSUSD||0, segs: segments, mktLabel };
   renderNwBreakdown(segments, mktLabel);
@@ -1646,8 +1657,6 @@ function updateFire() {
   const pensionAccessAge = 57;
   const rothAccessAge = 59.5;
   const ukStateIncome = 12548;
-  const usStateIncome = Math.round(37000 * 0.77);
-  const stateIncome = (ukStateOn ? ukStateIncome : 0) + (usStateOn ? usStateIncome : 0);
   const accShare = 666 / 2167;
   const penShare = 1020 / 2167;
   const rothShare = 481 / 2167;
@@ -1705,21 +1714,36 @@ function updateFire() {
     return { ok: true, total: accessible + pension + roth };
   }
 
-  function findFireMonths(giftMonthlyRun) {
+  function findFireMonthsForScenario(giftMonthlyRun, includeUkState, includeUsState) {
+    let assumedMonths = 0;
     let months = 0;
-    while (months < 75 * 12 && !runProjection(months, giftMonthlyRun, stateIncome).ok) months++;
-    return months;
+    let usProjection = projectedUsState(assumedMonths);
+    for (let i = 0; i < 6; i++) {
+      const stateIncomeRun = (includeUkState ? ukStateIncome : 0) + (includeUsState ? usProjection.gbp : 0);
+      months = 0;
+      while (months < 75 * 12 && !runProjection(months, giftMonthlyRun, stateIncomeRun).ok) months++;
+      const nextProjection = projectedUsState(months);
+      if (Math.abs(months - assumedMonths) < 1 && Math.abs(nextProjection.gbp - usProjection.gbp) < 50) {
+        usProjection = nextProjection;
+        return { months, stateIncome: stateIncomeRun, usProjection };
+      }
+      assumedMonths = months;
+      usProjection = nextProjection;
+    }
+    return {
+      months,
+      stateIncome: (includeUkState ? ukStateIncome : 0) + (includeUsState ? usProjection.gbp : 0),
+      usProjection
+    };
   }
 
-  const months = findFireMonths(giftMonthly);
-  const monthsWithGift = findFireMonths(16000 / 12);
-  const monthsWithoutGift = findFireMonths(0);
-  function findFireMonthsForState(giftMonthlyRun, stateIncomeRun) {
-    let months = 0;
-    while (months < 75 * 12 && !runProjection(months, giftMonthlyRun, stateIncomeRun).ok) months++;
-    return months;
-  }
-  const monthsSelfFunded = findFireMonthsForState(giftMonthly, 0);
+  const scenario = findFireMonthsForScenario(giftMonthly, ukStateOn, usStateOn);
+  const months = scenario.months;
+  const stateIncome = scenario.stateIncome;
+  const usStateProjection = scenario.usProjection;
+  const monthsWithGift = findFireMonthsForScenario(16000 / 12, ukStateOn, usStateOn).months;
+  const monthsWithoutGift = findFireMonthsForScenario(0, ukStateOn, usStateOn).months;
+  const monthsSelfFunded = findFireMonthsForScenario(giftMonthly, false, false).months;
   const fireAge = Math.min(Math.round(currentAge + months / 12), 90);
   const yearsToFire = Math.max(0, months / 12);
   const yearsToFireRounded = Math.max(0, Math.round(yearsToFire));
@@ -1761,8 +1785,18 @@ function updateFire() {
   document.getElementById('fire-num').textContent   = fmtBig(fireNum);
   document.getElementById('fire-67').textContent    = fmtBig(p67);
   document.getElementById('fire-state-cover').textContent = stateIncome === 0 ? '£0/yr' : '£' + stateIncome.toLocaleString() + '/yr from age 67';
+  const usSourceAmt = document.getElementById('fire-us-source-amt');
+  const usSourceNote = document.getElementById('fire-us-source-note');
+  if (usSourceAmt) usSourceAmt.textContent = `~£${usStateProjection.gbp.toLocaleString()}/yr`;
+  if (usSourceNote) usSourceNote.textContent = `Heuristic in GBP · ~${usStateProjection.eqYears.toFixed(1)} eq. SSA years by stop-work`;
   const rightNote = document.getElementById('fire-right-note');
-  if (stateIncome > 0) { rightNote.textContent = `In this scenario, state income starts at 67 and adds £${stateIncome.toLocaleString()}/yr, which supports the lifestyle target from that age onward.`; rightNote.style.display = ''; }
+  if (stateIncome > 0) {
+    const sources = [];
+    if (ukStateOn) sources.push('UK state pension £12,548/yr');
+    if (usStateOn) sources.push(`US Social Security ~£${usStateProjection.gbp.toLocaleString()}/yr using ~${usStateProjection.eqYears.toFixed(1)} equivalent SSA years`);
+    rightNote.textContent = `In this scenario, state income starts at 67. ${sources.join(' + ')} support the lifestyle target from that age onward.`;
+    rightNote.style.display = '';
+  }
   else { rightNote.style.display = 'none'; }
   document.getElementById('fire-headstart').textContent = stateLiftYears > 0.5 ? Math.round(stateLiftYears) + ' years earlier than self-funded' : yearsBefore67 + ' years before 67';
   document.getElementById('fire-now-age').textContent = Math.round(currentAge);
