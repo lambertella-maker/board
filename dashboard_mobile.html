@@ -1949,9 +1949,10 @@ updateFire();
 
 // ── LIFE GOALS ────────────────────────────────────────────────────────────────
 function updateGoals() {
-  // CSP progress — clean Amex history since Jan 30 2026 (count month you're IN, not completed)
+  // CSP progress — count completed payment cycles matching Chase's reporting (not partial current month)
   const cspStart    = new Date(2026, 0, 30);
-  const cspMonths   = Math.max(1, (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth()) + 1);
+  let cspMonths     = (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth());
+  if (today.getDate() < cspStart.getDate()) cspMonths = Math.max(0, cspMonths - 1);
   const cspMonthsLeft = Math.max(0, 9 - cspMonths);
   document.getElementById('csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
   document.getElementById('csp-months-lbl').textContent = cspMonths === 1 ? `1 month in` : `${cspMonths} months in`;

@@ -1082,7 +1082,8 @@ liveEstimates();
 // ── GOAL PROGRESS BARS ────────────────────────────────────────────────────────
 (function() {
   const cspStart  = new Date(2026, 0, 30);
-  const cspMonths = Math.max(1, (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth()) + 1);
+  let cspMonths   = (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth());
+  if (today.getDate() < cspStart.getDate()) cspMonths = Math.max(0, cspMonths - 1);
   document.getElementById('m-csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
   document.getElementById('m-csp-lbl').textContent  = cspMonths === 1 ? `1mo in` : `${cspMonths}mo in`;
 
