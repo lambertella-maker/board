@@ -340,8 +340,7 @@
   <div class="accounts-grid">
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Atom Bank</div><div class="acct-bal" id="m-bal-atom" style="color:var(--green)">—</div><div class="acct-note">3.49% AER · EF core</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Monzo EF (3.15%)</div><div class="acct-bal" id="m-bal-efsavings" style="color:var(--green)">—</div><div class="acct-note">3.15% AER · max 2 withdrawals</div></div>
-    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Monzo Move Fund</div><div class="acct-bal" id="m-bal-monzo" style="color:var(--cyan)">—</div><div class="acct-note">2.75% AER · move pot</div></div>
-    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">£1,200 avg</div><div class="acct-note">Salary hub · varies by day</div></div>
+<div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">£1,200 avg</div><div class="acct-note">Salary hub · varies by day</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$625/mo · active $590.72 + legacy $2,075.91</div></div>
@@ -939,7 +938,7 @@ function liveEstimates() {
   const fmt = (v, p='£') => p + v.toLocaleString('en-GB');
   document.getElementById('m-bal-atom').textContent       = fmt(atomEst);
   document.getElementById('m-bal-efsavings').textContent  = fmt(efSavingsEst);
-  document.getElementById('m-bal-monzo').textContent      = fmt(monzoEst);
+  // monzoEst feeds NW chart only (move fund is goal-tracked in Goal 2, no account card)
   // Hero EF card
   const efTotal = atomEst + efSavingsEst;
   const mHeroEfVal = document.getElementById('m-hero-ef-value');
