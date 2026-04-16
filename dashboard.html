@@ -947,7 +947,7 @@
   if (!label || !bar) return;
 
   const today = new Date();
-  const r = 0.02 / 12;
+  const r = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 3, 24);
   const potAnchor = 136.47;
   const moveTarget = 2700;
@@ -2063,7 +2063,7 @@ function updateGoals() {
   document.getElementById('csp-months-lbl').textContent = cspMonths === 1 ? `1 month in` : `${cspMonths} months in`;
 
   // Move pot — £230/mo from Apr 24 2026 onward. July rent relief stays in cashflow for flexibility.
-  const r        = 0.02 / 12;
+  const r        = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 3, 24);
   const potAnchor = 136.47;
   function potContribution(d) {
