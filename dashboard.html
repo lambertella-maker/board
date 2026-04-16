@@ -201,7 +201,7 @@
   .progress-labels { display:flex; justify-content:space-between; font-size:0.72rem; color:var(--muted); }
 
   /* ACCOUNTS */
-  .accounts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+  .accounts-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
   .account-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.2rem; }
   .account-flag { font-size:1.2rem; margin-bottom:0.5rem; }
   .account-name { font-size:0.78rem; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.2rem; }
@@ -500,8 +500,8 @@
       </div>
       <div class="metric-card">
         <div class="metric-label">Emergency Fund</div>
-        <div class="metric-value" style="color:var(--cyan)">£13,143</div>
-        <div class="metric-sub">Atom £11,143 + Monzo £2k</div>
+        <div class="metric-value" id="hero-ef-value" style="color:var(--cyan)">£13,180</div>
+        <div class="metric-sub" id="hero-ef-sub">Atom £11,176 + Monzo EF £2,004</div>
         <span class="metric-badge badge-cyan">6 months bare-bones covered</span>
       </div>
       <div class="metric-card">
@@ -517,10 +517,11 @@
   <!-- ACCOUNTS -->
   <section>
     <h2 class="section-title">Your <span>Accounts</span></h2>
-    <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.8rem;">Savings anchored 24 Feb 2026 · Pension anchored 3 Mar 2026 (£18,440) · Investments: live prices when server online · <span style="color:var(--indigo);">All estimates update on page load</span></div>
+    <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.8rem;">Savings anchored 16 Apr 2026 · Pension anchored 3 Mar 2026 (£18,440) · Investments: live prices when server online · <span style="color:var(--indigo);">All estimates update on page load</span></div>
     <div class="accounts-grid">
-      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£11,144</div><div class="account-rate">3.49% AER · interest daily-compounded</div><div class="account-note">Emergency fund · No withdrawals</div></div>
-      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo</div><div class="account-balance" id="bal-monzo" style="color:var(--cyan)">£2,000</div><div class="account-rate">2.75% AER · interest daily-compounded</div><div class="account-note">Instant liquidity buffer</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£11,176</div><div class="account-rate">3.49% AER · interest daily-compounded</div><div class="account-note">Emergency fund core · No withdrawals</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo EF (3.15%)</div><div class="account-balance" id="bal-efsavings" style="color:var(--green)">£2,004</div><div class="account-rate">3.15% AER · max 2 withdrawals/yr</div><div class="account-note">EF pot · Monzo</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo Move Fund</div><div class="account-balance" id="bal-monzo" style="color:var(--cyan)">£136</div><div class="account-rate">2.75% AER · move pot</div><div class="account-note">Flat move pot · +£230/mo from Apr</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">£1,200 avg</div><div class="account-rate">Current account · typical float</div><div class="account-note">Salary hub · min £1,000 · varies by day</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$3,948</div><div class="account-rate">+$475/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Active brokerage · Advisor holdings separate</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$2,667</div><div class="account-rate">+$625/mo to brokerage Roth · $7,500/yr limit</div><div class="account-note">Split: $590.72 active + $2,075.91 legacy at Fidelity Advisor</div></div>
@@ -651,9 +652,9 @@
         <div class="pillar-icon">🛡️</div>
         <div class="pillar-name">Pillar 7 · Foundation</div>
         <div class="pillar-title">Emergency Fund</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Total</span><span class="pillar-stat-value" style="color:var(--cyan)">£13,143</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Atom Bank (3.49%)</span><span class="pillar-stat-value">£11,143</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Monzo (2.75%)</span><span class="pillar-stat-value">£2,000</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Total</span><span class="pillar-stat-value" id="pillar-ef-total" style="color:var(--cyan)">£13,180</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Atom Bank (3.49%)</span><span class="pillar-stat-value" id="pillar-ef-atom">£11,176</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Monzo EF (3.15% · max 2 withdrawals)</span><span class="pillar-stat-value" id="pillar-ef-savings">£2,004</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target</span><span class="pillar-stat-value">£16–18k (no rush)</span></div>
         <div class="pillar-why">6 months of expenses, earning above-inflation interest, FSCS-protected, split across two accounts for liquidity tiering. The foundation that lets every other pillar take risk. Most people never build this properly. You have.</div>
       </div>
@@ -1617,7 +1618,7 @@ function nwSliderChange(yrs) {
   const r7 = 0.07/12, r55 = 0.055/12, FX = gNwFx;
   const fvc = (pmt, mo, r) => r > 0 ? pmt * ((Math.pow(1+r,mo)-1)/r) : pmt*mo;
   const segs = [
-    { label:'UK Savings',     val: Math.round(gNwBases.ukSav + 200*months),                                                              color:'#22d3ee', note:'Atom · Monzo · Chase UK — liquid' },
+    { label:'UK Savings',     val: Math.round(gNwBases.ukSav + 200*months),                                                              color:'#22d3ee', note:'Atom · Monzo EF · Move Fund · Chase UK' },
     { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(1020,months,r55)),                         color:'#818cf8', note:'Aviva workplace pension · 5.5% CAGR est.' },
     { label:'ABBV SIP Shares',val: Math.round(gNwBases.sip + 300*Math.min(months, Math.max(0,60-gNwBases.sipCompleted))),                color:'#f472b6', note:'Locked 5yr · acquisition cost est.' },
     { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+r7,months) + fvc(475,months,r7))*FX),                         color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
@@ -1632,7 +1633,7 @@ function nwSliderChange(yrs) {
 function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, fx = 0.77, mktLabel = 'Estimated · CAGR model', sip = 0, sipCompleted = 0) {
   gNwFx = fx;
   const segments = [
-    { label: 'UK Savings',     val: atom + monzo + chase,            color: '#22d3ee', note: 'Atom · Monzo · Chase UK — liquid' },
+    { label: 'UK Savings',     val: atom + monzo + chase,            color: '#22d3ee', note: 'Atom · Monzo EF · Move Fund · Chase UK' },
     { label: 'AbbVie Pension', val: pension,                          color: '#818cf8', note: 'Aviva workplace pension · 5.5% CAGR est.' },
     { label: 'ABBV SIP Shares',val: sip,                             color: '#f472b6', note: 'Locked 5yr · acquisition cost est.' },
     { label: 'US Brokerage',   val: Math.round(fidUSD * fx),         color: '#34d399', note: 'Fidelity FSKAX / FTIHX / FXNAX' },
@@ -1914,10 +1915,13 @@ function liveEstimates() {
     return Math.max(0, y * 12 + m);
   };
 
-  // UK SAVINGS (AER daily compound)
-  const daysA = daysSince(ANCHOR);
-  const atomEst  = Math.round(11143.51 * Math.pow(1.0349, daysA / 365));
-  const monzoEst = Math.round(2000.00  * Math.pow(1.0275, daysA / 365));
+  // UK SAVINGS (AER daily compound — anchored 16 Apr 2026 after Monzo EF split)
+  const SAVINGS_ANCHOR = new Date(2026, 3, 16); // Apr 16 2026
+  const daysA    = daysSince(ANCHOR);            // kept for pension/investments (Feb 24 anchor)
+  const daysSav  = daysSince(SAVINGS_ANCHOR);    // savings reanchored Apr 16
+  const atomEst      = Math.round(11176    * Math.pow(1.0349, daysSav / 365));
+  const efSavingsEst = Math.round(2004.42  * Math.pow(1.0315, daysSav / 365));  // Monzo EF pot · 3.15% AER
+  const monzoEst     = Math.round(136.47   * Math.pow(1.0275, daysSav / 365));  // move fund only
 
   // CHASE UK — deterministic schedule from anchor date. To reanchor: change ANCHOR_DATE + ANCHOR_BAL only.
   // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus. Amex (4th) is AFTER anchor.
@@ -2017,8 +2021,22 @@ function liveEstimates() {
 
   // Update DOM
   const fmt = (v, prefix='£') => prefix + v.toLocaleString('en-GB');
-  document.getElementById('bal-atom').textContent    = fmt(atomEst);
-  document.getElementById('bal-monzo').textContent   = fmt(monzoEst);
+  document.getElementById('bal-atom').textContent       = fmt(atomEst);
+  document.getElementById('bal-efsavings').textContent  = fmt(efSavingsEst);
+  document.getElementById('bal-monzo').textContent      = fmt(monzoEst);
+  // Hero EF card (Atom + EF Savings; Monzo move fund is separate)
+  const efTotal = atomEst + efSavingsEst;
+  const heroEfVal = document.getElementById('hero-ef-value');
+  const heroEfSub = document.getElementById('hero-ef-sub');
+  if (heroEfVal) heroEfVal.textContent = fmt(efTotal);
+  if (heroEfSub) heroEfSub.textContent = `Atom ${fmt(atomEst)} + Monzo EF ${fmt(efSavingsEst)}`;
+  // Pillar 7
+  const p7total = document.getElementById('pillar-ef-total');
+  const p7atom  = document.getElementById('pillar-ef-atom');
+  const p7sav   = document.getElementById('pillar-ef-savings');
+  if (p7total) p7total.textContent = fmt(efTotal);
+  if (p7atom)  p7atom.textContent  = fmt(atomEst);
+  if (p7sav)   p7sav.textContent   = fmt(efSavingsEst);
   // Chase UK: static display (schedule estimate too volatile to display; kept for NW calc only)
   const chaseEl = document.getElementById('bal-chase');
   if (chaseEl) { chaseEl.textContent = '£1,200 avg'; chaseEl.style.color = 'var(--indigo)'; }
@@ -2029,7 +2047,7 @@ function liveEstimates() {
   if (pillarEl) pillarEl.textContent = fmt(pensionEst);
   const pensionSubEl = document.getElementById('hero-pension-sub');
   if (pensionSubEl) pensionSubEl.textContent = 'Cash, investments, pension';
-  drawNetWorthChart(atomEst, monzoEst, chaseEst, pensionEst, fidelityEst, rothEst, chaseUSEst, liveFX, mktLabel, sipEst, sipCompleted);
+  drawNetWorthChart(atomEst, efSavingsEst + monzoEst, chaseEst, pensionEst, fidelityEst, rothEst, chaseUSEst, liveFX, mktLabel, sipEst, sipCompleted);
 }
 liveEstimates();
 updateFire();
