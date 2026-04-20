@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-04-20T12:00:00Z">
+<meta name="finance-build" content="2026-04-20T13:00:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-04-20T12:00:00Z';
+    const build = '2026-04-20T13:00:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -350,33 +350,47 @@
 
   /* LIFE ARCHITECTURE */
   .life-architecture { margin-top:1.2rem; }
-  .life-arch-grid { display:grid; grid-template-columns:1.15fr 0.85fr; gap:1rem; align-items:stretch; }
-  .life-arch-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.3rem; }
-  .life-arch-kicker { font-size:0.68rem; font-weight:800; color:var(--indigo); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.3rem; }
-  .life-arch-title { font-size:1.05rem; font-weight:800; margin-bottom:0.35rem; }
-  .life-arch-copy { font-size:0.78rem; color:var(--soft); line-height:1.6; margin-bottom:1rem; }
-  .life-arch-timeline { display:grid; grid-template-columns:repeat(4,1fr); gap:0.7rem; }
-  .life-arch-step { background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:0.75rem; min-width:0; }
-  .life-arch-year { font-size:0.64rem; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.25rem; }
-  .life-arch-step strong { display:block; font-size:0.82rem; margin-bottom:0.2rem; color:var(--text); }
-  .life-arch-step span { display:block; font-size:0.68rem; color:var(--soft); line-height:1.45; }
-  .life-arch-metrics { display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; margin-bottom:0.9rem; }
-  .life-arch-metric { background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.18); border-radius:12px; padding:0.75rem; }
-  .life-arch-label { font-size:0.64rem; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.25rem; }
-  .life-arch-value { font-size:1.2rem; font-weight:800; color:var(--green); }
-  .life-arch-note { font-size:0.68rem; color:var(--soft); line-height:1.45; margin-top:0.15rem; }
-  .life-arch-rules { display:flex; flex-direction:column; gap:0.45rem; }
-  .life-arch-rule { display:flex; justify-content:space-between; gap:0.8rem; padding:0.48rem 0; border-bottom:1px solid var(--border); font-size:0.74rem; }
-  .life-arch-rule:last-child { border-bottom:none; }
-  .life-arch-rule span:first-child { color:var(--muted); }
-  .life-arch-rule span:last-child { color:var(--text); font-weight:700; text-align:right; }
+  .life-shell { background:linear-gradient(135deg,rgba(129,140,248,0.1),rgba(34,211,238,0.05)); border:1px solid rgba(129,140,248,0.24); border-radius:16px; padding:1.35rem; }
+  .life-head { display:grid; grid-template-columns:1.1fr 0.9fr; gap:1rem; align-items:end; margin-bottom:1rem; }
+  .life-kicker { font-size:0.68rem; font-weight:800; color:var(--cyan); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.35rem; }
+  .life-title { font-size:1.55rem; font-weight:850; line-height:1.1; margin-bottom:0.4rem; }
+  .life-copy { font-size:0.82rem; color:var(--soft); line-height:1.65; max-width:680px; }
+  .life-funding { background:rgba(8,12,24,0.45); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:0.85rem; }
+  .life-funding-row { display:flex; justify-content:space-between; gap:1rem; padding:0.38rem 0; border-bottom:1px solid rgba(255,255,255,0.07); font-size:0.74rem; }
+  .life-funding-row:last-child { border-bottom:none; }
+  .life-funding-row span:first-child { color:var(--muted); }
+  .life-funding-row span:last-child { color:var(--text); font-weight:800; text-align:right; }
+  .life-lanes { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; margin-bottom:0.85rem; }
+  .life-lane { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:0.95rem; min-width:0; }
+  .life-lane-label { font-size:0.62rem; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.35rem; }
+  .life-lane-title { font-size:0.95rem; font-weight:800; margin-bottom:0.35rem; }
+  .life-lane-copy { font-size:0.72rem; color:var(--soft); line-height:1.55; }
+  .life-lane strong { color:var(--green); font-weight:800; }
+  .life-bottom { display:grid; grid-template-columns:1.1fr 0.9fr; gap:0.85rem; }
+  .life-track, .life-europe { background:rgba(15,22,41,0.82); border:1px solid var(--border); border-radius:12px; padding:0.95rem; }
+  .life-track-title, .life-europe-title { font-size:0.78rem; font-weight:800; color:var(--text); margin-bottom:0.65rem; }
+  .life-milestones { display:grid; grid-template-columns:repeat(4,1fr); gap:0.55rem; }
+  .life-milestone { border-left:2px solid var(--indigo); padding-left:0.6rem; min-width:0; }
+  .life-milestone:nth-child(2) { border-color:var(--cyan); }
+  .life-milestone:nth-child(3) { border-color:var(--green); }
+  .life-milestone:nth-child(4) { border-color:var(--amber); }
+  .life-milestone-value { font-size:1.05rem; font-weight:850; color:var(--text); }
+  .life-milestone-label { font-size:0.64rem; color:var(--soft); line-height:1.45; margin-top:0.15rem; }
+  .life-europe-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.55rem; margin-bottom:0.55rem; }
+  .life-europe-stat { background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.16); border-radius:9px; padding:0.55rem; }
+  .life-europe-stat span { display:block; font-size:0.58rem; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.2rem; }
+  .life-europe-stat strong { display:block; font-size:0.85rem; color:var(--amber); }
+  .life-europe-copy { font-size:0.7rem; color:var(--soft); line-height:1.55; }
+  .life-europe-copy strong { color:var(--text); }
 
   /* PAYE CHECKER */
   .paye-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem; }
   @media(max-width:700px){ .paye-grid { grid-template-columns:1fr; } }
   @media(max-width:900px){
-    .life-arch-grid { grid-template-columns:1fr; }
-    .life-arch-timeline { grid-template-columns:repeat(2,1fr); }
+    .life-head, .life-bottom { grid-template-columns:1fr; }
+    .life-lanes { grid-template-columns:1fr; }
+    .life-milestones { grid-template-columns:repeat(2,1fr); }
+    .life-europe-grid { grid-template-columns:1fr; }
   }
   .paye-input-group { margin-bottom:0.7rem; }
   .paye-input-group label { display:block; font-size:0.68rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.25rem; }
@@ -406,7 +420,7 @@
     <button onclick="scrollToSection('goals')">Goals</button>
     <button onclick="scrollToSection('tax')">Tax</button>
     <button onclick="scrollToSection('investments')">Investments</button>
-    <button onclick="scrollToSection('fire')">Optionality</button>
+    <button onclick="scrollToSection('life-architecture')">Optionality</button>
   </div>
   <div style="display:flex;align-items:center;gap:4px">
     <div class="date-pill" id="live-date"></div>
@@ -809,71 +823,6 @@
 
     </div>
 
-    <!-- Long Horizon: Southern Europe Bolthole -->
-    <div style="margin-top:1.2rem; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.25); border-radius:12px; padding:1.4rem;">
-
-      <!-- Header -->
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
-        <div>
-          <div style="font-size:0.6rem; color:var(--amber); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Long Horizon · Lifestyle Asset</div>
-          <div style="font-size:1.1rem; font-weight:700;">Southern Europe Bolthole</div>
-          <div style="font-size:0.72rem; color:var(--soft); margin-top:3px;">Spain · Portugal · SW France &nbsp;·&nbsp; village house or small flat</div>
-        </div>
-        <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:flex-start;">
-          <div style="text-align:right;"><div style="font-size:0.58rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Purchase</div><div style="font-size:0.95rem; font-weight:700; color:var(--green);">€50–80k</div></div>
-          <div style="text-align:right;"><div style="font-size:0.58rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Buy costs</div><div style="font-size:0.95rem; font-weight:700; color:var(--amber);">+8%</div></div>
-          <div style="text-align:right;"><div style="font-size:0.58rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Running/yr</div><div style="font-size:0.95rem; font-weight:700; color:var(--soft);">€2–4k</div></div>
-        </div>
-      </div>
-
-      <!-- Timeline -->
-      <div style="display:flex; align-items:flex-start; gap:0; margin-bottom:1.2rem;">
-        <div style="flex:0 0 auto; text-align:center;">
-          <div style="width:8px; height:8px; background:var(--text); border-radius:50%; margin:0 auto 4px;"></div>
-          <div style="font-size:0.6rem; color:var(--text); font-weight:700; white-space:nowrap;">Now</div>
-          <div style="font-size:0.56rem; color:var(--muted); white-space:nowrap;">could buy · not yet</div>
-        </div>
-        <div style="flex:1; height:2px; background:rgba(129,140,248,0.25); margin-top:4px;"></div>
-        <div style="flex:0 0 auto; text-align:center;">
-          <div style="width:8px; height:8px; background:var(--indigo); border-radius:50%; margin:0 auto 4px;"></div>
-          <div style="font-size:0.6rem; color:var(--indigo); font-weight:700; white-space:nowrap;">ILR Sep 2029</div>
-          <div style="font-size:0.56rem; color:var(--muted); white-space:nowrap;">can stay freely</div>
-        </div>
-        <div style="flex:1; height:2px; background:rgba(52,211,153,0.2); margin-top:4px;"></div>
-        <div style="flex:0 0 auto; text-align:center;">
-          <div style="width:8px; height:8px; background:var(--green); border-radius:50%; margin:0 auto 4px;"></div>
-          <div style="font-size:0.6rem; color:var(--green); font-weight:700; white-space:nowrap;">UK home first</div>
-          <div style="font-size:0.56rem; color:var(--muted); white-space:nowrap;">protect SDLT relief</div>
-        </div>
-        <div style="flex:1; height:2px; background:rgba(251,191,36,0.25); margin-top:4px;"></div>
-        <div style="flex:0 0 auto; text-align:center;">
-          <div style="width:8px; height:8px; background:var(--amber); border-radius:50%; margin:0 auto 4px;"></div>
-          <div style="font-size:0.6rem; color:var(--amber); font-weight:700; white-space:nowrap;">EU place ~2040s</div>
-          <div style="font-size:0.56rem; color:var(--muted); white-space:nowrap;">lifestyle · optionality</div>
-        </div>
-      </div>
-
-      <!-- 3 info tiles -->
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; margin-bottom:0.8rem;">
-        <div style="background:rgba(34,211,238,0.05); border:1px solid rgba(34,211,238,0.18); border-radius:8px; padding:0.8rem;">
-          <div style="font-size:0.58rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:5px;">Anyone can buy in EU</div>
-          <div style="font-size:0.67rem; color:var(--soft); line-height:1.5;">No EU residency or ILR needed to purchase. US citizens, UK residents, anyone — hire a local notaire, get a local tax number, transfer funds. Your friend's mom bought in Salies exactly this way.</div>
-        </div>
-        <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.18); border-radius:8px; padding:0.8rem;">
-          <div style="font-size:0.58rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:5px;">What ILR changes</div>
-          <div style="font-size:0.67rem; color:var(--soft); line-height:1.5;">Spending time there, not buying rights. Pre-ILR: trips abroad >180 days/yr break your qualifying clock — own the property but keep stays short. Post-ILR: no qualifying rules, spend months at a time freely. Only limit: don't leave UK for >2 consecutive years or you lose ILR.</div>
-        </div>
-        <div style="background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.18); border-radius:8px; padding:0.8rem;">
-          <div style="font-size:0.58rem; color:var(--amber); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:5px;">UK SDLT trap — sequence matters</div>
-          <div style="font-size:0.67rem; color:var(--soft); line-height:1.5;">Own anything abroad → lose first-time buyer SDLT relief + 3% surcharge on UK purchase. £12–15k extra on a £400k flat. Buy UK first, then EU. No getting around this.</div>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <div style="font-size:0.63rem; color:var(--muted); line-height:1.5; border-top:1px solid rgba(255,255,255,0.06); padding-top:0.65rem;">
-        Not a near-term goal · sequence: ILR → UK home → EU place ~2040s · village house or flat · sell anytime · no commitment required
-      </div>
-    </div>
   </section>
 
 <script>
@@ -1398,68 +1347,74 @@
     </div>
     </section>
 
-    <!-- Life Architecture -->
+    <!-- Life Optionality -->
     <section id="life-architecture" class="life-architecture">
-      <h2 class="section-title">Life <span>Architecture</span></h2>
-      <div class="life-arch-grid">
-        <div class="life-arch-card">
-          <div class="life-arch-kicker">What the wealth is for</div>
-          <div class="life-arch-title">Milestones without pressure</div>
-          <div class="life-arch-copy">Keep the current engine intact first. After the 2027 move, redirect old move-pot money into a flexible Life Milestones Fund for wedding, family, relocation, home, or a future pause.</div>
-          <div class="life-arch-timeline">
-            <div class="life-arch-step">
-              <div class="life-arch-year">Now to 2027</div>
-              <strong>Build the base</strong>
-              <span>Flat move first. Keep £850/mo investing, pension, SIP, emergency fund, and visa stability protected.</span>
-            </div>
-            <div class="life-arch-step">
-              <div class="life-arch-year">After move</div>
-              <strong>Start milestones</strong>
-              <span>Begin £150/mo if rent lands well. Push toward £200-245/mo if the flat is under budget.</span>
-            </div>
-            <div class="life-arch-step">
-              <div class="life-arch-year">2029-2030</div>
-              <strong>Unlock choices</strong>
-              <span>ILR target, stronger career leverage, and first real checkpoint for family, wedding, city, and home plans.</span>
-            </div>
-            <div class="life-arch-step">
-              <div class="life-arch-year">2030s</div>
-              <strong>Shared life</strong>
-              <span>Use the fund for an intimate wedding, Future Family cushion, location choice, or a career pause.</span>
-            </div>
+      <h2 class="section-title">Life <span>Optionality</span></h2>
+      <div class="life-shell">
+        <div class="life-head">
+          <div>
+            <div class="life-kicker">The point of the machine</div>
+            <div class="life-title">A bigger life, funded quietly.</div>
+            <div class="life-copy">The dashboard is not only about net worth. It is about making room for a calmer home, an intimate wedding, children if you choose them, family generosity, and the ability to pick London, Edinburgh, the US, or Europe from strength.</div>
+          </div>
+          <div class="life-funding">
+            <div class="life-funding-row"><span>Start serious funding</span><span>After Jun-Jul 2027 move</span></div>
+            <div class="life-funding-row"><span>Monthly baseline</span><span>£150/mo</span></div>
+            <div class="life-funding-row"><span>If rent lands well</span><span>£200-245/mo</span></div>
+            <div class="life-funding-row"><span>Bonus rule</span><span>10% of net bonus cash</span></div>
+            <div class="life-funding-row"><span>Protect first</span><span>£850/mo Fidelity</span></div>
           </div>
         </div>
 
-        <div class="life-arch-card">
-          <div class="life-arch-kicker">Milestone ladder</div>
-          <div class="life-arch-metrics">
-            <div class="life-arch-metric">
-              <div class="life-arch-label">First target</div>
-              <div class="life-arch-value">£5k</div>
-              <div class="life-arch-note">Small cushion for beauty, travel, wedding deposits, or family setup.</div>
-            </div>
-            <div class="life-arch-metric">
-              <div class="life-arch-label">Strong target</div>
-              <div class="life-arch-value">£15k</div>
-              <div class="life-arch-note">Intimate wedding scale or a meaningful adult milestone fund.</div>
-            </div>
-            <div class="life-arch-metric">
-              <div class="life-arch-label">Family-ready</div>
-              <div class="life-arch-value">£25k</div>
-              <div class="life-arch-note">First-child, relocation, childcare, or leave breathing room.</div>
-            </div>
-            <div class="life-arch-metric">
-              <div class="life-arch-label">Freedom</div>
-              <div class="life-arch-value">£50k</div>
-              <div class="life-arch-note">Real geographic and family optionality without touching retirement.</div>
+        <div class="life-lanes">
+          <div class="life-lane">
+            <div class="life-lane-label">Home & partnership</div>
+            <div class="life-lane-title">Beauty without fragility</div>
+            <div class="life-lane-copy">Target a better flat around £1,700 or less, then let the old move-pot money become the fund for an intimate wedding, hosting, and shared-life deposits.</div>
+          </div>
+          <div class="life-lane">
+            <div class="life-lane-label">Family cushion</div>
+            <div class="life-lane-title">Children from abundance</div>
+            <div class="life-lane-copy">Build own-name cash first, then invest excess later. The first job is flexibility: leave, childcare, family travel, relocation, and future education choices.</div>
+          </div>
+          <div class="life-lane">
+            <div class="life-lane-label">Place freedom</div>
+            <div class="life-lane-title">London, Edinburgh, US, Europe</div>
+            <div class="life-lane-copy">ILR turns immigration risk into choice. The fund becomes a bridge for changing city, changing pace, or choosing a family base that actually fits.</div>
+          </div>
+        </div>
+
+        <div class="life-bottom">
+          <div class="life-track">
+            <div class="life-track-title">Milestone ladder</div>
+            <div class="life-milestones">
+              <div class="life-milestone">
+                <div class="life-milestone-value">£5k</div>
+                <div class="life-milestone-label">First cushion for deposits, travel, beauty, or ceremony costs.</div>
+              </div>
+              <div class="life-milestone">
+                <div class="life-milestone-value">£15k</div>
+                <div class="life-milestone-label">Intimate wedding scale or one major adult milestone.</div>
+              </div>
+              <div class="life-milestone">
+                <div class="life-milestone-value">£25k</div>
+                <div class="life-milestone-label">Family-ready buffer for leave, childcare, or relocation.</div>
+              </div>
+              <div class="life-milestone">
+                <div class="life-milestone-value">£50k</div>
+                <div class="life-milestone-label">Real optionality without touching pension or core investments.</div>
+              </div>
             </div>
           </div>
-          <div class="life-arch-rules">
-            <div class="life-arch-rule"><span>Funding trigger</span><span>After Jun-Jul 2027 flat move</span></div>
-            <div class="life-arch-rule"><span>Monthly start</span><span>£150/mo baseline</span></div>
-            <div class="life-arch-rule"><span>Bonus rule</span><span>10% of net bonus cash</span></div>
-            <div class="life-arch-rule"><span>Keep sacred</span><span>£850/mo Fidelity engine</span></div>
-            <div class="life-arch-rule"><span>Account style</span><span>Own-name cash first, invest excess later</span></div>
+
+          <div class="life-europe">
+            <div class="life-europe-title">European bolthole, folded into optionality</div>
+            <div class="life-europe-grid">
+              <div class="life-europe-stat"><span>Purchase</span><strong>€50-80k</strong></div>
+              <div class="life-europe-stat"><span>Buy costs</span><strong>+8%</strong></div>
+              <div class="life-europe-stat"><span>Running</span><strong>€2-4k/yr</strong></div>
+            </div>
+            <div class="life-europe-copy"><strong>Sequence matters:</strong> ILR first, UK home first if you want first-time buyer relief, then Europe as a lifestyle asset in the 2040s. Spain, Portugal, or SW France stay in the dream file, not the near-term budget.</div>
           </div>
         </div>
       </div>
