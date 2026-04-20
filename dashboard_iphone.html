@@ -343,7 +343,7 @@
 <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">£1,200 avg</div><div class="acct-note">Salary hub · varies by day</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
-    <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$625/mo · active $590.72 + legacy $2,339.15</div></div>
+    <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$625/mo · active $634.00 + legacy $2,339.15</div></div>
   </div>
 
 </div>
@@ -937,8 +937,8 @@ function liveEstimates() {
     monthlyBuyValue(475, new Date(2026, 2, 30))
   );
   const rothEst = Math.round(
-    growUSD(590.72, ANCHOR) +
-    monthlyBuyValue(625, new Date(2026, 2, 30)) +
+    growUSD(634.00, new Date(2026, 3, 20)) +
+    monthlyBuyValue(625, new Date(2026, 3, 30)) +
     growUSD(2339.15, new Date(2026, 3, 20))
   );
   const chaseUSEst = 1600; // static working capital anchor
