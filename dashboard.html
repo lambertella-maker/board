@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-04-20T13:00:00Z">
+<meta name="finance-build" content="2026-04-20T14:00:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-04-20T13:00:00Z';
+    const build = '2026-04-20T14:00:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -1259,51 +1259,61 @@
     </div>
 
     <!-- SIP explainer -->
-    <div class="chart-card" style="margin-bottom:1.4rem; border-color:rgba(129,140,248,0.2); background:rgba(129,140,248,0.02);">
-      <h3>ABBV Share Incentive Plan · How it works</h3>
-      <div style="display:flex; flex-direction:column; gap:0.55rem; font-size:0.81rem; color:var(--soft); line-height:1.6;">
-        <div><span style="color:var(--indigo); font-weight:700;">Why this is good · </span>£150/mo comes out of your salary <em>before</em> income tax and NI — so at your rate, £63 of every £150 is tax you never hand over. You effectively pay £87 in take-home for £150 of shares. AbbVie then matches 1:1, adding another free £150/mo. Total: £300/mo · £3,600/yr accumulating with zero action needed from you.</div>
-        <div><span style="color:var(--amber); font-weight:700;">While you wait · </span>Shares sit in a trustee account on a platform (check your AbbVie benefit portal). Nothing to do — just let them accumulate. Each batch has two milestones: a <strong style="color:var(--text);">3-year vesting mark</strong> (shares unconditionally yours even if you leave AbbVie) and a <strong style="color:var(--text);">5-year tax-free mark</strong> (withdraw with zero income tax, zero NI). Nov 2024 batch → vested Nov 2027, tax-free Nov 2029. The 5-year mark is the target.</div>
-        <div><span style="color:var(--green); font-weight:700;">When to sell · </span>Don't sell each batch as it clears — you'd be logging in monthly forever. Do an <strong style="color:var(--text);">annual sweep</strong> instead: once a year in Nov/Dec, log in and sell everything that's cleared its 5-year mark since your last sweep. 10 minutes, one transaction per year. Move proceeds to Fidelity via Wise as usual. Sell most or all each time — you're already AbbVie-exposed through your salary and pension, so no need to hold extra here.</div>
+    <div class="chart-card" style="margin-bottom:1.4rem; border-color:rgba(244,114,182,0.24); background:linear-gradient(135deg,rgba(244,114,182,0.07),rgba(129,140,248,0.035));">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem; align-items:stretch;">
+        <div style="background:rgba(8,12,24,0.36); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem;">
+          <div style="font-size:0.62rem; font-weight:800; color:var(--pink); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.35rem;">AbbVie SIP</div>
+          <div style="font-size:1.35rem; font-weight:850; line-height:1.1; margin-bottom:0.5rem;">Turn &pound;87 take-home into &pound;300 of shares.</div>
+          <div style="font-size:0.78rem; color:var(--soft); line-height:1.6;">This is payroll doing something unusually efficient: tax saved, employer match added, and shares held until the tax-free mark.</div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:0.55rem; margin-top:0.9rem;">
+            <div style="border-left:2px solid var(--green); padding-left:0.6rem;"><div style="font-size:1.15rem; font-weight:850; color:var(--green);">&pound;1,044</div><div style="font-size:0.66rem; color:var(--soft); line-height:1.35;">real yearly cost</div></div>
+            <div style="border-left:2px solid var(--pink); padding-left:0.6rem;"><div style="font-size:1.15rem; font-weight:850; color:var(--pink);">&pound;3,600</div><div style="font-size:0.66rem; color:var(--soft); line-height:1.35;">shares added per year</div></div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:0.75rem;">
+          <div style="background:var(--card); border:1px solid var(--border); border-radius:12px; padding:0.85rem;">
+            <div style="font-size:0.62rem; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.35rem;">You give</div>
+            <div style="font-size:1.25rem; font-weight:850; color:var(--text);">&pound;150/mo</div>
+            <div style="font-size:0.7rem; color:var(--soft); line-height:1.5; margin-top:0.3rem;">Taken before tax and NI, so the take-home hit is about &pound;87.</div>
+          </div>
+          <div style="background:var(--card); border:1px solid var(--border); border-radius:12px; padding:0.85rem;">
+            <div style="font-size:0.62rem; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.35rem;">AbbVie adds</div>
+            <div style="font-size:1.25rem; font-weight:850; color:var(--green);">&pound;150/mo</div>
+            <div style="font-size:0.7rem; color:var(--soft); line-height:1.5; margin-top:0.3rem;">A 1:1 match. That creates &pound;300 of ABBV shares each month.</div>
+          </div>
+          <div style="background:var(--card); border:1px solid var(--border); border-radius:12px; padding:0.85rem;">
+            <div style="font-size:0.62rem; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.35rem;">You do</div>
+            <div style="font-size:1.25rem; font-weight:850; color:var(--cyan);">Nothing</div>
+            <div style="font-size:0.7rem; color:var(--soft); line-height:1.5; margin-top:0.3rem;">Let batches mature. Confirm cost basis once for future US tax reporting.</div>
+          </div>
+        </div>
       </div>
-      <div style="margin-top:1rem; border-top:1px solid var(--border); padding-top:0.9rem;">
-        <div style="font-size:0.8rem; font-weight:700; color:var(--text); margin-bottom:0.15rem;">First annual sweep: <span style="color:var(--amber)">Nov/Dec 2029</span></div>
-        <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.85rem;">1 batch will have cleared its 5-year mark by then (Nov 2024 · £300 at acquisition). From <strong style="color:var(--soft);">Nov/Dec 2030</strong> it's steady state: 12 batches · £3,600 per sweep, every Nov/Dec.</div>
 
-        <div style="font-size:0.68rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-bottom:0.35rem;">Per annual sweep — steady state (Nov/Dec 2030+) · 12 batches · £3,600 at acquisition</div>
-        <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden; font-size:0.76rem; margin-bottom:0.8rem;">
-          <div style="display:grid; grid-template-columns:1fr 0.8fr 0.8fr 1fr; background:var(--card2);">
-            <div style="padding:0.4rem 0.7rem; font-size:0.65rem; font-weight:600; color:var(--muted); text-transform:uppercase;"></div>
-            <div style="padding:0.4rem 0.7rem; font-size:0.65rem; font-weight:600; color:var(--muted); text-transform:uppercase; border-left:1px solid var(--border);">Sell proceeds</div>
-            <div style="padding:0.4rem 0.7rem; font-size:0.65rem; font-weight:600; color:var(--muted); text-transform:uppercase; border-left:1px solid var(--border);">UK tax</div>
-            <div style="padding:0.4rem 0.7rem; font-size:0.65rem; font-weight:600; color:var(--muted); text-transform:uppercase; border-left:1px solid var(--border);">Hits your account *</div>
-          </div>
-          <div style="display:grid; grid-template-columns:1fr 0.8fr 0.8fr 1fr; border-top:1px solid var(--border);">
-            <div style="padding:0.45rem 0.7rem; color:var(--soft);">ABBV flat</div>
-            <div style="padding:0.45rem 0.7rem; border-left:1px solid var(--border);">£3,600</div>
-            <div style="padding:0.45rem 0.7rem; border-left:1px solid var(--border); color:var(--green);">£0</div>
-            <div style="padding:0.45rem 0.7rem; border-left:1px solid var(--border); font-weight:700; color:var(--green);">£3,600</div>
-          </div>
-          <div style="display:grid; grid-template-columns:1fr 0.8fr 0.8fr 1fr; border-top:1px solid var(--border);">
-            <div style="padding:0.45rem 0.7rem; color:var(--soft);">ABBV +20%</div>
-            <div style="padding:0.45rem 0.7rem; border-left:1px solid var(--border);">£4,320</div>
-            <div style="padding:0.45rem 0.7rem; border-left:1px solid var(--border); color:var(--green);">£0</div>
-            <div style="padding:0.45rem 0.7rem; border-left:1px solid var(--border); font-weight:700; color:var(--indigo);">£4,212</div>
-          </div>
-          <div style="display:grid; grid-template-columns:1fr 0.8fr 0.8fr 1fr; border-top:1px solid var(--border);">
-            <div style="padding:0.45rem 0.7rem; color:var(--soft);">ABBV −20%</div>
-            <div style="padding:0.45rem 0.7rem; border-left:1px solid var(--border);">£2,880</div>
-            <div style="padding:0.45rem 0.7rem; border-left:1px solid var(--border); color:var(--green);">£0</div>
-            <div style="padding:0.45rem 0.7rem; border-left:1px solid var(--border); font-weight:700; color:var(--amber);">£2,880</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:0.85rem; margin-top:0.9rem;">
+        <div style="background:rgba(15,22,41,0.72); border:1px solid var(--border); border-radius:12px; padding:0.9rem;">
+          <div style="font-size:0.76rem; font-weight:800; color:var(--text); margin-bottom:0.55rem;">Timing rule</div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:0.5rem;">
+            <div><div style="font-size:0.62rem; color:var(--muted); font-weight:800; text-transform:uppercase;">3 years</div><div style="font-size:0.72rem; color:var(--soft); line-height:1.45; margin-top:0.2rem;">Vested even if you leave.</div></div>
+            <div><div style="font-size:0.62rem; color:var(--muted); font-weight:800; text-transform:uppercase;">5 years</div><div style="font-size:0.72rem; color:var(--soft); line-height:1.45; margin-top:0.2rem;">No UK income tax or NI.</div></div>
+            <div><div style="font-size:0.62rem; color:var(--muted); font-weight:800; text-transform:uppercase;">Annual sweep</div><div style="font-size:0.72rem; color:var(--soft); line-height:1.45; margin-top:0.2rem;">Sell cleared batches each Nov/Dec.</div></div>
           </div>
         </div>
 
-        <div style="font-size:0.72rem; color:var(--muted); line-height:1.7;">
-          <span style="color:var(--soft); font-weight:600;">UK tax: </span>After 5 years, no income tax and no NI on the shares — that's the whole point of the plan. The only possible charge is CGT on any price gain since purchase, and at this scale (£3,600/yr in shares) it's very unlikely to exceed your £3k annual exemption. Effectively £0 UK tax.<br><br>
-          <span style="color:var(--soft); font-weight:600;">US tax — what you need to know: </span>The US doesn't recognise UK SIP rules, so every time you sell shares you owe US tax on the <em>profit</em>. Profit = sale price minus what the shares were worth when you got them (your "cost basis"). Since you'll hold 3+ years before selling, it's taxed at the lower long-term capital gains rate (15%). You report it on Schedule D in your normal annual US return — nothing extra beyond what you already file.<br><br>
-          <span style="color:var(--amber); font-weight:600;">One thing to do now: </span>Log into your SIP platform (AbbVie benefit portal) and confirm it shows the purchase price for each monthly batch going back to Nov 2024. That's the number you'll need in 2029 to calculate your US profit. If it doesn't store it clearly, start keeping your own note. * CGT could apply if total gains across all assets exceed £3k in a tax year.<br><br>
-          <span style="color:var(--green); font-weight:600;">Bottom line — you're still winning by a lot: </span>Your real monthly outlay is £87 (£150 reduced by 42% — 40% higher-rate IT + 2% NI saved via salary sacrifice) = £1,044/year actual cash. In return you receive £3,600 in shares. Worst case (ABBV −20%): you get £2,880 — still 2.8× your cash, zero UK tax. Flat price: £3,600 — 3.4×. ABBV +20%: proceeds £4,320, US CGT £108 on the £720 gain, net £4,212 — 4× your cash. Every scenario is a major win after all tax.
+        <div style="background:rgba(15,22,41,0.72); border:1px solid var(--border); border-radius:12px; padding:0.9rem;">
+          <div style="font-size:0.76rem; font-weight:800; color:var(--text); margin-bottom:0.55rem;">Steady-state sweep</div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:0.5rem;">
+            <div><div style="font-size:1rem; font-weight:850; color:var(--green);">&pound;3,600</div><div style="font-size:0.66rem; color:var(--soft); line-height:1.35;">if ABBV flat</div></div>
+            <div><div style="font-size:1rem; font-weight:850; color:var(--indigo);">~&pound;4,212</div><div style="font-size:0.66rem; color:var(--soft); line-height:1.35;">if ABBV +20%, after est. US tax</div></div>
+            <div><div style="font-size:1rem; font-weight:850; color:var(--amber);">&pound;2,880</div><div style="font-size:0.66rem; color:var(--soft); line-height:1.35;">if ABBV -20%</div></div>
+          </div>
         </div>
+      </div>
+
+      <div style="display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:0.9rem; font-size:0.71rem; color:var(--soft); line-height:1.5;">
+        <div style="flex:1; min-width:210px;"><span style="color:var(--green); font-weight:800;">Action:</span> keep contributing. Confirm each batch shows purchase price/cost basis.</div>
+        <div style="flex:1; min-width:210px;"><span style="color:var(--amber); font-weight:800;">Sell rule:</span> annually sell most or all cleared shares and move proceeds to Fidelity.</div>
+        <div style="flex:1; min-width:210px;"><span style="color:var(--indigo); font-weight:800;">Tax note:</span> UK tax should be zero after 5 years; US tax is only on profit.</div>
       </div>
     </div>
 
