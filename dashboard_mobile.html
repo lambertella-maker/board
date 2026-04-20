@@ -1360,7 +1360,7 @@
           <div class="life-funding">
             <div class="life-funding-row"><span>Start serious funding</span><span>After Jun-Jul 2027 move</span></div>
             <div class="life-funding-row"><span>Monthly baseline</span><span>£150/mo</span></div>
-            <div class="life-funding-row"><span>If rent lands well</span><span>£200-245/mo</span></div>
+            <div class="life-funding-row"><span>Move-pot rule</span><span>£230/mo from now</span></div>
             <div class="life-funding-row"><span>Bonus rule</span><span>10% of net bonus cash</span></div>
             <div class="life-funding-row"><span>Protect first</span><span>£850/mo Fidelity</span></div>
           </div>
@@ -1892,8 +1892,8 @@ function liveEstimates() {
     const todayMs  = today.getTime();
 
     function monthSchedule(y, m) {
-      // Mar 2026 uses bonus-month net. Apr-Jun: £3,735 net − £120 move pot = £3,615. Jul onward: £3,735 net − £245 = £3,490.
-      const salary = (y === 2026 && m === 2) ? 5012 : ((y > 2026 || (y === 2026 && m >= 6)) ? 3490 : 3615);
+      // Mar 2026 uses bonus-month net. From Apr 2026 onward: £3,735 net − £230 move pot = £3,505.
+      const salary = (y === 2026 && m === 2) ? 5012 : 3505;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus full household
         { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
