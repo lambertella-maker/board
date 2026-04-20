@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-04-20T14:00:00Z">
+<meta name="finance-build" content="2026-04-20T15:00:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-04-20T14:00:00Z';
+    const build = '2026-04-20T15:00:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -509,7 +509,7 @@
         </div>
         <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
           <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Post-payday flow</div>
-          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,735 lands in Chase UK. <strong style="color:var(--text)">£230</strong> goes to the Move Pot.</div></div>
+          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,735 lands in Chase UK. Move Pot starts <strong style="color:var(--text)">24 May</strong> at £230/mo.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> <strong style="color:var(--text)">£850</strong> goes via Wise to Chase US, then Fidelity.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> <strong style="color:var(--text)">£56</strong> goes out for flatmate bills.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Month-end:</strong> BA Amex autopay clears, usually <strong style="color:var(--text)">£1,100-1,400</strong>.</div></div>
@@ -751,18 +751,18 @@
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£230/mo now · keep the July rent drop for breathing room</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£230/mo from 24 May · April cashflow kept calm</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
           <div class="progress-labels"><span>£136.47</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">All-in target</span><span class="goal-row-value">£4,900 · deposit + first month + AnyVan + buffer</span></div>
-        <div class="goal-row"><span class="goal-row-label">Pot at Mar 2027</span><span class="goal-row-value" style="color:var(--green)">£2,690 before bonus · pre-bonus target essentially hit</span></div>
+        <div class="goal-row"><span class="goal-row-label">Pot at Mar 2027</span><span class="goal-row-value" style="color:var(--green)">£2,700 before bonus · pre-bonus target essentially hit</span></div>
         <div class="goal-row"><span class="goal-row-label">Mar 2027 bonus</span><span class="goal-row-value" style="color:var(--indigo)">£2,170 net cash with 50% SALX</span></div>
-        <div class="goal-row"><span class="goal-row-label">Combined by Apr 2027</span><span class="goal-row-value" style="color:var(--green)">£4,860 · basically the full move</span></div>
+        <div class="goal-row"><span class="goal-row-label">Combined by Apr 2027</span><span class="goal-row-value" style="color:var(--green)">£4,870 · basically the full move</span></div>
         <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">£70,040 with a 3% merit rise assumption</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
-            <div class="gp-label" id="move-pill-label">£230 now keeps July flexible and gets the move fund ready by Jun–Jul 2027</div>
+            <div class="gp-label" id="move-pill-label">£230 from 24 May keeps April safe and still gets the move fund ready by Jun–Jul 2027</div>
             <span id="move-timeline">Jun–Jul 2027</span>
           </div>
         </div>
@@ -1370,7 +1370,7 @@
           <div class="life-funding">
             <div class="life-funding-row"><span>Start serious funding</span><span>After Jun-Jul 2027 move</span></div>
             <div class="life-funding-row"><span>Monthly baseline</span><span>£150/mo</span></div>
-            <div class="life-funding-row"><span>Move-pot rule</span><span>£230/mo from now</span></div>
+            <div class="life-funding-row"><span>Move-pot rule</span><span>£230/mo from 24 May</span></div>
             <div class="life-funding-row"><span>Bonus rule</span><span>10% of net bonus cash</span></div>
             <div class="life-funding-row"><span>Protect first</span><span>£850/mo Fidelity</span></div>
           </div>
@@ -1902,13 +1902,15 @@ function liveEstimates() {
     const todayMs  = today.getTime();
 
     function monthSchedule(y, m) {
-      // Mar 2026 uses bonus-month net. From Apr 2026 onward: £3,735 net − £230 move pot = £3,505.
-      const salary = (y === 2026 && m === 2) ? 5012 : 3505;
+      // Mar 2026 uses bonus-month net. From Apr 2026 onward: £3,735 net, with £230 move pot starting 24 May.
+      const salary = (y === 2026 && m === 2) ? 5012 : 3735;
+      const movePot = (y > 2026 || (y === 2026 && m >= 4)) ? -230 : 0;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus full household
         { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
         { date: new Date(y, m, 12), amount: (y > 2026 || (y === 2026 && m >= 6)) ? -1125 : -1250 }, // Rent (splits Jul 2026: −£125/mo)
-        { date: new Date(y, m, 24), amount: salary  }, // Salary net − move pot
+        { date: new Date(y, m, 24), amount: salary  }, // Salary net
+        { date: new Date(y, m, 24), amount: movePot }, // Move pot starts 24 May 2026
         { date: new Date(y, m, 24), amount:  -850   }, // Wise to US (same day as salary)
         { date: new Date(y, m, 26), amount:  -53.48 }, // Vancsi bills (council tax/water diff)
       ];
@@ -2030,9 +2032,9 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
   document.getElementById('csp-months-lbl').textContent = cspMonths === 1 ? `1 month in` : `${cspMonths} months in`;
 
-  // Move pot — £230/mo from Apr 24 2026 onward. July rent relief stays in cashflow for flexibility.
+  // Move pot — £230/mo from May 24 2026 onward. April deferral protects cashflow after the high Amex month.
   const r        = 0.0275 / 12;  // 2.75% AER
-  const potStart = new Date(2026, 3, 24);
+  const potStart = new Date(2026, 4, 24);
   const potAnchor = 136.47;
   function potContribution(d) {
     return d >= potStart ? 230 : 0;
@@ -2061,7 +2063,7 @@ function updateGoals() {
   document.getElementById('ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Late 2026");
-  setPill('move', "£230 now keeps July flexible and gets the move fund ready by Jun–Jul 2027", "Jun–Jul 2027");
+  setPill('move', "£230 from 24 May keeps April safe and gets the move fund ready by Jun–Jul 2027", "Jun–Jul 2027");
   setPill('travel', "CSP first · then book Polaris with UR", "Early 2027");
 }
 
