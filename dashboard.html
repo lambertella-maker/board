@@ -556,7 +556,7 @@
   <!-- ACCOUNTS -->
   <section>
     <h2 class="section-title">Your <span>Accounts</span></h2>
-    <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.8rem;">Savings anchored 16 Apr 2026 · Pension anchored 3 Mar 2026 (£18,440) · Investments: live prices when server online · <span style="color:var(--indigo);">All estimates update on page load</span></div>
+    <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.8rem;">Savings anchored 16 Apr 2026 · Pension anchored 3 Mar 2026 (£18,440) · Investments: 85/10/5 monthly-buy model · <span style="color:var(--indigo);">All estimates update on page load</span></div>
     <div class="accounts-grid">
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£11,176</div><div class="account-rate">3.49% AER · interest daily-compounded</div><div class="account-note">Emergency fund core · No withdrawals</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo EF (3.15%)</div><div class="account-balance" id="bal-efsavings" style="color:var(--green)">£2,004</div><div class="account-rate">3.15% AER · max 2 withdrawals/yr</div><div class="account-note">EF pot · Monzo</div></div>
@@ -1955,13 +1955,12 @@ function updateFire() {
 
 // ── LIVE BALANCE ESTIMATES ─────────────────────────────────────────────────────
 // Anchored to Feb 24 2026 (last payday). Updates every page load — no user input.
-// Savings: AER daily compound. Investments: 7% CAGR + monthly additions. Pension: 5.5% CAGR.
+// Savings: AER daily compound. Investments: weighted 85/10/5 model + dated monthly buys. Pension: 5.5% CAGR.
 // Chase UK: deterministic schedule from known paydays.
 
 function liveEstimates() {
-  const liveFX     = 0.77;                    // no server dependency — pure CAGR model
-  const fskaxDelta = null;
-  const mktLabel   = 'Estimated · CAGR model';
+  const liveFX     = 0.77;                    // no server dependency — pure local model
+  const mktLabel   = 'Estimated · 85/10/5 monthly-buy model';
 
   const ANCHOR     = new Date(2026, 1, 24);   // Feb 24 2026 (month is 0-indexed)
   const daysSince  = d => Math.max(0, (today - d) / 86400000);
@@ -2017,14 +2016,35 @@ function liveEstimates() {
   }
   const chaseEst = chaseEstimate();
 
-  // US INVESTMENTS — live via FSKAX price delta; fallback to 7% CAGR
-  const mosInvest = Math.max(0, monthsSince(new Date(2026, 2, 1))); // months since Mar 2026
-  const fidelityEst = fskaxDelta
-    ? Math.round(3948 * fskaxDelta + mosInvest * 475)
-    : Math.round(3948 * Math.pow(1.07, daysA / 365) + mosInvest * 475);
-  const rothEst = fskaxDelta
-    ? Math.round(2929.87 * fskaxDelta + mosInvest * 625)
-    : Math.round(2929.87 * Math.pow(1.07, daysA / 365) + mosInvest * 625);
+  // US INVESTMENTS — base balances plus each known monthly buy compounded from its own buy date.
+  // Active brokerage buys execute on the 30th: taxable $475/mo, Roth $625/mo, both 85/10/5.
+  const INVEST_RETURN =
+    0.85 * 0.07 +   // FSKAX
+    0.10 * 0.06 +   // FTIHX
+    0.05 * 0.04;    // FXNAX
+  function growUSD(amount, fromDate, annualRate = INVEST_RETURN) {
+    return amount * Math.pow(1 + annualRate, daysSince(fromDate) / 365);
+  }
+  function monthlyBuyValue(monthlyAmount, firstBuyDate) {
+    let total = 0;
+    let y = firstBuyDate.getFullYear(), m = firstBuyDate.getMonth();
+    const ey = today.getFullYear(), em = today.getMonth();
+    while (y < ey || (y === ey && m <= em)) {
+      const buyDate = new Date(y, m, 30);
+      if (buyDate >= firstBuyDate && buyDate <= today) total += growUSD(monthlyAmount, buyDate);
+      if (m === 11) { y++; m = 0; } else { m++; }
+    }
+    return total;
+  }
+  const fidelityEst = Math.round(
+    growUSD(3948, ANCHOR) +
+    monthlyBuyValue(475, new Date(2026, 2, 30))
+  );
+  const rothEst = Math.round(
+    growUSD(590.72, ANCHOR) +
+    monthlyBuyValue(625, new Date(2026, 2, 30)) +
+    growUSD(2339.15, new Date(2026, 3, 20))
+  );
   const chaseUSEst  = 1600; // static working capital anchor — maintained manually at $1,500–1,600
   // SIP shares — acquisition cost: £300/month (£150 employee + £150 AbbVie match) from Nov 2024
   const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);

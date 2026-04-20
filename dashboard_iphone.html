@@ -860,11 +860,10 @@ const dateLong  = today.toLocaleDateString('en-GB', {weekday:'long', day:'numeri
 document.getElementById('live-date-m').textContent = dateShort;
 document.getElementById('sb-date').textContent = dateLong;
 
-// ── LIVE ESTIMATES — pure CAGR model, no server dependency ───────────────────
+// ── LIVE ESTIMATES — local compounding model, no server dependency ───────────
 function liveEstimates() {
   const liveFX     = 0.77;
   const FX_M       = 0.77;
-  const fskaxDelta = null;
 
   const ANCHOR      = new Date(2026, 1, 24);
   const daysSince   = d => Math.max(0, (today - d) / 86400000);
@@ -915,13 +914,33 @@ function liveEstimates() {
   }
   const chaseEst = chaseEstimate();
 
-  const mosInvest   = Math.max(0, monthsSince(new Date(2026, 2, 1)));
-  const fidelityEst = fskaxDelta
-    ? Math.round(3948 * fskaxDelta + mosInvest * 475)
-    : Math.round(3948 * Math.pow(1.07, daysA / 365) + mosInvest * 475);
-  const rothEst = fskaxDelta
-    ? Math.round(2929.87 * fskaxDelta + mosInvest * 625)
-    : Math.round(2929.87 * Math.pow(1.07, daysA / 365) + mosInvest * 625);
+  const INVEST_RETURN =
+    0.85 * 0.07 +   // FSKAX
+    0.10 * 0.06 +   // FTIHX
+    0.05 * 0.04;    // FXNAX
+  function growUSD(amount, fromDate, annualRate = INVEST_RETURN) {
+    return amount * Math.pow(1 + annualRate, daysSince(fromDate) / 365);
+  }
+  function monthlyBuyValue(monthlyAmount, firstBuyDate) {
+    let total = 0;
+    let y = firstBuyDate.getFullYear(), m = firstBuyDate.getMonth();
+    const ey = today.getFullYear(), em = today.getMonth();
+    while (y < ey || (y === ey && m <= em)) {
+      const buyDate = new Date(y, m, 30);
+      if (buyDate >= firstBuyDate && buyDate <= today) total += growUSD(monthlyAmount, buyDate);
+      if (m === 11) { y++; m = 0; } else { m++; }
+    }
+    return total;
+  }
+  const fidelityEst = Math.round(
+    growUSD(3948, ANCHOR) +
+    monthlyBuyValue(475, new Date(2026, 2, 30))
+  );
+  const rothEst = Math.round(
+    growUSD(590.72, ANCHOR) +
+    monthlyBuyValue(625, new Date(2026, 2, 30)) +
+    growUSD(2339.15, new Date(2026, 3, 20))
+  );
   const chaseUSEst = 1600; // static working capital anchor
 
   const PENSION_ANCHOR = new Date(2026, 2, 3);
