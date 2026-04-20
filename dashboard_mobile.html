@@ -1582,22 +1582,23 @@ function nwSliderChange(yrs) {
   if (!gNwBases) return;
   if (yr === 0) { renderNwBreakdown(gNwBases.segs, gNwBases.mktLabel); if (gNwChart) { gNwChart.data.datasets[0].data = gNwBases.segs.map(s => s.val); gNwChart.update(); } return; }
   const months = yr * 12;
-  const r7 = 0.07/12, r55 = 0.055/12, FX = gNwFx;
+  const rInvest = (0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04) / 12;
+  const r55 = 0.055/12, FX = gNwFx;
   const fvc = (pmt, mo, r) => r > 0 ? pmt * ((Math.pow(1+r,mo)-1)/r) : pmt*mo;
   const segs = [
     { label:'UK Savings',     val: Math.round(gNwBases.ukSav + 200*months),                                                              color:'#22d3ee', note:'Atom · Monzo EF · Move Fund · Chase UK' },
     { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(1020,months,r55)),                         color:'#818cf8', note:'Aviva workplace pension · 5.5% CAGR est.' },
     { label:'ABBV SIP Shares',val: Math.round(gNwBases.sip + 300*Math.min(months, Math.max(0,60-gNwBases.sipCompleted))),                color:'#f472b6', note:'Locked 5yr · acquisition cost est.' },
-    { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+r7,months) + fvc(475,months,r7))*FX),                         color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
-    { label:'Roth IRA',       val: Math.round((gNwBases.rothUSD*Math.pow(1+r7,months) + fvc(625,months,r7))*FX),                        color:'#fbbf24', note:'Tax-free retirement · never touch' },
+    { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+rInvest,months) + fvc(475,months,rInvest))*FX),                color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
+    { label:'Roth IRA',       val: Math.round((gNwBases.rothUSD*Math.pow(1+rInvest,months) + fvc(625,months,rInvest))*FX),               color:'#fbbf24', note:'Tax-free retirement · never touch' },
     { label:'US Cash',        val: Math.round(gNwBases.usCashUSD*FX),                                                                   color:'#6366f1', note:'Chase US — pipeline hub · $1,500 min' },
   ];
-  renderNwBreakdown(segs, `Projected · ${2026+yr} · 7% equities · 5.5% pension`);
+  renderNwBreakdown(segs, `Projected · ${2026+yr} · 85/10/5 investments · 5.5% pension`);
   if (gNwChart) { gNwChart.data.datasets[0].data = segs.map(s => s.val); gNwChart.update(); }
 }
 
 // Called from liveEstimates() with live-computed values. FX: GBP/USD ~0.77.
-function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, fx = 0.77, mktLabel = 'Estimated · CAGR model', sip = 0, sipCompleted = 0) {
+function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, fx = 0.77, mktLabel = 'Estimated · 85/10/5 monthly-buy model', sip = 0, sipCompleted = 0) {
   gNwFx = fx;
   const segments = [
     { label: 'UK Savings',     val: atom + monzo + chase,            color: '#22d3ee', note: 'Atom · Monzo EF · Move Fund · Chase UK' },
@@ -1867,7 +1868,7 @@ function updateFire() {
 
 // ── LIVE BALANCE ESTIMATES ─────────────────────────────────────────────────────
 // Anchored to Feb 24 2026 (last payday). Updates every page load — no user input.
-// Savings: AER daily compound. Investments: 7% CAGR + monthly additions. Pension: 5.5% CAGR.
+// Savings: AER daily compound. Investments: weighted 85/10/5 model + dated monthly buys. Pension: 5.5% CAGR.
 // Chase UK: deterministic schedule from known paydays.
 
 function liveEstimates() {
