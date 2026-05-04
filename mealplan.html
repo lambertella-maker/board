@@ -1790,6 +1790,7 @@ let modalCurrentServings = 2;
 let favourites = JSON.parse(localStorage.getItem('fodmap_favs') || '[]');
 let deleted = new Set(JSON.parse(localStorage.getItem('fodmap_deleted') || '[]'));
 let photoOverrides = JSON.parse(localStorage.getItem('photo_overrides') || '{}');
+let photoMeta = JSON.parse(localStorage.getItem('photo_meta') || '{}');
 let BASE_RECIPE_IMGS = {}; // set in DOMContentLoaded before overrides — device-independent pool
 let openRecipeId = null;
 let currentFilter = 'All';
@@ -2599,8 +2600,12 @@ function openModal(id) {
 function readAndSavePhoto(id, file) {
   const reader = new FileReader();
   reader.onload = e => {
+    photoMeta[id] = Date.now();
     photoOverrides[id] = e.target.result;
-    try { localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides)); } catch(e) {}
+    try {
+      localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+      localStorage.setItem('photo_meta', JSON.stringify(photoMeta));
+    } catch(e) {}
     RECIPE_IMGS[id] = e.target.result;
     // Update every rendered image for this recipe across all tabs instantly
     document.querySelectorAll(`img[data-recipe-id="${id}"]`).forEach(img => { img.src = e.target.result; });
@@ -2660,9 +2665,11 @@ function deleteRecipe(id) {
     if (ri !== -1) RECIPES.splice(ri, 1);
     delete RECIPE_IMGS[id];
     delete photoOverrides[id];
+    delete photoMeta[id];
     try {
       localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
       localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+      localStorage.setItem('photo_meta', JSON.stringify(photoMeta));
     } catch(e) {}
     syncPush();
   } else {
@@ -2718,7 +2725,8 @@ function saveEditRecipe() {
       cal: parseInt(document.getElementById('er-cal').value) || 0,
       protein: parseInt(document.getElementById('er-protein').value) || 0,
       carbs: parseInt(document.getElementById('er-carbs').value) || 0,
-    }
+    },
+    _updatedAt: Date.now()
   };
   if (!updated.name) { showToast('Name is required'); return; }
   const idx = RECIPES.findIndex(x => x.id === id);
@@ -3163,11 +3171,20 @@ function showRecipePreview(r) {
 function confirmAddRecipe() {
   if (!arGeneratedRecipe) return;
   const r = { ...arGeneratedRecipe };
+  r._updatedAt = Date.now();
   if (arPhotoData) r._photoData = arPhotoData;
 
   // Add to runtime RECIPES array
   RECIPES.push(r);
-  if (arPhotoData) RECIPE_IMGS[r.id] = arPhotoData;
+  if (arPhotoData) {
+    RECIPE_IMGS[r.id] = arPhotoData;
+    photoOverrides[r.id] = arPhotoData;
+    photoMeta[r.id] = r._updatedAt;
+    try {
+      localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+      localStorage.setItem('photo_meta', JSON.stringify(photoMeta));
+    } catch(e) {}
+  }
 
   // Persist to localStorage + remote KV
   customRecipes.push(r);
@@ -3183,7 +3200,7 @@ function confirmAddRecipe() {
   hideAddRecipe();
 
   // Preload photo into browser cache before rendering cards
-  if (arPhotoData && !arPhotoData.startsWith('data:')) new Image().src = arPhotoData;
+  if (r._photoData && !r._photoData.startsWith('data:')) new Image().src = r._photoData;
 
   // Switch to recipes tab showing the new recipe (reset filter so it's always visible)
   showTab('recipes');
@@ -3201,67 +3218,124 @@ function _workerUrl() {
   return localStorage.getItem('ar_proxy_url') || 'https://mealplan-proxy.lambert-ella.workers.dev/';
 }
 
-async function syncPush() {
-  const url = _workerUrl();
+async function kvGet(key) {
+  const res = await fetch(_workerUrl(), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ kv_get: key })
+  });
+  return res.json();
+}
+
+async function kvSet(key, data) {
+  await fetch(_workerUrl(), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ kv_set: key, data })
+  });
+}
+
+function recipeVersion(r) {
+  if (!r) return 0;
+  if (Number.isFinite(r._updatedAt)) return r._updatedAt;
+  const m = String(r.id || '').match(/^c_(\d+)/);
+  return m ? parseInt(m[1], 10) || 0 : 0;
+}
+
+function mergeRecipes(localList, remoteList, preferLocalOnTie) {
+  const byId = {};
+  (Array.isArray(remoteList) ? remoteList : []).forEach(r => { if (r?.id && !isRemovedRecipe(r)) byId[r.id] = r; });
+  (Array.isArray(localList) ? localList : []).forEach(r => {
+    if (!r?.id || isRemovedRecipe(r)) return;
+    const existing = byId[r.id];
+    if (!existing || recipeVersion(r) > recipeVersion(existing) ||
+        (preferLocalOnTie && recipeVersion(r) === recipeVersion(existing))) {
+      byId[r.id] = r;
+    }
+  });
+  return Object.values(byId);
+}
+
+function mergePhotos(localPhotos, remotePhotos, localStamp, remoteStamp, preferLocalOnTie) {
+  const photos = {};
+  const stamps = {};
+  const keys = new Set([
+    ...Object.keys(remotePhotos || {}),
+    ...Object.keys(localPhotos || {})
+  ]);
+  keys.forEach(id => {
+    const rv = remotePhotos?.[id];
+    const lv = localPhotos?.[id];
+    const rt = Number(remoteStamp?.[id] || 0);
+    const lt = Number(localStamp?.[id] || 0);
+    if (lv == null) {
+      photos[id] = rv;
+      stamps[id] = rt;
+    } else if (rv == null) {
+      photos[id] = lv;
+      stamps[id] = lt || Date.now();
+    } else if (lt > rt || (preferLocalOnTie && lt === rt)) {
+      photos[id] = lv;
+      stamps[id] = lt || rt || Date.now();
+    } else {
+      photos[id] = rv;
+      stamps[id] = rt || lt || Date.now();
+    }
+  });
+  return { photos, stamps };
+}
+
+function applySyncedState(nextRecipes, nextPhotos, nextPhotoMeta) {
+  customRecipes = nextRecipes.filter(r => !isRemovedRecipe(r));
+  photoOverrides = { ...(nextPhotos || {}) };
+  photoMeta = { ...(nextPhotoMeta || {}) };
+  customRecipes.forEach(r => {
+    const ri = RECIPES.findIndex(x => x.id === r.id);
+    if (ri === -1) RECIPES.push(r);
+    else Object.assign(RECIPES[ri], r);
+    if (r._photoData && !photoOverrides[r.id]) {
+      photoOverrides[r.id] = r._photoData;
+      photoMeta[r.id] = photoMeta[r.id] || recipeVersion(r) || Date.now();
+    }
+  });
   try {
+    localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+    localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+    localStorage.setItem('photo_meta', JSON.stringify(photoMeta));
+  } catch(e) {}
+  Object.assign(RECIPE_IMGS, photoOverrides);
+}
+
+async function syncPush() {
+  try {
+    const [remoteRecipes, remotePhotos, remotePhotoMeta] = await Promise.all([
+      kvGet('custom_recipes'),
+      kvGet('photo_overrides'),
+      kvGet('photo_meta')
+    ]);
+    const mergedRecipes = mergeRecipes(customRecipes, remoteRecipes, true);
+    const mergedPhotoState = mergePhotos(photoOverrides, remotePhotos, photoMeta, remotePhotoMeta, true);
+    applySyncedState(mergedRecipes, mergedPhotoState.photos, mergedPhotoState.stamps);
     await Promise.all([
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kv_set: 'custom_recipes', data: customRecipes })
-      }),
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kv_set: 'photo_overrides', data: photoOverrides })
-      })
+      kvSet('custom_recipes', customRecipes),
+      kvSet('photo_overrides', photoOverrides),
+      kvSet('photo_meta', photoMeta)
     ]);
   } catch(e) {}
 }
 
 async function syncPull() {
-  const url = _workerUrl();
   try {
-    const [recipeRes, photoRes] = await Promise.all([
-      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kv_get: 'custom_recipes' }) }),
-      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kv_get: 'photo_overrides' }) })
+    const [remoteRecipes, remotePhotos, remotePhotoMeta] = await Promise.all([
+      kvGet('custom_recipes'),
+      kvGet('photo_overrides'),
+      kvGet('photo_meta')
     ]);
-    const [remoteRecipes, remotePhotos] = await Promise.all([recipeRes.json(), photoRes.json()]);
-    let changed = false;
-
-    // Merge custom recipes: union by ID, remote wins on conflict
-    if (Array.isArray(remoteRecipes) && remoteRecipes.length > 0) {
-      const byId = {};
-      customRecipes.forEach(r => byId[r.id] = r);
-      remoteRecipes.forEach(r => byId[r.id] = r);
-      const merged = Object.values(byId);
-      const recipeChanged = merged.length !== customRecipes.length ||
-        merged.some(r => JSON.stringify(r) !== JSON.stringify(customRecipes.find(x => x.id === r.id)));
-      if (recipeChanged) {
-        customRecipes = merged;
-        try { localStorage.setItem('custom_recipes', JSON.stringify(customRecipes)); } catch(e) {}
-        customRecipes.forEach(r => {
-          const ri = RECIPES.findIndex(x => x.id === r.id);
-          if (ri === -1) RECIPES.push(r);
-          else Object.assign(RECIPES[ri], r);
-          // Only apply _photoData if no drag-drop override exists for this recipe
-          if (r._photoData && !photoOverrides[r.id]) RECIPE_IMGS[r.id] = r._photoData;
-        });
-        changed = true;
-      }
-    }
-
-    // Merge photo overrides: union, remote wins on conflict
-    if (remotePhotos && typeof remotePhotos === 'object' && !Array.isArray(remotePhotos)) {
-      const merged = { ...photoOverrides, ...remotePhotos };
-      if (JSON.stringify(merged) !== JSON.stringify(photoOverrides)) {
-        Object.assign(photoOverrides, remotePhotos);
-        try { localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides)); } catch(e) {}
-        Object.assign(RECIPE_IMGS, photoOverrides);
-        changed = true;
-      }
-    }
-
+    const mergedRecipes = mergeRecipes(customRecipes, remoteRecipes, false);
+    const mergedPhotoState = mergePhotos(photoOverrides, remotePhotos, photoMeta, remotePhotoMeta, false);
+    const changed = JSON.stringify(mergedRecipes) !== JSON.stringify(customRecipes) ||
+      JSON.stringify(mergedPhotoState.photos) !== JSON.stringify(photoOverrides);
+    if (changed) applySyncedState(mergedRecipes, mergedPhotoState.photos, mergedPhotoState.stamps);
     if (changed) {
       renderRecipes(currentFilter);
       renderHome();
@@ -3280,7 +3354,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   customRecipes = customRecipes.filter(r => !isRemovedRecipe(r));
   Object.keys(photoOverrides).forEach(id => {
-    if (REMOVED_RECIPE_IDS.has(id)) delete photoOverrides[id];
+    if (REMOVED_RECIPE_IDS.has(id)) {
+      delete photoOverrides[id];
+      delete photoMeta[id];
+    }
   });
 
   // Merge custom recipes saved to localStorage
@@ -3315,6 +3392,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.cookie = 'ar_ak=;max-age=0;path=/;SameSite=Strict';
   localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
   localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+  localStorage.setItem('photo_meta', JSON.stringify(photoMeta));
 
   // Always open on Home when the app loads.
   localStorage.removeItem('lastTab');
@@ -3529,12 +3607,20 @@ function addCbRecipeToMine(code, recipeId, sharedById) {
     return;
   }
   const newId = 'c_' + Date.now().toString(36);
-  const r = {...entry, id: newId, _fromCookbook: true};
+  const r = {...entry, id: newId, _fromCookbook: true, _updatedAt: Date.now()};
   delete r.sharedBy; delete r.sharedByEmoji; delete r.sharedById; delete r.sharedAt; delete r.madeBy; delete r._code;
   customRecipes.push(r);
   RECIPES.push(r);
-  if (r._photoData) RECIPE_IMGS[newId] = r._photoData;
-  try { localStorage.setItem('custom_recipes', JSON.stringify(customRecipes)); } catch(e) {}
+  if (r._photoData) {
+    RECIPE_IMGS[newId] = r._photoData;
+    photoOverrides[newId] = r._photoData;
+    photoMeta[newId] = r._updatedAt;
+  }
+  try {
+    localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
+    localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
+    localStorage.setItem('photo_meta', JSON.stringify(photoMeta));
+  } catch(e) {}
   syncPush();
   showToast('Added to your recipes ✓');
 }
