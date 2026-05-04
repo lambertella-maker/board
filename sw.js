@@ -1,4 +1,4 @@
-const CACHE = 'mealplan-v1000000007';
+const CACHE = 'mealplan-v101580377339228';
 const ASSETS = [
   './ep6-burger.png',
   './y18-panang.png',
