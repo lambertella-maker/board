@@ -524,6 +524,9 @@ li { margin-bottom: 4px; }
 .pack-col li { font-size: 0.81em; padding: 3px 0 3px 18px; position: relative; margin-bottom: 2px; line-height: 1.4; }
 .pack-col li::before { content: '☐'; position: absolute; left: 0; color: var(--green-mid); font-size: 0.95em; line-height: 1.4; }
 .pack-col li.done::before { content: '☑'; color: var(--green); }
+.section-nav { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 24px; }
+.section-nav a { display: inline-block; padding: 8px 12px; border-radius: 999px; background: #F3F7F4; border: 1px solid var(--border); color: var(--green); font-size: 0.8em; font-weight: 700; letter-spacing: 0.2px; }
+.section-nav a:hover { background: #EBF6EF; text-decoration: none; }
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 700px) {
@@ -536,6 +539,8 @@ li { margin-bottom: 4px; }
   .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
   .hut-header { flex-direction: column; }
   .pack-grid { grid-template-columns: repeat(2, 1fr); }
+  .section-nav { gap: 8px; margin: 16px 0 20px; }
+  .section-nav a { padding: 6px 10px; font-size: 0.76em; }
 }
 </style>
 </head>
@@ -557,6 +562,15 @@ li { margin-bottom: 4px; }
     <div class="hs"><span class="val">2,447 m</span><span class="lbl">Highest Hut</span></div>
     <div class="hs"><span class="val">Jul 27–30</span><span class="lbl">Hiking Days</span></div>
   </div>
+</div>
+
+<div class="section-nav">
+  <a href="#huts">Huts</a>
+  <a href="#route">Route</a>
+  <a href="#travel">Getting There</a>
+  <a href="#costs">Costs</a>
+  <a href="#weather">Weather + Gear</a>
+  <a href="#checklist">Checklist</a>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -599,7 +613,7 @@ li { margin-bottom: 4px; }
 <!-- ═══════════════════════════════════════════════════════════
      HUT OVERVIEW
 ══════════════════════════════════════════════════════════════ -->
-<h2>The Three Huts</h2>
+<h2 id="huts">The Three Huts</h2>
 
 <div class="hut-overview-grid">
 
@@ -665,7 +679,7 @@ li { margin-bottom: 4px; }
 <!-- ═══════════════════════════════════════════════════════════
      DAY 0 — TRAVEL DAY
 ══════════════════════════════════════════════════════════════ -->
-<h2>The Route — Day by Day</h2>
+<h2 id="route">The Route — Day by Day</h2>
 
 <div class="day-card">
   <div class="day-header dh-travel">
@@ -966,7 +980,7 @@ li { margin-bottom: 4px; }
 <!-- ═══════════════════════════════════════════════════════════
      GETTING THERE
 ══════════════════════════════════════════════════════════════ -->
-<h2>Getting There — Flights &amp; Car</h2>
+<h2 id="travel">Getting There — Flights &amp; Car</h2>
 
 <p><strong>Outbound ✓ BOOKED:</strong> BA598 LHR → VCE, Sun 26 Jul, depart 06:05, land 09:20. All four fly together. Pick up car at Venice Marco Polo and drive ~3h north through the Dolomites to Sillian.</p>
 
@@ -1043,7 +1057,7 @@ li { margin-bottom: 4px; }
 <!-- ═══════════════════════════════════════════════════════════
      APPROXIMATE COSTS
 ══════════════════════════════════════════════════════════════ -->
-<h2>Approximate Costs per Person</h2>
+<h2 id="costs">Approximate Costs per Person</h2>
 
 <div class="trip-total-card">
   <h3>Trip Total — per person estimate</h3>
@@ -1091,7 +1105,7 @@ li { margin-bottom: 4px; }
   <p style="font-size:0.8em; color: var(--muted); margin-top: 10px; margin-bottom: 0;">Euro costs converted at ~$1.10/€. US friends' totals include transatlantic inbound + return from VCE (TBD).</p>
 </div>
 
-<h2>July Weather on the Carnic Ridge</h2>
+<h2 id="weather">July Weather on the Carnic Ridge</h2>
 
 <div class="weather-grid">
   <div class="wx-card">
@@ -1190,7 +1204,7 @@ li { margin-bottom: 4px; }
 <!-- ═══════════════════════════════════════════════════════════
      PRE-TRIP CHECKLIST
 ══════════════════════════════════════════════════════════════ -->
-<h2>Pre-Trip Checklist</h2>
+<h2 id="checklist">Pre-Trip Checklist</h2>
 
 <ul class="checklist">
   <li class="cl-done">
