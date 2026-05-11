@@ -753,18 +753,18 @@
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">£230/mo from 24 May · April cashflow kept calm</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Target rent budget: about £1,700/mo or less</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
           <div class="progress-labels"><span>£136.47</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£2,700 pre-bonus</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">All-in target</span><span class="goal-row-value">£4,900 · deposit + first month + AnyVan + buffer</span></div>
+        <div class="goal-row"><span class="goal-row-label">All-in move target</span><span class="goal-row-value">£4,900 · deposit, first month, AnyVan, buffer</span></div>
         <div class="goal-row"><span class="goal-row-label">Pot at Mar 2027</span><span class="goal-row-value" style="color:var(--green)">£2,700 before bonus · pre-bonus target essentially hit</span></div>
         <div class="goal-row"><span class="goal-row-label">Mar 2027 bonus</span><span class="goal-row-value" style="color:var(--indigo)">£2,170 net cash with 50% SALX</span></div>
         <div class="goal-row"><span class="goal-row-label">Combined by Apr 2027</span><span class="goal-row-value" style="color:var(--green)">£4,870 · basically the full move</span></div>
         <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">£70,040 with a 3% merit rise assumption</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
-            <div class="gp-label" id="move-pill-label">£230 from 24 May keeps April safe and still gets the move fund ready by Jun–Jul 2027</div>
+            <div class="gp-label" id="move-pill-label">£230/mo from 24 May keeps the move fund on track</div>
             <span id="move-timeline">Jun–Jul 2027</span>
           </div>
         </div>
@@ -2088,7 +2088,7 @@ function updateGoals() {
   document.getElementById('ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Late 2026");
-  setPill('move', "£230 from 24 May keeps April safe and gets the move fund ready by Jun–Jul 2027", "Jun–Jul 2027");
+  setPill('move', "£230/mo from 24 May keeps the move fund on track", "Jun–Jul 2027");
   setPill('travel', "CSP first · then book Polaris with UR", "Early 2027");
 }
 
