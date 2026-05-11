@@ -336,9 +336,9 @@
     <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross £5,667 → £3,773 net</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension £340 · SIP £150 · GymFlex £97 · tax/NI £1,344</span></div>
     <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot £230/mo from 24 May</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">25th/30th</span><span style="color:var(--amber);font-weight:700;">£850 Wise → $475 taxable + $625 Roth</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">25th/1st</span><span style="color:var(--amber);font-weight:700;">£850 Wise → $475 taxable + $625 Roth</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1-1.4k · 1st Octopus £55 · 12th rent £1,250</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Same desktop flow, compressed: payroll deductions first, then Chase UK, Wise, Fidelity, cards, utilities, rent.</span><span>Check after 30th</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Same desktop flow, compressed: payroll deductions first, then Chase UK, Wise, Fidelity, cards, utilities, rent.</span><span>Auto buys 1st</span></div>
   </div>
 
   <div class="section-title">Accounts — live estimates</div>
@@ -348,7 +348,7 @@
 <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">£1,200 avg</div><div class="acct-note">Salary hub · varies by day</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
-    <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$625/mo · active $634.00 + legacy $2,339.15</div></div>
+<div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$625/mo · brokerage Roth only</div></div>
   </div>
 
 </div>
@@ -401,7 +401,7 @@
       <div class="pillar-stat-row"><span class="pillar-stat-k">Target split</span><span class="pillar-stat-v">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Annual total (Fidelity)</span><span class="pillar-stat-v">£10,200/yr: taxable + Roth</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">£1.1M (taxable, after-tax)</span></div>
-      <div class="pillar-why-text">$475/mo taxable + $625/mo Roth = same $1,100 total. Both execute 30th, fully automated.</div>
+      <div class="pillar-why-text">$475/mo taxable + $625/mo Roth = same $1,100 total. Both execute automatically on the 1st.</div>
     </div>
   </div>
 
@@ -931,20 +931,22 @@ function liveEstimates() {
     let y = firstBuyDate.getFullYear(), m = firstBuyDate.getMonth();
     const ey = today.getFullYear(), em = today.getMonth();
     while (y < ey || (y === ey && m <= em)) {
-      const buyDate = new Date(y, m, 30);
+      const buyDate = new Date(y, m, firstBuyDate.getDate());
       if (buyDate >= firstBuyDate && buyDate <= today) total += growUSD(monthlyAmount, buyDate);
       if (m === 11) { y++; m = 0; } else { m++; }
     }
     return total;
   }
+  const INVEST_ANCHOR = new Date(2026, 4, 11);
+  const FIDELITY_TAXABLE_ANCHOR = 6946.67;
+  const ROTH_BROKERAGE_ANCHOR = 1293.65;
   const fidelityEst = Math.round(
-    growUSD(3948, ANCHOR) +
-    monthlyBuyValue(475, new Date(2026, 2, 30))
+    growUSD(FIDELITY_TAXABLE_ANCHOR, INVEST_ANCHOR) +
+    monthlyBuyValue(475, new Date(2026, 5, 1))
   );
   const rothEst = Math.round(
-    growUSD(634.00, new Date(2026, 3, 20)) +
-    monthlyBuyValue(625, new Date(2026, 3, 30)) +
-    growUSD(2339.15, new Date(2026, 3, 20))
+    growUSD(ROTH_BROKERAGE_ANCHOR, INVEST_ANCHOR) +
+    monthlyBuyValue(625, new Date(2026, 5, 1))
   );
   const chaseUSEst = 1600; // static working capital anchor
 
@@ -1384,7 +1386,7 @@ mCalcFire();
     <button class="modal-close" onclick="document.getElementById('invest-modal').classList.remove('open')">×</button>
     <div style="font-size:0.58rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:0.4rem;">Locked April 2026</div>
     <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
-    <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">£850 Wise → Chase US → Fidelity. $625/mo Roth + $475/mo taxable. Fully automated.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">£850 Wise → Chase US → Fidelity. $625/mo brokerage Roth + $475/mo taxable. Both execute automatically on the 1st.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Both accounts</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical allocation. No monthly rebalancing.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Roth · $625/mo</div><div class="modal-rule-value">Zero tax on growth or withdrawal — US and UK (treaty Art.17). $7,500/yr 2026 limit. Contributions = liquidity backstop.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Taxable · $475/mo</div><div class="modal-rule-value">0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
