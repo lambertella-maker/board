@@ -729,12 +729,12 @@
         </div>
         <div style="margin-bottom:1rem;">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Clean Amex Blue Cash history — opened Jan 30, 2026 · 2 prior rejections as AU · apply at 9 months</div>
-          <div class="progress-bar"><div class="progress-fill" id="csp-prog" style="background:linear-gradient(90deg,var(--indigo),var(--pink)); width:11%"></div></div>
-          <div class="progress-labels"><span>Jan 2026</span><span id="csp-months-lbl" style="color:var(--indigo)">1 month in</span><span>Apply October 2026</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="csp-prog" style="background:linear-gradient(90deg,var(--indigo),var(--pink)); width:0%"></div></div>
+          <div class="progress-labels"><span>Jan 30, 2026</span><span id="csp-months-lbl" style="color:var(--indigo)">Updating...</span><span>Apply October 2026</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Application date</span><span class="goal-row-value" style="color:var(--amber)">October 2026 · 9mo individual history · no earlier</span></div>
-        <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">60k Chase UR · $4k spend in first 3 months</span></div>
-        <div class="goal-row"><span class="goal-row-label">60k UR bonus</span><span class="goal-row-value" style="color:var(--indigo)">any partner · United, BA, Virgin · or ~$750 via portal</span></div>
+        <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">75k Chase UR · $5k spend in first 3 months</span></div>
+        <div class="goal-row"><span class="goal-row-label">75k UR bonus</span><span class="goal-row-value" style="color:var(--indigo)">any partner · United, BA, Virgin · or $750+ via portal</span></div>
         <div class="goal-row"><span class="goal-row-label">Transfer partners</span><span class="goal-row-value">United · BA · Virgin · Hyatt · more</span></div>
         <div class="goal-row"><span class="goal-row-label">Ongoing earning</span><span class="goal-row-value">3× travel & dining · no FX fees · travel insurance</span></div>
         <div class="goal-timeline">
@@ -787,7 +787,7 @@
           <div class="progress-labels"><span>Jan 2026</span><span style="color:var(--amber)">CSP unlocks this</span><span>Early 2027</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Points needed</span><span class="goal-row-value">70–75k UR → United MileagePlus · Polaris one-way LHR→ORD</span></div>
-        <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">60k UR covers 85% · top up via 3× spend · done in months</span></div>
+        <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">75k UR can cover the points need · top up via 3× spend if pricing moves</span></div>
         <div class="goal-row"><span class="goal-row-label">Cash out of pocket</span><span class="goal-row-value">£220 · UK APD only · United has zero carrier surcharges</span></div>
         <div class="goal-row"><span class="goal-row-label">Ongoing</span><span class="goal-row-value">3× travel & dining · no FX fees · UR for any flight, any airline</span></div>
         <div class="goal-timeline">
@@ -2045,13 +2045,16 @@ updateFire();
 
 // ── LIFE GOALS ────────────────────────────────────────────────────────────────
 function updateGoals() {
-  // CSP progress — count completed payment cycles matching Chase's reporting (not partial current month)
-  const cspStart    = new Date(2026, 0, 30);
-  let cspMonths     = (today.getFullYear() - cspStart.getFullYear()) * 12 + (today.getMonth() - cspStart.getMonth());
-  if (today.getDate() < cspStart.getDate()) cspMonths = Math.max(0, cspMonths - 1);
-  const cspMonthsLeft = Math.max(0, 9 - cspMonths);
-  document.getElementById('csp-prog').style.width = Math.min(100, cspMonths / 9 * 100) + '%';
-  document.getElementById('csp-months-lbl').textContent = cspMonths === 1 ? `1 month in` : `${cspMonths} months in`;
+  // CSP progress updates on every load from the Amex open date to the October application window.
+  const cspStart = new Date(2026, 0, 30);
+  const cspTarget = new Date(2026, 9, 1);
+  const cspElapsedDays = Math.max(0, Math.floor((today - cspStart) / (24 * 3600 * 1000)));
+  const cspTotalDays = Math.max(1, Math.floor((cspTarget - cspStart) / (24 * 3600 * 1000)));
+  const cspProgress = Math.min(100, cspElapsedDays / cspTotalDays * 100);
+  const cspMonths = Math.max(0, Math.floor(cspElapsedDays / 30.44));
+  const cspMonthsLeft = Math.max(0, Math.ceil((cspTarget - today) / (30.44 * 24 * 3600 * 1000)));
+  document.getElementById('csp-prog').style.width = cspProgress.toFixed(1) + '%';
+  document.getElementById('csp-months-lbl').textContent = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
   // Move pot — £230/mo from May 24 2026 onward. April deferral protects cashflow after the high Amex month.
   const r        = 0.0275 / 12;  // 2.75% AER
