@@ -433,7 +433,7 @@
   <!-- HERO -->
   <section class="hero" id="overview">
     <h1>Chicago → Edinburgh → London</h1>
-    <p>Health Literacy Coordinator · AbbVie UK · Building wealth across two continents</p>
+    <p>Health Literacy Specialist · AbbVie UK · Building wealth across two continents</p>
 
     <div class="metrics">
       <div class="metric-card">
@@ -1144,28 +1144,6 @@
         <div><span style="color:var(--soft);">Type</span>&nbsp;&nbsp;Actively managed</div>
       </div>
       <div style="font-size:0.72rem;color:var(--muted);margin-top:0.6rem;line-height:1.6;">Existing holding from Fidelity Advisor platform. No new contributions going here. Separate from the Advisor Roth. Actively managed fund with 1% annual fee creates slow drag vs index funds. No urgent action — selling triggers LTCG (15% on gains).</div>
-    </div>
-
-    <!-- Roth IRA + Actions -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; margin-bottom:1.2rem;">
-      <div class="chart-card" style="padding:1.15rem 1.2rem;">
-        <h3>Roth IRA — quick split</h3>
-        <div class="tax-row" style="padding:0.35rem 0;"><span class="tax-row-label">Brokerage Roth IRA</span><span class="tax-row-value" id="roth-split-brokerage" style="color:var(--amber);">$1,293.65</span></div>
-        <div class="tax-row" style="padding:0.35rem 0;"><span class="tax-row-label">Advisor Roth</span><span class="tax-row-value" style="color:var(--soft)">$2,339.15 · no new buys</span></div>
-        <div class="tax-row" style="padding:0.35rem 0;"><span class="tax-row-label">Contribution principal</span><span class="tax-row-value" style="color:var(--green)">Accessible</span></div>
-        <div style="font-size:0.71rem; color:var(--muted); margin-top:0.6rem; line-height:1.45;">Keep funding the brokerage Roth on the 1st. Advisor Roth stays untouched.</div>
-      </div>
-
-      <div class="chart-card" style="padding:1.15rem 1.2rem;">
-        <h3>Monthly Actions</h3>
-        <div style="display:flex; flex-direction:column; gap:0.5rem;">
-          <div class="action-item"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Wise pulls £650 from Chase UK</div></div>
-          <div class="action-item"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">26th:</strong> Wise sends USD to Chase US</div></div>
-          <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Annually:</strong> Rebalance if allocation drifts more than 5%</div></div>
-          <div class="action-item"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">At £75k salary:</strong> Increase pension AVCs (the trigger)</div></div>
-          <div class="action-item"><span class="action-dot muted"></span><div><strong style="color:var(--text)">Never:</strong> Sell in a downturn. Never sell Roth. Never pick stocks.</div></div>
-        </div>
-      </div>
     </div>
 
     <!-- SIP explainer -->
@@ -2035,7 +2013,6 @@ function liveEstimates() {
   document.getElementById('inv-roth-value').textContent = '$' + rothEst.toLocaleString('en-GB');
   document.getElementById('pillar-fid-val').textContent = '$' + fidelityEst.toLocaleString('en-GB');
   document.getElementById('pillar-roth-val').textContent = '$' + rothEst.toLocaleString('en-GB');
-  document.getElementById('roth-split-brokerage').textContent = '$' + rothEst.toLocaleString('en-GB');
   document.getElementById('bal-pension').textContent = '~' + fmt(pensionEst);
   const pillarEl = document.getElementById('pillar-pension-val');
   if (pillarEl) pillarEl.textContent = '~' + fmt(pensionEst);
