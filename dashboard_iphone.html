@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="2026-05-22T10:30:00Z">
+<meta name="finance-build" content="2026-05-22T11:05:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-05-22T10:30:00Z';
+    const build = '2026-05-22T11:05:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -344,9 +344,9 @@ window.PLAN = Object.freeze({
     </div>
     <div class="metric">
       <div class="metric-label">Savings Rate</div>
-      <div class="metric-value" style="color:var(--amber)">45%</div>
-      <div class="metric-sub">vs gross · all pillars</div>
-      <div class="metric-badge badge-amber">£30,700/yr</div>
+      <div class="metric-value" id="m-savings-rate-value" style="color:var(--amber)">—</div>
+      <div class="metric-sub">vs gross · incl employer pension + SIP</div>
+      <div class="metric-badge badge-amber" id="m-savings-rate-badge">—</div>
     </div>
   </div>
 
@@ -387,7 +387,7 @@ window.PLAN = Object.freeze({
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" id="m-pillar-pension" style="color:var(--indigo)">—</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Annual input</span><span class="pillar-stat-v">£12,240 (18% total)</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Your contribution</span><span class="pillar-stat-v">6% · AbbVie matches 12%</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" style="color:var(--green)">£2.1M</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" id="m-pillar-pension-67" style="color:var(--green)">—</span></div>
       <div class="pillar-why-text">AbbVie's 12% match is a 200% return on your 6% before a single penny of growth. Fully utilised.</div>
     </div>
   </div>
@@ -479,9 +479,9 @@ window.PLAN = Object.freeze({
   <div class="section-title">Total picture</div>
   <div class="superplan-total">
     <div class="st-box"><div id="m-sp-nw" class="st-val" style="color:var(--amber)">—</div><div class="st-lbl">Wealth today</div><div class="st-note" id="m-sp-nw-note">Total incl. pension</div></div>
-    <div class="st-box"><div class="st-val" style="color:var(--green)">£31k+</div><div class="st-lbl">Annual creation</div><div class="st-note">£31,600/yr total · promo min</div></div>
-    <div class="st-box"><div class="st-val" style="color:var(--indigo)">£4M+</div><div class="st-lbl">At age 67</div><div class="st-note">7% CAGR</div></div>
-    <div class="st-box"><div class="st-val" style="color:var(--pink)">£41k+</div><div class="st-lbl">State income/yr</div><div class="st-note">Full UK + salary-scaled US</div></div>
+    <div class="st-box"><div class="st-val" id="m-annual-wealth-value" style="color:var(--green)">—</div><div class="st-lbl">Annual creation</div><div class="st-note" id="m-annual-wealth-note">All pillars</div></div>
+    <div class="st-box"><div class="st-val" id="m-projected-67-value" style="color:var(--indigo)">—</div><div class="st-lbl">At age 67</div><div class="st-note">Live + PLAN</div></div>
+    <div class="st-box"><div class="st-val" id="m-state-income-value" style="color:var(--pink)">—</div><div class="st-lbl">State income/yr</div><div class="st-note">Full UK + salary-scaled US</div></div>
   </div>
 </div>
 
@@ -994,7 +994,43 @@ function liveEstimates() {
   const pensionContribs = pensionPaydays * PLAN.pensionMonthlyGbp;
   const pensionEst = Math.round(PENSION_VAL * Math.pow(1.055, daysPension / 365) + pensionContribs);
 
+  function fvMonthly(base, monthly, months, monthlyRate) {
+    return base * Math.pow(1 + monthlyRate, months) +
+      (monthlyRate > 0 ? monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) : monthly * months);
+  }
+  const currentAgeForProjection = (today - new Date(2001, 1, 18)) / (365.25 * 24 * 3600 * 1000);
+  const monthsTo67 = Math.max(0, Math.round((67 - currentAgeForProjection) * 12));
+  const monthlyWealthCreation = PLAN.pensionMonthlyGbp + PLAN.sipMonthlyGbp + PLAN.wiseMonthlyGbp + PLAN.moveMonthlyGbp;
+  const annualWealthCreation = monthlyWealthCreation * 12;
+  const savingsRatePct = Math.round((monthlyWealthCreation / (PLAN.salaryGrossGbp / 12)) * 100);
+  const pension67 = Math.round(fvMonthly(pensionEst, PLAN.pensionMonthlyGbp, monthsTo67, 0.055 / 12));
+  const invest67 = Math.round((
+    fvMonthly(fidelityEst, PLAN.fidelityTaxableMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
+    fvMonthly(rothEst, PLAN.rothBrokerageMonthlyUsd, monthsTo67, PLAN.investReturn / 12)
+  ) * FX_M);
+  const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
+  const sipEst = Math.max(0, sipCompleted) * PLAN.sipMonthlyGbp;
+  const sip67 = sipEst + PLAN.sipMonthlyGbp * Math.min(monthsTo67, Math.max(0, 60 - sipCompleted));
+  const ukSavings67 = atomEst + efSavingsEst + monzoEst + chaseEst + PLAN.projectedUkSavingsMonthlyGbp * monthsTo67;
+  const total67 = Math.round(pension67 + invest67 + sip67 + ukSavings67 + chaseUSEst * FX_M);
+  const stateIncome67 = Math.round(12548 + US_SS_FULL_USD * FX_M);
+
   const fmt = (v, p='£') => p + v.toLocaleString('en-GB');
+  const fmtCompactMoney = v => v >= 1000000 ? '£' + (v / 1000000).toFixed(1).replace('.0', '') + 'M' : '£' + Math.round(v / 1000).toLocaleString('en-GB') + 'k';
+  const savingsRateValue = document.getElementById('m-savings-rate-value');
+  const savingsRateBadge = document.getElementById('m-savings-rate-badge');
+  const annualWealthValue = document.getElementById('m-annual-wealth-value');
+  const annualWealthNote = document.getElementById('m-annual-wealth-note');
+  const projected67Value = document.getElementById('m-projected-67-value');
+  const stateIncomeValue = document.getElementById('m-state-income-value');
+  const pension67El = document.getElementById('m-pillar-pension-67');
+  if (savingsRateValue) savingsRateValue.textContent = savingsRatePct + '%';
+  if (savingsRateBadge) savingsRateBadge.textContent = fmt(annualWealthCreation) + '/yr';
+  if (annualWealthValue) annualWealthValue.textContent = fmtCompactMoney(annualWealthCreation);
+  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl employer match';
+  if (projected67Value) projected67Value.textContent = fmtCompactMoney(total67);
+  if (stateIncomeValue) stateIncomeValue.textContent = fmtCompactMoney(stateIncome67) + '+';
+  if (pension67El) pension67El.textContent = fmtCompactMoney(pension67);
   document.getElementById('m-bal-atom').textContent       = fmt(atomEst);
   document.getElementById('m-bal-efsavings').textContent  = fmt(efSavingsEst);
   // monzoEst feeds NW chart only (move fund is goal-tracked in Goal 2, no account card)
@@ -1079,8 +1115,6 @@ function liveEstimates() {
   else                 { nv.textContent='£3,773';  ns.textContent='£68,000 salary · payday 24th';  nb.textContent='+£125/mo · 12 Jul rent drop'; }
 
   // Net worth composition
-  const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
-  const sipEst = Math.max(0, sipCompleted) * PLAN.sipMonthlyGbp; // acquisition cost · £300/month (employee + AbbVie match)
   const mSegs = [
     { label:'UK Savings',     val: atomEst + efSavingsEst + monzoEst + chaseEst,  color:'#22d3ee', note:'Atom · Monzo EF · Move Fund · Chase UK' },
     { label:'AbbVie Pension', val: pensionEst,                      color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
