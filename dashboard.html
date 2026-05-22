@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-04-20T15:00:00Z">
+<meta name="finance-build" content="2026-05-22T10:30:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-04-20T15:00:00Z';
+    const build = '2026-05-22T10:30:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -16,6 +16,25 @@
     }
   } catch (_) {}
 })();
+</script>
+<script>
+window.PLAN = Object.freeze({
+  salaryGrossGbp: 68000,
+  salaryNetMonthlyGbp: 3773,
+  salaryNetBonusMonthGbp: 5012,
+  moveMonthlyGbp: 130,
+  moveTargetGbp: 1800,
+  wiseMonthlyGbp: 650,
+  fidelityTaxableMonthlyUsd: 370,
+  rothBrokerageMonthlyUsd: 480,
+  pensionMonthlyGbp: 1020,
+  sipMonthlyGbp: 300,
+  projectedUkSavingsMonthlyGbp: 200,
+  fireAccessibleMonthlyGbp: 666,
+  firePensionMonthlyGbp: 1020,
+  fireRothMonthlyGbp: 481,
+  investReturn: 0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04
+});
 </script>
 <title>Ella Lambert — Finance Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -926,11 +945,11 @@
   const r = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 6, 24);
   const potAnchor = 136.47;
-  const moveTarget = 1800;
+  const moveTarget = window.PLAN.moveTargetGbp;
   let total = potAnchor;
 
   for (let d = new Date(potStart); d <= today; d = new Date(d.getFullYear(), d.getMonth() + 1, 24)) {
-    total = total * (1 + r) + 130;
+    total = total * (1 + r) + window.PLAN.moveMonthlyGbp;
   }
 
   total = Math.round(total * 100) / 100;
@@ -1600,6 +1619,23 @@ let gNwFx    = 0.77;
 const US_SS_FULL_USD = 37000;
 const US_SS_BASE_EQ_YEARS = 3;
 const US_SS_FULL_EQ_YEARS = 35;
+const PLAN = window.PLAN || Object.freeze({
+  salaryGrossGbp: 68000,
+  salaryNetMonthlyGbp: 3773,
+  salaryNetBonusMonthGbp: 5012,
+  moveMonthlyGbp: 130,
+  moveTargetGbp: 1800,
+  wiseMonthlyGbp: 650,
+  fidelityTaxableMonthlyUsd: 370,
+  rothBrokerageMonthlyUsd: 480,
+  pensionMonthlyGbp: 1020,
+  sipMonthlyGbp: 300,
+  projectedUkSavingsMonthlyGbp: 200,
+  fireAccessibleMonthlyGbp: 666,
+  firePensionMonthlyGbp: 1020,
+  fireRothMonthlyGbp: 481,
+  investReturn: 0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04
+});
 
 function liquidNetWorthFromSegments(segs) {
   return segs
@@ -1647,15 +1683,15 @@ function nwSliderChange(yrs) {
   if (!gNwBases) return;
   if (yr === 0) { renderNwBreakdown(gNwBases.segs, gNwBases.mktLabel); if (gNwChart) { gNwChart.data.datasets[0].data = gNwBases.segs.map(s => s.val); gNwChart.update(); } return; }
   const months = yr * 12;
-  const rInvest = (0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04) / 12;
+  const rInvest = PLAN.investReturn / 12;
   const r55 = 0.055/12, FX = gNwFx;
   const fvc = (pmt, mo, r) => r > 0 ? pmt * ((Math.pow(1+r,mo)-1)/r) : pmt*mo;
   const segs = [
-    { label:'UK Savings',     val: Math.round(gNwBases.ukSav + 200*months),                                                              color:'#22d3ee', note:'Atom · Monzo EF · Move Fund · Chase UK' },
-    { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(1020,months,r55)),                         color:'#818cf8', note:'Aviva workplace pension · 5.5% CAGR est.' },
-    { label:'ABBV SIP Shares',val: Math.round(gNwBases.sip + 300*Math.min(months, Math.max(0,60-gNwBases.sipCompleted))),                color:'#f472b6', note:'Locked 5yr · acquisition cost est.' },
-    { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+rInvest,months) + fvc(370,months,rInvest))*FX),                color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
-    { label:'Brokerage Roth', val: Math.round((gNwBases.rothUSD*Math.pow(1+rInvest,months) + fvc(480,months,rInvest))*FX),               color:'#fbbf24', note:'Active Roth IRA · Advisor Roth separate' },
+    { label:'UK Savings',     val: Math.round(gNwBases.ukSav + PLAN.projectedUkSavingsMonthlyGbp * months),                                                              color:'#22d3ee', note:'Atom · Monzo EF · Move Fund · Chase UK' },
+    { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(PLAN.pensionMonthlyGbp, months, r55)),                         color:'#818cf8', note:'Aviva workplace pension · 5.5% CAGR est.' },
+    { label:'ABBV SIP Shares',val: Math.round(gNwBases.sip + PLAN.sipMonthlyGbp * Math.min(months, Math.max(0, 60 - gNwBases.sipCompleted))),                color:'#f472b6', note:'Locked 5yr · acquisition cost est.' },
+    { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+rInvest,months) + fvc(PLAN.fidelityTaxableMonthlyUsd, months, rInvest))*FX),                color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
+    { label:'Brokerage Roth', val: Math.round((gNwBases.rothUSD*Math.pow(1+rInvest,months) + fvc(PLAN.rothBrokerageMonthlyUsd, months, rInvest))*FX),               color:'#fbbf24', note:'Active Roth IRA · Advisor Roth separate' },
     { label:'US Cash',        val: Math.round(gNwBases.usCashUSD*FX),                                                                   color:'#6366f1', note:'Chase US — pipeline hub · $1,500 min' },
   ];
   renderNwBreakdown(segs, `Projected · ${2026+yr} · 85/10/5 investments · 5.5% pension`);
@@ -1753,7 +1789,7 @@ function syncFireStateScenario() {
 }
 
 function updateFire() {
-  const mo    = 2170;
+  const mo    = PLAN.fireAccessibleMonthlyGbp + PLAN.firePensionMonthlyGbp + PLAN.fireRothMonthlyGbp;
   const r     = 0.07;
   const sp    = +document.getElementById('exp-slider').value;
   const wr    = 0.04;
@@ -1763,9 +1799,9 @@ function updateFire() {
 
   setFireRangeFill(document.getElementById('exp-slider'));
 
-  document.getElementById('acc-label').textContent = '£666/mo';
-  document.getElementById('pen-label').textContent = '£1,020/mo';
-  document.getElementById('roth-label').textContent = '£481/mo';
+  document.getElementById('acc-label').textContent = `£${PLAN.fireAccessibleMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('pen-label').textContent = `£${PLAN.firePensionMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('roth-label').textContent = `£${PLAN.fireRothMonthlyGbp.toLocaleString('en-GB')}/mo`;
   document.getElementById('exp-label').textContent = '£' + sp.toLocaleString();
   document.getElementById('fire-slider-big').textContent = '£' + Math.round(sp / 1000) + 'k';
 
@@ -1781,9 +1817,9 @@ function updateFire() {
   const pensionAccessAge = 57;
   const rothAccessAge = 59.5;
   const ukStateIncome = 12548;
-  const accShare = 666 / 2167;
-  const penShare = 1020 / 2167;
-  const rothShare = 481 / 2167;
+  const accShare = PLAN.fireAccessibleMonthlyGbp / mo;
+  const penShare = PLAN.firePensionMonthlyGbp / mo;
+  const rothShare = PLAN.fireRothMonthlyGbp / mo;
   const moAcc = mo * accShare;
   const moPen = mo * penShare;
   const moRoth = mo * rothShare;
@@ -1967,15 +2003,15 @@ function liveEstimates() {
 
     function monthSchedule(y, m) {
       // Mar 2026 uses bonus-month net. From Apr 2026 onward: £3,773 net, with £130 move pot starting 24 Jul.
-      const salary = (y === 2026 && m === 2) ? 5012 : 3773;
-      const movePot = (y > 2026 || (y === 2026 && m >= 6)) ? -130 : 0;
+      const salary = (y === 2026 && m === 2) ? PLAN.salaryNetBonusMonthGbp : PLAN.salaryNetMonthlyGbp;
+      const movePot = (y > 2026 || (y === 2026 && m >= 6)) ? -PLAN.moveMonthlyGbp : 0;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus full household
         { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
         { date: new Date(y, m, 12), amount: (y > 2026 || (y === 2026 && m >= 6)) ? -1125 : -1250 }, // Rent (splits Jul 2026: −£125/mo)
         { date: new Date(y, m, 24), amount: salary  }, // Salary net
         { date: new Date(y, m, 24), amount: movePot }, // Move pot starts 24 Jul 2026
-        { date: new Date(y, m, 25), amount:  -650   }, // Wise pulls GBP from Chase UK
+        { date: new Date(y, m, 25), amount:  -PLAN.wiseMonthlyGbp }, // Wise pulls GBP from Chase UK
         { date: new Date(y, m, 26), amount:  -53.48 }, // Vancsi bills (council tax/water diff)
       ];
     }
@@ -1998,10 +2034,7 @@ function liveEstimates() {
   const INVEST_ANCHOR = new Date(2026, 4, 11);
   const FIDELITY_TAXABLE_ANCHOR = 6946.67;
   const ROTH_BROKERAGE_ANCHOR = 1293.65;
-  const INVEST_RETURN =
-    0.85 * 0.07 +   // FSKAX
-    0.10 * 0.06 +   // FTIHX
-    0.05 * 0.04;    // FXNAX
+  const INVEST_RETURN = PLAN.investReturn;
   function growUSD(amount, fromDate, annualRate = INVEST_RETURN) {
     return amount * Math.pow(1 + annualRate, daysSince(fromDate) / 365);
   }
@@ -2018,11 +2051,11 @@ function liveEstimates() {
   }
   const fidelityEst = Math.round(
     growUSD(FIDELITY_TAXABLE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(370, new Date(2026, 5, 1))
+    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(2026, 5, 1))
   );
   const rothEst = Math.round(
     growUSD(ROTH_BROKERAGE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(480, new Date(2026, 5, 1))
+    monthlyBuyValue(PLAN.rothBrokerageMonthlyUsd, new Date(2026, 5, 1))
   );
   const chaseUSEst  = 1600; // static working capital anchor — maintained manually at $1,500–1,600
   // SIP shares — acquisition cost: £300/month (£150 employee + £150 AbbVie match) from Nov 2024
@@ -2039,7 +2072,7 @@ function liveEstimates() {
   const daysPension    = daysSince(PENSION_ANCHOR);
   const pensionPaydays = today < NEXT_PENSION_PAYDAY ? 0
     : monthsSince(NEXT_PENSION_PAYDAY) + (today.getDate() >= 24 ? 1 : 0);
-  const pensionContribs = pensionPaydays * 1020;
+  const pensionContribs = pensionPaydays * PLAN.pensionMonthlyGbp;
   const pensionEst = Math.round(PENSION_VAL * Math.pow(1.055, daysPension / 365) + pensionContribs);
 
   // DYNAMIC HERO NET — switches at April 1 for promo preview, April 24 for payday
@@ -2129,7 +2162,7 @@ function updateGoals() {
   const potStart = new Date(2026, 6, 24);
   const potAnchor = 136.47;
   function potContribution(d) {
-    return d >= potStart ? 130 : 0;
+    return d >= potStart ? PLAN.moveMonthlyGbp : 0;
   }
   function potFV(asOf) {
     let total = potAnchor;
@@ -2142,7 +2175,7 @@ function updateGoals() {
   const flatSaved = potFV(today);
 
   // Goal 2: Move to nicer flat with a simple £1,800 move buffer.
-  const moveTarget = 1800;
+  const moveTarget = window.PLAN.moveTargetGbp;
   document.getElementById('move-prog').style.width = Math.min(100, flatSaved / moveTarget * 100).toFixed(1) + '%';
   document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
 

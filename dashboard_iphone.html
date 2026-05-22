@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="2026-04-14T15:45:00Z">
+<meta name="finance-build" content="2026-05-22T10:30:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-04-14T15:45:00Z';
+    const build = '2026-05-22T10:30:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -16,6 +16,25 @@
     }
   } catch (_) {}
 })();
+</script>
+<script>
+window.PLAN = Object.freeze({
+  salaryGrossGbp: 68000,
+  salaryNetMonthlyGbp: 3773,
+  salaryNetBonusMonthGbp: 5012,
+  moveMonthlyGbp: 130,
+  moveTargetGbp: 1800,
+  wiseMonthlyGbp: 650,
+  fidelityTaxableMonthlyUsd: 370,
+  rothBrokerageMonthlyUsd: 480,
+  pensionMonthlyGbp: 1020,
+  sipMonthlyGbp: 300,
+  projectedUkSavingsMonthlyGbp: 200,
+  fireAccessibleMonthlyGbp: 666,
+  firePensionMonthlyGbp: 1020,
+  fireRothMonthlyGbp: 481,
+  investReturn: 0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04
+});
 </script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -510,11 +529,11 @@
   const r = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 6, 24);
   const potAnchor = 136.47;
-  const moveTarget = 1800;
+  const moveTarget = window.PLAN.moveTargetGbp;
   let total = potAnchor;
 
   for (let d = new Date(potStart); d <= today; d = new Date(d.getFullYear(), d.getMonth() + 1, 24)) {
-    total = total * (1 + r) + 130;
+    total = total * (1 + r) + window.PLAN.moveMonthlyGbp;
   }
 
   total = Math.round(total * 100) / 100;
@@ -835,6 +854,23 @@ const today = new Date();
 const US_SS_FULL_USD = 37000;
 const US_SS_BASE_EQ_YEARS = 3;
 const US_SS_FULL_EQ_YEARS = 35;
+const PLAN = window.PLAN || Object.freeze({
+  salaryGrossGbp: 68000,
+  salaryNetMonthlyGbp: 3773,
+  salaryNetBonusMonthGbp: 5012,
+  moveMonthlyGbp: 130,
+  moveTargetGbp: 1800,
+  wiseMonthlyGbp: 650,
+  fidelityTaxableMonthlyUsd: 370,
+  rothBrokerageMonthlyUsd: 480,
+  pensionMonthlyGbp: 1020,
+  sipMonthlyGbp: 300,
+  projectedUkSavingsMonthlyGbp: 200,
+  fireAccessibleMonthlyGbp: 666,
+  firePensionMonthlyGbp: 1020,
+  fireRothMonthlyGbp: 481,
+  investReturn: 0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04
+});
 
 function fmtCompactK(value) {
   return `£${Math.round(value / 1000).toLocaleString('en-GB')}k`;
@@ -893,15 +929,15 @@ function liveEstimates() {
     const anchorMs = ANCHOR_DATE.getTime();
     const todayMs  = today.getTime();
     function monthSchedule(y, m) {
-      const salary = (y === 2026 && m === 2) ? 5012 : 3773;
-      const movePot = (y > 2026 || (y === 2026 && m >= 6)) ? -130 : 0;
+      const salary = (y === 2026 && m === 2) ? PLAN.salaryNetBonusMonthGbp : PLAN.salaryNetMonthlyGbp;
+      const movePot = (y > 2026 || (y === 2026 && m >= 6)) ? -PLAN.moveMonthlyGbp : 0;
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus
         { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
         { date: new Date(y, m, 12), amount: (y > 2026 || (y === 2026 && m >= 6)) ? -1125 : -1250 }, // Rent (splits Jul 2026: −£125/mo)
         { date: new Date(y, m, 24), amount: salary  }, // Salary net
         { date: new Date(y, m, 24), amount: movePot }, // Move pot starts 24 Jul 2026
-        { date: new Date(y, m, 25), amount:  -650   }, // Wise pulls GBP from Chase UK
+        { date: new Date(y, m, 25), amount:  -PLAN.wiseMonthlyGbp }, // Wise pulls GBP from Chase UK
         { date: new Date(y, m, 26), amount:  -53.48 }, // Vancsi bills
       ];
     }
@@ -918,10 +954,7 @@ function liveEstimates() {
   }
   const chaseEst = chaseEstimate();
 
-  const INVEST_RETURN =
-    0.85 * 0.07 +   // FSKAX
-    0.10 * 0.06 +   // FTIHX
-    0.05 * 0.04;    // FXNAX
+  const INVEST_RETURN = PLAN.investReturn;
   function growUSD(amount, fromDate, annualRate = INVEST_RETURN) {
     return amount * Math.pow(1 + annualRate, daysSince(fromDate) / 365);
   }
@@ -941,11 +974,11 @@ function liveEstimates() {
   const ROTH_BROKERAGE_ANCHOR = 1293.65;
   const fidelityEst = Math.round(
     growUSD(FIDELITY_TAXABLE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(370, new Date(2026, 5, 1))
+    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(2026, 5, 1))
   );
   const rothEst = Math.round(
     growUSD(ROTH_BROKERAGE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(480, new Date(2026, 5, 1))
+    monthlyBuyValue(PLAN.rothBrokerageMonthlyUsd, new Date(2026, 5, 1))
   );
   const chaseUSEst = 1600; // static working capital anchor
 
@@ -958,7 +991,7 @@ function liveEstimates() {
   const daysPension    = daysSince(PENSION_ANCHOR);
   const pensionPaydays = today < NEXT_PENSION_PAYDAY ? 0
     : monthsSince(NEXT_PENSION_PAYDAY) + (today.getDate() >= 24 ? 1 : 0);
-  const pensionContribs = pensionPaydays * 1020;
+  const pensionContribs = pensionPaydays * PLAN.pensionMonthlyGbp;
   const pensionEst = Math.round(PENSION_VAL * Math.pow(1.055, daysPension / 365) + pensionContribs);
 
   const fmt = (v, p='£') => p + v.toLocaleString('en-GB');
@@ -1013,8 +1046,8 @@ function liveEstimates() {
       { name:'FTIHX', desc:'International Ex-US',   pct:10, color:'var(--cyan)',   role:'Diversifier' },
       { name:'FXNAX', desc:'US Bond Index',          pct:5,  color:'var(--amber)', role:'Ballast' },
     ];
-    const moTaxable = 370;
-    const moRoth = 480;
+    const moTaxable = PLAN.fidelityTaxableMonthlyUsd;
+    const moRoth = PLAN.rothBrokerageMonthlyUsd;
     const makeRows = (mo, label) =>
       funds.map((f, i) => {
         const amt = Math.round(mo * f.pct / 100);
@@ -1047,7 +1080,7 @@ function liveEstimates() {
 
   // Net worth composition
   const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
-  const sipEst = Math.max(0, sipCompleted) * 300; // acquisition cost · £300/month (employee + AbbVie match)
+  const sipEst = Math.max(0, sipCompleted) * PLAN.sipMonthlyGbp; // acquisition cost · £300/month (employee + AbbVie match)
   const mSegs = [
     { label:'UK Savings',     val: atomEst + efSavingsEst + monzoEst + chaseEst,  color:'#22d3ee', note:'Atom · Monzo EF · Move Fund · Chase UK' },
     { label:'AbbVie Pension', val: pensionEst,                      color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
@@ -1122,16 +1155,16 @@ function nwSliderChange(yrs) {
   if (yr === 0) { renderNWSegs(gNwBases.segs); return; }
   if (!gNwBases) return;
   const months = yr * 12;
-  const rInvest = (0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04) / 12;
+  const rInvest = PLAN.investReturn / 12;
   const r55 = 0.055 / 12;
   const FX  = gNwBases.fx;
   const fvc = (pmt, mo, r) => r > 0 ? pmt * ((Math.pow(1+r,mo) - 1) / r) : pmt * mo;
-  const ukSav     = gNwBases.ukSav + 200 * months;
-  const pensionFV = gNwBases.pension * Math.pow(1+r55, months) + fvc(1020, months, r55);
+  const ukSav     = gNwBases.ukSav + PLAN.projectedUkSavingsMonthlyGbp * months;
+  const pensionFV = gNwBases.pension * Math.pow(1+r55, months) + fvc(PLAN.pensionMonthlyGbp, months, r55);
   const sipLeft   = Math.max(0, 60 - gNwBases.sipCompleted);
-  const sip       = gNwBases.sip + 300 * Math.min(months, sipLeft);
-  const fidFV     = Math.round((gNwBases.fidelityUSD * Math.pow(1+rInvest, months) + fvc(370, months, rInvest)) * FX);
-  const rothFV    = Math.round((gNwBases.rothUSD    * Math.pow(1+rInvest, months) + fvc(480, months, rInvest)) * FX);
+  const sip       = gNwBases.sip + PLAN.sipMonthlyGbp * Math.min(months, sipLeft);
+  const fidFV     = Math.round((gNwBases.fidelityUSD * Math.pow(1+rInvest, months) + fvc(PLAN.fidelityTaxableMonthlyUsd, months, rInvest)) * FX);
+  const rothFV    = Math.round((gNwBases.rothUSD    * Math.pow(1+rInvest, months) + fvc(PLAN.rothBrokerageMonthlyUsd, months, rInvest)) * FX);
   renderNWSegs([
     { label:'UK Savings',     val: Math.round(ukSav),       color:'#22d3ee', note:'Atom · Monzo · Chase UK' },
     { label:'AbbVie Pension', val: Math.round(pensionFV),   color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
@@ -1160,7 +1193,7 @@ liveEstimates();
   const potStart = new Date(2026, 6, 24);
   const potAnchor = 136.47;
   function potContribution(d) {
-    return d >= potStart ? 130 : 0;
+    return d >= potStart ? PLAN.moveMonthlyGbp : 0;
   }
   function potFV(asOf) {
     let total = potAnchor;
@@ -1171,7 +1204,7 @@ liveEstimates();
     return total;
   }
   const flatSaved = potFV(today);
-  document.getElementById('m-move-prog').style.width = Math.min(100, flatSaved / 1800 * 100) + '%';
+  document.getElementById('m-move-prog').style.width = Math.min(100, flatSaved / PLAN.moveTargetGbp * 100) + '%';
   document.getElementById('m-move-lbl').textContent  = `£${flatSaved.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
 
   const ilrDeadline = new Date(2029, 8, 1);
@@ -1203,7 +1236,7 @@ function mSetStateScenario(mode) {
 
 function mCalcFire() {
   const r   = 0.07;
-  const mo  = 2170;
+  const mo  = PLAN.fireAccessibleMonthlyGbp + PLAN.firePensionMonthlyGbp + PLAN.fireRothMonthlyGbp;
   const sp  = parseFloat(document.getElementById('m-sp').value);
   const wr  = 0.04;
   const bruce = document.getElementById('m-bruceToggle').checked;
@@ -1212,9 +1245,9 @@ function mCalcFire() {
 
   mSetFireRangeFill(document.getElementById('m-sp'));
 
-  document.getElementById('m-acc-lbl').textContent  = '£666/mo';
-  document.getElementById('m-pen-lbl').textContent  = '£1,020/mo';
-  document.getElementById('m-roth-lbl').textContent = '£481/mo';
+  document.getElementById('m-acc-lbl').textContent  = `£${PLAN.fireAccessibleMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('m-pen-lbl').textContent  = `£${PLAN.firePensionMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('m-roth-lbl').textContent = `£${PLAN.fireRothMonthlyGbp.toLocaleString('en-GB')}/mo`;
   document.getElementById('m-sp-lbl').textContent  = '£'+sp.toLocaleString('en-GB');
   document.getElementById('m-fire-slider-big').textContent = '£'+Math.round(sp/1000)+'k';
   document.querySelectorAll('[data-m-fire-spend]').forEach(btn => {
@@ -1227,9 +1260,9 @@ function mCalcFire() {
   const rothAccessAge = 59.5;
   const ukStateIncome = 12548;
   const giftStart = new Date(2029, 0, 1);
-  const accShare = 666 / 2167;
-  const penShare = 1020 / 2167;
-  const rothShare = 481 / 2167;
+  const accShare = PLAN.fireAccessibleMonthlyGbp / mo;
+  const penShare = PLAN.firePensionMonthlyGbp / mo;
+  const rothShare = PLAN.fireRothMonthlyGbp / mo;
   const moAcc = mo * accShare;
   const moPen = mo * penShare;
   const moRoth = mo * rothShare;
