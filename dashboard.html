@@ -599,7 +599,8 @@
         <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
           <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Post-payday flow</div>
           <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,773 lands in Chase UK. Move Pot starts <strong style="color:var(--text)">24 Jul</strong> at £130/mo.</div></div>
-          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> <strong style="color:var(--text)">£650</strong> goes via Wise to Chase US, then Fidelity.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Wise pulls <strong style="color:var(--text)">£650</strong> from Chase UK.</div></div>
+          <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">26th:</strong> Wise sends USD to Chase US.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> <strong style="color:var(--text)">£56</strong> goes out for flatmate bills.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Month-end:</strong> BA Amex autopay clears, usually <strong style="color:var(--text)">£1,100-1,400</strong>.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot muted"></span><div><strong style="color:var(--text)">1st:</strong> Octopus hits at <strong style="color:var(--text)">£55 net</strong> after reimbursement.</div></div>
@@ -1144,8 +1145,8 @@
         <div class="pipe-step">
           <div class="pipe-icon">💸</div>
           <div class="pipe-label">Wise</div>
-          <div class="pipe-amount">25th</div>
-          <div class="pipe-note">One transfer/mo only. No fragments.</div>
+          <div class="pipe-amount">25/26</div>
+          <div class="pipe-note">Pulls GBP on 25th. Sends USD to Chase US on 26th.</div>
         </div>
         <div class="pipe-arrow">→</div>
         <div class="pipe-step">
@@ -1246,7 +1247,8 @@
       <div class="chart-card" style="padding:1.15rem 1.2rem;">
         <h3>Monthly Actions</h3>
         <div style="display:flex; flex-direction:column; gap:0.5rem;">
-          <div class="action-item"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Transfer £650 via Wise (one shot, no fragments)</div></div>
+          <div class="action-item"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Wise pulls £650 from Chase UK</div></div>
+          <div class="action-item"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">26th:</strong> Wise sends USD to Chase US</div></div>
           <div class="action-item"><span class="action-dot amber"></span><div><strong style="color:var(--text)">Annually:</strong> Rebalance if allocation drifts more than 5%</div></div>
           <div class="action-item"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">At £75k salary:</strong> Increase pension AVCs (the trigger)</div></div>
           <div class="action-item"><span class="action-dot muted"></span><div><strong style="color:var(--text)">Never:</strong> Sell in a downturn. Never sell Roth. Never pick stocks.</div></div>
@@ -1995,7 +1997,7 @@ function liveEstimates() {
         { date: new Date(y, m, 12), amount: (y > 2026 || (y === 2026 && m >= 6)) ? -1125 : -1250 }, // Rent (splits Jul 2026: −£125/mo)
         { date: new Date(y, m, 24), amount: salary  }, // Salary net
         { date: new Date(y, m, 24), amount: movePot }, // Move pot starts 24 Jul 2026
-        { date: new Date(y, m, 24), amount:  -650   }, // Wise to US (same day as salary)
+        { date: new Date(y, m, 25), amount:  -650   }, // Wise pulls GBP from Chase UK
         { date: new Date(y, m, 26), amount:  -53.48 }, // Vancsi bills (council tax/water diff)
       ];
     }
@@ -2593,7 +2595,7 @@ setInterval(checkChatStatus, 30000);
     <button class="modal-close" onclick="document.getElementById('invest-modal').classList.remove('open')">×</button>
     <div style="font-size:0.58rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:0.4rem;">Locked April 2026 · Do not deviate</div>
     <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
-    <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">£650/mo Wise → Chase US → Fidelity. Fidelity ACH pulls on the 30th; recurring buys execute automatically on the 1st.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">Wise pulls £650 from Chase UK on the 25th, sends USD to Chase US on the 26th, Fidelity ACH pulls on the 30th, and recurring buys execute on the 1st.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Allocation — active brokerage only</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical across active Roth brokerage and active taxable brokerage. No monthly rebalancing.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth IRA</div><div class="modal-rule-value">Brokerage Roth gets the automatic $480/mo buy. Advisor Roth is separate and stays untouched.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Taxable · $370/mo</div><div class="modal-rule-value">FSKAX/FTIHX/FXNAX in Fidelity retail taxable. 0.3%/yr dividend drag. 15% LTCG on gains at sale. Pre-retirement bridge and liquidity layer. Access anytime.</div></div>
