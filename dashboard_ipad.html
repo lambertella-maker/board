@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-05-28T13:45:00Z">
+<meta name="finance-build" content="2026-05-28T13:55:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-05-28T13:45:00Z';
+    const build = '2026-05-28T13:55:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -105,8 +105,7 @@ window.PLAN = Object.freeze({
   .badge-cyan  { background:rgba(34,211,238,0.15); color:var(--cyan); }
   .badge-amber { background:rgba(251,191,36,0.15); color:var(--amber); }
   .badge-indigo { background:rgba(129,140,248,0.15); color:var(--indigo); }
-  .hero .metrics { align-items:stretch; grid-auto-rows:142px; }
-  .hero .metric-card { min-width:0; min-height:142px; overflow:hidden; }
+  .hero .metric-card { min-width:0; overflow:hidden; }
   .hero .metric-label,
   .hero .metric-value,
   .hero .metric-sub,
