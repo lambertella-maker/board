@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-05-28T13:05:00Z">
+<meta name="finance-build" content="2026-05-28T13:20:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-05-28T13:05:00Z';
+    const build = '2026-05-28T13:20:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -105,6 +105,14 @@ window.PLAN = Object.freeze({
   .badge-cyan  { background:rgba(34,211,238,0.15); color:var(--cyan); }
   .badge-amber { background:rgba(251,191,36,0.15); color:var(--amber); }
   .badge-indigo { background:rgba(129,140,248,0.15); color:var(--indigo); }
+  .hero .metrics { align-items:stretch; }
+  .hero .metric-card { height:142px; min-width:0; display:flex; flex-direction:column; justify-content:flex-start; overflow:hidden; }
+  .hero .metric-label,
+  .hero .metric-value,
+  .hero .metric-sub,
+  .hero .metric-badge { max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .hero .metric-value { line-height:1.05; }
+  .hero .metric-badge { align-self:flex-start; }
   #hero-ef-badge { white-space:nowrap; }
 
   /* CHARTS GRID */
