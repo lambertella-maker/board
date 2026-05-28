@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="2026-05-22T11:05:00Z">
+<meta name="finance-build" content="2026-05-28T13:05:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-05-22T11:05:00Z';
+    const build = '2026-05-28T13:05:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -25,14 +25,14 @@ window.PLAN = Object.freeze({
   moveMonthlyGbp: 130,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
-  fidelityTaxableMonthlyUsd: 370,
-  rothBrokerageMonthlyUsd: 480,
+  fidelityTaxableMonthlyUsd: 225,
+  rothBrokerageMonthlyUsd: 625,
   pensionMonthlyGbp: 1020,
   sipMonthlyGbp: 300,
   projectedUkSavingsMonthlyGbp: 200,
   fireAccessibleMonthlyGbp: 666,
   firePensionMonthlyGbp: 1020,
-  fireRothMonthlyGbp: 481,
+  fireRothMonthlyGbp: 466,
   investReturn: 0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04
 });
 </script>
@@ -367,7 +367,7 @@ window.PLAN = Object.freeze({
 <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">£1,200 avg</div><div class="acct-note">Salary hub · varies by day</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity Taxable</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
-<div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Brokerage Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$480/mo · Advisor Roth separate</div></div>
+<div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Brokerage Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$625/mo · $6,875 left</div></div>
   </div>
 
 </div>
@@ -416,7 +416,7 @@ window.PLAN = Object.freeze({
     <div class="pillar-header"><div class="pillar-ico">📈</div><div><div class="pillar-label">Pillar 4 · US Investing</div><div class="pillar-name">Fidelity Taxable</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Taxable value</span><span class="pillar-stat-v" id="m-pillar-fid" style="color:var(--green)">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly buy</span><span class="pillar-stat-v">$370/mo taxable</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly buy</span><span class="pillar-stat-v">$225/mo taxable</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Target split</span><span class="pillar-stat-v">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
       <div class="pillar-why-text">Accessible US investing bucket. ACH pulls on the 30th; recurring fund buys happen on the 1st.</div>
     </div>
@@ -426,9 +426,9 @@ window.PLAN = Object.freeze({
     <div class="pillar-header"><div class="pillar-ico">🌱</div><div><div class="pillar-label">Pillar 5 · US Retirement</div><div class="pillar-name">Brokerage Roth IRA</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" style="color:var(--pink)" id="m-pillar-roth">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly buy</span><span class="pillar-stat-v" style="color:var(--pink)">$480/mo</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly buy</span><span class="pillar-stat-v" style="color:var(--pink)">$625/mo</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Advisor Roth</span><span class="pillar-stat-v" style="color:var(--soft)">Separate · untouched</span></div>
-      <div class="pillar-why-text">Brokerage Roth gets the $480/mo buy on the 1st. It is tracked separately from the Advisor Roth.</div>
+      <div class="pillar-why-text">Brokerage Roth gets the $625/mo buy on the 1st. It is tracked separately from the Advisor Roth.</div>
     </div>
   </div>
 
@@ -777,11 +777,11 @@ window.PLAN = Object.freeze({
       <span class="fire-stat-val" id="m-inv-pension" style="color:var(--pink)">—</span>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Brokerage Roth IRA</div><div style="font-size:0.64rem;color:var(--muted);">+$480/mo · Advisor Roth separate</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Brokerage Roth IRA</div><div style="font-size:0.64rem;color:var(--muted);">+$625/mo · $6,875 left</div></div>
       <span class="fire-stat-val" id="m-inv-roth" style="color:var(--amber)">—</span>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Fidelity Taxable</div><div style="font-size:0.64rem;color:var(--muted);">+$370/mo · FSKAX/FTIHX/FXNAX</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Fidelity Taxable</div><div style="font-size:0.64rem;color:var(--muted);">+$225/mo · FSKAX/FTIHX/FXNAX</div></div>
       <span class="fire-stat-val" id="m-inv-fid" style="color:var(--green)">—</span>
     </div>
     <div class="fire-stat-row" style="border-bottom:none;opacity:0.6;">
@@ -861,8 +861,8 @@ const PLAN = window.PLAN || Object.freeze({
   moveMonthlyGbp: 130,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
-  fidelityTaxableMonthlyUsd: 370,
-  rothBrokerageMonthlyUsd: 480,
+  fidelityTaxableMonthlyUsd: 225,
+  rothBrokerageMonthlyUsd: 625,
   pensionMonthlyGbp: 1020,
   sipMonthlyGbp: 300,
   projectedUkSavingsMonthlyGbp: 200,
@@ -931,13 +931,14 @@ function liveEstimates() {
     function monthSchedule(y, m) {
       const salary = (y === 2026 && m === 2) ? PLAN.salaryNetBonusMonthGbp : PLAN.salaryNetMonthlyGbp;
       const movePot = (y > 2026 || (y === 2026 && m >= 6)) ? -PLAN.moveMonthlyGbp : 0;
+      const wisePull = (y === 2026 && m === 4) ? 0 : -PLAN.wiseMonthlyGbp; // May 2026 skipped for float recovery
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus
         { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
         { date: new Date(y, m, 12), amount: (y > 2026 || (y === 2026 && m >= 6)) ? -1125 : -1250 }, // Rent (splits Jul 2026: −£125/mo)
         { date: new Date(y, m, 24), amount: salary  }, // Salary net
         { date: new Date(y, m, 24), amount: movePot }, // Move pot starts 24 Jul 2026
-        { date: new Date(y, m, 25), amount:  -PLAN.wiseMonthlyGbp }, // Wise pulls GBP from Chase UK
+        { date: new Date(y, m, 25), amount: wisePull }, // Wise pulls GBP from Chase UK
         { date: new Date(y, m, 26), amount:  -53.48 }, // Vancsi bills
       ];
     }
@@ -969,9 +970,10 @@ function liveEstimates() {
     }
     return total;
   }
-  const INVEST_ANCHOR = new Date(2026, 4, 11);
+  // May 2026 is skipped for float recovery. From June: taxable $225/mo, Roth brokerage $625/mo, both 85/10/5.
+  const INVEST_ANCHOR = new Date(2026, 4, 28);
   const FIDELITY_TAXABLE_ANCHOR = 6946.67;
-  const ROTH_BROKERAGE_ANCHOR = 1293.65;
+  const ROTH_BROKERAGE_ANCHOR = 1313.51;
   const fidelityEst = Math.round(
     growUSD(FIDELITY_TAXABLE_ANCHOR, INVEST_ANCHOR) +
     monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(2026, 5, 1))
@@ -1084,14 +1086,15 @@ function liveEstimates() {
     ];
     const moTaxable = PLAN.fidelityTaxableMonthlyUsd;
     const moRoth = PLAN.rothBrokerageMonthlyUsd;
+    const fmtUsdCents = value => '$' + value.toLocaleString('en-US', { minimumFractionDigits: value % 1 ? 2 : 0, maximumFractionDigits: 2 });
     const makeRows = (mo, label) =>
       funds.map((f, i) => {
-        const amt = Math.round(mo * f.pct / 100);
+        const amt = mo * f.pct / 100;
         const border = i < funds.length - 1 ? 'border-bottom:1px solid var(--border);' : '';
         return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;${border}">` +
           `<div><div style="font-size:0.8rem;font-weight:600;color:var(--text);">${f.name} <span style="font-size:0.68rem;font-weight:500;color:${f.color};">${f.pct}%</span></div>` +
           `<div style="font-size:0.64rem;color:var(--muted);">${f.desc}</div></div>` +
-          `<div style="text-align:right;"><div style="font-size:0.98rem;font-weight:800;color:${f.color};">$${amt}</div>` +
+          `<div style="text-align:right;"><div style="font-size:0.98rem;font-weight:800;color:${f.color};">${fmtUsdCents(amt)}</div>` +
           `<div style="font-size:0.62rem;color:var(--muted);">${label}</div></div></div>`;
       }).join('');
     fundRowsEl.innerHTML =
@@ -1454,8 +1457,8 @@ mCalcFire();
     <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
     <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">Wise pulls £650 from Chase UK on the 25th, sends USD to Chase US on the 26th, Fidelity ACH pulls on the 30th, and recurring buys execute on the 1st.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Both accounts</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical allocation. No monthly rebalancing.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth · $480/mo</div><div class="modal-rule-value">Brokerage Roth gets the automatic monthly buy. Advisor Roth stays separate.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Taxable · $370/mo</div><div class="modal-rule-value">0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth · $625/mo</div><div class="modal-rule-value">Brokerage Roth gets the automatic monthly buy. 2026 shows $625 contributed and $6,875 left against the $7,500 limit. Advisor Roth stays separate.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Taxable · $225/mo</div><div class="modal-rule-value">0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 · 1% ER · no new money. Review migration when convenient.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET: salary sacrifice now, tax-free growth, 25% lump sum + 75% income at drawdown. £1.9M at 67. Retirement covered.</div></div>
     <div class="modal-rule" style="border-bottom:none;"><div class="modal-rule-label">No ISAs</div><div class="modal-rule-value">Blocked while US citizen. Trigger = CLN only.</div></div>
