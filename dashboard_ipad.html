@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-05-28T13:55:00Z">
+<meta name="finance-build" content="2026-05-29T10:58:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-05-28T13:55:00Z';
+    const build = '2026-05-29T10:58:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -796,28 +796,28 @@ window.PLAN = Object.freeze({
         </div>
       </div>
 
-      <!-- Goal 3: Business class LHR → ORD -->
+      <!-- Goal 3: CSP travel engine -->
       <div class="goal-card goal-travel">
         <div class="goal-header">
           <div class="goal-icon">✈️</div>
           <div>
-            <div class="goal-name">Goal 3 · Travel · Early 2027</div>
-            <div class="goal-title">Business class LHR → ORD</div>
+            <div class="goal-name">Goal 3 · Travel · CSP Engine</div>
+            <div class="goal-title">Travel more for less</div>
           </div>
         </div>
         <div class="goal-progress-meta">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Transfer UR → United MileagePlus for Polaris LHR→ORD · ~£220 cash (APD only)</div>
-          <div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
-          <div class="progress-labels"><span>Jan 2026</span><span style="color:var(--amber)">CSP unlocks this</span><span>Early 2027</span></div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">CSP turns normal travel and dining spend into flexible UR points, no-FX payments, protections, and better trip choices.</div>
+          <div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:33%"></div></div>
+          <div class="progress-labels"><span>Build history</span><span style="color:var(--amber)">Apply Oct/Nov</span><span>Redeem by value</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">Points needed</span><span class="goal-row-value">70–75k UR → United MileagePlus · Polaris one-way LHR→ORD</span></div>
-        <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">75k UR can cover the points need · top up via 3× spend if pricing moves</span></div>
-        <div class="goal-row"><span class="goal-row-label">Cash out of pocket</span><span class="goal-row-value">£220 · UK APD only · United has zero carrier surcharges</span></div>
-        <div class="goal-row"><span class="goal-row-label">Ongoing</span><span class="goal-row-value">3× travel & dining · no FX fees · UR for any flight, any airline</span></div>
+        <div class="goal-row"><span class="goal-row-label">Core win</span><span class="goal-row-value">Spend less on fees and bad redemptions, not chase one flight</span></div>
+        <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">75k UR after $5k spend · only if natural and paid in full</span></div>
+        <div class="goal-row"><span class="goal-row-label">Use order</span><span class="goal-row-value">Chase Travel / Points Boost → partners → cash floor</span></div>
+        <div class="goal-row"><span class="goal-row-label">Decision rule</span><span class="goal-row-value">Compare United, Aeroplan, Virgin, Flying Blue, BA, Hyatt before transfer</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="travel-pill">
-            <div class="gp-label" id="travel-pill-label">CSP first · then book Polaris with UR</div>
-            <span id="travel-timeline">Early 2027</span>
+            <div class="gp-label" id="travel-pill-label">CSP first · then choose the best-value trip</div>
+            <span id="travel-timeline">2027+</span>
           </div>
         </div>
       </div>
@@ -2144,7 +2144,7 @@ function updateGoals() {
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Late 2026");
   setPill('move', "£130/mo from 24 Jul keeps the move fund on track", "Jun–Jul 2027");
-  setPill('travel', "CSP first · then book Polaris with UR", "Early 2027");
+  setPill('travel', "CSP first · then choose the best-value trip", "2027+");
 }
 
 function setPill(id, label, value) {
