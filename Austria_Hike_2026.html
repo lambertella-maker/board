@@ -311,6 +311,22 @@ li { margin-bottom: 4px; }
 }
 .price-pill.sp { background: var(--orange-light); color: var(--orange); }
 .hut-note { font-size: 0.8em; color: var(--muted); margin-top: 8px; }
+.booked-badge {
+  display: inline-block;
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid var(--green-border);
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-size: 0.72em;
+  font-weight: 700;
+  line-height: 1.45;
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.booked-badge.block { margin-bottom: 5px; }
 
 /* ─── CALLOUT BOXES ─── */
 .note-box {
@@ -623,9 +639,9 @@ li { margin-bottom: 4px; }
     <div class="travel-card-body">
       <div class="tc-label">Arrival</div>
       <div class="tc-date">Fri 24 Jul</div>
-      <div class="tc-sub">Janek LHR Fri 10:00 ✓ · Dina ✓ · Maya ✓.</div>
+      <div class="tc-sub"><span class="booked-badge">Booked</span> Janek LHR Fri 10:00 · Dina + Maya London arrivals.</div>
       <div class="tc-date" style="margin-top:10px;">Sun 26 Jul</div>
-      <div class="tc-sub">BA598 06:05 → 09:20 ✓ · pick up car, drive straight to Sillian.</div>
+      <div class="tc-sub"><span class="booked-badge">Booked</span> BA598 06:05 → 09:20 · optional Venice lunch, then Avis car pickup 15:00.</div>
     </div>
   </div>
 
@@ -638,33 +654,33 @@ li { margin-bottom: 4px; }
       <div class="ov-night">Night 1 · Mon 27 Jul</div>
       <h3><a href="https://www.alpenverein.at/sillian" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.15);">Sillianer Hütte ↗</a></h3>
       <div class="ov-elev">2,447m · Carnic Main Ridge</div>
-      <div class="ov-note"><span style="display:inline-block;background:#EBF6EF;color:#2B6E42;font-size:0.73em;font-weight:700;padding:1px 7px;border-radius:4px;margin-bottom:5px;">✓ BOOKED</span><br>Private multi-bed · half-board</div>
+      <div class="ov-note"><span class="booked-badge block">Booked</span><br>Private multi-bed · half-board</div>
     </div>
   </div>
 
   <!-- NIGHT 2 -->
   <div class="hut-ov-card">
     <a href="https://www.alpenverein.at/obstanserseehuette/" target="_blank" rel="noopener" style="display:block;text-decoration:none;">
-      <div class="hut-ov-photo" style="background: url('https://www.alpenverein-austria.at/austria/slides/bilder/sommer2018/weblication/wThumbnails/Obstans-Galbavy-2013-1-71cd0ca38e2d74c61d5930d7ca278e50.jpg') center / cover no-repeat, linear-gradient(150deg, #1E5A96, #78B8E0);"></div>
+      <div class="hut-ov-photo" style="background: url('https://t3.ftcdn.net/jpg/18/66/32/44/360_F_1866324409_munmcjIMulAHPISjTDXG1omDjlJr6Fby.jpg') center / cover no-repeat, linear-gradient(150deg, #1E5A96, #78B8E0);"></div>
     </a>
     <div class="hut-ov-body">
       <div class="ov-night">Night 2 · Tue 28 Jul</div>
       <h3><a href="https://www.alpenverein.at/obstanserseehuette/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.15);">Obstanserseehütte ↗</a></h3>
       <div class="ov-elev">2,306m · Above alpine lake</div>
-      <div class="ov-note"><span style="display:inline-block;background:#EBF6EF;color:#2B6E42;font-size:0.73em;font-weight:700;padding:1px 7px;border-radius:4px;margin-bottom:5px;">✓ BOOKED</span><br>Dorm · half-board · hold until 16:30</div>
+      <div class="ov-note"><span class="booked-badge block">Booked</span><br>Dorm · half-board · hold until 16:30</div>
     </div>
   </div>
 
   <!-- NIGHT 3 -->
   <div class="hut-ov-card">
     <a href="https://www.alpenverein.at/porzehuette/" target="_blank" rel="noopener" style="display:block;text-decoration:none;">
-      <div class="hut-ov-photo" style="background: url('https://img1.oastatic.com/img2/14690577/max/variant.jpg') center / cover no-repeat, linear-gradient(150deg, #B85828, #E8A878);"></div>
+      <div class="hut-ov-photo" style="background: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/1c/2a/f9/view-from-above-porzehutte.jpg?w=900&h=-1&s=1') center / cover no-repeat, linear-gradient(150deg, #B85828, #E8A878);"></div>
     </a>
     <div class="hut-ov-body">
       <div class="ov-night">Night 3 · Wed 29 Jul</div>
       <h3><a href="https://www.alpenverein.at/porzehuette/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.15);">Porzehütte ↗</a></h3>
       <div class="ov-elev">1,942m · Above Obertilliach</div>
-      <div class="ov-note"><span style="display:inline-block;background:#EBF6EF;color:#2B6E42;font-size:0.73em;font-weight:700;padding:1px 7px;border-radius:4px;margin-bottom:5px;">✓ BOOKED</span><br>Dorm · half-board · rebuilt 2020</div>
+      <div class="ov-note"><span class="booked-badge block">Booked</span><br>Dorm · half-board · rebuilt 2020</div>
     </div>
   </div>
 
@@ -674,9 +690,9 @@ li { margin-bottom: 4px; }
     <div class="travel-card-body">
       <div class="tc-label">Departure</div>
       <div class="tc-date">Thu 30 Jul</div>
-      <div class="tc-sub">Leave Porzehütte 07:30 · VCE car drop 15:00 · no Friday rental.</div>
+      <div class="tc-sub">Leave Porzehütte 07:30 · Avis VCE car drop 15:00 · Venice before flight.</div>
       <div class="tc-date" style="margin-top:10px;">Thu 30 Jul evening</div>
-      <div class="tc-sub">Ella + Dina + Maya BA609 20:15 ✓ · Janek night train to Rome ✓.</div>
+      <div class="tc-sub"><span class="booked-badge">Booked</span> Ella + Dina + Maya BA609 20:15 · Janek night train to Rome.</div>
     </div>
   </div>
 
@@ -708,8 +724,8 @@ li { margin-bottom: 4px; }
       <span class="rname">Venice (VCE)</span>
       <span class="rdetail">land 09:20 · BA598</span>
       <span class="arrow">→</span>
-      <span class="rname">Car pickup</span>
-      <span class="rdetail">15:00 · lunch/reset at VCE first</span>
+      <span class="rname">Avis VCE pickup</span>
+      <span class="rdetail">15:00 · Venice lunch possible first</span>
       <span class="arrow">🚗</span>
       <span class="rname">Sillian</span>
       <span class="rdetail">3h15–3h45 with stops</span>
@@ -718,16 +734,12 @@ li { margin-bottom: 4px; }
       <img src="https://www.hotel-unterwoeger.at/fileadmin/user_upload/Obertilliach_8.jpg" alt="Obertilliach mountain valley" loading="lazy" style="width: 100%; height: 240px; object-fit: cover; object-position: center 48%; display: block;">
     </div>
     <ul class="highlights">
-      <li><strong>BA598 LHR 06:05 → VCE 09:20</strong> <span class="status-pill sm">✓ BOOKED</span>. Heathrow by 04:00</li>
-      <li>Option 2: lunch/reset at VCE, then car pickup <strong>15:00</strong></li>
+      <li><strong>BA598 LHR 06:05 → VCE 09:20</strong> <span class="booked-badge">Booked</span>. Heathrow by 04:00</li>
+      <li>Venice lunch window after landing; be back at VCE for <strong>15:00 Avis pickup</strong></li>
       <li>Allow <strong>3h15–3h45</strong> with stops; target Sillian <strong>18:30–19:00</strong></li>
       <li>Sillian evening: bags, cash, snacks, hut packs, dinner</li>
-      <li>Skip Venice on arrival. Too much airport-city-airport before a mountain drive</li>
       <li>Next morning: <strong>~20 min to Helmjet lower station</strong></li>
     </ul>
-    <div class="tip-inline">
-      <strong>Call:</strong> no arrival Venice. Save Venice for Thursday after car return.
-    </div>
   </div>
 </div>
 
@@ -908,24 +920,20 @@ li { margin-bottom: 4px; }
       <span class="rname">Helmjet + Sillian</span>
       <span class="rdetail">taxi · car · bags</span>
       <span class="arrow">🚗</span>
-      <span class="rname">Venice VCE</span>
-      <span class="rdetail">target 15:00 car drop</span>
+      <span class="rname">Avis VCE dropoff</span>
+      <span class="rdetail">15:00 Avis return</span>
       <span class="arrow">✈</span>
       <span class="rname">Ella + Dina + Maya: BA609 20:15</span>
-      <span class="rdetail">✓ BOOKED · Janek train to Rome ✓</span>
+      <span class="rdetail">BA609 + Janek train</span>
     </div>
     <ul class="highlights">
       <li>Start <strong>07:30</strong>; Obertilliach <strong>09:30–10:15</strong></li>
       <li>Taxi to Helmjet, collect car, grab bags in Sillian</li>
-      <li>Target VCE car drop <strong>15:00</strong>; 59-min grace is emergency buffer only</li>
+      <li>Avis VCE car drop <strong>15:00</strong></li>
       <li>Ella + Dina + Maya BA609 20:15; airport by <strong>18:00</strong></li>
-      <li>Janek overnight train to Rome booked</li>
     </ul>
     <div class="tip-inline">
-      <strong>Day 4 rule:</strong> leave hut at 07:30, return car by 15:00, no Friday rental.
-    </div>
-    <div class="tip-inline">
-      <strong>Venice window:</strong> after car return only. Aim <strong>16:00–17:30</strong>, then VCE.
+      <strong>Venice window:</strong> after car return. Aim <strong>15:45–17:30</strong>, then VCE.
     </div>
   </div>
 </div>
@@ -938,30 +946,27 @@ li { margin-bottom: 4px; }
 <div class="cost-grid">
   <div class="cost-card">
     <h4>Car Rental</h4>
-    <div class="card-sub">Locauto · rental to book/pay</div>
+    <div class="card-sub">Avis · Venice Marco Polo Airport (VCE)</div>
     <ul>
-      <li><span>Car</span><span class="cv">VW Polo Automatic or similar · Thu afternoon return</span></li>
-      <li><span>Status</span><span class="cv">only thing left: book/pay</span></li>
-      <li><span>Austria</span><span class="cv">allowed by Locauto EU policy</span></li>
+      <li><span>Car</span><span class="cv">MG ZS or similar · intermediate automatic</span></li>
+      <li><span>Capacity</span><span class="cv">4 doors · 5 passengers · 2 large bags + 2 small bags</span></li>
+      <li><span>Pickup</span><span class="cv">Venice Marco Polo Airport (VCE) · 15:00 Sun 26 Jul 2026</span></li>
+      <li><span>Dropoff</span><span class="cv">Venice Marco Polo Airport (VCE) · 15:00 Thu 30 Jul 2026</span></li>
       <li><span>IDP</span><span class="cv">Janek sent for it</span></li>
       <li><span>Vignette</span><span class="cv">~$11 · buy after border</span></li>
-      <li class="total-row"><span>Timing</span><span class="cv">Sun 15:00 → Thu 15:00</span></li>
+      <li class="total-row"><span>Price</span><span class="cv">~$200 total · ~$50/person</span></li>
     </ul>
   </div>
   <div class="cost-card" id="hotels">
     <h4>Hotel + Bags</h4>
-    <div class="card-sub">Hotel Schwarzer Adler · Sillian · Sun Jul 26</div>
+    <div class="card-sub"><span class="booked-badge">Booked</span> Hotel Schwarzer Adler · Sillian · Sun Jul 26</div>
     <ul>
       <li><span>Location</span><span class="cv">~20 min to Helmjet</span></li>
       <li><span>Bags</span><span class="cv">store while hiking</span></li>
       <li><span>Free cancellation</span><span class="cv">before 21 Jul</span></li>
-      <li class="total-row"><span><a href="https://www.booking.com/Share-6dAUlDE" target="_blank" style="color: var(--green); font-weight: 700;">Book · room of 4</a></span><span class="cv">$143 total · ~$36/person</span></li>
+      <li class="total-row"><span><a href="https://www.booking.com/Share-6dAUlDE" target="_blank" style="color: var(--green); font-weight: 700;">Booking.com · room of 4</a></span><span class="cv">$143 total · ~$36/person</span></li>
     </ul>
   </div>
-</div>
-
-<div class="warn-box">
-  <strong>Booking rule:</strong> VCE pickup/drop. Book <strong>15:00 Sun → 15:00 Thu</strong>. No Friday rollover.
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -976,20 +981,20 @@ li { margin-bottom: 4px; }
   <h3>Per-person roughs</h3>
 
   <div class="tt-section">
-    <div class="tt-row"><span>🏨 Pre-hike hotel · Sillian <span style="background:#EBF6EF;color:#2B6E42;font-size:0.72em;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;">✓ BOOKED</span></span><span class="tt-val">~$36</span></div>
+    <div class="tt-row"><span>🏨 Pre-hike hotel · Sillian <span class="booked-badge">Booked</span></span><span class="tt-val">~$36</span></div>
     <div class="tt-sub"><span>Room of 4 · $143 total · free cancel before 21 Jul</span></div>
     <div class="tt-sub"><span>Car + bags stored while hiking</span></div>
   </div>
 
   <div class="tt-section">
-    <div class="tt-row"><span>🚗 Car rental · VCE pickup → VCE drop (÷4)</span><span class="tt-val">~$35–65</span></div>
-    <div class="tt-sub"><span>VCE 15:00 Sun pickup · 15:00 Thu drop · no one-way fee</span></div>
+    <div class="tt-row"><span>🚗 Car rental · Avis MG ZS automatic or similar (÷4)</span><span class="tt-val">~$50</span></div>
+    <div class="tt-sub"><span>Venice Marco Polo Airport 15:00 Sun pickup · 15:00 Thu drop</span></div>
     <div class="tt-sub"><span>Fuel loop via Sillian/Dobbiaco</span><span class="ts-val">~$18–25/person</span></div>
   </div>
 
   <div class="tt-section">
     <div class="tt-row"><span>🏕 Huts · 3 nights half-board</span><span class="tt-val">~$170–220</span></div>
-    <div class="tt-sub"><span>Sillianer · Obstansersee · Porze</span><span class="ts-val">booked</span></div>
+    <div class="tt-sub"><span>Sillianer · Obstansersee · Porze</span><span class="ts-val"><span class="booked-badge">Booked</span></span></div>
   </div>
 
   <div class="tt-section">
@@ -998,15 +1003,14 @@ li { margin-bottom: 4px; }
   </div>
 
   <div class="tt-section">
-    <div class="tt-row"><span>✈ Flights / returns</span><span class="tt-val">booked</span></div>
-    <div class="tt-sub"><span>Wed 22 Jul · Dina → London</span><span class="ts-val">morning · booked</span></div>
-    <div class="tt-sub"><span>Fri 24 Jul · Maya + Janek → London</span><span class="ts-val">morning · booked</span></div>
+    <div class="tt-row"><span>✈ Flights / returns</span><span class="tt-val"><span class="booked-badge">Booked</span></span></div>
+    <div class="tt-sub"><span>Wed 22 Jul · Dina → London</span><span class="ts-val">morning</span></div>
+    <div class="tt-sub"><span>Fri 24 Jul · Maya + Janek → London</span><span class="ts-val">morning</span></div>
     <div class="tt-sub"><span>Sun 26 Jul · all four · BA598 LHR → VCE</span><span class="ts-val">06:05–09:20</span></div>
     <div class="tt-sub"><span>Thu 30 Jul · Ella + Dina + Maya · BA609 VCE → LHR</span><span class="ts-val">20:15–21:25</span></div>
     <div class="tt-sub"><span>Thu 30 Jul · Janek · overnight train to Rome + flight</span><span class="ts-val">booked</span></div>
   </div>
 
-  <div class="tt-row total"><span>Remaining shared booking</span><span class="tt-val">car rental only</span></div>
   <p style="font-size:0.8em; color: var(--muted); margin-top: 10px; margin-bottom: 0;">€ converted at ~$1.10. US totals include transatlantic legs.</p>
 </div>
 
@@ -1107,28 +1111,28 @@ li { margin-bottom: 4px; }
 
 <ul class="checklist">
   <li class="cl-done">
-    <strong>Sillianer Hütte — Night 1 ✓</strong>
+    <strong>Sillianer Hütte — Night 1</strong>
     <span class="cl-sub">Private multi-bed · half-board</span>
   </li>
   <li class="cl-done">
-    <strong>Obstanserseehütte — Night 2 ✓</strong>
+    <strong>Obstanserseehütte — Night 2</strong>
     <span class="cl-sub">Matratzenlager · half-board · hold until 16:30</span>
   </li>
   <li class="cl-done">
-    <strong>Porzehütte — Night 3 ✓</strong>
+    <strong>Porzehütte — Night 3</strong>
     <span class="cl-sub">Dorm · half-board</span>
   </li>
-  <li>
-    <strong>Outbound — BA598 LHR → VCE, Sun 26 Jul ✓</strong>
+  <li class="cl-done">
+    <strong>Outbound — BA598 LHR → VCE, Sun 26 Jul</strong>
     <span class="cl-sub">06:05–09:20 · Heathrow by 04:00</span>
   </li>
-  <li>
-    <strong>Return — Ella + Dina + Maya BA609 ✓</strong>
+  <li class="cl-done">
+    <strong>Return — Ella + Dina + Maya BA609</strong>
     <span class="cl-sub">Thu 30 Jul · 20:15–21:25</span>
   </li>
-  <li>
-    <strong>Car — book/pay</strong>
-    <span class="cl-sub">Locauto · Austria allowed · IDP sent · Sun 15:00 → Thu 15:00</span>
+  <li class="cl-done">
+    <strong>Car — Avis VCE</strong>
+    <span class="cl-sub">MG ZS automatic or similar · Sun 15:00 → Thu 15:00 · ~$200 total</span>
   </li>
   <li class="cl-done">
     <strong>Pre-hike hotel — Sillian (Sun 26 Jul night)</strong>
@@ -1139,7 +1143,7 @@ li { margin-bottom: 4px; }
     <span class="cl-sub">~1h · ~€50–70 · ask Porzehütte the night before</span>
   </li>
   <li class="cl-done">
-    <strong>Janek return ✓</strong>
+    <strong>Janek return</strong>
     <span class="cl-sub">Overnight train to Rome + flight booked</span>
   </li>
   <li>
