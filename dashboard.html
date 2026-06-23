@@ -110,12 +110,11 @@ window.PLAN = Object.freeze({
   .hero .metric-value { line-height:1.05; }
 
   /* CHARTS GRID */
-  .charts-2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.4rem; }
+  .charts-2 { display:grid; grid-template-columns:1.4fr 1fr; gap:1.4rem; }
   .charts-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
   .chart-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; }
   .chart-card h3 { font-size:0.9rem; font-weight:600; color:var(--soft); margin-bottom:1.2rem; text-transform:uppercase; letter-spacing:.05em; }
-  .chart-wrap { position:relative; height:260px; width:100%; }
-  .chart-wrap canvas { display:block; width:100% !important; height:100% !important; }
+  .chart-wrap { position:relative; }
 
   /* TIMELINE */
   .timeline { position:relative; padding:1rem 0; }
@@ -1573,7 +1572,7 @@ Chart.defaults.font.family = 'Inter';
 new Chart(document.getElementById('salaryChart'), {
   type: 'line',
   data: {
-    labels: ['May 2023','Nov 2024','Mar 2025','Apr 2026','G15'],
+    labels: ['May 2023','Nov 2024','Mar 2025','Apr 2026','Apr 2026'],
     datasets: [{
       label: 'Salary',
       data: [28000, 57500, 58794, 61439, 68000],
@@ -1589,8 +1588,6 @@ new Chart(document.getElementById('salaryChart'), {
   },
   options: {
     responsive: true,
-    maintainAspectRatio: false,
-    layout: { padding: { right: 8 } },
     plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>{const d=['Luto Research','AbbVie job G14','2025 merit','2026 merit','Promotion G15'];return `£${c.raw.toLocaleString()} · ${d[c.dataIndex]||''}`;}}}},
     scales: {
       y: { ticks:{callback:v=>`£${(v/1000).toFixed(0)}k`}, grid:{color:'#1e2d50'} },
@@ -1613,10 +1610,9 @@ new Chart(document.getElementById('budgetChart'), {
   },
   options: {
     responsive: true,
-    maintainAspectRatio: false,
     cutout: '65%',
     plugins: {
-      legend: { position:'right', labels:{font:{size:10},boxWidth:12,padding:8} },
+      legend: { position:'right', labels:{font:{size:10},boxWidth:12,padding:10} },
       tooltip: { callbacks: { label: c => `${c.label}: £${c.raw}` }}
     }
   }
