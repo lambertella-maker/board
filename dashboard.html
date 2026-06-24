@@ -150,30 +150,30 @@ window.PLAN = Object.freeze({
   .fire-age-big { display:flex; align-items:baseline; justify-content:center; gap:0.7rem; padding:0.35rem 0 0.25rem; }
   .fire-age-num { font-size:3rem; line-height:1; font-weight:800; background:linear-gradient(135deg,var(--amber),var(--pink));
                   -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-  .fire-age-label { font-size:0.78rem; color:var(--soft); max-width:11rem; line-height:1.35; }
+  .fire-age-label { font-size:0.76rem; color:var(--soft); max-width:14rem; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .fire-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.45rem; margin:0.55rem 0; }
   .fire-stat { display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0; border-bottom:1px solid var(--border); }
   .fire-stat:last-child { border-bottom:none; }
   .fire-stat-grid .fire-stat { display:block; padding:0.55rem 0.65rem; border:1px solid var(--border); border-radius:10px; background:var(--card2); }
-  .fire-stat-label { font-size:0.82rem; color:var(--soft); }
+  .fire-stat-label { font-size:0.82rem; color:var(--soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .fire-stat-grid .fire-stat-label { display:block; font-size:0.66rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:0.2rem; }
-  .fire-stat-value { font-size:1rem; font-weight:750; }
+  .fire-stat-value { font-size:1rem; font-weight:750; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .fire-kicker { font-size:0.72rem; font-weight:700; color:var(--indigo); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.35rem; }
   .fire-intro { font-size:0.75rem; color:var(--soft); line-height:1.45; margin-bottom:0.75rem; }
   .fire-section-label { font-size:0.66rem; font-weight:750; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin:0 0 0.32rem; }
   .fire-backbone { display:grid; grid-template-columns:repeat(3,1fr); gap:0.45rem; margin-bottom:0.8rem; }
-  .fire-pill { display:block; padding:0.55rem 0.6rem; border-radius:10px; background:var(--card2); border:1px solid var(--border); font-size:0.65rem; color:var(--soft); line-height:1.3; min-width:0; }
-  .fire-pill strong { display:block; color:var(--text); font-size:0.82rem; margin-top:0.08rem; }
+  .fire-pill { display:block; padding:0.55rem 0.6rem; border-radius:10px; background:var(--card2); border:1px solid var(--border); font-size:0.65rem; color:var(--soft); line-height:1.2; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fire-pill strong { display:block; color:var(--text); font-size:0.82rem; margin-top:0.08rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .fire-preset-row { display:grid; grid-template-columns:repeat(3,1fr); gap:0.45rem; margin-bottom:0.7rem; }
   .fire-chip { border:1px solid var(--border); background:var(--card2); color:var(--soft); border-radius:10px; padding:0.55rem 0.6rem; text-align:left; cursor:pointer; transition:border-color .18s, transform .18s, background .18s; }
   .fire-chip:hover { border-color:rgba(129,140,248,0.35); transform:translateY(-1px); }
   .fire-chip.active { background:rgba(129,140,248,0.12); border-color:rgba(129,140,248,0.38); color:var(--text); }
-  .fire-chip-title { display:block; font-size:0.76rem; font-weight:700; color:inherit; margin-bottom:0.12rem; }
-  .fire-chip-copy { display:block; font-size:0.63rem; color:var(--soft); line-height:1.3; }
+  .fire-chip-title { display:block; font-size:0.76rem; font-weight:700; color:inherit; margin-bottom:0.12rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fire-chip-copy { display:block; font-size:0.63rem; color:var(--soft); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .fire-slider-shell { padding:0.75rem 0.85rem; background:rgba(129,140,248,0.06); border:1px solid rgba(129,140,248,0.16); border-radius:10px; margin-bottom:0.8rem; }
   .fire-slider-top { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; margin-bottom:0.5rem; }
   .fire-slider-value { font-size:1.35rem; font-weight:800; color:var(--text); }
-  .fire-slider-copy { font-size:0.7rem; color:var(--soft); line-height:1.4; }
+  .fire-slider-copy { font-size:0.68rem; color:var(--soft); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .fire-scale { display:flex; justify-content:space-between; font-size:0.64rem; color:var(--muted); margin-top:0.3rem; }
   .fire-status-line { display:flex; justify-content:space-between; align-items:center; gap:0.8rem; margin-bottom:0.45rem; flex-wrap:wrap; }
   .fire-status-badge { display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.6rem; border-radius:999px; background:rgba(34,211,238,0.08); border:1px solid rgba(34,211,238,0.22); color:var(--cyan); font-size:0.72rem; font-weight:700; }
@@ -186,16 +186,16 @@ window.PLAN = Object.freeze({
   .fire-stage { border:1px solid var(--border); background:var(--card2); border-radius:10px; padding:0.55rem 0.6rem; min-width:0; }
   .fire-stage span { display:block; font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.2rem; }
   .fire-stage strong { display:block; font-size:0.76rem; margin-bottom:0.15rem; color:var(--text); }
-  .fire-stage em { display:block; font-style:normal; font-size:0.68rem; line-height:1.4; color:var(--soft); }
-  .fire-story { margin-top:0.55rem; padding-top:0.55rem; border-top:1px solid var(--border); font-size:0.76rem; color:var(--soft); line-height:1.5; }
+  .fire-stage em { display:block; font-style:normal; font-size:0.64rem; line-height:1.2; color:var(--soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fire-story { margin-top:0.55rem; padding-top:0.55rem; border-top:1px solid var(--border); font-size:0.72rem; color:var(--soft); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .fire-story strong { color:var(--text); }
   .fire-source-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.55rem; margin-top:0.2rem; }
   .fire-source-card { padding:0.55rem 0.65rem; border-radius:10px; border:1px solid var(--border); background:var(--card2); }
   .fire-source-head { display:flex; justify-content:space-between; align-items:flex-start; gap:0.6rem; margin-bottom:0.25rem; }
-  .fire-source-name { font-size:0.76rem; font-weight:700; color:var(--text); }
-  .fire-source-note { font-size:0.62rem; color:var(--soft); line-height:1.35; }
+  .fire-source-name { font-size:0.76rem; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fire-source-note { font-size:0.62rem; color:var(--soft); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .fire-source-amt { font-size:0.78rem; font-weight:700; color:var(--cyan); }
-  .fire-note-box { margin-top:0.4rem; padding:0.5rem 0.7rem; border-radius:12px; background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.14); font-size:0.71rem; color:var(--soft); line-height:1.5; }
+  .fire-note-box { margin-top:0.4rem; padding:0.5rem 0.7rem; border-radius:12px; background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.14); font-size:0.71rem; color:var(--soft); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
   /* TOGGLE */
   .toggle-row { display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem; padding:1rem; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.2); border-radius:10px; }
@@ -1407,7 +1407,7 @@ window.PLAN = Object.freeze({
         </div>
         <div class="fire-age-big">
           <div class="fire-age-num" id="fire-age">51</div>
-          <div class="fire-age-label">earliest modeled stop-work age</div>
+          <div class="fire-age-label">earliest modeled age</div>
         </div>
         <div class="fire-progress-wrap">
           <div class="fire-progress-labels">
@@ -1445,7 +1445,7 @@ window.PLAN = Object.freeze({
           </div>
         </div>
         <div class="fire-story" id="fire-story">
-          <strong>Readout:</strong> earliest modeled optionality age under the current structure.
+          <strong>Readout:</strong> age 47 at £75k/yr; state income trims the draw.
         </div>
       </div>
     </div>
@@ -1962,12 +1962,12 @@ function updateFire() {
   const usSourceAmt = document.getElementById('fire-us-source-amt');
   const usSourceNote = document.getElementById('fire-us-source-note');
   if (usSourceAmt) usSourceAmt.textContent = `~£${usStateProjection.gbp.toLocaleString()}/yr`;
-  if (usSourceNote) usSourceNote.textContent = `Heuristic in GBP · ~${usStateProjection.eqYears.toFixed(1)} eq. SSA years by stop-work`;
+  if (usSourceNote) usSourceNote.textContent = `~${usStateProjection.eqYears.toFixed(1)} SSA yrs`;
   const rightNote = document.getElementById('fire-right-note');
   if (stateIncome > 0) {
     const sources = [];
     if (ukStateOn) sources.push('UK state pension £12,548/yr');
-    if (usStateOn) sources.push(`US Social Security ~£${usStateProjection.gbp.toLocaleString()}/yr using ~${usStateProjection.eqYears.toFixed(1)} equivalent SSA years`);
+    if (usStateOn) sources.push(`US Social Security ~£${usStateProjection.gbp.toLocaleString()}/yr`);
     rightNote.textContent = sources.join(' + ');
     rightNote.style.display = '';
   }
@@ -1977,7 +1977,7 @@ function updateFire() {
   document.getElementById('fire-gap').textContent = yearsToFireRounded + ' years to optionality';
   document.getElementById('fire-progress-fill').style.width = progressPct + '%';
   document.getElementById('fire-progress-marker').style.left = progressPct + '%';
-  document.getElementById('fire-story').innerHTML = `<strong>Readout:</strong> ${story}`;
+  document.getElementById('fire-story').innerHTML = `<strong>Readout:</strong> age ${fireAge} at £${Math.round(sp/1000)}k/yr; state income trims draw.`;
 }
 
 // ── LIVE BALANCE ESTIMATES ─────────────────────────────────────────────────────
