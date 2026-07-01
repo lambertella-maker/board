@@ -1256,6 +1256,25 @@ liveEstimates();
   const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
   document.getElementById('m-ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
   document.getElementById('m-ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
+
+  // Travel — UR points toward Polaris (independent of CSP credit-history bar)
+  const travelPhase2Start = new Date(2026, 9, 1);
+  const travelPhase2End   = new Date(2027, 0, 1);
+  let travelPct, travelLbl;
+  if (today < travelPhase2Start) {
+    travelPct = 5; travelLbl = '0 UR · pre-card';
+  } else if (today < travelPhase2End) {
+    const elapsed = today - travelPhase2Start;
+    const total   = travelPhase2End - travelPhase2Start;
+    travelPct = 5 + Math.round(elapsed / total * 95);
+    travelLbl = `~${Math.round(elapsed / total * 75000).toLocaleString()} UR earned`;
+  } else {
+    travelPct = 100; travelLbl = '75k UR · ready to book';
+  }
+  const mTravelEl = document.getElementById('m-travel-prog');
+  if (mTravelEl) mTravelEl.style.width = travelPct + '%';
+  const mTravelLbl = document.getElementById('m-travel-prog-lbl');
+  if (mTravelLbl) mTravelLbl.textContent = travelLbl;
 })();
 
 // ── FIRE CALCULATOR ───────────────────────────────────────────────────────────
