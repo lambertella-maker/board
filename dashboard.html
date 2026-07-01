@@ -22,7 +22,7 @@ window.PLAN = Object.freeze({
   salaryGrossGbp: 68000,
   salaryNetMonthlyGbp: 3773,
   salaryNetBonusMonthGbp: 5012,
-  moveMonthlyGbp: 130,
+  moveMonthlyGbp: 230,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
   fidelityTaxableMonthlyUsd: 224,
@@ -588,7 +588,7 @@ window.PLAN = Object.freeze({
     <div class="accounts-grid">
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£12,000</div><div class="account-rate">3.49% AER · interest daily-compounded</div><div class="account-note">Emergency fund core · No withdrawals</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo EF (3.15%)</div><div class="account-balance" id="bal-efsavings" style="color:var(--green)">£2,005</div><div class="account-rate">3.15% AER · max 2 withdrawals/yr</div><div class="account-note">EF pot · Monzo</div></div>
-<div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">£2,146</div><div class="account-rate">Current account · current float</div><div class="account-note">Payday tomorrow · £350 festival/hotel owed back</div></div>
+<div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">£1,200</div><div class="account-rate">Current account · avg float</div><div class="account-note">Min £1,000 buffer · refills 24th</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$6,947</div><div class="account-rate">+$224/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Active brokerage · May 2026 skipped for float</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Brokerage Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$1,314</div><div class="account-rate">+$624/mo to brokerage Roth · $7,500/yr limit</div><div class="account-note">2026: $625 contributed · $6,875 left</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">£23,761</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">Reanchored 6 May 2026 · £1,020/mo (G15)</div></div>
@@ -746,7 +746,7 @@ window.PLAN = Object.freeze({
         <div class="pillar-stat"><span class="pillar-stat-label">UK assets</span><span class="pillar-stat-value" style="color:var(--green)">£31k + pension</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">US assets</span><span class="pillar-stat-value">$9,800 (£7.8k)</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">ILR target</span><span class="pillar-stat-value">Sep 2029</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Citizenship eligible</span><span class="pillar-stat-value">Sep 2030+ · optional</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Citizenship eligible</span><span class="pillar-stat-value">12 Sep 2030+ · optional</span></div>
         <div class="pillar-why">The rarest pillar: genuine optionality. You can retire in the UK, the US, or Europe. You have assets, pensions, and credit in both major Anglophone economies. ILR locks in the right to live and work here permanently. This is not normal. This is exceptional.</div>
       </div>
 
@@ -768,7 +768,7 @@ window.PLAN = Object.freeze({
       <div class="jc-item">
         <div class="jc-dot done"></div>
         <div class="jc-card">
-          <div class="jc-year">Sep 2019</div>
+          <div class="jc-year">12 Sep 2019</div>
           <div class="jc-title">Edinburgh</div>
           <div class="jc-desc">Chicago → Scotland. Student visa. University of Edinburgh.</div>
           <div class="jc-salary" style="color:var(--soft)">Graduate Visa · 2023</div>
@@ -801,7 +801,7 @@ window.PLAN = Object.freeze({
           <div class="jc-year">Jul 2025</div>
           <div class="jc-title">Skilled Worker</div>
           <div class="jc-desc">Visa secured. AbbVie sponsor.</div>
-          <div class="jc-salary" style="color:var(--soft)">ILR clock: Sep 2019 entry</div>
+          <div class="jc-salary" style="color:var(--soft)">ILR clock: 12 Sep 2019 entry</div>
         </div>
       </div>
 
@@ -821,7 +821,7 @@ window.PLAN = Object.freeze({
           <div class="jc-year" style="color:var(--soft)">Sep 2029</div>
           <div class="jc-title">ILR Target</div>
           <div class="jc-desc">10yr long residence route.</div>
-          <div class="jc-salary" style="color:var(--soft)">Sep 2030+ → citizenship eligible</div>
+          <div class="jc-salary" style="color:var(--soft)">12 Sep 2030+ → citizenship eligible</div>
         </div>
       </div>
 
@@ -924,9 +924,9 @@ window.PLAN = Object.freeze({
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from Sep 2019 · application window Sep 2029 · no more visa renewals</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from 12 Sep 2019 · target 12 Sep 2029 · no more visa renewals</div>
           <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
-          <div class="progress-labels"><span>Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>Sep 2029</span></div>
+          <div class="progress-labels"><span>12 Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>12 Sep 2029</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises 5%/yr · £3,340 by 2029</span></div>
         <div class="goal-row"><span class="goal-row-label">Total all-in</span><span class="goal-row-value" style="color:var(--indigo)">£3,400 fee + £50 Life in the UK test · DIY application</span></div>
@@ -975,7 +975,7 @@ window.PLAN = Object.freeze({
       <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-top:0.5rem; text-align:center;">
         <div style="padding:1rem; background:rgba(52,211,153,0.1); border:1px solid var(--green); border-radius:10px;">
           <div style="font-size:0.7rem; color:var(--green); font-weight:700; margin-bottom:0.3rem;">DONE ✓</div>
-          <div style="font-weight:700;">Sep 2019</div>
+          <div style="font-weight:700;">12 Sep 2019</div>
           <div style="font-size:0.75rem; color:var(--soft);">UK arrival</div>
         </div>
         <div style="padding:1rem; background:rgba(52,211,153,0.1); border:1px solid var(--green); border-radius:10px;">
@@ -995,12 +995,12 @@ window.PLAN = Object.freeze({
         </div>
         <div style="padding:1rem; background:rgba(34,211,238,0.08); border:1px solid rgba(34,211,238,0.3); border-radius:10px;">
           <div style="font-size:0.7rem; color:var(--cyan); font-weight:700; margin-bottom:0.3rem;">OPTIONALITY</div>
-          <div style="font-weight:700;">Sep 2030+</div>
+          <div style="font-weight:700;">12 Sep 2030+</div>
           <div style="font-size:0.75rem; color:var(--soft);">Citizenship eligible</div>
         </div>
       </div>
       <div style="margin-top:1.2rem; font-size:0.78rem; color:var(--muted);">
-        10-year long residence route (Sep 2019 → Sep 2029) is 10 months faster than Skilled Worker 5-year route (Jul 2030). ILR is the primary goal — citizenship remains optional. No ISAs until CLN, regardless of ILR status.
+        10-year long residence route (12 Sep 2019 → 12 Sep 2029) is about 10 months faster than Skilled Worker 5-year route (Jul 2030). ILR is the primary goal — citizenship remains optional. No ISAs until CLN, regardless of ILR status.
       </div>
     </div>
   </section>
@@ -1634,7 +1634,7 @@ const PLAN = window.PLAN || Object.freeze({
   salaryGrossGbp: 68000,
   salaryNetMonthlyGbp: 3773,
   salaryNetBonusMonthGbp: 5012,
-  moveMonthlyGbp: 130,
+  moveMonthlyGbp: 230,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
   fidelityTaxableMonthlyUsd: 224,
@@ -2232,7 +2232,7 @@ function updateGoals() {
 
   // Goal 3: ILR — time-to-prepare progress bar
   const ilrDeadline = new Date(2029, 8, 1);
-  const ilrStart    = new Date(2019, 8, 1); // UK arrival — full 10-year journey
+  const ilrStart    = new Date(2019, 8, 12); // UK arrival — full 10-year journey
   const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
   const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
   document.getElementById('ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';

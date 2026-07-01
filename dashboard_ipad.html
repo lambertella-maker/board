@@ -22,7 +22,7 @@ window.PLAN = Object.freeze({
   salaryGrossGbp: 68000,
   salaryNetMonthlyGbp: 3773,
   salaryNetBonusMonthGbp: 5012,
-  moveMonthlyGbp: 130,
+  moveMonthlyGbp: 230,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
   fidelityTaxableMonthlyUsd: 224,
@@ -36,12 +36,6 @@ window.PLAN = Object.freeze({
   investReturn: 0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04
 });
 </script>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Ella Finance">
-<meta name="theme-color" content="#080c18">
-<link rel="apple-touch-icon" href="./finance-apple-touch-icon.png">
-<link rel="icon" type="image/png" href="./finance-icon-512.png">
 <title>Ella Lambert — Finance Dashboard (iPad)</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="tax_data.js" onerror="void 0"></script>
@@ -76,8 +70,6 @@ window.PLAN = Object.freeze({
   .nav-links a, .nav-links button { color:var(--soft); text-decoration:none; font-size:0.82rem; font-weight:500; transition:color .2s; cursor:pointer; background:none; border:none; padding:0; font-family:inherit; }
   .nav-links a:hover, .nav-links button:hover { color:var(--text); }
   .date-pill { background:var(--card2); border:1px solid var(--border); border-radius:20px; padding:0.3rem 1rem; font-size:0.75rem; color:var(--soft); }
-  .refresh-btn { background:none; border:none; cursor:pointer; color:var(--muted); font-size:0.8rem; padding:2px 4px; line-height:1; transition:color .2s; }
-  .refresh-btn:hover { color:var(--soft); }
 
   /* LAYOUT */
   .container { max-width:1280px; margin:0 auto; padding:0 2rem; }
@@ -100,18 +92,22 @@ window.PLAN = Object.freeze({
   .metric-label { font-size:0.75rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:0.5rem; }
   .metric-value { font-size:2rem; font-weight:800; line-height:1; }
   .metric-sub { font-size:0.75rem; color:var(--soft); margin-top:0.4rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .metric-badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:20px; margin-top:0.5rem; font-weight:600; line-height:1.2; white-space:nowrap; }
+  .metric-badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:20px; margin-top:0.5rem; font-weight:600; white-space:nowrap; }
   .badge-green { background:rgba(52,211,153,0.15); color:var(--green); }
   .badge-cyan  { background:rgba(34,211,238,0.15); color:var(--cyan); }
   .badge-amber { background:rgba(251,191,36,0.15); color:var(--amber); }
   .badge-indigo { background:rgba(129,140,248,0.15); color:var(--indigo); }
+  .invest-top-metrics { grid-template-columns:repeat(4,minmax(0,1fr)); gap:0.9rem; }
+  .invest-top-metrics .metric-card { min-width:0; padding:1.25rem 1.1rem; }
+  .invest-top-metrics .metric-value { font-size:1.75rem; }
+  .invest-top-metrics .metric-sub,
+  .invest-top-metrics .metric-badge { white-space:normal; overflow:visible; text-overflow:clip; line-height:1.35; }
   .hero .metric-card { min-width:0; overflow:hidden; }
   .hero .metric-label,
   .hero .metric-value,
   .hero .metric-sub,
   .hero .metric-badge { max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .hero .metric-value { line-height:1.05; }
-  #hero-ef-badge { white-space:nowrap; }
 
   /* CHARTS GRID */
   .charts-2 { display:grid; grid-template-columns:1.4fr 1fr; gap:1.4rem; }
@@ -287,10 +283,10 @@ window.PLAN = Object.freeze({
   .pillar-icon { font-size:1.8rem; margin-bottom:0.8rem; }
   .pillar-name { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:0.3rem; }
   .pillar-title { font-size:1rem; font-weight:700; margin-bottom:0.8rem; }
-  .pillar-stat { display:flex; justify-content:space-between; align-items:flex-start; gap:0.9rem; margin-bottom:0.5rem; }
-  .pillar-stat-label { font-size:0.75rem; color:var(--muted); line-height:1.4; }
-  .pillar-stat-value { font-size:0.78rem; font-weight:700; text-align:right; line-height:1.4; }
-  .pillar-why { font-size:0.75rem; color:var(--soft); line-height:1.6; margin-top:1rem; padding-top:0.9rem; border-top:1px solid var(--border); }
+  .pillar-stat { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; margin-bottom:0.35rem; }
+  .pillar-stat-label { font-size:0.75rem; color:var(--muted); }
+  .pillar-stat-value { font-size:0.78rem; font-weight:700; text-align:right; }
+  .pillar-why { font-size:0.75rem; color:var(--soft); line-height:1.5; margin-top:0.9rem; padding-top:0.8rem; border-top:1px solid var(--border); }
   .superplan-total { background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(244,114,182,0.05)); border:1px solid rgba(251,191,36,0.25); border-radius:16px; padding:2rem; margin-top:2rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; text-align:center; }
   .st-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin-bottom:0.4rem; }
   .st-value { font-size:1.6rem; font-weight:800; }
@@ -361,11 +357,6 @@ window.PLAN = Object.freeze({
   .goal-name { font-size:0.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.2rem; }
   .goal-title { font-size:1rem; font-weight:700; }
   .goal-card.goal-travel .goal-name { white-space:nowrap; font-size:0.66rem; }
-  .goal-card.goal-travel .goal-header,
-  .goal-card.goal-ilr .goal-header { min-height:3rem; }
-  .goal-progress-meta { margin-bottom:1rem; }
-  .goal-card.goal-travel .goal-progress-meta,
-  .goal-card.goal-ilr .goal-progress-meta { min-height:4.25rem; }
   .goal-row { display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0; border-bottom:1px solid var(--border); font-size:0.8rem; }
   .goal-row:last-of-type { border-bottom:none; }
   .goal-row-label { color:var(--muted); }
@@ -411,15 +402,87 @@ window.PLAN = Object.freeze({
   .life-europe-copy { font-size:0.7rem; color:var(--soft); line-height:1.55; }
   .life-europe-copy strong { color:var(--text); }
 
-  /* PAYE CHECKER */
-  .paye-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem; }
-  @media(max-width:700px){ .paye-grid { grid-template-columns:1fr; } }
+  /* CHAT BAR */
+  .chatbar { padding:1.4rem 2rem; display:flex; justify-content:center; }
+  .chatbar-inner { width:100%; max-width:680px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1rem 1.4rem 1.7rem; position:relative; transition:box-shadow .2s,border-color .2s,transform .2s; }
+  .chatbar-inner.is-expanded { width:min(900px, 100%); max-width:none;
+    box-shadow:0 24px 80px rgba(15,23,42,0.22); border-color:rgba(129,140,248,0.35); transform:translateY(0); }
+  .chatbar-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.65rem; }
+  .chatbar-greeting { font-size:0.92rem; font-weight:600; background:linear-gradient(135deg,var(--indigo),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .chatbar-meta { display:flex; align-items:center; gap:0.75rem; }
+  .chatbar-actions { display:flex; align-items:center; gap:0.45rem; }
+  .chatbar-action { border:1px solid var(--border); background:var(--card2); color:var(--soft); border-radius:999px; padding:0.28rem 0.7rem;
+    font-size:0.67rem; font-weight:700; letter-spacing:.02em; cursor:pointer; transition:.18s; }
+  .chatbar-action:hover { border-color:var(--indigo); color:var(--text); }
+  .chat-status-dot { width:7px; height:7px; border-radius:50%; background:var(--muted); flex-shrink:0; }
+  .chat-status-dot.online { background:var(--green); box-shadow:0 0 0 3px rgba(52,211,153,0.2); }
+  .chatbar-status-text { font-size:0.7rem; color:var(--muted); }
+  .chatbar-messages { display:none; flex-direction:column; gap:0.6rem; max-height:480px; overflow-y:auto;
+    margin-bottom:0.75rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border); }
+  .chatbar-inner.is-expanded .chatbar-messages { max-height:min(68vh, 820px); }
+  .chatbar-messages.visible { display:flex; }
+  .chatbar-messages::-webkit-scrollbar { width:3px; }
+  .chatbar-messages::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+  .chat-msg { max-width:88%; }
+  .chat-msg.user { align-self:flex-end; }
+  .chat-msg.assistant { align-self:flex-start; }
+  .chat-bubble { padding:0.7rem 1rem; border-radius:12px; font-size:0.83rem; line-height:1.6; }
+  /* Markdown elements inside chat bubbles */
+  .chat-bubble h3,.chat-bubble h4 { font-size:0.88rem; font-weight:700; color:var(--text); margin:0.7rem 0 0.3rem; }
+  .chat-bubble h3:first-child,.chat-bubble h4:first-child { margin-top:0; }
+  .chat-bubble p { margin:0.25rem 0; }
+  .chat-bubble ul,.chat-bubble ol { padding-left:1.1rem; margin:0.3rem 0; }
+  .chat-bubble li { margin:0.15rem 0; }
+  .chat-bubble strong { color:var(--text); font-weight:700; }
+  .chat-bubble em { color:var(--soft); }
+  .chat-bubble code { background:rgba(129,140,248,0.12); border:1px solid rgba(129,140,248,0.2);
+    border-radius:4px; padding:0.05rem 0.35rem; font-family:'SF Mono',monospace; font-size:0.78rem; color:var(--indigo); }
+  .chat-bubble pre { background:var(--bg); border:1px solid var(--border); border-radius:8px;
+    padding:0.7rem 0.9rem; overflow-x:auto; margin:0.5rem 0; }
+  .chat-bubble pre code { background:none; border:none; padding:0; color:var(--soft); font-size:0.76rem; }
+  .chat-bubble table { border-collapse:collapse; width:100%; margin:0.5rem 0; font-size:0.78rem; }
+  .chat-bubble th { background:rgba(129,140,248,0.1); color:var(--indigo); font-weight:700;
+    text-align:left; padding:0.3rem 0.6rem; border:1px solid var(--border); }
+  .chat-bubble td { padding:0.25rem 0.6rem; border:1px solid var(--border); color:var(--soft); }
+  .chat-bubble hr { border:none; border-top:1px solid var(--border); margin:0.6rem 0; }
+  .chat-bubble .md-gap { height:0.4rem; }
+  .chat-msg.user .chat-bubble { background:rgba(129,140,248,0.15); border:1px solid rgba(129,140,248,0.2); color:var(--text); border-bottom-right-radius:3px; }
+  .chat-msg.assistant .chat-bubble { background:var(--card2); border:1px solid var(--border); color:var(--text); border-bottom-left-radius:3px; }
+  .chat-update-banner { padding:0.45rem 0.7rem; background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.25); border-radius:7px; font-size:0.72rem; color:var(--amber); align-self:stretch; }
+  .chat-update-banner strong { display:block; font-size:0.65rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.15rem; }
+  .chat-thinking { color:var(--muted); font-size:0.78rem; font-style:italic; }
+  .chatbar-input-row { display:flex; align-items:center; gap:0.8rem; }
+  .chatbar-input { flex:1; background:transparent; border:none; border-bottom:1px solid var(--border); color:var(--text);
+    font-size:0.88rem; font-family:'Inter',sans-serif; outline:none; resize:none; padding:0.25rem 0;
+    line-height:1.5; max-height:72px; overflow-y:auto; transition:border-color .2s; }
+  .chatbar-input:focus { border-bottom-color:var(--indigo); }
+  .chatbar-input::placeholder { color:var(--muted); }
+  .chatbar-send { background:none; border:none; color:var(--indigo); cursor:pointer; font-size:1.15rem;
+    padding:0.1rem 0.3rem; opacity:0.6; transition:opacity .2s; flex-shrink:0; }
+  .chatbar-send:hover { opacity:1; }
+  .chatbar-send:disabled { opacity:0.25; cursor:not-allowed; }
+  .chatbar-corner-toggle { position:absolute; right:10px; bottom:8px; width:28px; height:28px; border:none; background:transparent; color:var(--muted);
+    cursor:nwse-resize; display:flex; align-items:center; justify-content:center; padding:0; transition:color .18s, transform .18s; }
+  .chatbar-corner-toggle:hover { color:var(--indigo); }
+  .chatbar-corner-toggle svg { width:18px; height:18px; }
+  .chatbar-inner.is-expanded .chatbar-corner-toggle { color:var(--indigo); }
+  .chat-offline-msg { font-size:0.75rem; color:var(--muted); background:rgba(251,191,36,0.05);
+    border:1px solid rgba(251,191,36,0.15); border-radius:7px; padding:0.5rem 0.8rem; line-height:1.5; }
+  .chat-offline-msg code { background:var(--bg); padding:0.1rem 0.3rem; border-radius:3px; font-size:0.7rem; }
   @media(max-width:900px){
+    .chatbar { padding:1rem; }
+    .chatbar-inner.is-expanded { width:100%; }
+    .chatbar-top { align-items:flex-start; gap:0.8rem; }
+    .chatbar-meta { flex-direction:column; align-items:flex-end; }
     .life-head, .life-bottom { grid-template-columns:1fr; }
     .life-lanes { grid-template-columns:1fr; }
     .life-milestones { grid-template-columns:repeat(2,1fr); }
     .life-europe-grid { grid-template-columns:1fr; }
   }
+
+  /* PAYE CHECKER */
+  .paye-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem; }
+  @media(max-width:700px){ .paye-grid { grid-template-columns:1fr; } }
   .paye-input-group { margin-bottom:0.7rem; }
   .paye-input-group label { display:block; font-size:0.68rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.25rem; }
   .paye-input { width:100%; background:var(--card2); border:1px solid var(--border); border-radius:8px; padding:0.45rem 0.7rem; color:var(--text); font-size:0.88rem; box-sizing:border-box; }
@@ -434,7 +497,6 @@ window.PLAN = Object.freeze({
   .paye-warn  { color:var(--amber); font-weight:700; }
   .paye-error { color:var(--red);   font-weight:700; }
   .paye-section-label { font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin:0.8rem 0 0.3rem; }
-
 </style>
 </head>
 <body>
@@ -450,11 +512,38 @@ window.PLAN = Object.freeze({
     <button onclick="scrollToSection('investments')">Investments</button>
     <button onclick="scrollToSection('fire')">Optionality</button>
   </div>
-  <div style="display:flex;align-items:center;gap:4px">
-    <div class="date-pill" id="live-date"></div>
-    <button class="refresh-btn" onclick="refreshDashboard()" title="Refresh">↺</button>
-  </div>
+  <div class="date-pill" id="live-date"></div>
 </nav>
+
+<!-- CHAT BAR -->
+<div class="chatbar">
+  <div class="chatbar-inner">
+    <div class="chatbar-top">
+      <div class="chatbar-greeting" id="chat-greeting"></div>
+      <div class="chatbar-meta">
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <div class="chat-status-dot" id="chat-status-dot"></div>
+          <span class="chatbar-status-text" id="chat-status-text">Checking…</span>
+        </div>
+        <div class="chatbar-actions">
+          <button type="button" class="chatbar-action" onclick="openChatPopout()">Pop out</button>
+        </div>
+      </div>
+    </div>
+    <div class="chatbar-messages" id="chat-messages"></div>
+    <div class="chatbar-input-row">
+      <textarea class="chatbar-input" id="chat-input" rows="1" placeholder="Ask me anything about your finances…"></textarea>
+      <button class="chatbar-send" id="chat-send" onclick="sendChat()">↵</button>
+    </div>
+    <button type="button" class="chatbar-corner-toggle" id="chat-corner-toggle" aria-label="Expand chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 16L16 8"></path>
+        <path d="M10 8h6v6"></path>
+        <path d="M14 20h6v-6"></path>
+      </svg>
+    </button>
+  </div>
+</div>
 
 <div class="container">
 
@@ -480,7 +569,7 @@ window.PLAN = Object.freeze({
         <div class="metric-label">Emergency Fund</div>
         <div class="metric-value" id="hero-ef-value" style="color:var(--cyan)">£14,005</div>
         <div class="metric-sub" id="hero-ef-sub">Atom £12,000 + Monzo EF £2,005</div>
-        <span class="metric-badge badge-cyan" id="hero-ef-badge">6 months bare-bones covered</span>
+        <span class="metric-badge badge-cyan">6 months bare-bones covered</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Savings Rate</div>
@@ -499,7 +588,7 @@ window.PLAN = Object.freeze({
     <div class="accounts-grid">
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£12,000</div><div class="account-rate">3.49% AER · interest daily-compounded</div><div class="account-note">Emergency fund core · No withdrawals</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo EF (3.15%)</div><div class="account-balance" id="bal-efsavings" style="color:var(--green)">£2,005</div><div class="account-rate">3.15% AER · max 2 withdrawals/yr</div><div class="account-note">EF pot · Monzo</div></div>
-<div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">£2,146</div><div class="account-rate">Current account · current float</div><div class="account-note">Payday tomorrow · £350 festival/hotel owed back</div></div>
+<div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">£1,200</div><div class="account-rate">Current account · avg float</div><div class="account-note">Min £1,000 buffer · refills 24th</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$6,947</div><div class="account-rate">+$224/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Active brokerage · May 2026 skipped for float</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Brokerage Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$1,314</div><div class="account-rate">+$624/mo to brokerage Roth · $7,500/yr limit</div><div class="account-note">2026: $625 contributed · $6,875 left</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">£23,761</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">Reanchored 6 May 2026 · £1,020/mo (G15)</div></div>
@@ -657,7 +746,7 @@ window.PLAN = Object.freeze({
         <div class="pillar-stat"><span class="pillar-stat-label">UK assets</span><span class="pillar-stat-value" style="color:var(--green)">£31k + pension</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">US assets</span><span class="pillar-stat-value">$9,800 (£7.8k)</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">ILR target</span><span class="pillar-stat-value">Sep 2029</span></div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Citizenship eligible</span><span class="pillar-stat-value">Sep 2030+ · optional</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Citizenship eligible</span><span class="pillar-stat-value">12 Sep 2030+ · optional</span></div>
         <div class="pillar-why">The rarest pillar: genuine optionality. You can retire in the UK, the US, or Europe. You have assets, pensions, and credit in both major Anglophone economies. ILR locks in the right to live and work here permanently. This is not normal. This is exceptional.</div>
       </div>
 
@@ -679,7 +768,7 @@ window.PLAN = Object.freeze({
       <div class="jc-item">
         <div class="jc-dot done"></div>
         <div class="jc-card">
-          <div class="jc-year">Sep 2019</div>
+          <div class="jc-year">12 Sep 2019</div>
           <div class="jc-title">Edinburgh</div>
           <div class="jc-desc">Chicago → Scotland. Student visa. University of Edinburgh.</div>
           <div class="jc-salary" style="color:var(--soft)">Graduate Visa · 2023</div>
@@ -712,7 +801,7 @@ window.PLAN = Object.freeze({
           <div class="jc-year">Jul 2025</div>
           <div class="jc-title">Skilled Worker</div>
           <div class="jc-desc">Visa secured. AbbVie sponsor.</div>
-          <div class="jc-salary" style="color:var(--soft)">ILR clock: Sep 2019 entry</div>
+          <div class="jc-salary" style="color:var(--soft)">ILR clock: 12 Sep 2019 entry</div>
         </div>
       </div>
 
@@ -732,7 +821,7 @@ window.PLAN = Object.freeze({
           <div class="jc-year" style="color:var(--soft)">Sep 2029</div>
           <div class="jc-title">ILR Target</div>
           <div class="jc-desc">10yr long residence route.</div>
-          <div class="jc-salary" style="color:var(--soft)">Sep 2030+ → citizenship eligible</div>
+          <div class="jc-salary" style="color:var(--soft)">12 Sep 2030+ → citizenship eligible</div>
         </div>
       </div>
 
@@ -746,7 +835,7 @@ window.PLAN = Object.freeze({
     <div class="goals-grid">
 
       <!-- Goal 1: Chase Sapphire Preferred — most imminent -->
-      <div class="goal-card goal-travel">
+      <div class="goal-card">
         <div class="goal-header">
           <div class="goal-icon">💳</div>
           <div>
@@ -808,7 +897,7 @@ window.PLAN = Object.freeze({
             <div class="goal-title">Travel more for less</div>
           </div>
         </div>
-        <div class="goal-progress-meta">
+        <div style="margin-bottom:1rem;">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">CSP turns normal travel and dining spend into flexible UR points, no-FX payments, protections, and better trip choices.</div>
           <div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:33%"></div></div>
           <div class="progress-labels"><span>Build history</span><span style="color:var(--amber)">Apply Oct/Nov</span><span>Redeem by value</span></div>
@@ -826,7 +915,7 @@ window.PLAN = Object.freeze({
       </div>
 
       <!-- Goal 4: ILR — Permanent Residency -->
-      <div class="goal-card goal-ilr">
+      <div class="goal-card">
         <div class="goal-header">
           <div class="goal-icon">🇬🇧</div>
           <div>
@@ -834,10 +923,10 @@ window.PLAN = Object.freeze({
             <div class="goal-title">ILR — Permanent Residency</div>
           </div>
         </div>
-        <div class="goal-progress-meta">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from Sep 2019 · application window Sep 2029 · no more visa renewals</div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from 12 Sep 2019 · target 12 Sep 2029 · no more visa renewals</div>
           <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
-          <div class="progress-labels"><span>Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>Sep 2029</span></div>
+          <div class="progress-labels"><span>12 Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>12 Sep 2029</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises 5%/yr · £3,340 by 2029</span></div>
         <div class="goal-row"><span class="goal-row-label">Total all-in</span><span class="goal-row-value" style="color:var(--indigo)">£3,400 fee + £50 Life in the UK test · DIY application</span></div>
@@ -850,7 +939,6 @@ window.PLAN = Object.freeze({
           </div>
         </div>
       </div>
-
 
     </div>
 
@@ -887,7 +975,7 @@ window.PLAN = Object.freeze({
       <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-top:0.5rem; text-align:center;">
         <div style="padding:1rem; background:rgba(52,211,153,0.1); border:1px solid var(--green); border-radius:10px;">
           <div style="font-size:0.7rem; color:var(--green); font-weight:700; margin-bottom:0.3rem;">DONE ✓</div>
-          <div style="font-weight:700;">Sep 2019</div>
+          <div style="font-weight:700;">12 Sep 2019</div>
           <div style="font-size:0.75rem; color:var(--soft);">UK arrival</div>
         </div>
         <div style="padding:1rem; background:rgba(52,211,153,0.1); border:1px solid var(--green); border-radius:10px;">
@@ -907,12 +995,12 @@ window.PLAN = Object.freeze({
         </div>
         <div style="padding:1rem; background:rgba(34,211,238,0.08); border:1px solid rgba(34,211,238,0.3); border-radius:10px;">
           <div style="font-size:0.7rem; color:var(--cyan); font-weight:700; margin-bottom:0.3rem;">OPTIONALITY</div>
-          <div style="font-weight:700;">Sep 2030+</div>
+          <div style="font-weight:700;">12 Sep 2030+</div>
           <div style="font-size:0.75rem; color:var(--soft);">Citizenship eligible</div>
         </div>
       </div>
       <div style="margin-top:1.2rem; font-size:0.78rem; color:var(--muted);">
-        10-year long residence route (Sep 2019 → Sep 2029) is 10 months faster than Skilled Worker 5-year route (Jul 2030). ILR is the primary goal — citizenship remains optional. No ISAs until CLN, regardless of ILR status.
+        10-year long residence route (12 Sep 2019 → 12 Sep 2029) is about 10 months faster than Skilled Worker 5-year route (Jul 2030). ILR is the primary goal — citizenship remains optional. No ISAs until CLN, regardless of ILR status.
       </div>
     </div>
   </section>
@@ -1044,7 +1132,7 @@ window.PLAN = Object.freeze({
     <h2 class="section-title">Investment <span>Engine</span> <button class="info-btn" onclick="document.getElementById('invest-modal').classList.add('open')">ℹ strategy</button></h2>
 
     <!-- Overview cards -->
-    <div class="metrics" style="margin-bottom:1.4rem;">
+    <div class="metrics invest-top-metrics" style="margin-bottom:1.4rem;">
       <div class="metric-card">
         <div class="metric-label">Brokerage Roth IRA</div>
         <div class="metric-value" id="inv-roth-value" style="color:var(--amber)">$1,314</div>
@@ -1465,6 +1553,7 @@ window.PLAN = Object.freeze({
 <script>
 // ── LIVE DATE ────────────────────────────────────────────────────────────────
 const today = new Date();
+const CHATBOT_URL = 'http://localhost:5001';
 document.getElementById('live-date').textContent =
   today.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 
@@ -1504,7 +1593,7 @@ new Chart(document.getElementById('salaryChart'), {
   },
   options: {
     responsive: true,
-    plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>{const d=['Luto Research','AbbVie job G14','2025 merit','2026 merit','Promotion G15']; return `£${c.raw.toLocaleString()} · ${d[c.dataIndex]||''}`;}}}},
+    plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>{const d=['Luto Research','AbbVie job G14','2025 merit','2026 merit','Promotion G15'];return `£${c.raw.toLocaleString()} · ${d[c.dataIndex]||''}`;}}}},
     scales: {
       y: { ticks:{callback:v=>`£${(v/1000).toFixed(0)}k`}, grid:{color:'#1e2d50'} },
       x: { grid:{display:false} }
@@ -1545,7 +1634,7 @@ const PLAN = window.PLAN || Object.freeze({
   salaryGrossGbp: 68000,
   salaryNetMonthlyGbp: 3773,
   salaryNetBonusMonthGbp: 5012,
-  moveMonthlyGbp: 130,
+  moveMonthlyGbp: 230,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
   fidelityTaxableMonthlyUsd: 224,
@@ -1620,7 +1709,7 @@ function nwSliderChange(yrs) {
   if (gNwChart) { gNwChart.data.datasets[0].data = segs.map(s => s.val); gNwChart.update(); }
 }
 
-// Called from liveEstimates() with live-computed values. FX: GBP/USD ~0.77.
+// Called from liveEstimates() with live-computed values. FX: GBP/USD 0.77.
 function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, fx = 0.77, mktLabel = 'Estimated · 85/10/5 monthly-buy model', sip = 0, sipCompleted = 0) {
   gNwFx = fx;
   const segments = [
@@ -1644,7 +1733,6 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
   gNwBases = { ukSav: atom+monzo+chase, pension, sip, sipCompleted, fidUSD, rothUSD, usCashUSD: chaseUSUSD||0, segs: segments, mktLabel };
   renderNwBreakdown(segments, mktLabel);
 
-  if (gNwChart) gNwChart.destroy();
   gNwChart = new Chart(document.getElementById('nwChart'), {
     type: 'doughnut',
     data: {
@@ -1918,8 +2006,8 @@ function liveEstimates() {
   const monzoEst     = Math.round(661.28   * Math.pow(1.0275, daysSav / 365));  // move fund only
 
   // CHASE UK — deterministic schedule from anchor date. To reanchor: change ANCHOR_DATE + ANCHOR_BAL only.
-  // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus. Amex (~4th) is AFTER anchor.
-  // Monthly: 1 Octopus | ~4 Amex | 12 Rent | 24 Salary+Wise | 26 Vancsi -53.48
+  // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus. Amex (4th) is AFTER anchor.
+  // Monthly: 1 Octopus | 4 Amex | 12 Rent | 24 Salary+Wise | 26 Vancsi -53.48
   function chaseEstimate() {
     const ANCHOR_DATE = new Date(2026, 2, 3); // Mar 3 2026 — update date+bal together if reanchoring
     const ANCHOR_BAL  = 3839.90;
@@ -1984,7 +2072,7 @@ function liveEstimates() {
     growUSD(ROTH_BROKERAGE_ANCHOR, INVEST_ANCHOR) +
     monthlyBuyValue(PLAN.rothBrokerageMonthlyUsd, new Date(2026, 5, 1))
   );
-  const chaseUSEst  = 1600; // static working capital anchor — maintained manually at ~$1,500–1,600
+  const chaseUSEst  = 1600; // static working capital anchor — maintained manually at $1,500–1,600
   // SIP shares — acquisition cost: £300/month (£150 employee + £150 AbbVie match) from Nov 2024
   const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
   const sipEst = Math.max(0, sipCompleted) * PLAN.sipMonthlyGbp;
@@ -2088,7 +2176,7 @@ function liveEstimates() {
   if (p7total) p7total.textContent = fmt(efTotal);
   if (p7atom)  p7atom.textContent  = fmt(atomEst);
   if (p7sav)   p7sav.textContent   = fmt(efSavingsEst);
-  // Chase UK: static display (schedule estimate too volatile; kept for NW calc only)
+  // Chase UK: static display (schedule estimate too volatile to display; kept for NW calc only)
   const chaseEl = document.getElementById('bal-chase');
   if (chaseEl) { chaseEl.textContent = '£2,146'; chaseEl.style.color = 'var(--indigo)'; }
   document.getElementById('bal-fid').textContent     = '$' + fidelityEst.toLocaleString('en-GB');
@@ -2097,9 +2185,9 @@ function liveEstimates() {
   document.getElementById('inv-roth-value').textContent = '$' + rothEst.toLocaleString('en-GB');
   document.getElementById('pillar-fid-val').textContent = '$' + fidelityEst.toLocaleString('en-GB');
   document.getElementById('pillar-roth-val').textContent = '$' + rothEst.toLocaleString('en-GB');
-  document.getElementById('bal-pension').textContent = '~' + fmt(pensionEst);
+  document.getElementById('bal-pension').textContent = fmt(pensionEst);
   const pillarEl = document.getElementById('pillar-pension-val');
-  if (pillarEl) pillarEl.textContent = '~' + fmt(pensionEst);
+  if (pillarEl) pillarEl.textContent = fmt(pensionEst);
   const pensionSubEl = document.getElementById('hero-pension-sub');
   if (pensionSubEl) pensionSubEl.textContent = 'Cash, investments, pension';
   drawNetWorthChart(atomEst, efSavingsEst + monzoEst, chaseEst, pensionEst, fidelityEst, rothEst, chaseUSEst, liveFX, mktLabel, sipEst, sipCompleted);
@@ -2144,7 +2232,7 @@ function updateGoals() {
 
   // Goal 3: ILR — time-to-prepare progress bar
   const ilrDeadline = new Date(2029, 8, 1);
-  const ilrStart    = new Date(2019, 8, 1); // UK arrival — full 10-year journey
+  const ilrStart    = new Date(2019, 8, 12); // UK arrival — full 10-year journey
   const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
   const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
   document.getElementById('ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
@@ -2174,6 +2262,43 @@ updateGoals();
   if (days > 0) el.textContent = days === 1 ? '1 day away' : days < 14 ? `${days} days away` : `${Math.ceil(days/7)} wks away`;
   else el.textContent = 'current year';
 })();
+
+// ── CHAT BAR ──────────────────────────────────────────────────────────────────
+let chatHistory = [];
+let chatOnline  = false;
+let chatExpanded = false;
+let chatPopout = null;
+let chatResizeState = null;
+const CHAT_BASE_URL = 'http://localhost:5001';
+
+// Greeting
+(function() {
+  const h = new Date().getHours();
+  const g = h < 12 ? 'Good morning, Ella ✦'
+           : h < 18 ? 'Good afternoon, Ella ✦'
+           : 'Good evening, Ella ✦';
+  document.getElementById('chat-greeting').textContent = g;
+})();
+
+async function checkChatStatus() {
+  try {
+    const r = await fetch(`${CHAT_BASE_URL}/status`, {signal: AbortSignal.timeout(2500)});
+    if (r.ok) {
+      chatOnline = true;
+      document.getElementById('chat-status-dot').classList.add('online');
+      document.getElementById('chat-status-text').textContent = 'online';
+    } else throw new Error();
+  } catch {
+    chatOnline = false;
+    document.getElementById('chat-status-dot').classList.remove('online');
+    document.getElementById('chat-status-text').textContent = 'server offline';
+  }
+  syncPopout();
+}
+
+function escapeHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 
 function mdToHtml(raw) {
   // 1. Extract fenced code blocks before any escaping
@@ -2258,23 +2383,271 @@ function mdToHtml(raw) {
   return html;
 }
 
-// ── BIOMETRIC LOCK ────────────────────────────────────────────────────────────
-function refreshDashboard() {
-  sessionStorage.setItem('dash_scroll_y', String(window.scrollY || window.pageYOffset || 0));
-  window.location.reload();
+function appendMsg(role, content) {
+  const msgs = document.getElementById('chat-messages');
+  msgs.classList.add('visible');
+  const wrap   = document.createElement('div');
+  wrap.className = `chat-msg ${role}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble';
+  bubble.innerHTML = role === 'user'
+    ? escapeHtml(content).replace(/\n/g,'<br>')
+    : mdToHtml(content);
+  wrap.appendChild(bubble);
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+  syncPopout();
 }
 
-(() => {
-  const y = sessionStorage.getItem('dash_scroll_y');
-  if (y !== null) {
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        window.scrollTo(0, parseInt(y, 10) || 0);
-        sessionStorage.removeItem('dash_scroll_y');
-      }, 80);
-    }, { once: true });
+function appendUpdateBanner(desc) {
+  const msgs = document.getElementById('chat-messages');
+  msgs.classList.add('visible');
+  const div = document.createElement('div');
+  div.className = 'chat-update-banner';
+  div.innerHTML = `<strong>Update logged</strong>${desc}`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  syncPopout();
+}
+
+function appendChatNotice(html) {
+  const msgs = document.getElementById('chat-messages');
+  msgs.classList.add('visible');
+  const note = document.createElement('div');
+  note.className = 'chat-offline-msg';
+  note.innerHTML = html;
+  msgs.appendChild(note);
+  msgs.scrollTop = msgs.scrollHeight;
+  syncPopout();
+}
+
+function toggleChatExpand(forceState, options = {}) {
+  const panel = document.querySelector('.chatbar-inner');
+  const preserveSize = !!options.preserveSize;
+  chatExpanded = typeof forceState === 'boolean' ? forceState : !chatExpanded;
+  panel.classList.toggle('is-expanded', chatExpanded);
+  if (chatExpanded) document.getElementById('chat-messages').classList.add('visible');
+  if (!chatExpanded) {
+    panel.style.width = '';
+    panel.style.height = '';
+  } else if (!panel.style.height && !preserveSize) {
+    panel.style.height = '640px';
   }
-})();
+  syncPopout();
+}
+
+function startChatResize(event) {
+  const panel = document.querySelector('.chatbar-inner');
+  const initialRect = panel.getBoundingClientRect();
+  if (!chatExpanded) {
+    panel.style.width = `${Math.round(initialRect.width)}px`;
+    panel.style.height = `${Math.round(initialRect.height)}px`;
+    toggleChatExpand(true, {preserveSize: true});
+  }
+  const rect = panel.getBoundingClientRect();
+  chatResizeState = {
+    startX: event.clientX,
+    startY: event.clientY,
+    startWidth: rect.width,
+    startHeight: rect.height,
+  };
+  document.addEventListener('mousemove', onChatResizeMove);
+  document.addEventListener('mouseup', stopChatResize);
+  event.preventDefault();
+}
+
+function onChatResizeMove(event) {
+  if (!chatResizeState) return;
+  const panel = document.querySelector('.chatbar-inner');
+  const width = Math.max(520, chatResizeState.startWidth + (event.clientX - chatResizeState.startX));
+  const height = Math.max(420, chatResizeState.startHeight + (event.clientY - chatResizeState.startY));
+  panel.style.width = `${Math.min(window.innerWidth - 48, width)}px`;
+  panel.style.height = `${Math.min(window.innerHeight - 48, height)}px`;
+}
+
+function stopChatResize() {
+  chatResizeState = null;
+  document.removeEventListener('mousemove', onChatResizeMove);
+  document.removeEventListener('mouseup', stopChatResize);
+}
+
+function getChatState() {
+  const msgs = document.getElementById('chat-messages').innerHTML;
+  return {
+    html: msgs,
+    online: chatOnline,
+    expanded: chatExpanded,
+    statusText: document.getElementById('chat-status-text').textContent,
+  };
+}
+
+function syncPopout() {
+  if (!chatPopout || chatPopout.closed || !chatPopout.applyState) return;
+  try {
+    chatPopout.applyState(getChatState());
+  } catch {}
+}
+
+function openChatPopout() {
+  if (chatPopout && !chatPopout.closed) {
+    chatPopout.focus();
+    syncPopout();
+    return;
+  }
+
+  chatPopout = window.open('', 'ella-finance-chat', 'width=560,height=760,resizable=yes,scrollbars=no');
+  if (!chatPopout) return;
+
+  chatPopout.document.write(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ella Finance Chat</title>
+  <style>
+    :root { color-scheme: light; --bg:#f5f7fb; --panel:#ffffff; --panel2:#eef2ff; --border:#d9e0ee; --text:#0f172a; --muted:#64748b; --indigo:#6366f1; --green:#22c55e; --amber:#d97706; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,sans-serif; background:linear-gradient(180deg,#eef2ff 0%,#f8fafc 100%); color:var(--text); display:flex; flex-direction:column; height:100vh; }
+    .top { display:flex; justify-content:space-between; align-items:center; padding:16px 18px; border-bottom:1px solid var(--border); background:rgba(255,255,255,0.88); backdrop-filter:blur(12px); }
+    .title { font-size:14px; font-weight:800; letter-spacing:.02em; }
+    .status { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:8px; }
+    .dot { width:8px; height:8px; border-radius:50%; background:#94a3b8; }
+    .dot.online { background:var(--green); box-shadow:0 0 0 4px rgba(34,197,94,0.14); }
+    .msgs { flex:1; overflow:auto; padding:16px; display:flex; flex-direction:column; gap:10px; }
+    .inputbar { display:flex; gap:10px; padding:14px 16px 16px; border-top:1px solid var(--border); background:rgba(255,255,255,0.92); }
+    textarea { flex:1; resize:none; min-height:52px; max-height:140px; border:1px solid var(--border); border-radius:14px; padding:12px 14px; font:inherit; color:var(--text); background:var(--panel); outline:none; }
+    textarea:focus { border-color:var(--indigo); }
+    button { border:none; border-radius:12px; background:var(--indigo); color:white; padding:0 16px; font:inherit; font-weight:700; cursor:pointer; }
+    button:disabled { opacity:.45; cursor:not-allowed; }
+    .chat-msg { max-width:88%; }
+    .chat-msg.user { align-self:flex-end; }
+    .chat-msg.assistant { align-self:flex-start; }
+    .chat-bubble { padding:11px 14px; border-radius:14px; line-height:1.55; font-size:13px; }
+    .chat-msg.user .chat-bubble { background:rgba(99,102,241,0.14); border:1px solid rgba(99,102,241,0.2); }
+    .chat-msg.assistant .chat-bubble { background:var(--panel); border:1px solid var(--border); }
+    .chat-update-banner,.chat-offline-msg { font-size:12px; line-height:1.5; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:rgba(217,119,6,0.08); color:#92400e; }
+    .chat-update-banner strong { display:block; margin-bottom:2px; font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
+    .chat-bubble code { background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.15); border-radius:4px; padding:1px 5px; }
+    .chat-bubble pre { background:#0f172a; color:#e2e8f0; overflow:auto; padding:10px 12px; border-radius:10px; }
+    .chat-bubble table { width:100%; border-collapse:collapse; }
+    .chat-bubble th,.chat-bubble td { border:1px solid var(--border); padding:5px 7px; text-align:left; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="title">Ella Finance Chat</div>
+    <div class="status"><span class="dot" id="status-dot"></span><span id="status-text">Checking…</span></div>
+  </div>
+  <div class="msgs" id="msgs"></div>
+  <div class="inputbar">
+    <textarea id="input" placeholder="Ask me anything about your finances..."></textarea>
+    <button id="send">Send</button>
+  </div>
+  <script>
+    const openerBridge = window.opener && window.opener.dashboardChatBridge;
+    const msgs = document.getElementById('msgs');
+    const input = document.getElementById('input');
+    const send = document.getElementById('send');
+    window.applyState = state => {
+      msgs.innerHTML = state.html || '';
+      msgs.scrollTop = msgs.scrollHeight;
+      document.getElementById('status-text').textContent = state.statusText || 'Checking…';
+      document.getElementById('status-dot').classList.toggle('online', !!state.online);
+    };
+    send.addEventListener('click', async () => {
+      const msg = input.value.trim();
+      if (!msg || !openerBridge) return;
+      send.disabled = true;
+      await openerBridge.sendMessageFromPopout(msg);
+      input.value = '';
+      send.disabled = false;
+      input.focus();
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send.click(); }
+    });
+    setInterval(() => {
+      if (!window.opener || window.opener.closed || !window.opener.dashboardChatBridge) return;
+      window.applyState(window.opener.dashboardChatBridge.getState());
+    }, 800);
+    if (openerBridge) window.applyState(openerBridge.getState());
+    input.focus();
+  <\/script>
+</body>
+</html>`);
+  chatPopout.document.close();
+  syncPopout();
+}
+
+async function sendChatMessage(msg) {
+  const btn = document.getElementById('chat-send');
+  if (!msg || btn.disabled) return false;
+
+  appendMsg('user', msg);
+  chatHistory.push({role: 'user', content: msg});
+  btn.disabled = true;
+
+  const msgs = document.getElementById('chat-messages');
+  const thinking = document.createElement('div');
+  thinking.className = 'chat-msg assistant';
+  thinking.id = 'chat-thinking-indicator';
+  thinking.innerHTML = '<div class="chat-bubble chat-thinking">Thinking…</div>';
+  msgs.appendChild(thinking);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  try {
+    const resp = await fetch(`${CHAT_BASE_URL}/chat`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message: msg, history: chatHistory}),
+      signal: AbortSignal.timeout(45000)
+    });
+    document.getElementById('chat-thinking-indicator')?.remove();
+    const data = await resp.json();
+    if (data.reply) {
+      appendMsg('assistant', data.reply);
+      chatHistory.push({role: 'assistant', content: data.reply});
+      if (data.update_detected) appendUpdateBanner(data.update_detected);
+    }
+  } catch {
+    document.getElementById('chat-thinking-indicator')?.remove();
+    appendChatNotice(`⚠️ Server offline — run <code>python3 /Desktop/Finances/chatbot_server.py</code> in Terminal`);
+  }
+
+  btn.disabled = false;
+  document.getElementById('chat-input').focus();
+  return true;
+}
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg   = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  input.style.height = 'auto';
+  await sendChatMessage(msg);
+}
+
+window.dashboardChatBridge = {
+  getState: () => getChatState(),
+  sendMessageFromPopout: msg => sendChatMessage(msg),
+};
+
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+});
+document.getElementById('chat-input').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 72) + 'px';
+});
+document.getElementById('chat-corner-toggle').addEventListener('mousedown', startChatResize);
+document.getElementById('chat-corner-toggle').addEventListener('click', e => {
+  if (chatExpanded) return;
+  toggleChatExpand(true);
+  e.preventDefault();
+});
+
+checkChatStatus();
+setInterval(checkChatStatus, 30000);
 </script>
 
 <!-- Rent Rules Modal -->
@@ -2284,10 +2657,10 @@ function refreshDashboard() {
     <div style="font-size:0.58rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:0.4rem;">Locked April 2026 · Do not deviate</div>
     <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
     <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">Wise pulls £650 from Chase UK on the 25th, sends USD to Chase US on the 26th, Fidelity ACH pulls on the 30th, and recurring buys execute on the 1st.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Allocation — both accounts</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical across Roth and taxable. No monthly rebalancing.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Allocation — active brokerage only</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical across active Roth brokerage and active taxable brokerage. No monthly rebalancing.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth IRA · $624/mo</div><div class="modal-rule-value">Brokerage Roth gets whole-dollar automatic buys: $531 FSKAX, $62 FTIHX, $31 FXNAX. 2026 shows $625 contributed and $6,875 left against the $7,500 limit. Advisor Roth is separate and stays untouched.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Taxable · $224/mo</div><div class="modal-rule-value">Whole-dollar taxable buys: $191 FSKAX, $22 FTIHX, $11 FXNAX. ~0.3%/yr dividend drag. 15% LTCG on gains at sale. Pre-retirement bridge and liquidity layer. Access anytime.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 in Fidelity Advisor Growth Opps Class C. ~1% expense ratio. No new contributions. Tracked separately. Review migration when convenient — selling triggers 15% LTCG on gains.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Taxable · $224/mo</div><div class="modal-rule-value">Whole-dollar taxable buys: $191 FSKAX, $22 FTIHX, $11 FXNAX. 0.3%/yr dividend drag. 15% LTCG on gains at sale. Pre-retirement bridge and liquidity layer. Access anytime.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 in Fidelity Advisor Growth Opps Class C. 1% expense ratio. No new contributions. Separate from the Advisor Roth.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET wrapper: salary sacrifice removes income tax + NI now, tax-free growth, 25% lump sum tax-free + 75% taxed as income at drawdown. Treaty-protected in US. £1.9M projected at 67. Retirement fully covered regardless of Fidelity.</div></div>
     <div class="modal-rule" style="border-bottom:none;"><div class="modal-rule-label">No ISAs</div><div class="modal-rule-value">Blocked while US citizen. Trigger = CLN (renouncing citizenship) only. Not ILR. Not British passport.</div></div>
   </div>
