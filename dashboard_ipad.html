@@ -898,9 +898,9 @@ window.PLAN = Object.freeze({
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">CSP turns normal travel and dining spend into flexible UR points, no-FX payments, protections, and better trip choices.</div>
-          <div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:33%"></div></div>
-          <div class="progress-labels"><span>Build history</span><span style="color:var(--amber)">Apply Oct/Nov</span><span>Redeem by value</span></div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">UR points toward Polaris LHR→ORD · 75k welcome bonus covers it · £220 cash out of pocket (APD only)</div>
+          <div class="progress-bar"><div class="progress-fill" id="travel-prog" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
+          <div class="progress-labels"><span>Get CSP</span><span id="travel-prog-lbl" style="color:var(--amber)">0 UR · pre-card</span><span>Fly Polaris</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Core win</span><span class="goal-row-value">Spend less on fees and bad redemptions, not chase one flight</span></div>
         <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--green)">75k UR after $5k spend · only if natural and paid in full</span></div>
@@ -2208,7 +2208,7 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = cspProgress.toFixed(1) + '%';
   document.getElementById('csp-months-lbl').textContent = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
-  // Move pot — £130/mo from July 24 2026 onward. May/June pause protects cashflow after the high Amex month.
+  // Move pot — £230/mo from May 2026. Pot starts accumulating from July 24 anchor date.
   const r        = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 6, 24);
   const potAnchor = 661.28;
@@ -2239,8 +2239,36 @@ function updateGoals() {
   document.getElementById('ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Late 2026");
-  setPill('move', "£130/mo from 24 Jul keeps the move fund on track", "Jun–Jul 2027");
-  setPill('travel', "CSP first · then choose the best-value trip", "2027+");
+  setPill('move', "£230/mo from May 2026 keeps the move fund on track", "Jun–Jul 2027");
+
+  // Travel — UR points toward Polaris (independent of CSP credit-history bar)
+  // Phase 1: pre-CSP (now → Oct 1 2026) → 0–5%
+  // Phase 2: CSP approved, earning welcome bonus (Oct 1 2026 → Jan 1 2027) → 5–100%
+  // Phase 3: bonus earned (Jan 1 2027+) → 100%
+  const travelPhase2Start = new Date(2026, 9, 1);   // Oct 1 2026
+  const travelPhase2End   = new Date(2027, 0, 1);   // Jan 1 2027
+  let travelPct, travelLbl, travelTime;
+  if (today < travelPhase2Start) {
+    travelPct = 5;
+    travelLbl = '0 UR · pre-card';
+    travelTime = '2027+';
+  } else if (today < travelPhase2End) {
+    const elapsed = today - travelPhase2Start;
+    const total   = travelPhase2End - travelPhase2Start;
+    travelPct = 5 + Math.round(elapsed / total * 95);
+    const estUR = Math.round(elapsed / total * 75000);
+    travelLbl = `~${estUR.toLocaleString()} UR earned`;
+    travelTime = 'Earning bonus';
+  } else {
+    travelPct = 100;
+    travelLbl = '75k UR · ready to book';
+    travelTime = 'Book now';
+  }
+  const travelEl = document.getElementById('travel-prog');
+  if (travelEl) travelEl.style.width = travelPct + '%';
+  const travelLblEl = document.getElementById('travel-prog-lbl');
+  if (travelLblEl) travelLblEl.textContent = travelLbl;
+  setPill('travel', "CSP first · then book Polaris with UR · no BA surcharges", travelTime);
 }
 
 function setPill(id, label, value) {

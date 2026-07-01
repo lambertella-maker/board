@@ -2208,7 +2208,7 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = cspProgress.toFixed(1) + '%';
   document.getElementById('csp-months-lbl').textContent = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
-  // Move pot — £130/mo from July 24 2026 onward. May/June pause protects cashflow after the high Amex month.
+  // Move pot — £230/mo from May 2026. Pot starts accumulating from July 24 anchor date.
   const r        = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 6, 24);
   const potAnchor = 661.28;
