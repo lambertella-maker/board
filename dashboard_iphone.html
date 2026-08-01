@@ -22,6 +22,11 @@ window.PLAN = Object.freeze({
   salaryGrossGbp: 68000,
   salaryNetMonthlyGbp: 3773,
   salaryNetBonusMonthGbp: 5012,
+  rentMonthlyGbp: 1125,
+  previousRentMonthlyGbp: 1250,
+  phoneMonthlyGbp: 29,
+  utilitiesExPhoneMonthlyGbp: 163,
+  cspCreditHistoryMonths: 12,
   moveMonthlyGbp: 130,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
@@ -34,6 +39,11 @@ window.PLAN = Object.freeze({
   firePensionMonthlyGbp: 1020,
   fireRothMonthlyGbp: 466,
   investReturn: 0.85 * 0.07 + 0.10 * 0.06 + 0.05 * 0.04
+});
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-plan-gbp]').forEach((el) => {
+    el.textContent = `£${window.PLAN[el.dataset.planGbp].toLocaleString('en-GB')}`;
+  });
 });
 </script>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -359,7 +369,7 @@ window.PLAN = Object.freeze({
     <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension £340 · SIP £150 · GymFlex £97 · tax/NI £1,344</span></div>
     <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot £230/mo from May 2026</span></div>
     <div class="goal-row-m"><span class="goal-row-k">25th/26th</span><span style="color:var(--amber);font-weight:700;">£650 Wise → $224 taxable + $624 Roth</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1-1.4k · 1st Octopus £55 · 12th rent £1,250</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1-1.4k · 1st Octopus £55 · phone <span data-plan-gbp="phoneMonthlyGbp">£29</span> · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
     <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Same desktop flow, compressed: payroll deductions first, then Chase UK, Wise, Fidelity, cards, utilities, rent.</span><span>Funds auto-buy 1st</span></div>
   </div>
 
@@ -462,7 +472,7 @@ window.PLAN = Object.freeze({
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">UK: BA Amex</span><span class="pillar-stat-v" style="color:var(--muted)">Retiring once CSP live</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">US: Amex Blue Cash</span><span class="pillar-stat-v">Building credit history</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Next: Chase Sapphire</span><span class="pillar-stat-v">Late 2026</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Next: Chase Sapphire</span><span class="pillar-stat-v">Jan 2027</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">All cards</span><span class="pillar-stat-v" style="color:var(--green)">Zero balance carried</span></div>
       <div class="pillar-why-text">Simultaneous credit history in two countries. CSP unlocks this: no-FX travel rewards, UR transfers to United, Virgin, BA, Hyatt. Credit as a tool, never debt.</div>
     </div>
@@ -495,15 +505,15 @@ window.PLAN = Object.freeze({
   <div class="card" style="margin-top:10px;">
     <div class="goal-card-head">
       <span style="font-size:1.4rem;">💳</span>
-      <div class="goal-card-meta"><div class="goal-card-label">Goal 1 · Most Imminent · Late 2026</div><div class="goal-card-title">Chase Sapphire Preferred</div></div>
+      <div class="goal-card-meta"><div class="goal-card-label">Goal 1 · Most Imminent · Jan 2027</div><div class="goal-card-title">Chase Sapphire Preferred</div></div>
     </div>
-    <div class="goal-subcopy">9 months clean Amex history · opened Jan 30, 2026 · 2 prior rejections as AU</div>
+    <div class="goal-subcopy">1 full year clean Amex history · opened Jan 30, 2026 · 2 prior rejections as AU</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-csp-prog" style="background:linear-gradient(90deg,var(--indigo),var(--pink)); width:0%"></div></div>
-    <div class="prog-labels"><span>Jan 30</span><span id="m-csp-lbl" style="color:var(--indigo)">Updating...</span><span>Oct 2026</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Application date</span><span style="color:var(--amber); font-weight:600;">October 2026 · 9mo · no earlier</span></div>
+    <div class="prog-labels"><span>Jan 30, 2026</span><span id="m-csp-lbl" style="color:var(--indigo)">Updating...</span><span>Jan 30, 2027</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Application date</span><span style="color:var(--amber); font-weight:600;">Jan 30, 2027 · 12mo · no earlier</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--green); font-weight:600;">75k Chase UR · $5k spend in first 3 months</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Transfer partners</span><span style="font-weight:600;">United · BA · Virgin · Hyatt</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Building clean history</span><span>Late 2026</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Building clean history</span><span>Jan 2027</span></div>
   </div>
 
   <div class="card">
@@ -826,7 +836,7 @@ window.PLAN = Object.freeze({
       🚫 No ISAs while US citizen · trigger = CLN, not ILR<br>
       ✅ Always FTC (Form 1116) · never FEIE<br>
       💸 SALX = 50% of bonus pre-tax into pension<br>
-      🎯 Next: Chase Sapphire Preferred · late 2026
+      🎯 Next: Chase Sapphire Preferred · Jan 2027
     </div>
   </div>
 </div>
@@ -939,7 +949,7 @@ function liveEstimates() {
       return [
         { date: new Date(y, m,  1), amount: -110.51 }, // Octopus
         { date: new Date(y, m,  1), amount: -1300   }, // Amex autopay (assume 1st; varies £1,100–1,400)
-        { date: new Date(y, m, 12), amount: (y > 2026 || (y === 2026 && m >= 6)) ? -1125 : -1250 }, // Rent (splits Jul 2026: −£125/mo)
+        { date: new Date(y, m, 12), amount: -PLAN.rentMonthlyGbp }, // Current rent, locked in PLAN
         { date: new Date(y, m, 24), amount: salary  }, // Salary net
         { date: new Date(y, m, 24), amount: movePot }, // Move pot starts 24 Jul 2026
         { date: new Date(y, m, 25), amount: wisePull }, // Wise pulls GBP from Chase UK
@@ -1223,7 +1233,8 @@ liveEstimates();
 // ── GOAL PROGRESS BARS ────────────────────────────────────────────────────────
 (function() {
   const cspStart = new Date(2026, 0, 30);
-  const cspTarget = new Date(2026, 9, 1);
+  const cspTarget = new Date(cspStart);
+  cspTarget.setMonth(cspTarget.getMonth() + PLAN.cspCreditHistoryMonths);
   const cspElapsedDays = Math.max(0, Math.floor((today - cspStart) / (24 * 3600 * 1000)));
   const cspTotalDays = Math.max(1, Math.floor((cspTarget - cspStart) / (24 * 3600 * 1000)));
   const cspProgress = Math.min(100, cspElapsedDays / cspTotalDays * 100);
