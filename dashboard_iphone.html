@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="2026-08-01T16:05:00Z">
+<meta name="finance-build" content="2026-08-01T16:30:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-08-01T16:05:00Z';
+    const build = '2026-08-01T16:30:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -32,6 +32,10 @@ window.PLAN = Object.freeze({
   atomBalanceGbp: 12668,
   monzoEfBalanceGbp: 2305,
   monzoMoveBalanceGbp: 1093,
+  fidelityTaxableBalanceUsd: 7459.51,
+  rothBrokerageBalanceUsd: 2560.28,
+  rothContributed2026Usd: 1875,
+  rothRemaining2026Usd: 5625,
   moveMonthlyGbp: 130,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
@@ -385,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">£1,200</div><div class="acct-note">Avg float · min £1,000 · refills 24th</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity Taxable</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
-<div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Brokerage Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$624/mo · $6,875 left</div></div>
+<div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Brokerage Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$624/mo · $5,625 left pre-gift</div></div>
   </div>
 
 </div>
@@ -796,7 +800,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <span class="fire-stat-val" id="m-inv-pension" style="color:var(--pink)">—</span>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Brokerage Roth IRA</div><div style="font-size:0.64rem;color:var(--muted);">+$624/mo · $6,875 left</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Brokerage Roth IRA</div><div style="font-size:0.64rem;color:var(--muted);">+$624/mo · $5,625 left pre-gift</div></div>
       <span class="fire-stat-val" id="m-inv-roth" style="color:var(--amber)">—</span>
     </div>
     <div class="fire-stat-row">
@@ -976,7 +980,7 @@ function liveEstimates() {
 
   const INVEST_RETURN = PLAN.investReturn;
   function growUSD(amount, fromDate, annualRate = INVEST_RETURN) {
-    return amount * Math.pow(1 + annualRate, daysSince(fromDate) / 365);
+    return amount * Math.pow(1 + annualRate, Math.floor(daysSince(fromDate)) / 365);
   }
   function monthlyBuyValue(monthlyAmount, firstBuyDate) {
     let total = 0;
@@ -989,18 +993,18 @@ function liveEstimates() {
     }
     return total;
   }
-  // May 2026 is skipped for float recovery. From June: taxable $224/mo, Roth brokerage $624/mo, both rounded down to whole-dollar fund buys.
-  const INVEST_ANCHOR = new Date(2026, 4, 28);
-  const FIDELITY_TAXABLE_ANCHOR = 6946.67;
-  const ROTH_BROKERAGE_ANCHOR = 1313.51;
-  const fidelityEst = Math.round(
+  // US investments reanchored 1 Aug 2026 before gift allocation; future buys resume 1 Sep.
+  const INVEST_ANCHOR = new Date(2026, 7, 1);
+  const FIDELITY_TAXABLE_ANCHOR = window.PLAN.fidelityTaxableBalanceUsd;
+  const ROTH_BROKERAGE_ANCHOR = window.PLAN.rothBrokerageBalanceUsd;
+  const fidelityEst = Math.round((
     growUSD(FIDELITY_TAXABLE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(2026, 5, 1))
-  );
-  const rothEst = Math.round(
+    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(2026, 8, 1))
+  ) * 100) / 100;
+  const rothEst = Math.round((
     growUSD(ROTH_BROKERAGE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(PLAN.rothBrokerageMonthlyUsd, new Date(2026, 5, 1))
-  );
+    monthlyBuyValue(PLAN.rothBrokerageMonthlyUsd, new Date(2026, 8, 1))
+  ) * 100) / 100;
   const chaseUSEst = 1600; // static working capital anchor
 
   // UK pension reanchored 6 May 2026 at £23,761.08 after SALX/recent payroll updates.
@@ -1499,7 +1503,7 @@ mCalcFire();
     <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
     <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">Wise pulls £650 from Chase UK on the 25th, sends USD to Chase US on the 26th, Fidelity ACH pulls on the 30th, and recurring buys execute on the 1st.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Both accounts</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical allocation. No monthly rebalancing.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth · $624/mo</div><div class="modal-rule-value">Whole-dollar automatic buys: $531 FSKAX, $62 FTIHX, $31 FXNAX. 2026 shows $625 contributed and $6,875 left against the $7,500 limit. Advisor Roth stays separate.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth · $624/mo</div><div class="modal-rule-value">Whole-dollar automatic buys: $531 FSKAX, $62 FTIHX, $31 FXNAX. Before gift allocation, 2026 shows $1,875 contributed and $5,625 left against the $7,500 limit. Advisor Roth stays separate.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Taxable · $224/mo</div><div class="modal-rule-value">Whole-dollar automatic buys: $191 FSKAX, $22 FTIHX, $11 FXNAX. 0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 · 1% ER · no new money. Review migration when convenient.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET: salary sacrifice now, tax-free growth, 25% lump sum + 75% income at drawdown. £1.9M at 67. Retirement covered.</div></div>

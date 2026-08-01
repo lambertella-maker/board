@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="2026-08-01T16:05:00Z">
+<meta name="finance-build" content="2026-08-01T16:30:00Z">
 <script>
 (() => {
   try {
-    const build = '2026-08-01T16:05:00Z';
+    const build = '2026-08-01T16:30:00Z';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -32,6 +32,10 @@ window.PLAN = Object.freeze({
   atomBalanceGbp: 12668,
   monzoEfBalanceGbp: 2305,
   monzoMoveBalanceGbp: 1093,
+  fidelityTaxableBalanceUsd: 7459.51,
+  rothBrokerageBalanceUsd: 2560.28,
+  rothContributed2026Usd: 1875,
+  rothRemaining2026Usd: 5625,
   moveMonthlyGbp: 130,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
@@ -604,8 +608,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£12,668</div><div class="account-rate">3.44% gross · 3.49% AER reward</div><div class="account-note">Withdrawal month drops to 2.00% AER</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo EF (3.15%)</div><div class="account-balance" id="bal-efsavings" style="color:var(--green)">£2,305</div><div class="account-rate">3.15% AER · max 2 withdrawals/yr</div><div class="account-note">3+ withdrawals: 2.60% AER until Apr 2027</div></div>
 <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">£1,200</div><div class="account-rate">Current account · avg float</div><div class="account-note">Min £1,000 buffer · refills 24th</div></div>
-      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$6,947</div><div class="account-rate">+$224/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Active brokerage · May 2026 skipped for float</div></div>
-      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Brokerage Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$1,314</div><div class="account-rate">+$624/mo to brokerage Roth · $7,500/yr limit</div><div class="account-note">2026: $625 contributed · $6,875 left</div></div>
+      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$7,459.51</div><div class="account-rate">+$224/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Pre-gift balance · 1 Aug 2026</div></div>
+      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Brokerage Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$2,560.28</div><div class="account-rate">+$624/mo to brokerage Roth · $7,500/yr limit</div><div class="account-note">2026: $1,875 contributed · $5,625 left</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">£23,761</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">Reanchored 6 May 2026 · £1,020/mo (G15)</div></div>
     </div>
   </section>
@@ -704,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="pillar-icon">📈</div>
         <div class="pillar-name">Pillar 4 · US Investing</div>
         <div class="pillar-title">Fidelity Taxable</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Taxable value</span><span class="pillar-stat-value" id="pillar-fid-val" style="color:var(--green)">$6,947</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Taxable value</span><span class="pillar-stat-value" id="pillar-fid-val" style="color:var(--green)">$7,459.51</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Monthly buy</span><span class="pillar-stat-value">$224/mo taxable</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target allocation</span><span class="pillar-stat-value">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
         <div class="pillar-why">Taxable brokerage is the accessible US investing bucket. Fidelity ACH pulls on the 30th; recurring fund buys happen automatically on the 1st.</div>
@@ -714,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="pillar-icon">🌱</div>
         <div class="pillar-name">Pillar 5 · US Retirement</div>
         <div class="pillar-title">Brokerage Roth IRA</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-roth-val" style="color:var(--pink)">$1,314</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-roth-val" style="color:var(--pink)">$2,560.28</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Monthly buy</span><span class="pillar-stat-value" style="color:var(--pink)">$624/mo brokerage Roth</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Contribution principal</span><span class="pillar-stat-value" style="color:var(--green)">Accessible</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Advisor Roth</span><span class="pillar-stat-value" style="color:var(--soft)">Separate · untouched</span></div>
@@ -1150,13 +1154,13 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="metrics invest-top-metrics" style="margin-bottom:1.4rem;">
       <div class="metric-card">
         <div class="metric-label">Brokerage Roth IRA</div>
-        <div class="metric-value" id="inv-roth-value" style="color:var(--amber)">$1,314</div>
+        <div class="metric-value" id="inv-roth-value" style="color:var(--amber)">$2,560.28</div>
         <div class="metric-sub">$624/mo · $7.5k cap</div>
         <span class="metric-badge badge-amber">Brokerage Roth only</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Fidelity Taxable</div>
-        <div class="metric-value" id="inv-fid-value" style="color:var(--green)">$6,947</div>
+        <div class="metric-value" id="inv-fid-value" style="color:var(--green)">$7,459.51</div>
         <div class="metric-sub">$224/mo into 3 funds</div>
         <span class="metric-badge badge-green">Active only · legacy separate</span>
       </div>
@@ -2059,14 +2063,13 @@ function liveEstimates() {
   }
   const chaseEst = chaseEstimate();
 
-  // US INVESTMENTS — May 28 anchors plus automatic recurring buys on the 1st.
-  // May 2026 is skipped for float recovery. From June: taxable $224/mo, Roth brokerage $624/mo, both rounded down to whole-dollar fund buys.
-  const INVEST_ANCHOR = new Date(2026, 4, 28);
-  const FIDELITY_TAXABLE_ANCHOR = 6946.67;
-  const ROTH_BROKERAGE_ANCHOR = 1313.51;
+  // US INVESTMENTS — reanchored 1 Aug 2026 before gift allocation; future buys resume 1 Sep.
+  const INVEST_ANCHOR = new Date(2026, 7, 1);
+  const FIDELITY_TAXABLE_ANCHOR = window.PLAN.fidelityTaxableBalanceUsd;
+  const ROTH_BROKERAGE_ANCHOR = window.PLAN.rothBrokerageBalanceUsd;
   const INVEST_RETURN = PLAN.investReturn;
   function growUSD(amount, fromDate, annualRate = INVEST_RETURN) {
-    return amount * Math.pow(1 + annualRate, daysSince(fromDate) / 365);
+    return amount * Math.pow(1 + annualRate, Math.floor(daysSince(fromDate)) / 365);
   }
   function monthlyBuyValue(monthlyAmount, firstBuyDate) {
     let total = 0;
@@ -2079,14 +2082,14 @@ function liveEstimates() {
     }
     return total;
   }
-  const fidelityEst = Math.round(
+  const fidelityEst = Math.round((
     growUSD(FIDELITY_TAXABLE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(2026, 5, 1))
-  );
-  const rothEst = Math.round(
+    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(2026, 8, 1))
+  ) * 100) / 100;
+  const rothEst = Math.round((
     growUSD(ROTH_BROKERAGE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(PLAN.rothBrokerageMonthlyUsd, new Date(2026, 5, 1))
-  );
+    monthlyBuyValue(PLAN.rothBrokerageMonthlyUsd, new Date(2026, 8, 1))
+  ) * 100) / 100;
   const chaseUSEst  = 1600; // static working capital anchor — maintained manually at $1,500–1,600
   // SIP shares — acquisition cost: £300/month (£150 employee + £150 AbbVie match) from Nov 2024
   const sipCompleted = monthsSince(new Date(2024, 10, 1)) + (today.getDate() >= 24 ? 1 : 0);
@@ -2703,7 +2706,7 @@ setInterval(checkChatStatus, 30000);
     <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
     <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">Wise pulls £650 from Chase UK on the 25th, sends USD to Chase US on the 26th, Fidelity ACH pulls on the 30th, and recurring buys execute on the 1st.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Allocation — active brokerage only</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical across active Roth brokerage and active taxable brokerage. No monthly rebalancing.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth IRA · $624/mo</div><div class="modal-rule-value">Brokerage Roth gets whole-dollar automatic buys: $531 FSKAX, $62 FTIHX, $31 FXNAX. 2026 shows $625 contributed and $6,875 left against the $7,500 limit. Advisor Roth is separate and stays untouched.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth IRA · $624/mo</div><div class="modal-rule-value">Brokerage Roth gets whole-dollar automatic buys: $531 FSKAX, $62 FTIHX, $31 FXNAX. Before gift allocation, 2026 shows $1,875 contributed and $5,625 left against the $7,500 limit. Advisor Roth is separate and stays untouched.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Taxable · $224/mo</div><div class="modal-rule-value">Whole-dollar taxable buys: $191 FSKAX, $22 FTIHX, $11 FXNAX. 0.3%/yr dividend drag. 15% LTCG on gains at sale. Pre-retirement bridge and liquidity layer. Access anytime.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 in Fidelity Advisor Growth Opps Class C. 1% expense ratio. No new contributions. Separate from the Advisor Roth.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET wrapper: salary sacrifice removes income tax + NI now, tax-free growth, 25% lump sum tax-free + 75% taxed as income at drawdown. Treaty-protected in US. £1.9M projected at 67. Retirement fully covered regardless of Fidelity.</div></div>
