@@ -25,6 +25,8 @@ window.PLAN = Object.freeze({
   rentMonthlyGbp: 1125,
   previousRentMonthlyGbp: 1250,
   phoneMonthlyGbp: 30,
+  monthlySpendGbp: 2300,
+  monthlyLeftoverGbp: 1473,
   utilitiesExPhoneMonthlyGbp: 163,
   cspCreditHistoryMonths: 12,
   atomBalanceGbp: 12668,
@@ -344,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="metric-label">Monthly Net</div>
       <div class="metric-value" id="m-net-value" style="color:var(--green)">£3,773</div>
       <div class="metric-sub" id="m-net-sub">£68,000 salary · payday 24th</div>
-      <div class="metric-badge badge-green" id="m-net-badge">+£125/mo · 12 Jul rent drop</div>
+      <div class="metric-badge badge-green" id="m-net-badge">£1,473/mo after budget</div>
     </div>
     <div class="metric">
       <div class="metric-label">Net Worth</div>
@@ -931,7 +933,7 @@ function liveEstimates() {
   // UK SAVINGS (AER daily compound — reanchored 1 Aug 2026 after gift transfers)
   const SAVINGS_ANCHOR = new Date(2026, 7, 1);
   const daysA    = daysSince(ANCHOR);            // kept for pension/investments (Feb 24 anchor)
-  const daysSav  = daysSince(SAVINGS_ANCHOR);    // savings reanchored Apr 16
+  const daysSav  = Math.floor(daysSince(SAVINGS_ANCHOR));
   const atomEst      = Math.round(window.PLAN.atomBalanceGbp      * Math.pow(1.0349, daysSav / 365));
   const efSavingsEst = Math.round(window.PLAN.monzoEfBalanceGbp   * Math.pow(1.0315, daysSav / 365)); // Monzo EF · 3.15% AER
   const monzoEst     = Math.round(window.PLAN.monzoMoveBalanceGbp * Math.pow(1.0275, daysSav / 365)); // move fund only
@@ -1130,11 +1132,12 @@ function liveEstimates() {
   const nv = document.getElementById('m-net-value');
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
-  if (isJul)           { nv.textContent='£3,773'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='+£125/mo · rent drop from 12 Jul'; }
-  else if (isApr)      { nv.textContent='£3,773'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='+£125/mo · 12 Jul rent drop'; }
-  else if (isAprPre)   { nv.textContent='£3,773'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent='+£125/mo · 12 Jul rent drop'; }
+  const budgetHeadroom = `£${window.PLAN.monthlyLeftoverGbp.toLocaleString('en-GB')}/mo after budget`;
+  if (isJul)           { nv.textContent='£3,773'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
+  else if (isApr)      { nv.textContent='£3,773'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
+  else if (isAprPre)   { nv.textContent='£3,773'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
   else if (isMarch)    { nv.textContent='£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
-  else                 { nv.textContent='£3,773';  ns.textContent='£68,000 salary · payday 24th';  nb.textContent='+£125/mo · 12 Jul rent drop'; }
+  else                 { nv.textContent='£3,773';  ns.textContent='£68,000 salary · payday 24th';  nb.textContent=budgetHeadroom; }
 
   // Net worth composition
   const mSegs = [

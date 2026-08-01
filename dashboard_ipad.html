@@ -25,6 +25,8 @@ window.PLAN = Object.freeze({
   rentMonthlyGbp: 1125,
   previousRentMonthlyGbp: 1250,
   phoneMonthlyGbp: 30,
+  monthlySpendGbp: 2300,
+  monthlyLeftoverGbp: 1473,
   utilitiesExPhoneMonthlyGbp: 163,
   cspCreditHistoryMonths: 12,
   atomBalanceGbp: 12668,
@@ -570,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="metric-label">Monthly Net</div>
         <div class="metric-value" id="hero-net-value" style="color:var(--green)">£3,773</div>
         <div class="metric-sub" id="hero-net-sub">£68,000 salary · payday 24th</div>
-        <span class="metric-badge badge-green" id="hero-net-badge">+£125/mo · 12 Jul rent drop</span>
+        <span class="metric-badge badge-green" id="hero-net-badge">£1,473/mo after budget</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Net Worth (total)</div>
@@ -2013,7 +2015,7 @@ function liveEstimates() {
   // UK SAVINGS (AER daily compound — reanchored 1 Aug 2026 after gift transfers)
   const SAVINGS_ANCHOR = new Date(2026, 7, 1);
   const daysA    = daysSince(ANCHOR);            // kept for pension/investments (Feb 24 anchor)
-  const daysSav  = daysSince(SAVINGS_ANCHOR);    // savings reanchored Apr 16
+  const daysSav  = Math.floor(daysSince(SAVINGS_ANCHOR));
   const atomEst      = Math.round(window.PLAN.atomBalanceGbp      * Math.pow(1.0349, daysSav / 365));
   const efSavingsEst = Math.round(window.PLAN.monzoEfBalanceGbp   * Math.pow(1.0315, daysSav / 365)); // Monzo EF · 3.15% AER
   const monzoEst     = Math.round(window.PLAN.monzoMoveBalanceGbp * Math.pow(1.0275, daysSav / 365)); // move fund only
@@ -2130,19 +2132,20 @@ function liveEstimates() {
   const heroNetEl   = document.getElementById('hero-net-value');
   const heroSubEl   = document.getElementById('hero-net-sub');
   const heroBadgeEl = document.getElementById('hero-net-badge');
+  const budgetHeadroom = `£${window.PLAN.monthlyLeftoverGbp.toLocaleString('en-GB')}/mo after budget`;
   if (heroNetEl) {
     if (isJulOnwards) {
       heroNetEl.textContent  = '£3,773';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '+£125/mo · rent drop from 12 Jul';
+      heroBadgeEl.textContent = budgetHeadroom;
     } else if (isAprilOnwards) {
       heroNetEl.textContent  = '£3,773';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
+      heroBadgeEl.textContent = budgetHeadroom;
     } else if (isAprilPrePayday) {
       heroNetEl.textContent  = '£3,773';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
+      heroBadgeEl.textContent = budgetHeadroom;
     } else if (isMarchPayday) {
       heroNetEl.textContent  = '£5,136';
       heroSubEl.textContent  = 'Bonus month · March 24 payday';
@@ -2150,7 +2153,7 @@ function liveEstimates() {
     } else {
       heroNetEl.textContent  = '£3,773';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
-      heroBadgeEl.textContent = '+£125/mo · 12 Jul rent drop';
+      heroBadgeEl.textContent = budgetHeadroom;
     }
   }
 
