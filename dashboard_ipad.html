@@ -608,8 +608,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Atom Bank</div><div class="account-balance" id="bal-atom" style="color:var(--green)">£12,668</div><div class="account-rate">3.44% gross · 3.49% AER reward</div><div class="account-note">Withdrawal month drops to 2.00% AER</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Monzo EF (3.15%)</div><div class="account-balance" id="bal-efsavings" style="color:var(--green)">£2,305</div><div class="account-rate">3.15% AER · max 2 withdrawals/yr</div><div class="account-note">3+ withdrawals: 2.60% AER until Apr 2027</div></div>
 <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">£1,200</div><div class="account-rate">Current account · avg float</div><div class="account-note">Min £1,000 buffer · refills 24th</div></div>
-      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$7,459.51</div><div class="account-rate">+$224/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Pre-gift balance · 1 Aug 2026</div></div>
-      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Brokerage Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$2,560.28</div><div class="account-rate">+$624/mo to brokerage Roth · $7,500/yr limit</div><div class="account-note">2026: $1,875 contributed · $5,625 left</div></div>
+      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$7,460</div><div class="account-rate">+$224/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Pre-gift balance · 1 Aug 2026</div></div>
+      <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Brokerage Roth IRA</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$2,560</div><div class="account-rate">+$624/mo to brokerage Roth · $7,500/yr limit</div><div class="account-note">2026: $1,875 contributed · $5,625 left</div></div>
       <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">£23,761</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">Reanchored 6 May 2026 · £1,020/mo (G15)</div></div>
     </div>
   </section>
@@ -708,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="pillar-icon">📈</div>
         <div class="pillar-name">Pillar 4 · US Investing</div>
         <div class="pillar-title">Fidelity Taxable</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Taxable value</span><span class="pillar-stat-value" id="pillar-fid-val" style="color:var(--green)">$7,459.51</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Taxable value</span><span class="pillar-stat-value" id="pillar-fid-val" style="color:var(--green)">$7,460</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Monthly buy</span><span class="pillar-stat-value">$224/mo taxable</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target allocation</span><span class="pillar-stat-value">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
         <div class="pillar-why">Taxable brokerage is the accessible US investing bucket. Fidelity ACH pulls on the 30th; recurring fund buys happen automatically on the 1st.</div>
@@ -718,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="pillar-icon">🌱</div>
         <div class="pillar-name">Pillar 5 · US Retirement</div>
         <div class="pillar-title">Brokerage Roth IRA</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-roth-val" style="color:var(--pink)">$2,560.28</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-roth-val" style="color:var(--pink)">$2,560</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Monthly buy</span><span class="pillar-stat-value" style="color:var(--pink)">$624/mo brokerage Roth</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Contribution principal</span><span class="pillar-stat-value" style="color:var(--green)">Accessible</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Advisor Roth</span><span class="pillar-stat-value" style="color:var(--soft)">Separate · untouched</span></div>
@@ -1154,13 +1154,13 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="metrics invest-top-metrics" style="margin-bottom:1.4rem;">
       <div class="metric-card">
         <div class="metric-label">Brokerage Roth IRA</div>
-        <div class="metric-value" id="inv-roth-value" style="color:var(--amber)">$2,560.28</div>
+        <div class="metric-value" id="inv-roth-value" style="color:var(--amber)">$2,560</div>
         <div class="metric-sub">$624/mo · $7.5k cap</div>
         <span class="metric-badge badge-amber">Brokerage Roth only</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Fidelity Taxable</div>
-        <div class="metric-value" id="inv-fid-value" style="color:var(--green)">$7,459.51</div>
+        <div class="metric-value" id="inv-fid-value" style="color:var(--green)">$7,460</div>
         <div class="metric-sub">$224/mo into 3 funds</div>
         <span class="metric-badge badge-green">Active only · legacy separate</span>
       </div>
@@ -2198,12 +2198,13 @@ function liveEstimates() {
   // Chase UK: static display (schedule estimate too volatile to display; kept for NW calc only)
   const chaseEl = document.getElementById('bal-chase');
   if (chaseEl) { chaseEl.textContent = '£2,146'; chaseEl.style.color = 'var(--indigo)'; }
-  document.getElementById('bal-fid').textContent     = '$' + fidelityEst.toLocaleString('en-GB');
-  document.getElementById('bal-roth').textContent    = '$' + rothEst.toLocaleString('en-GB');
-  document.getElementById('inv-fid-value').textContent = '$' + fidelityEst.toLocaleString('en-GB');
-  document.getElementById('inv-roth-value').textContent = '$' + rothEst.toLocaleString('en-GB');
-  document.getElementById('pillar-fid-val').textContent = '$' + fidelityEst.toLocaleString('en-GB');
-  document.getElementById('pillar-roth-val').textContent = '$' + rothEst.toLocaleString('en-GB');
+  const fmtUsdRounded = value => '$' + Math.round(value).toLocaleString('en-GB');
+  document.getElementById('bal-fid').textContent = fmtUsdRounded(fidelityEst);
+  document.getElementById('bal-roth').textContent = fmtUsdRounded(rothEst);
+  document.getElementById('inv-fid-value').textContent = fmtUsdRounded(fidelityEst);
+  document.getElementById('inv-roth-value').textContent = fmtUsdRounded(rothEst);
+  document.getElementById('pillar-fid-val').textContent = fmtUsdRounded(fidelityEst);
+  document.getElementById('pillar-roth-val').textContent = fmtUsdRounded(rothEst);
   document.getElementById('bal-pension').textContent = fmt(pensionEst);
   const pillarEl = document.getElementById('pillar-pension-val');
   if (pillarEl) pillarEl.textContent = fmt(pensionEst);

@@ -1075,15 +1075,16 @@ function liveEstimates() {
   // Chase UK: static display (schedule estimate too volatile; kept for NW calc only)
   const ce = document.getElementById('m-bal-chase');
   if (ce) { ce.textContent = '£2,146'; ce.style.color = 'var(--indigo)'; }
-  document.getElementById('m-bal-fid').textContent     = '$' + fidelityEst.toLocaleString('en-GB');
-  document.getElementById('m-bal-roth').textContent    = '$' + rothEst.toLocaleString('en-GB');
+  const fmtUsdRounded = value => '$' + Math.round(value).toLocaleString('en-GB');
+  document.getElementById('m-bal-fid').textContent = fmtUsdRounded(fidelityEst);
+  document.getElementById('m-bal-roth').textContent = fmtUsdRounded(rothEst);
   document.getElementById('m-bal-pension').textContent = fmt(pensionEst);
   const pp = document.getElementById('m-pillar-pension');
   if (pp) pp.textContent = fmt(pensionEst);
   const pf = document.getElementById('m-pillar-fid');
-  if (pf) pf.textContent = '$' + fidelityEst.toLocaleString('en-GB');
+  if (pf) pf.textContent = fmtUsdRounded(fidelityEst);
   const pr = document.getElementById('m-pillar-roth');
-  if (pr) pr.textContent = '$' + rothEst.toLocaleString('en-GB');
+  if (pr) pr.textContent = fmtUsdRounded(rothEst);
   document.getElementById('m-pension-sub').textContent = 'Cash, investments, pension';
 
   // Invest tab
@@ -1092,8 +1093,8 @@ function liveEstimates() {
   const invRoth    = document.getElementById('m-inv-roth');
   const invTotal   = document.getElementById('m-invest-total');
   if (invPension) invPension.textContent = fmt(pensionEst);
-  if (invFid)     invFid.textContent     = '$' + fidelityEst.toLocaleString('en-GB');
-  if (invRoth)    invRoth.textContent    = '$' + rothEst.toLocaleString('en-GB');
+  if (invFid) invFid.textContent = fmtUsdRounded(fidelityEst);
+  if (invRoth) invRoth.textContent = fmtUsdRounded(rothEst);
   if (invTotal) {
     const totalInvest = pensionEst + Math.round(fidelityEst * FX_M) + Math.round(rothEst * FX_M);
     invTotal.textContent = '£' + Math.round(totalInvest / 1000) + 'k';
