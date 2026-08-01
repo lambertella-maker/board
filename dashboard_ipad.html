@@ -32,7 +32,7 @@ window.PLAN = Object.freeze({
   atomBalanceGbp: 12668,
   monzoEfBalanceGbp: 2305,
   monzoMoveBalanceGbp: 1093,
-  moveMonthlyGbp: 230,
+  moveMonthlyGbp: 130,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
   fidelityTaxableMonthlyUsd: 224,
@@ -891,7 +891,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="progress-labels"><span>£1,093</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Move target</span><span class="goal-row-value">£1,800 · simple move buffer, movers, overlap, setup</span></div>
-        <div class="goal-row"><span class="goal-row-label">Pot by Jun-Jul 2027</span><span class="goal-row-value" style="color:var(--green)">£1.7k-£1.8k from the £130/mo plan</span></div>
+        <div class="goal-row"><span class="goal-row-label">Current / target</span><span class="goal-row-value" style="color:var(--green)">£1,093 now · £1,800 target</span></div>
         <div class="goal-row"><span class="goal-row-label">Deposit bridge</span><span class="goal-row-value" style="color:var(--indigo)">Use returned deposit / short EF bridge if timing needs it</span></div>
         <div class="goal-row"><span class="goal-row-label">Bonus rule</span><span class="goal-row-value" style="color:var(--green)">Not earmarked for the move unless the actual flat requires it</span></div>
         <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">£70,040 with a 3% merit rise assumption</span></div>
@@ -1649,7 +1649,7 @@ const PLAN = window.PLAN || Object.freeze({
   salaryGrossGbp: 68000,
   salaryNetMonthlyGbp: 3773,
   salaryNetBonusMonthGbp: 5012,
-  moveMonthlyGbp: 230,
+  moveMonthlyGbp: 130,
   moveTargetGbp: 1800,
   wiseMonthlyGbp: 650,
   fidelityTaxableMonthlyUsd: 224,
@@ -2225,7 +2225,7 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = cspProgress.toFixed(1) + '%';
   document.getElementById('csp-months-lbl').textContent = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
-  // Move pot — £230/mo from May 2026. Pot starts accumulating from July 24 anchor date.
+  // Move pot — £130/mo; reanchored after the 1 Aug gift allocation.
   const r        = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 7, 24);
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
@@ -2256,7 +2256,7 @@ function updateGoals() {
   document.getElementById('ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Jan 2027");
-  setPill('move', "£230/mo from May 2026 keeps the move fund on track", "Jun–Jul 2027");
+  setPill('move', "£130/mo keeps the £1,800 move buffer ahead", "Jun–Jul 2027");
 
   // Travel — UR points toward Polaris (independent of CSP credit-history bar)
   // Phase 1: pre-CSP (now → Oct 1 2026) → 0–5%
