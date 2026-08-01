@@ -966,7 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const today = new Date();
   const r = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 7, 24);
-  const potAnchor = PLAN.monzoMoveBalanceGbp;
+  const potAnchor = window.PLAN.monzoMoveBalanceGbp;
   const moveTarget = window.PLAN.moveTargetGbp;
   let total = potAnchor;
 
@@ -1620,7 +1620,7 @@ new Chart(document.getElementById('budgetChart'), {
   data: {
     labels: ['Rent','Groceries','Eating out','Shopping','Transport','Subscriptions','Travel fund','Utilities','Other'],
     datasets: [{
-      data: [PLAN.rentMonthlyGbp, 230, 250, 120, 100, 42, 150, PLAN.utilitiesExPhoneMonthlyGbp + PLAN.phoneMonthlyGbp, 90],
+      data: [window.PLAN.rentMonthlyGbp, 230, 250, 120, 100, 42, 150, window.PLAN.utilitiesExPhoneMonthlyGbp + window.PLAN.phoneMonthlyGbp, 90],
       backgroundColor: ['#818cf8','#22d3ee','#fbbf24','#34d399','#f472b6','#a78bfa','#60a5fa','#fb923c','#64748b'],
       borderWidth: 0,
       hoverOffset: 8,
@@ -2014,9 +2014,9 @@ function liveEstimates() {
   const SAVINGS_ANCHOR = new Date(2026, 7, 1);
   const daysA    = daysSince(ANCHOR);            // kept for pension/investments (Feb 24 anchor)
   const daysSav  = daysSince(SAVINGS_ANCHOR);    // savings reanchored Apr 16
-  const atomEst      = Math.round(PLAN.atomBalanceGbp      * Math.pow(1.0349, daysSav / 365));
-  const efSavingsEst = Math.round(PLAN.monzoEfBalanceGbp   * Math.pow(1.0315, daysSav / 365)); // Monzo EF · 3.15% AER
-  const monzoEst     = Math.round(PLAN.monzoMoveBalanceGbp * Math.pow(1.0275, daysSav / 365)); // move fund only
+  const atomEst      = Math.round(window.PLAN.atomBalanceGbp      * Math.pow(1.0349, daysSav / 365));
+  const efSavingsEst = Math.round(window.PLAN.monzoEfBalanceGbp   * Math.pow(1.0315, daysSav / 365)); // Monzo EF · 3.15% AER
+  const monzoEst     = Math.round(window.PLAN.monzoMoveBalanceGbp * Math.pow(1.0275, daysSav / 365)); // move fund only
 
   // CHASE UK — deterministic schedule from anchor date. To reanchor: change ANCHOR_DATE + ANCHOR_BAL only.
   // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus. Amex (4th) is AFTER anchor.
@@ -2225,7 +2225,7 @@ function updateGoals() {
   // Move pot — £230/mo from May 2026. Pot starts accumulating from July 24 anchor date.
   const r        = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 7, 24);
-  const potAnchor = PLAN.monzoMoveBalanceGbp;
+  const potAnchor = window.PLAN.monzoMoveBalanceGbp;
   function potContribution(d) {
     return d >= potStart ? PLAN.moveMonthlyGbp : 0;
   }
