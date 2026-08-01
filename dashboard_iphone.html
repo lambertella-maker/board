@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="card" style="margin-top:0;">
     <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross £5,667 → £3,773 net</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension £340 · SIP £150 · GymFlex £97 · tax/NI £1,344</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot £230/mo from May 2026</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot £130/mo</span></div>
     <div class="goal-row-m"><span class="goal-row-k">25th/26th</span><span style="color:var(--amber);font-weight:700;">£650 Wise → $224 taxable + $624 Roth</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1-1.4k · 1st Octopus £55 · phone <span data-plan-gbp="phoneMonthlyGbp">£30</span> · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
     <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Same desktop flow, compressed: payroll deductions first, then Chase UK, Wise, Fidelity, cards, utilities, rent.</span><span>Funds auto-buy 1st</span></div>
@@ -526,15 +526,15 @@ document.addEventListener('DOMContentLoaded', () => {
       <span style="font-size:1.4rem;">🗝️</span>
       <div class="goal-card-meta"><div class="goal-card-label">Goal 2 · Jun–Jul 2027</div><div class="goal-card-title">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
-    <div class="goal-subcopy">Target rent about £1,700/mo max · £230/mo move fund from May 2026</div>
+    <div class="goal-subcopy">Target rent about £1,700/mo max · £130/mo move fund</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
     <div class="prog-labels"><span>£1,093</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Move target</span><span style="font-weight:600;">£1,800 · movers, overlap, setup</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">By Jun-Jul 2027</span><span style="color:var(--green); font-weight:600;">£1.7k-£1.8k from £230/mo</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Current / target</span><span style="color:var(--green); font-weight:600;">£1,093 now · £1,800 target</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Deposit timing</span><span style="color:var(--indigo); font-weight:600;">Returned deposit / short EF bridge if needed</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Bonus rule</span><span style="color:var(--green); font-weight:600;">Not earmarked unless the flat requires it</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Apr 2027 salary</span><span style="color:var(--green); font-weight:600;">£70,040 with a 3% merit rise</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£230 now keeps July flexible and gets the move fund ready by Jun–Jul 2027</span><span>Jun–Jul 2027</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£130/mo keeps the move buffer ahead</span><span>Jun–Jul 2027</span></div>
   </div>
 
 <script>
@@ -1248,7 +1248,7 @@ liveEstimates();
   document.getElementById('m-csp-prog').style.width = cspProgress.toFixed(1) + '%';
   document.getElementById('m-csp-lbl').textContent  = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
-  // Move pot — £230/mo from May 2026. Pot starts accumulating from July 24 anchor date.
+  // Move pot — £130/mo; reanchored after the 1 Aug gift allocation.
   const r = 0.0275 / 12;  // 2.75% AER
   const potStart = new Date(2026, 7, 24);
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
