@@ -1145,7 +1145,7 @@ function liveEstimates() {
   const nv = document.getElementById('m-net-value');
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
-  const budgetHeadroom = `£${window.PLAN.monthlyLeftoverGbp.toLocaleString('en-GB')}/mo after budget`;
+  const budgetHeadroom = 'Post-promotion salary';
   if (isJul)           { nv.textContent='£3,736'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
   else if (isApr)      { nv.textContent='£3,736'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
   else if (isAprPre)   { nv.textContent='£3,736'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
