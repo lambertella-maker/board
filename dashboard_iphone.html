@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross £5,667 → £3,773 net</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension £340 · SIP £150 · GymFlex £97 · tax/NI £1,344</span></div>
     <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot £130/mo</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">25th/26th</span><span style="color:var(--amber);font-weight:700;">£650 Wise → $224 taxable + $624 Roth</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">25th/26th</span><span style="color:var(--amber);font-weight:700;">£650 Wise → $850 taxable (Roth maxed)</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1-1.4k · ChatGPT $20 · phone <span data-plan-gbp="phoneMonthlyGbp">£30</span> incl. active Prime at £0 · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
     <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Subscriptions £40/mo: Spotify £12.99 · Apple TV £9.99 · Google One ~£2 · ChatGPT $20 (~£15) · Prime £0 via O2. £95 Prime refund pending.</span><span>Funds auto-buy 1st</span></div>
   </div>
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">£1,200</div><div class="acct-note">Avg float · min £1,000 · refills 24th</div></div>
     <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity Taxable</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
-<div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Brokerage Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">+$624/mo · $2,625 left after gift contribution</div></div>
+<div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Brokerage Roth IRA</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">$8,309 balance · 2026 maxed · no further buys</div></div>
   </div>
 
 </div>
@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="pillar-header"><div class="pillar-ico">📈</div><div><div class="pillar-label">Pillar 4 · US Investing</div><div class="pillar-name">Fidelity Taxable</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Taxable value</span><span class="pillar-stat-v" id="m-pillar-fid" style="color:var(--green)">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly buy</span><span class="pillar-stat-v">$224/mo taxable</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly buy</span><span class="pillar-stat-v">$850/mo taxable</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Target split</span><span class="pillar-stat-v">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
       <div class="pillar-why-text">Accessible US investing bucket. ACH pulls on the 30th; recurring fund buys happen on the 1st.</div>
     </div>
@@ -455,9 +455,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="pillar-header"><div class="pillar-ico">🌱</div><div><div class="pillar-label">Pillar 5 · US Retirement</div><div class="pillar-name">Brokerage Roth IRA</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" style="color:var(--pink)" id="m-pillar-roth">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly buy</span><span class="pillar-stat-v" style="color:var(--pink)">$624/mo</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">2026 status</span><span class="pillar-stat-v" style="color:var(--pink)">Maxed · $7,500 contributed</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Advisor Roth</span><span class="pillar-stat-v" style="color:var(--soft)">Separate · untouched</span></div>
-      <div class="pillar-why-text">Brokerage Roth gets the $624/mo whole-dollar buy on the 1st. It is tracked separately from the Advisor Roth.</div>
+      <div class="pillar-why-text">Leave the $8,309 Roth invested. The 2026 limit is fully used, so future Fidelity buys go to taxable until 2027.</div>
     </div>
   </div>
 
@@ -807,11 +807,11 @@ document.addEventListener('DOMContentLoaded', () => {
       <span class="fire-stat-val" id="m-inv-pension" style="color:var(--pink)">—</span>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Brokerage Roth IRA</div><div style="font-size:0.64rem;color:var(--muted);">+$624/mo · $2,625 left after gift contribution</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Brokerage Roth IRA</div><div style="font-size:0.64rem;color:var(--muted);">$8,309 balance · 2026 maxed</div></div>
       <span class="fire-stat-val" id="m-inv-roth" style="color:var(--amber)">—</span>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Fidelity Taxable</div><div style="font-size:0.64rem;color:var(--muted);">+$224/mo · FSKAX/FTIHX/FXNAX</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Fidelity Taxable</div><div style="font-size:0.64rem;color:var(--muted);">+$850/mo · FSKAX/FTIHX/FXNAX</div></div>
       <span class="fire-stat-val" id="m-inv-fid" style="color:var(--green)">—</span>
     </div>
     <div class="fire-stat-row" style="border-bottom:none;opacity:0.6;">
@@ -1012,7 +1012,7 @@ function liveEstimates() {
     growUSD(ROTH_BROKERAGE_ANCHOR, INVEST_ANCHOR) +
     monthlyBuyValue(PLAN.rothBrokerageMonthlyUsd, new Date(2026, 8, 1))
   ) * 100) / 100;
-  const chaseUSEst = 1600; // static working capital anchor
+  const chaseUSEst = PLAN.chaseUSBalanceUsd; // confirmed 5 Aug 2026 working-capital anchor
 
   // UK pension reanchored 6 May 2026 at £23,761.08 after SALX/recent payroll updates.
   const PENSION_ANCHOR = new Date(2026, 4, 6);
@@ -1115,8 +1115,8 @@ function liveEstimates() {
       { name:'FTIHX', desc:'International Ex-US',   pct:10, color:'var(--cyan)',   role:'Diversifier' },
       { name:'FXNAX', desc:'US Bond Index',          pct:5,  color:'var(--amber)', role:'Ballast' },
     ];
-    const taxableBuys = { FSKAX:191, FTIHX:22, FXNAX:11 };
-    const rothBuys = { FSKAX:531, FTIHX:62, FXNAX:31 };
+    const taxableBuys = { FSKAX:723, FTIHX:85, FXNAX:42 };
+    const rothBuys = { FSKAX:0, FTIHX:0, FXNAX:0 };
     const moTaxable = Object.values(taxableBuys).reduce((sum, amt) => sum + amt, 0);
     const moRoth = Object.values(rothBuys).reduce((sum, amt) => sum + amt, 0);
     const fmtUsdCents = value => '$' + value.toLocaleString('en-US');
@@ -1511,8 +1511,8 @@ mCalcFire();
     <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
     <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">Wise pulls £650 from Chase UK on the 25th, sends USD to Chase US on the 26th, Fidelity ACH pulls on the 30th, and recurring buys execute on the 1st.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Both accounts</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical allocation. No monthly rebalancing.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth · $624/mo</div><div class="modal-rule-value">Whole-dollar automatic buys: $531 FSKAX, $62 FTIHX, $31 FXNAX. After the $3,000 gift contribution, 2026 shows $4,875 contributed and $2,625 left against the $7,500 limit. Advisor Roth stays separate.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Taxable · $224/mo</div><div class="modal-rule-value">Whole-dollar automatic buys: $191 FSKAX, $22 FTIHX, $11 FXNAX. 0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Brokerage Roth · $8,309 balance</div><div class="modal-rule-value">2026 is fully maxed at $7,500 contributed. Leave the invested balance in place; no further 2026 buys go here. Advisor Roth stays separate.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Taxable · $850/mo</div><div class="modal-rule-value">Until the 2027 Roth year opens, whole-dollar automatic buys are $723 FSKAX, $85 FTIHX, $42 FXNAX. 0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 · 1% ER · no new money. Review migration when convenient.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET: salary sacrifice now, tax-free growth, 25% lump sum + 75% income at drawdown. £1.9M at 67. Retirement covered.</div></div>
     <div class="modal-rule" style="border-bottom:none;"><div class="modal-rule-label">No ISAs</div><div class="modal-rule-value">Blocked while US citizen. Trigger = CLN only.</div></div>
