@@ -2208,8 +2208,8 @@ function liveEstimates() {
   const fmtUsdRounded = value => '$' + Math.round(value).toLocaleString('en-GB');
   document.getElementById('bal-fid').textContent = fmtUsdRounded(fidelityEst);
   document.getElementById('bal-roth').textContent = fmtUsdRounded(rothEst);
-  document.getElementById('inv-fid-value').textContent = fmtUsdRounded(fidelityEst);
-  document.getElementById('inv-roth-value').textContent = fmtUsdRounded(rothEst);
+  document.getElementById('inv-fid-value').textContent = fmtUsdRounded(window.PLAN.fidelityTaxableBalanceUsd);
+  document.getElementById('inv-roth-value').textContent = fmtUsdRounded(window.PLAN.rothBrokerageBalanceUsd);
   document.getElementById('pillar-fid-val').textContent = fmtUsdRounded(fidelityEst);
   document.getElementById('pillar-roth-val').textContent = fmtUsdRounded(rothEst);
   document.getElementById('bal-pension').textContent = fmt(pensionEst);

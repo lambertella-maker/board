@@ -1100,8 +1100,8 @@ function liveEstimates() {
   const invRoth    = document.getElementById('m-inv-roth');
   const invTotal   = document.getElementById('m-invest-total');
   if (invPension) invPension.textContent = fmt(pensionEst);
-  if (invFid) invFid.textContent = fmtUsdRounded(fidelityEst);
-  if (invRoth) invRoth.textContent = fmtUsdRounded(rothEst);
+  if (invFid) invFid.textContent = fmtUsdRounded(window.PLAN.fidelityTaxableBalanceUsd);
+  if (invRoth) invRoth.textContent = fmtUsdRounded(window.PLAN.rothBrokerageBalanceUsd);
   if (invTotal) {
     const totalInvest = pensionEst + Math.round(fidelityEst * FX_M) + Math.round(rothEst * FX_M);
     invTotal.textContent = '£' + Math.round(totalInvest / 1000) + 'k';
