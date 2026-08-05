@@ -20,7 +20,7 @@
 <script>
 window.PLAN = Object.freeze({
   salaryGrossGbp: 68000,
-  salaryNetMonthlyGbp: 3773,
+  salaryNetMonthlyGbp: 3736,
   salaryNetBonusMonthGbp: 5012,
   rentMonthlyGbp: 1125,
   previousRentMonthlyGbp: 1250,
@@ -32,7 +32,7 @@ window.PLAN = Object.freeze({
   ukSubscriptionsMonthlyGbp: 25,
   subscriptionsMonthlyGbp: 40,
   monthlySpendGbp: 2148,
-  monthlyLeftoverGbp: 1625,
+  monthlyLeftoverGbp: 1588,
   utilitiesExPhoneMonthlyGbp: 163,
   cspCreditHistoryMonths: 12,
   atomBalanceGbp: 12668,
@@ -355,9 +355,9 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="metrics-grid">
     <div class="metric">
       <div class="metric-label">Monthly Net</div>
-      <div class="metric-value" id="m-net-value" style="color:var(--green)">£3,773</div>
+      <div class="metric-value" id="m-net-value" style="color:var(--green)">£3,736</div>
       <div class="metric-sub" id="m-net-sub">£68,000 salary · payday 24th</div>
-      <div class="metric-badge badge-green" id="m-net-badge">£1,625/mo after budget</div>
+      <div class="metric-badge badge-green" id="m-net-badge">£3,736 salary · £1,588 free</div>
     </div>
     <div class="metric">
       <div class="metric-label">Net Worth</div>
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <div class="section-title">After payday</div>
   <div class="card" style="margin-top:0;">
-    <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross £5,667 → £3,773 net</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross £5,667 → £3,736 net</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension £340 · SIP £150 · GymFlex £97 · tax/NI £1,344</span></div>
     <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot £130/mo</span></div>
     <div class="goal-row-m"><span class="goal-row-k">25th</span><span style="color:var(--amber);font-weight:700;">Wise pulls £650 from Chase UK</span></div>
@@ -887,7 +887,7 @@ const US_SS_BASE_EQ_YEARS = 3;
 const US_SS_FULL_EQ_YEARS = 35;
 const PLAN = window.PLAN || Object.freeze({
   salaryGrossGbp: 68000,
-  salaryNetMonthlyGbp: 3773,
+  salaryNetMonthlyGbp: 3736,
   salaryNetBonusMonthGbp: 5012,
   moveMonthlyGbp: 130,
   moveTargetGbp: 1800,
@@ -1146,11 +1146,11 @@ function liveEstimates() {
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
   const budgetHeadroom = `£${window.PLAN.monthlyLeftoverGbp.toLocaleString('en-GB')}/mo after budget`;
-  if (isJul)           { nv.textContent='£3,773'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
-  else if (isApr)      { nv.textContent='£3,773'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
-  else if (isAprPre)   { nv.textContent='£3,773'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
+  if (isJul)           { nv.textContent='£3,736'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
+  else if (isApr)      { nv.textContent='£3,736'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
+  else if (isAprPre)   { nv.textContent='£3,736'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
   else if (isMarch)    { nv.textContent='£5,136'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
-  else                 { nv.textContent='£3,773';  ns.textContent='£68,000 salary · payday 24th';  nb.textContent=budgetHeadroom; }
+  else                 { nv.textContent='£3,736';  ns.textContent='£68,000 salary · payday 24th';  nb.textContent=budgetHeadroom; }
 
   // Net worth composition
   const mSegs = [

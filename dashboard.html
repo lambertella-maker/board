@@ -20,7 +20,7 @@
 <script>
 window.PLAN = Object.freeze({
   salaryGrossGbp: 68000,
-  salaryNetMonthlyGbp: 3773,
+  salaryNetMonthlyGbp: 3736,
   salaryNetBonusMonthGbp: 5012,
   rentMonthlyGbp: 1125,
   previousRentMonthlyGbp: 1250,
@@ -32,7 +32,7 @@ window.PLAN = Object.freeze({
   ukSubscriptionsMonthlyGbp: 25,
   subscriptionsMonthlyGbp: 40,
   monthlySpendGbp: 2148,
-  monthlyLeftoverGbp: 1625,
+  monthlyLeftoverGbp: 1588,
   utilitiesExPhoneMonthlyGbp: 163,
   cspCreditHistoryMonths: 12,
   atomBalanceGbp: 12668,
@@ -581,9 +581,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="metrics">
       <div class="metric-card">
         <div class="metric-label">Monthly Net</div>
-        <div class="metric-value" id="hero-net-value" style="color:var(--green)">£3,773</div>
+        <div class="metric-value" id="hero-net-value" style="color:var(--green)">£3,736</div>
         <div class="metric-sub" id="hero-net-sub">£68,000 salary · payday 24th</div>
-        <span class="metric-badge badge-green" id="hero-net-badge">£1,625/mo after budget</span>
+        <span class="metric-badge badge-green" id="hero-net-badge">£3,736 salary · £1,588 free</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Net Worth (total)</div>
@@ -639,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em;">After Payday</div>
           <div style="font-size:0.98rem; font-weight:700; margin-top:0.15rem;">What gets deducted and where the cash goes after the 24th</div>
         </div>
-        <div style="font-size:0.74rem; color:var(--soft);">Gross £5,667 → net £3,773 in Chase UK</div>
+        <div style="font-size:0.74rem; color:var(--soft);">Gross £5,667 → net £3,736 in Chase UK</div>
       </div>
       <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:0.7rem;">
         <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
           <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Post-payday flow</div>
-          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,773 lands in Chase UK. Move Pot starts <strong style="color:var(--text)">24 Jul</strong> at £130/mo.</div></div>
+          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,736 lands in Chase UK. Move Pot starts <strong style="color:var(--text)">24 Jul</strong> at £130/mo.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Wise pulls <strong style="color:var(--text)">£650</strong> from Chase UK.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">26th:</strong> Wise sends <strong style="color:var(--text)">$850</strong> to Chase US.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> <strong style="color:var(--text)">£56</strong> goes out for flatmate bills.</div></div>
@@ -1081,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="tax-row" style="padding-left:0.5rem;"><span class="tax-row-label" style="font-size:0.72rem; color:var(--muted)">20% × £37,440 = £7,488 · 40% × £13,539 = £5,416</span></div>
           <div class="tax-row"><span class="tax-row-label">National Insurance</span><span class="tax-row-value" style="color:var(--red)">−£3,230</span></div>
           <div class="tax-row" style="padding-left:0.5rem;"><span class="tax-row-label" style="font-size:0.72rem; color:var(--muted)">8% on £37,700 (PT→UEL) + 2% above UEL</span></div>
-          <div class="tax-row" style="border-top:2px solid var(--border); margin-top:0.3rem;"><span class="tax-row-label" style="font-weight:700; color:var(--text)">Net take-home</span><span class="tax-row-value" style="color:var(--green); font-size:1rem;">£45,276/yr · £3,773/mo</span></div>
+          <div class="tax-row" style="border-top:2px solid var(--border); margin-top:0.3rem;"><span class="tax-row-label" style="font-weight:700; color:var(--text)">Net take-home</span><span class="tax-row-value" style="color:var(--green); font-size:1rem;">£44,832/yr · £3,736/mo</span></div>
           <div class="tax-row"><span class="tax-row-label">IT saved (pension + SIP)</span><span class="tax-row-value" style="color:var(--green)">+£2,352/yr</span></div>
           <div class="tax-row"><span class="tax-row-label">NI saved (all sacrifice, mostly 2%)</span><span class="tax-row-value" style="color:var(--green)">+£141/yr</span></div>
           <div class="tax-row"><span class="tax-row-label" style="font-size:0.72rem;">2025/26 bonus (£6,371) paid Mar 2026</span><span class="tax-row-value" style="color:var(--soft); font-size:0.75rem;">UK 2025/26 + US 2026</span></div>
@@ -1238,8 +1238,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="fund-alloc" style="background:rgba(129,140,248,0.15); color:var(--indigo);">85%</div>
         </div>
         <div class="cost-badge">0.015% expense ratio</div>
-        <div class="fund-amount">$722/mo total <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">$191 taxable · $531 Roth</span></div>
-        <div class="fund-why">$191 taxable + $531 Roth is smart. This is the core fund, so it should keep getting most of the money: cheap, broad, simple.</div>
+        <div class="fund-amount">$723/mo taxable <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">85% FSKAX</span></div>
+        <div class="fund-why">$723/month now goes to taxable FSKAX as the 85% core allocation; the 2026 Roth limit is already full.</div>
       </div>
 
       <div class="fund-card" style="border-color:rgba(34,211,238,0.3);">
@@ -1251,8 +1251,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="fund-alloc" style="background:rgba(34,211,238,0.15); color:var(--cyan);">10%</div>
         </div>
         <div class="cost-badge">0.06% expense ratio</div>
-        <div class="fund-amount">$84/mo total <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">$22 taxable · $62 Roth</span></div>
-        <div class="fund-why">$22 taxable + $62 Roth is sensible. It gives you enough international exposure without dragging the portfolio away from its US core.</div>
+        <div class="fund-amount">$85/mo taxable <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">10% FTIHX</span></div>
+        <div class="fund-why">$85/month now goes to taxable FTIHX for the 10% international allocation.</div>
       </div>
 
       <div class="fund-card" style="border-color:rgba(251,191,36,0.3);">
@@ -1264,8 +1264,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="fund-alloc" style="background:rgba(251,191,36,0.15); color:var(--amber);">5%</div>
         </div>
         <div class="cost-badge">0.025% expense ratio</div>
-        <div class="fund-amount">$42/mo total <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">$11 taxable · $31 Roth</span></div>
-        <div class="fund-why">$11 taxable + $31 Roth is a fine small ballast. At 25 you do not need more than this, but a little bond exposure makes the mix steadier.</div>
+        <div class="fund-amount">$42/mo taxable <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">5% FXNAX</span></div>
+        <div class="fund-why">$42/month now goes to taxable FXNAX for the 5% bond ballast.</div>
       </div>
 
     </div>
@@ -1658,7 +1658,7 @@ const US_SS_BASE_EQ_YEARS = 3;
 const US_SS_FULL_EQ_YEARS = 35;
 const PLAN = window.PLAN || Object.freeze({
   salaryGrossGbp: 68000,
-  salaryNetMonthlyGbp: 3773,
+  salaryNetMonthlyGbp: 3736,
   salaryNetBonusMonthGbp: 5012,
   moveMonthlyGbp: 130,
   moveTargetGbp: 1800,
@@ -2042,7 +2042,7 @@ function liveEstimates() {
     const todayMs  = today.getTime();
 
     function monthSchedule(y, m) {
-      // Mar 2026 uses bonus-month net. From Apr 2026 onward: £3,773 net, with £130 move pot starting 24 Jul.
+      // Mar 2026 uses bonus-month net. From Apr 2026 onward: £3,736 net, with £130 move pot starting 24 Jul.
       const salary = (y === 2026 && m === 2) ? PLAN.salaryNetBonusMonthGbp : PLAN.salaryNetMonthlyGbp;
       const movePot = (y > 2026 || (y === 2026 && m >= 6)) ? -PLAN.moveMonthlyGbp : 0;
       const wisePull = (y === 2026 && m === 4) ? 0 : -PLAN.wiseMonthlyGbp; // May 2026 skipped for float recovery
@@ -2145,15 +2145,15 @@ function liveEstimates() {
   const budgetHeadroom = `£${window.PLAN.monthlyLeftoverGbp.toLocaleString('en-GB')}/mo after budget`;
   if (heroNetEl) {
     if (isJulOnwards) {
-      heroNetEl.textContent  = '£3,773';
+      heroNetEl.textContent  = '£3,736';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
       heroBadgeEl.textContent = budgetHeadroom;
     } else if (isAprilOnwards) {
-      heroNetEl.textContent  = '£3,773';
+      heroNetEl.textContent  = '£3,736';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
       heroBadgeEl.textContent = budgetHeadroom;
     } else if (isAprilPrePayday) {
-      heroNetEl.textContent  = '£3,773';
+      heroNetEl.textContent  = '£3,736';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
       heroBadgeEl.textContent = budgetHeadroom;
     } else if (isMarchPayday) {
@@ -2161,7 +2161,7 @@ function liveEstimates() {
       heroSubEl.textContent  = 'Bonus month · March 24 payday';
       heroBadgeEl.textContent = 'SALX + regular salary · big month';
     } else {
-      heroNetEl.textContent  = '£3,773';
+      heroNetEl.textContent  = '£3,736';
       heroSubEl.textContent  = '£68,000 salary · payday 24th';
       heroBadgeEl.textContent = budgetHeadroom;
     }
