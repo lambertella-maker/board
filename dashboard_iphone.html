@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div class="goal-subcopy">10-year long residence from 12 Sep 2019 · target 12 Sep 2029 · no more visa renewals</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
-    <div class="prog-labels"><span>12 Sep 2019</span><span id="m-ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>12 Sep 2029</span></div>
+    <div class="prog-labels"><span>12 Sep 2019</span><span id="m-ilr-lbl" style="color:var(--cyan)">3 years, 1 month to go</span><span>12 Sep 2029</span></div>
     <div class="goal-row-m"><span class="goal-row-k">ILR fee</span><span style="color:var(--amber); font-weight:600;">£2,885 now · rises 5%/yr · £3,340 by 2029</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Total all-in</span><span style="color:var(--indigo); font-weight:600;">£3,400 fee + £50 Life in the UK test · DIY application</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Funded by</span><span style="color:var(--green); font-weight:600;">£4k net bonus · covers fee + £50 Life in the UK test</span></div>
@@ -1281,12 +1281,18 @@ liveEstimates();
   document.getElementById('m-move-prog').style.width = Math.min(100, flatSaved / PLAN.moveTargetGbp * 100) + '%';
   document.getElementById('m-move-lbl').textContent  = `£${flatSaved.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
 
-  const ilrDeadline = new Date(2029, 8, 1);
+  const ilrDeadline = new Date(2029, 8, 12);
   const ilrStart    = new Date(2019, 8, 12); // UK arrival — full 10-year journey
   const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
   const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
+  const ilrYearsLeft = Math.floor(ilrMonthsLeft / 12);
+  const ilrRemainderMonths = ilrMonthsLeft % 12;
+  const ilrTimeParts = [
+    ilrYearsLeft ? `${ilrYearsLeft} year${ilrYearsLeft === 1 ? '' : 's'}` : '',
+    ilrRemainderMonths ? `${ilrRemainderMonths} month${ilrRemainderMonths === 1 ? '' : 's'}` : ''
+  ].filter(Boolean);
   document.getElementById('m-ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
-  document.getElementById('m-ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
+  document.getElementById('m-ilr-lbl').textContent  = ilrTimeParts.length ? `${ilrTimeParts.join(', ')} to go` : 'Eligible now';
 
   // Travel — UR points toward Polaris (independent of CSP credit-history bar)
   const travelPhase2Start = new Date(2026, 9, 1);

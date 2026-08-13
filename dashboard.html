@@ -952,7 +952,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="margin-bottom:1rem;">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from 12 Sep 2019 · target 12 Sep 2029 · no more visa renewals</div>
           <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
-          <div class="progress-labels"><span>12 Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">42 months to go</span><span>12 Sep 2029</span></div>
+          <div class="progress-labels"><span>12 Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">3 years, 1 month to go</span><span>12 Sep 2029</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises 5%/yr · £3,340 by 2029</span></div>
         <div class="goal-row"><span class="goal-row-label">Total all-in</span><span class="goal-row-value" style="color:var(--indigo)">£3,400 fee + £50 Life in the UK test · DIY application</span></div>
@@ -2260,12 +2260,18 @@ function updateGoals() {
   document.getElementById('move-saved-lbl').textContent = `£${flatSaved.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
 
   // Goal 3: ILR — time-to-prepare progress bar
-  const ilrDeadline = new Date(2029, 8, 1);
+  const ilrDeadline = new Date(2029, 8, 12);
   const ilrStart    = new Date(2019, 8, 12); // UK arrival — full 10-year journey
   const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
   const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
+  const ilrYearsLeft = Math.floor(ilrMonthsLeft / 12);
+  const ilrRemainderMonths = ilrMonthsLeft % 12;
+  const ilrTimeParts = [
+    ilrYearsLeft ? `${ilrYearsLeft} year${ilrYearsLeft === 1 ? '' : 's'}` : '',
+    ilrRemainderMonths ? `${ilrRemainderMonths} month${ilrRemainderMonths === 1 ? '' : 's'}` : ''
+  ].filter(Boolean);
   document.getElementById('ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
-  document.getElementById('ilr-lbl').textContent  = `${ilrMonthsLeft} months to go`;
+  document.getElementById('ilr-lbl').textContent  = ilrTimeParts.length ? `${ilrTimeParts.join(', ')} to go` : 'Eligible now';
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Jan 2027");
   setPill('move', "£130/mo keeps the £1,800 move buffer ahead", "Jun–Jul 2027");
