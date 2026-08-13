@@ -600,7 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="metric-card">
         <div class="metric-label">Savings Rate</div>
         <div class="metric-value" id="savings-rate-value" style="color:var(--amber)">—</div>
-        <div class="metric-sub" id="savings-rate-sub">vs gross · all pillars</div>
+        <div class="metric-sub" id="savings-rate-sub">vs gross · incl. matches + unspent cash</div>
         <span class="metric-badge badge-amber" id="savings-rate-badge">—</span>
       </div>
     </div>
@@ -2121,9 +2121,10 @@ function liveEstimates() {
   }
   const currentAgeForProjection = (today - new Date(2001, 1, 18)) / (365.25 * 24 * 3600 * 1000);
   const monthsTo67 = Math.max(0, Math.round((67 - currentAgeForProjection) * 12));
-  const monthlyWealthCreation = PLAN.pensionMonthlyGbp + PLAN.sipMonthlyGbp + PLAN.wiseMonthlyGbp + PLAN.moveMonthlyGbp;
+  const flexibleCashMonthly = Math.max(0, PLAN.monthlyLeftoverGbp - PLAN.wiseMonthlyGbp - PLAN.moveMonthlyGbp);
+  const monthlyWealthCreation = PLAN.pensionMonthlyGbp + PLAN.sipMonthlyGbp + PLAN.wiseMonthlyGbp + PLAN.moveMonthlyGbp + flexibleCashMonthly;
   const annualWealthCreation = monthlyWealthCreation * 12;
-  const savingsRatePct = Math.round((monthlyWealthCreation / (PLAN.salaryGrossGbp / 12)) * 100);
+  const savingsRatePct = ((annualWealthCreation / PLAN.salaryGrossGbp) * 100).toFixed(1);
   const pension67 = Math.round(fvMonthly(pensionEst, PLAN.pensionMonthlyGbp, monthsTo67, 0.055 / 12));
   const invest67 = Math.round((
     fvMonthly(fidelityEst, PLAN.fidelityTaxableMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
@@ -2181,7 +2182,7 @@ function liveEstimates() {
   if (savingsRateValue) savingsRateValue.textContent = savingsRatePct + '%';
   if (savingsRateBadge) savingsRateBadge.textContent = fmt(annualWealthCreation) + '/yr total saving';
   if (annualWealthValue) annualWealthValue.textContent = fmtCompactMoney(annualWealthCreation);
-  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl employer pension + SIP match';
+  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + flexibleCashMonthly.toLocaleString('en-GB') + '/mo unspent';
   if (projected67Value) projected67Value.textContent = fmtCompactMoney(total67);
   if (projected67Note) projected67Note.textContent = 'Live balances + PLAN monthly inputs';
   if (stateIncomeValue) stateIncomeValue.textContent = fmtCompactMoney(stateIncome67) + '+';
