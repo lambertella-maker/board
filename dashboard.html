@@ -2124,7 +2124,7 @@ function liveEstimates() {
   const flexibleCashMonthly = Math.max(0, PLAN.monthlyLeftoverGbp - PLAN.wiseMonthlyGbp - PLAN.moveMonthlyGbp);
   const monthlyWealthCreation = PLAN.pensionMonthlyGbp + PLAN.sipMonthlyGbp + PLAN.wiseMonthlyGbp + PLAN.moveMonthlyGbp + flexibleCashMonthly;
   const annualWealthCreation = monthlyWealthCreation * 12;
-  const savingsRatePct = ((annualWealthCreation / PLAN.salaryGrossGbp) * 100).toFixed(1);
+  const savingsRatePct = Math.round((annualWealthCreation / PLAN.salaryGrossGbp) * 100);
   const pension67 = Math.round(fvMonthly(pensionEst, PLAN.pensionMonthlyGbp, monthsTo67, 0.055 / 12));
   const invest67 = Math.round((
     fvMonthly(fidelityEst, PLAN.fidelityTaxableMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
