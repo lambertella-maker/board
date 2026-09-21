@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="f714472ffd8d15d8">
+<meta name="finance-build" content="159be65fe46a89c2">
 <script>
 (() => {
   try {
-    const build = 'f714472ffd8d15d8';
+    const build = '159be65fe46a89c2';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -1422,7 +1422,7 @@ function renderNWSegs(segs) {
   const nwTotalEl = document.getElementById('m-nw-total');
   const nwRowsEl  = document.getElementById('m-nw-rows');
   const rankEl    = document.getElementById('m-nw-rank');
-  if (nwTotalEl) nwTotalEl.innerHTML = `£${total.toLocaleString()} <span style="font-size:0.62em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
+  if (nwTotalEl) nwTotalEl.innerHTML = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span style="font-size:0.62em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
   if (nwRowsEl) nwRowsEl.innerHTML = segs.map((s, i) => {
     const pct = ((s.val / total) * 100).toFixed(1);
     const sep = i < segs.length - 1 ? `<div style="height:1px;background:var(--border);margin:0;"></div>` : '';

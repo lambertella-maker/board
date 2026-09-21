@@ -1133,13 +1133,13 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <div class="metric-card">
         <div class="metric-label">Annual investing</div>
-        <div class="metric-value" style="color:var(--indigo)">—</div>
+        <div class="metric-value" id="annual-investing-value" style="color:var(--indigo)">—</div>
         <div class="metric-sub">Fidelity + SIP combined</div>
         <span class="metric-badge badge-indigo">SIP {{sipEmployeeAnnualGbp:gbpk1}} + {{sipEmployerAnnualGbp:gbpk1}} match</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Projected at {{statePensionAge:number}} ({{fireReturn:percent}})</div>
-        <div class="metric-value" style="color:var(--cyan)">—</div>
+        <div class="metric-value" id="projected-67-card-value" style="color:var(--cyan)">—</div>
         <div class="metric-sub">Pension + US investing</div>
         <span class="metric-badge badge-green">Pension + taxable + Roth</span>
       </div>
@@ -1642,7 +1642,7 @@ function renderNwBreakdown(segs, label) {
   const usRank = totalUSD < window.PLAN.netWorthUsMedianUsd ? 'below median' : totalUSD < window.PLAN.netWorthUsAboveMedianUsd ? 'above median' : totalUSD < window.PLAN.netWorthUsTop30Usd ? 'top 30%' : 'top 15%';
   document.getElementById('nw-breakdown').innerHTML =
     `<div style="font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:2px;">` +
-    `£${total.toLocaleString()} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>` +
+    `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>` +
     `<div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.9rem;">(${fmtCompactK(liquid)} liquid) · FX £${gNwFx.toFixed(3)}/$ · ${label}</div>` +
     segs.map(s => {
       const pct = ((s.val / total) * 100).toFixed(1);
@@ -2087,6 +2087,8 @@ function liveEstimates() {
   const annualWealthValue = document.getElementById('annual-wealth-value');
   const annualWealthNote = document.getElementById('annual-wealth-note');
   const projected67Value = document.getElementById('projected-67-value');
+  const annualInvestingValue = document.getElementById('annual-investing-value');
+  const projected67CardValue = document.getElementById('projected-67-card-value');
   const projected67Note = document.getElementById('projected-67-note');
   const stateIncomeValue = document.getElementById('state-income-value');
   const pension67El = document.getElementById('pillar-pension-67');
@@ -2095,6 +2097,8 @@ function liveEstimates() {
   if (annualWealthValue) annualWealthValue.textContent = fmtCompactMoney(annualWealthCreation);
   if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + flexibleCashMonthly.toLocaleString('en-GB') + '/mo unspent';
   if (projected67Value) projected67Value.textContent = fmtCompactMoney(total67);
+  if (annualInvestingValue) annualInvestingValue.textContent = fmt(Math.round((PLAN.fidelityTaxableMonthlyUsd * liveFX * 12) + PLAN.sipAnnualGbp));
+  if (projected67CardValue) projected67CardValue.textContent = fmtCompactMoney(total67);
   if (projected67Note) projected67Note.textContent = 'Live balances + PLAN monthly inputs';
   if (stateIncomeValue) stateIncomeValue.textContent = fmtCompactMoney(stateIncome67) + '+';
   if (pension67El) pension67El.textContent = fmtCompactMoney(pension67);
