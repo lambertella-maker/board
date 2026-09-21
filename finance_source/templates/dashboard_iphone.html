@@ -893,7 +893,7 @@ function liveEstimates() {
   const atomEst      = Math.round(window.PLAN.atomBalanceGbp      * Math.pow((1 + window.PLAN.atomAer), daysSav / 365));
   const efSavingsEst = Math.round(window.PLAN.monzoEfBalanceGbp   * Math.pow((1 + window.PLAN.monzoEfAer), daysSav / 365)); // Monzo EF · {{monzoEfAer:percent}} AER
   const monzoEst = window.Finance.moveBalance(today);
-  document.querySelectorAll("[data-live-move]").forEach(el => { el.textContent = "£" + monzoEst.toLocaleString("en-GB", {maximumFractionDigits:2}); }); // move fund only
+  document.querySelectorAll("[data-live-move]").forEach(el => { el.textContent = "£" + window.Finance.money(monzoEst); }); // move fund only
 
   // To reanchor: change ANCHOR_DATE + ANCHOR_BAL only. Everything else self-updates.
   // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus. Amex (~4th) is AFTER anchor.
@@ -954,7 +954,9 @@ function liveEstimates() {
   const pension67 = Math.round(fvMonthly(pensionEst, PLAN.pensionMonthlyGbp, monthsTo67, window.PLAN.pensionReturn / 12));
   const invest67 = Math.round((
     fvMonthly(fidelityEst, PLAN.fidelityTaxableMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
-    fvMonthly(rothEst, PLAN.rothBrokerageMonthlyUsd, monthsTo67, PLAN.investReturn / 12)
+    fvMonthly(rothEst, PLAN.rothBrokerageMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
+    fvMonthly(PLAN.advisorRothBalanceUsd, PLAN.advisorRothMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
+    fvMonthly(PLAN.advisorBalanceUsd, PLAN.advisorMonthlyUsd, monthsTo67, PLAN.investReturn / 12)
   ) * FX_M);
   const { completed: sipCompleted, value: sipEst } = window.Finance.sip(today);
   document.querySelectorAll("[data-live-sip]").forEach(el => { el.textContent = "£" + sipEst.toLocaleString("en-GB"); });
@@ -963,8 +965,8 @@ function liveEstimates() {
   const total67 = Math.round(pension67 + invest67 + sip67 + ukSavings67 + chaseUSEst * FX_M);
   const stateIncome67 = Math.round(window.PLAN.ukStateAnnualGbp + US_SS_FULL_USD * FX_M);
 
-  const fmt = (v, p='£') => p + v.toLocaleString('en-GB');
-  const fmtCompactMoney = v => v >= 1000000 ? '£' + (v / 1000000).toFixed(1).replace('.0', '') + 'M' : '£' + Math.round(v / 1000).toLocaleString('en-GB') + 'k';
+  const fmt = (v, p='£') => p + window.Finance.money(v);
+  const fmtCompactMoney = v => v >= 1000000 ? '£' + (v / 1000000).toFixed(2).replace('.00', '') + 'M' : '£' + Math.round(v / 1000).toLocaleString('en-GB') + 'k';
   const savingsRateValue = document.getElementById('m-savings-rate-value');
   const savingsRateBadge = document.getElementById('m-savings-rate-badge');
   const annualWealthValue = document.getElementById('m-annual-wealth-value');
@@ -975,7 +977,7 @@ function liveEstimates() {
   if (savingsRateValue) savingsRateValue.textContent = savingsRatePct + '%';
   if (savingsRateBadge) savingsRateBadge.textContent = fmt(annualWealthCreation) + '/yr';
   if (annualWealthValue) annualWealthValue.textContent = fmtCompactMoney(annualWealthCreation);
-  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + flexibleCashMonthly.toLocaleString('en-GB') + '/mo unspent';
+  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + window.Finance.money(flexibleCashMonthly) + '/mo unspent';
   if (projected67Value) projected67Value.textContent = fmtCompactMoney(total67);
   if (stateIncomeValue) stateIncomeValue.textContent = fmtCompactMoney(stateIncome67) + '+';
   if (pension67El) pension67El.textContent = fmtCompactMoney(pension67);
@@ -1251,7 +1253,7 @@ function mCalcFire() {
 
   mSetFireRangeFill(document.getElementById('m-sp'));
 
-  document.getElementById('m-acc-lbl').textContent  = `£${PLAN.fireAccessibleMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('m-acc-lbl').textContent  = `£${window.Finance.money(PLAN.fireAccessibleMonthlyGbp)}/mo`;
   document.getElementById('m-pen-lbl').textContent  = `£${PLAN.firePensionMonthlyGbp.toLocaleString('en-GB')}/mo`;
   document.getElementById('m-roth-lbl').textContent = `£${PLAN.fireRothMonthlyGbp.toLocaleString('en-GB')}/mo`;
   document.getElementById('m-sp-lbl').textContent  = '£'+sp.toLocaleString('en-GB');

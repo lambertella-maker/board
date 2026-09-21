@@ -77,6 +77,8 @@
   "advisorExpenseRatio": 0.01,
   "advisorBalanceUsd": 3948,
   "advisorMonthlyUsd": 0,
+  "advisorRothBalanceUsd": 0,
+  "advisorRothMonthlyUsd": 0,
   "usGainsRate": 0.15,
   "dividendDrag": 0.003,
   "usStateFullAnnualUsd": 37000,

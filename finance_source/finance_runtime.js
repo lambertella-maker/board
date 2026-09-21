@@ -1,5 +1,9 @@
 // Shared date-sensitive calculations. PLAN is embedded by build_finance.py.
 window.Finance = Object.freeze({
+  money(value) {
+    const places = Number.isInteger(value) ? 0 : 2;
+    return Number(value).toLocaleString('en-GB', { minimumFractionDigits: places, maximumFractionDigits: 2 });
+  },
   sip(asOf) {
     const p = window.PLAN;
     const start = new Date(...p.sipStartDate);

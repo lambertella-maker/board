@@ -20,6 +20,9 @@ class VisibleNumbers(HTMLParser):
 class FinanceTests(unittest.TestCase):
     def test_generated_outputs(self):
         self.assertEqual(check_generated(), [])
+        naked_half = re.compile(r'(?:£|\$|€)[0-9,]+\.5(?![0-9])')
+        for name, html in render_all().items():
+            self.assertIsNone(naked_half.search(html), name)
     def test_shared_model_and_no_money_literals(self):
         for name, html in render_all().items():
             models = re.findall(r'window.PLAN = Object.freeze\((\{.*?\})\);', html, re.S)

@@ -1141,7 +1141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="metric-label">Projected at {{statePensionAge:number}} ({{fireReturn:percent}})</div>
         <div class="metric-value" id="projected-67-card-value" style="color:var(--cyan)">—</div>
         <div class="metric-sub">Pension + US investing</div>
-        <span class="metric-badge badge-green">Pension + taxable + Roth</span>
+        <span class="metric-badge badge-green">Pension + taxable + both Roths + shares + cash</span>
       </div>
     </div>
 
@@ -1780,9 +1780,9 @@ function updateFire() {
 
   setFireRangeFill(document.getElementById('exp-slider'));
 
-  document.getElementById('acc-label').textContent = `£${PLAN.fireAccessibleMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('acc-label').textContent = `£${window.Finance.money(PLAN.fireAccessibleMonthlyGbp)}/mo`;
   document.getElementById('pen-label').textContent = `£${PLAN.firePensionMonthlyGbp.toLocaleString('en-GB')}/mo`;
-  document.getElementById('roth-label').textContent = `£${PLAN.fireRothMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('roth-label').textContent = `£${window.Finance.money(PLAN.fireRothMonthlyGbp)}/mo`;
   document.getElementById('exp-label').textContent = '£' + sp.toLocaleString();
   document.getElementById('fire-slider-big').textContent = '£' + Math.round(sp / 1000) + 'k';
 
@@ -1974,7 +1974,7 @@ function liveEstimates() {
   const atomEst      = Math.round(window.PLAN.atomBalanceGbp      * Math.pow((1 + window.PLAN.atomAer), daysSav / 365));
   const efSavingsEst = Math.round(window.PLAN.monzoEfBalanceGbp   * Math.pow((1 + window.PLAN.monzoEfAer), daysSav / 365)); // Monzo EF · {{monzoEfAer:percent}} AER
   const monzoEst = window.Finance.moveBalance(today);
-  document.querySelectorAll("[data-live-move]").forEach(el => { el.textContent = "£" + monzoEst.toLocaleString("en-GB", {maximumFractionDigits:2}); }); // move fund only
+  document.querySelectorAll("[data-live-move]").forEach(el => { el.textContent = "£" + window.Finance.money(monzoEst); }); // move fund only
 
   // CHASE UK — deterministic schedule from anchor date. To reanchor: change ANCHOR_DATE + ANCHOR_BAL only.
   // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus. Amex (4th) is AFTER anchor.
@@ -2039,7 +2039,9 @@ function liveEstimates() {
   const pension67 = Math.round(fvMonthly(pensionEst, PLAN.pensionMonthlyGbp, monthsTo67, window.PLAN.pensionReturn / 12));
   const invest67 = Math.round((
     fvMonthly(fidelityEst, PLAN.fidelityTaxableMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
-    fvMonthly(rothEst, PLAN.rothBrokerageMonthlyUsd, monthsTo67, PLAN.investReturn / 12)
+    fvMonthly(rothEst, PLAN.rothBrokerageMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
+    fvMonthly(PLAN.advisorRothBalanceUsd, PLAN.advisorRothMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
+    fvMonthly(PLAN.advisorBalanceUsd, PLAN.advisorMonthlyUsd, monthsTo67, PLAN.investReturn / 12)
   ) * liveFX);
   const sip67 = sipEst + PLAN.sipMonthlyGbp * Math.min(monthsTo67, Math.max(0, PLAN.sipHoldMonths - sipCompleted));
   const ukSavings67 = atomEst + efSavingsEst + monzoEst + chaseEst + PLAN.projectedUkSavingsMonthlyGbp * monthsTo67;
@@ -2080,8 +2082,8 @@ function liveEstimates() {
   }
 
   // Update DOM
-  const fmt = (v, prefix='£') => prefix + v.toLocaleString('en-GB');
-  const fmtCompactMoney = v => v >= 1000000 ? '£' + (v / 1000000).toFixed(1).replace('.0', '') + 'M' : '£' + Math.round(v / 1000).toLocaleString('en-GB') + 'k';
+  const fmt = (v, prefix='£') => prefix + window.Finance.money(v);
+  const fmtCompactMoney = v => v >= 1000000 ? '£' + (v / 1000000).toFixed(2).replace('.00', '') + 'M' : '£' + Math.round(v / 1000).toLocaleString('en-GB') + 'k';
   const savingsRateValue = document.getElementById('savings-rate-value');
   const savingsRateBadge = document.getElementById('savings-rate-badge');
   const annualWealthValue = document.getElementById('annual-wealth-value');
@@ -2095,11 +2097,11 @@ function liveEstimates() {
   if (savingsRateValue) savingsRateValue.textContent = savingsRatePct + '%';
   if (savingsRateBadge) savingsRateBadge.textContent = fmt(annualWealthCreation) + '/yr total saving';
   if (annualWealthValue) annualWealthValue.textContent = fmtCompactMoney(annualWealthCreation);
-  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + flexibleCashMonthly.toLocaleString('en-GB') + '/mo unspent';
+  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + window.Finance.money(flexibleCashMonthly) + '/mo unspent';
   if (projected67Value) projected67Value.textContent = fmtCompactMoney(total67);
   if (annualInvestingValue) annualInvestingValue.textContent = fmt(Math.round((PLAN.fidelityTaxableMonthlyUsd * liveFX * 12) + PLAN.sipAnnualGbp));
   if (projected67CardValue) projected67CardValue.textContent = fmtCompactMoney(total67);
-  if (projected67Note) projected67Note.textContent = 'Live balances + PLAN monthly inputs';
+  if (projected67Note) projected67Note.textContent = 'All recorded assets: pension + taxable + both Roths + shares + cash';
   if (stateIncomeValue) stateIncomeValue.textContent = fmtCompactMoney(stateIncome67) + '+';
   if (pension67El) pension67El.textContent = fmtCompactMoney(pension67);
   document.getElementById('bal-atom').textContent       = fmt(atomEst);

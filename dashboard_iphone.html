@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="159be65fe46a89c2">
+<meta name="finance-build" content="8106576d9cfab992">
 <script>
 (() => {
   try {
-    const build = '159be65fe46a89c2';
+    const build = '8106576d9cfab992';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -24,6 +24,8 @@ window.PLAN = Object.freeze({
   "advisorExpenseRatio": 0.01,
   "advisorFeeMultiple": 66.66666666666667,
   "advisorMonthlyUsd": 0,
+  "advisorRothBalanceUsd": 0,
+  "advisorRothMonthlyUsd": 0,
   "amazonPrimeMonthlyGbp": 0,
   "amazonPrimeRefundGbp": 95,
   "amexAutopayEstimateGbp": 1300,
@@ -312,6 +314,10 @@ window.PLAN = Object.freeze({
 });
 // Shared date-sensitive calculations. PLAN is embedded by build_finance.py.
 window.Finance = Object.freeze({
+  money(value) {
+    const places = Number.isInteger(value) ? 0 : 2;
+    return Number(value).toLocaleString('en-GB', { minimumFractionDigits: places, maximumFractionDigits: 2 });
+  },
   sip(asOf) {
     const p = window.PLAN;
     const start = new Date(...p.sipStartDate);
@@ -655,12 +661,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <div class="section-title">After payday</div>
   <div class="card" style="margin-top:0;">
-    <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross £5,667 → £3,736 net</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension £340 · SIP £150 · GymFlex £97 · tax/NI £1,344</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross £5,666.67 → £3,736 net</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension £340 · SIP £150 · GymFlex £97.40 · tax/NI £1,344</span></div>
     <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot £130/mo</span></div>
     <div class="goal-row-m"><span class="goal-row-k">25th</span><span style="color:var(--amber);font-weight:700;">Wise pulls £650 from Chase UK</span></div>
     <div class="goal-row-m"><span class="goal-row-k">26th</span><span style="color:var(--amber);font-weight:700;">Wise sends $850 to Chase US</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1k–£1.4k · ChatGPT $20 · phone <span data-plan-gbp="phoneMonthlyGbp">£30</span> incl. active Prime at £0 · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.10k–£1.40k · ChatGPT $20 · phone <span data-plan-gbp="phoneMonthlyGbp">£30</span> incl. active Prime at £0 · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
     <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Subscriptions £40/mo: Spotify £12.99 · Apple TV £9.99 · Google One ~£2 · ChatGPT $20 (~£15) · Prime £0 via O2.</span><span>Funds auto-buy 1st</span></div>
   </div>
 
@@ -865,7 +871,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="goal-subcopy">10-year long residence from 12 Sep 2019 · no more visa renewals</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
     <div class="prog-labels"><span>12 Sep 2019</span><span id="m-ilr-lbl" style="color:var(--cyan)">3 years, 1 month to go</span><span>12 Sep 2029</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">ILR fee</span><span style="color:var(--amber); font-weight:600;">£2,885 now · rises 5%/yr · £3,340 by 2029</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">ILR fee</span><span style="color:var(--amber); font-weight:600;">£2,885 now · rises 5%/yr · £3,339.75 by 2029</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Total all-in</span><span style="color:var(--indigo); font-weight:600;">£3,400 fee + £50 Life in the UK test · DIY application</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Funded by</span><span style="color:var(--green); font-weight:600;">£4k net bonus</span></div>
     <div class="goal-row-m"><span class="goal-row-k">What it unlocks</span><span style="font-weight:600;">Live and work in UK permanently · no immigration stress</span></div>
@@ -992,7 +998,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="card">
     <div class="fire-kicker-m">Inputs</div>
     <div class="fire-backbone-m">
-      <div class="fire-pill-m">Accessible <strong id="m-acc-lbl">£655/mo</strong></div>
+      <div class="fire-pill-m">Accessible <strong id="m-acc-lbl">£654.50/mo</strong></div>
       <div class="fire-pill-m">UK pension <strong id="m-pen-lbl">£1,020/mo</strong></div>
       <div class="fire-pill-m">US Roth <strong id="m-roth-lbl">£0/mo</strong></div>
     </div>
@@ -1016,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="fire-slider-big-m" id="m-fire-slider-big">£45k</div>
       </div>
       <input type="range" id="m-sp" min="15000" max="80000" step="1000" value="45000" oninput="mCalcFire()">
-      <div class="fire-scale-m"><span>£15k</span><span>£47.5k</span><span>£80k</span></div>
+      <div class="fire-scale-m"><span>£15k</span><span>£47.50k</span><span>£80k</span></div>
     </div>
     <div class="fire-toggle-m" style="margin-top:10px;">
       <label class="toggle"><input type="checkbox" id="m-bruceToggle" onchange="mCalcFire()"><span class="toggle-slider"></span></label>
@@ -1202,7 +1208,7 @@ function liveEstimates() {
   const atomEst      = Math.round(window.PLAN.atomBalanceGbp      * Math.pow((1 + window.PLAN.atomAer), daysSav / 365));
   const efSavingsEst = Math.round(window.PLAN.monzoEfBalanceGbp   * Math.pow((1 + window.PLAN.monzoEfAer), daysSav / 365)); // Monzo EF · 3.15% AER
   const monzoEst = window.Finance.moveBalance(today);
-  document.querySelectorAll("[data-live-move]").forEach(el => { el.textContent = "£" + monzoEst.toLocaleString("en-GB", {maximumFractionDigits:2}); }); // move fund only
+  document.querySelectorAll("[data-live-move]").forEach(el => { el.textContent = "£" + window.Finance.money(monzoEst); }); // move fund only
 
   // To reanchor: change ANCHOR_DATE + ANCHOR_BAL only. Everything else self-updates.
   // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus. Amex (~4th) is AFTER anchor.
@@ -1263,7 +1269,9 @@ function liveEstimates() {
   const pension67 = Math.round(fvMonthly(pensionEst, PLAN.pensionMonthlyGbp, monthsTo67, window.PLAN.pensionReturn / 12));
   const invest67 = Math.round((
     fvMonthly(fidelityEst, PLAN.fidelityTaxableMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
-    fvMonthly(rothEst, PLAN.rothBrokerageMonthlyUsd, monthsTo67, PLAN.investReturn / 12)
+    fvMonthly(rothEst, PLAN.rothBrokerageMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
+    fvMonthly(PLAN.advisorRothBalanceUsd, PLAN.advisorRothMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
+    fvMonthly(PLAN.advisorBalanceUsd, PLAN.advisorMonthlyUsd, monthsTo67, PLAN.investReturn / 12)
   ) * FX_M);
   const { completed: sipCompleted, value: sipEst } = window.Finance.sip(today);
   document.querySelectorAll("[data-live-sip]").forEach(el => { el.textContent = "£" + sipEst.toLocaleString("en-GB"); });
@@ -1272,8 +1280,8 @@ function liveEstimates() {
   const total67 = Math.round(pension67 + invest67 + sip67 + ukSavings67 + chaseUSEst * FX_M);
   const stateIncome67 = Math.round(window.PLAN.ukStateAnnualGbp + US_SS_FULL_USD * FX_M);
 
-  const fmt = (v, p='£') => p + v.toLocaleString('en-GB');
-  const fmtCompactMoney = v => v >= 1000000 ? '£' + (v / 1000000).toFixed(1).replace('.0', '') + 'M' : '£' + Math.round(v / 1000).toLocaleString('en-GB') + 'k';
+  const fmt = (v, p='£') => p + window.Finance.money(v);
+  const fmtCompactMoney = v => v >= 1000000 ? '£' + (v / 1000000).toFixed(2).replace('.00', '') + 'M' : '£' + Math.round(v / 1000).toLocaleString('en-GB') + 'k';
   const savingsRateValue = document.getElementById('m-savings-rate-value');
   const savingsRateBadge = document.getElementById('m-savings-rate-badge');
   const annualWealthValue = document.getElementById('m-annual-wealth-value');
@@ -1284,7 +1292,7 @@ function liveEstimates() {
   if (savingsRateValue) savingsRateValue.textContent = savingsRatePct + '%';
   if (savingsRateBadge) savingsRateBadge.textContent = fmt(annualWealthCreation) + '/yr';
   if (annualWealthValue) annualWealthValue.textContent = fmtCompactMoney(annualWealthCreation);
-  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + flexibleCashMonthly.toLocaleString('en-GB') + '/mo unspent';
+  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + window.Finance.money(flexibleCashMonthly) + '/mo unspent';
   if (projected67Value) projected67Value.textContent = fmtCompactMoney(total67);
   if (stateIncomeValue) stateIncomeValue.textContent = fmtCompactMoney(stateIncome67) + '+';
   if (pension67El) pension67El.textContent = fmtCompactMoney(pension67);
@@ -1560,7 +1568,7 @@ function mCalcFire() {
 
   mSetFireRangeFill(document.getElementById('m-sp'));
 
-  document.getElementById('m-acc-lbl').textContent  = `£${PLAN.fireAccessibleMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('m-acc-lbl').textContent  = `£${window.Finance.money(PLAN.fireAccessibleMonthlyGbp)}/mo`;
   document.getElementById('m-pen-lbl').textContent  = `£${PLAN.firePensionMonthlyGbp.toLocaleString('en-GB')}/mo`;
   document.getElementById('m-roth-lbl').textContent = `£${PLAN.fireRothMonthlyGbp.toLocaleString('en-GB')}/mo`;
   document.getElementById('m-sp-lbl').textContent  = '£'+sp.toLocaleString('en-GB');

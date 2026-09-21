@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="159be65fe46a89c2">
+<meta name="finance-build" content="8106576d9cfab992">
 <script>
 (() => {
   try {
-    const build = '159be65fe46a89c2';
+    const build = '8106576d9cfab992';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -24,6 +24,8 @@ window.PLAN = Object.freeze({
   "advisorExpenseRatio": 0.01,
   "advisorFeeMultiple": 66.66666666666667,
   "advisorMonthlyUsd": 0,
+  "advisorRothBalanceUsd": 0,
+  "advisorRothMonthlyUsd": 0,
   "amazonPrimeMonthlyGbp": 0,
   "amazonPrimeRefundGbp": 95,
   "amexAutopayEstimateGbp": 1300,
@@ -312,6 +314,10 @@ window.PLAN = Object.freeze({
 });
 // Shared date-sensitive calculations. PLAN is embedded by build_finance.py.
 window.Finance = Object.freeze({
+  money(value) {
+    const places = Number.isInteger(value) ? 0 : 2;
+    return Number(value).toLocaleString('en-GB', { minimumFractionDigits: places, maximumFractionDigits: 2 });
+  },
   sip(asOf) {
     const p = window.PLAN;
     const start = new Date(...p.sipStartDate);
@@ -891,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">Chase UK</div><div class="account-balance" id="bal-chase" style="color:var(--indigo)">£2,146</div><div class="account-rate">Current account · avg float</div><div class="account-note">Min £1,000 buffer · refills 24th</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Fidelity Taxable</div><div class="account-balance" id="bal-fid" style="color:var(--green)">$8,858</div><div class="account-rate">+$850/mo → FSKAX/FTIHX/FXNAX</div><div class="account-note">Current anchor · 5 Aug 2026</div></div>
       <div class="account-card"><div class="account-flag">🇺🇸</div><div class="account-name">Roth IRA (Brokerage)</div><div class="account-balance" id="bal-roth" style="color:var(--amber)">$8,309</div><div class="account-rate">2026 Roth maxed · $7,500 contributed</div><div class="account-note">No further 2026 Roth buys · Advisor Roth separate</div></div>
-      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">£23,761</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">Reanchored 6 May 2026 · £1,020/mo (G15)</div></div>
+      <div class="account-card"><div class="account-flag">🇬🇧</div><div class="account-name">AbbVie Pension</div><div class="account-balance" id="bal-pension" style="color:var(--pink)">£23,761.08</div><div class="account-rate">18% total (6% + 12% match) · 5.5% CAGR</div><div class="account-note">Reanchored 6 May 2026 · £1,020/mo (G15)</div></div>
     </div>
   </section>
 
@@ -913,14 +919,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <div style="font-size:0.62rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.07em;">After Payday</div>
           <div style="font-size:0.98rem; font-weight:700; margin-top:0.15rem;">What gets deducted and where the cash goes after the 24th</div>
         </div>
-        <div style="font-size:0.74rem; color:var(--soft);">Gross £5,667 → net £3,736 in Chase UK</div>
+        <div style="font-size:0.74rem; color:var(--soft);">Gross £5,666.67 → net £3,736 in Chase UK</div>
       </div>
       <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:0.7rem;">
         <div style="background:rgba(129,140,248,0.05); border:1px solid rgba(129,140,248,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
           <div style="font-size:0.6rem; color:var(--indigo); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Payroll deductions</div>
           <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">Pension salary sacrifice</span><span class="tax-row-value" style="color:var(--green)">−£340</span></div>
           <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">AbbVie SIP shares</span><span class="tax-row-value" style="color:var(--green)">−£150</span></div>
-          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">GymFlex</span><span class="tax-row-value" style="color:var(--amber)">−£97</span></div>
+          <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">GymFlex</span><span class="tax-row-value" style="color:var(--amber)">−£97.40</span></div>
           <div class="tax-row" style="padding:0.45rem 0;"><span class="tax-row-label">PAYE + NI</span><span class="tax-row-value" style="color:var(--red)">−£1,344</span></div>
           <div style="font-size:0.65rem; color:var(--muted); line-height:1.35; margin-top:0.45rem;">PMI and dental stay folded into PAYE rather than appearing as separate bank deductions.</div>
         </div>
@@ -957,7 +963,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="pillar-icon">🏦</div>
         <div class="pillar-name">Pillar 1 · UK Workplace</div>
         <div class="pillar-title">AbbVie Pension</div>
-        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-pension-val" style="color:var(--indigo)">£23,761</span></div>
+        <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-pension-val" style="color:var(--indigo)">£23,761.08</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Annual input</span><span class="pillar-stat-value">£12,240 (18% total)</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Your contribution</span><span class="pillar-stat-value">6% · AbbVie matches 12%</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Projected at 67</span><span class="pillar-stat-value" id="pillar-pension-67" style="color:var(--green)">—</span></div>
@@ -1229,7 +1235,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
           <div class="progress-labels"><span>12 Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">3 years, 1 month to go</span><span>12 Sep 2029</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises 5%/yr · £3,340 by 2029</span></div>
+        <div class="goal-row"><span class="goal-row-label">ILR fee</span><span class="goal-row-value" style="color:var(--amber)">£2,885 now · rises 5%/yr · £3,339.75 by 2029</span></div>
         <div class="goal-row"><span class="goal-row-label">Total all-in</span><span class="goal-row-value" style="color:var(--indigo)">£3,400 fee + £50 Life in the UK test · DIY application</span></div>
         <div class="goal-row"><span class="goal-row-label">Funded by</span><span class="goal-row-value" style="color:var(--green)">£4k net bonus</span></div>
         <div class="goal-row"><span class="goal-row-label">What it unlocks</span><span class="goal-row-value">Live and work in UK permanently · no immigration stress</span></div>
@@ -1407,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>Never Form 2555 (FEIE)</strong>Not part of this setup. FTC stays locked unless the whole tax plan changes.</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>No ISAs — ever (while US citizen)</strong>S&amp;S ISAs = PFIC. Only trigger: renouncing US citizenship (CLN). ILR and British citizenship do NOT change this.</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">📋</div><div class="tax-rule-text"><strong>FBAR every year</strong>File FinCEN 114 by Oct 15. Free via <a href="https://bsaefiling.fincen.treas.gov" target="_blank" style="color:var(--cyan); text-decoration:none;">BSA E-Filing →</a> All UK accounts over $10k aggregate.</div></div>
-        <div class="tax-rule"><div class="tax-rule-icon">💰</div><div class="tax-rule-text"><strong>Sacrifice rules — know your benefit</strong>Pension + SIP save IT + NI (£133/yr combined NI saving, all at 2% above UEL). GymFlex (from Apr 2026) saves NI only — £97.40/mo gross − £1.95 NI saving (2% above UEL) = <span style="color:var(--text);font-weight:700;">£95/mo net cost</span>. Not income-tax deductible (HMRC OpRA).</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">💰</div><div class="tax-rule-text"><strong>Sacrifice rules — know your benefit</strong>Pension + SIP save IT + NI (£133/yr combined NI saving, all at 2% above UEL). GymFlex (from Apr 2026) saves NI only — £97.40/mo gross − £1.95 NI saving (2% above UEL) = <span style="color:var(--text);font-weight:700;">£95.45/mo net cost</span>. Not income-tax deductible (HMRC OpRA).</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">🤝</div><div class="tax-rule-text"><strong>Totalization Agreement</strong>UK NI + US SS credits can combine for Social Security eligibility. Separate question from FTC vs FEIE.</div></div>
       </div>
     </div>
@@ -1431,7 +1437,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="metric-card">
         <div class="metric-label">Roth IRA (Brokerage)</div>
         <div class="metric-value" id="inv-roth-value" style="color:var(--amber)">$8,309</div>
-        <div class="metric-sub">$8.3k balance · 2026 maxed</div>
+        <div class="metric-sub">$8.31k balance · 2026 maxed</div>
         <span class="metric-badge badge-amber">Brokerage Roth only</span>
       </div>
       <div class="metric-card">
@@ -1444,13 +1450,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="metric-label">Annual investing</div>
         <div class="metric-value" id="annual-investing-value" style="color:var(--indigo)">—</div>
         <div class="metric-sub">Fidelity + SIP combined</div>
-        <span class="metric-badge badge-indigo">SIP £1.8k + £1.8k match</span>
+        <span class="metric-badge badge-indigo">SIP £1.80k + £1.80k match</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Projected at 67 (7%)</div>
         <div class="metric-value" id="projected-67-card-value" style="color:var(--cyan)">—</div>
         <div class="metric-sub">Pension + US investing</div>
-        <span class="metric-badge badge-green">Pension + taxable + Roth</span>
+        <span class="metric-badge badge-green">Pension + taxable + both Roths + shares + cash</span>
       </div>
     </div>
 
@@ -1625,7 +1631,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="fire-section-label">Monthly saving</div>
         <div class="fire-backbone">
-          <div class="fire-pill">Accessible now<strong id="acc-label">£655/mo</strong></div>
+          <div class="fire-pill">Accessible now<strong id="acc-label">£654.50/mo</strong></div>
           <div class="fire-pill">UK pension<strong id="pen-label">£1,020/mo</strong></div>
           <div class="fire-pill">US Roth<strong id="roth-label">£0/mo</strong></div>
         </div>
@@ -1658,7 +1664,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="fire-slider-value" id="fire-slider-big">£45k</div>
             </div>
             <input type="range" id="exp-slider" min="15000" max="80000" step="500" value="45000" oninput="updateFire()">
-            <div class="fire-scale"><span>£15k</span><span>£47.5k</span><span>£80k</span></div>
+            <div class="fire-scale"><span>£15k</span><span>£47.50k</span><span>£80k</span></div>
           </div>
         </div>
 
@@ -1682,7 +1688,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <label class="toggle"><input type="checkbox" id="usStateToggle" checked onchange="syncFireStateScenario(); updateFire()"><span class="toggle-slider"></span></label>
               </div>
-              <div class="fire-source-amt" id="fire-us-source-amt">~£28.5k/yr</div>
+              <div class="fire-source-amt" id="fire-us-source-amt">~£28.49k/yr</div>
             </div>
           </div>
         <div class="toggle-row fire-toggle-row">
@@ -2089,9 +2095,9 @@ function updateFire() {
 
   setFireRangeFill(document.getElementById('exp-slider'));
 
-  document.getElementById('acc-label').textContent = `£${PLAN.fireAccessibleMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('acc-label').textContent = `£${window.Finance.money(PLAN.fireAccessibleMonthlyGbp)}/mo`;
   document.getElementById('pen-label').textContent = `£${PLAN.firePensionMonthlyGbp.toLocaleString('en-GB')}/mo`;
-  document.getElementById('roth-label').textContent = `£${PLAN.fireRothMonthlyGbp.toLocaleString('en-GB')}/mo`;
+  document.getElementById('roth-label').textContent = `£${window.Finance.money(PLAN.fireRothMonthlyGbp)}/mo`;
   document.getElementById('exp-label').textContent = '£' + sp.toLocaleString();
   document.getElementById('fire-slider-big').textContent = '£' + Math.round(sp / 1000) + 'k';
 
@@ -2283,7 +2289,7 @@ function liveEstimates() {
   const atomEst      = Math.round(window.PLAN.atomBalanceGbp      * Math.pow((1 + window.PLAN.atomAer), daysSav / 365));
   const efSavingsEst = Math.round(window.PLAN.monzoEfBalanceGbp   * Math.pow((1 + window.PLAN.monzoEfAer), daysSav / 365)); // Monzo EF · 3.15% AER
   const monzoEst = window.Finance.moveBalance(today);
-  document.querySelectorAll("[data-live-move]").forEach(el => { el.textContent = "£" + monzoEst.toLocaleString("en-GB", {maximumFractionDigits:2}); }); // move fund only
+  document.querySelectorAll("[data-live-move]").forEach(el => { el.textContent = "£" + window.Finance.money(monzoEst); }); // move fund only
 
   // CHASE UK — deterministic schedule from anchor date. To reanchor: change ANCHOR_DATE + ANCHOR_BAL only.
   // Anchor (Mar 3) already includes: Feb 24 salary+Wise, Feb 26 Vancsi, Mar 1 Octopus. Amex (4th) is AFTER anchor.
@@ -2348,7 +2354,9 @@ function liveEstimates() {
   const pension67 = Math.round(fvMonthly(pensionEst, PLAN.pensionMonthlyGbp, monthsTo67, window.PLAN.pensionReturn / 12));
   const invest67 = Math.round((
     fvMonthly(fidelityEst, PLAN.fidelityTaxableMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
-    fvMonthly(rothEst, PLAN.rothBrokerageMonthlyUsd, monthsTo67, PLAN.investReturn / 12)
+    fvMonthly(rothEst, PLAN.rothBrokerageMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
+    fvMonthly(PLAN.advisorRothBalanceUsd, PLAN.advisorRothMonthlyUsd, monthsTo67, PLAN.investReturn / 12) +
+    fvMonthly(PLAN.advisorBalanceUsd, PLAN.advisorMonthlyUsd, monthsTo67, PLAN.investReturn / 12)
   ) * liveFX);
   const sip67 = sipEst + PLAN.sipMonthlyGbp * Math.min(monthsTo67, Math.max(0, PLAN.sipHoldMonths - sipCompleted));
   const ukSavings67 = atomEst + efSavingsEst + monzoEst + chaseEst + PLAN.projectedUkSavingsMonthlyGbp * monthsTo67;
@@ -2389,8 +2397,8 @@ function liveEstimates() {
   }
 
   // Update DOM
-  const fmt = (v, prefix='£') => prefix + v.toLocaleString('en-GB');
-  const fmtCompactMoney = v => v >= 1000000 ? '£' + (v / 1000000).toFixed(1).replace('.0', '') + 'M' : '£' + Math.round(v / 1000).toLocaleString('en-GB') + 'k';
+  const fmt = (v, prefix='£') => prefix + window.Finance.money(v);
+  const fmtCompactMoney = v => v >= 1000000 ? '£' + (v / 1000000).toFixed(2).replace('.00', '') + 'M' : '£' + Math.round(v / 1000).toLocaleString('en-GB') + 'k';
   const savingsRateValue = document.getElementById('savings-rate-value');
   const savingsRateBadge = document.getElementById('savings-rate-badge');
   const annualWealthValue = document.getElementById('annual-wealth-value');
@@ -2404,11 +2412,11 @@ function liveEstimates() {
   if (savingsRateValue) savingsRateValue.textContent = savingsRatePct + '%';
   if (savingsRateBadge) savingsRateBadge.textContent = fmt(annualWealthCreation) + '/yr total saving';
   if (annualWealthValue) annualWealthValue.textContent = fmtCompactMoney(annualWealthCreation);
-  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + flexibleCashMonthly.toLocaleString('en-GB') + '/mo unspent';
+  if (annualWealthNote) annualWealthNote.textContent = fmt(annualWealthCreation) + '/yr · incl matches + £' + window.Finance.money(flexibleCashMonthly) + '/mo unspent';
   if (projected67Value) projected67Value.textContent = fmtCompactMoney(total67);
   if (annualInvestingValue) annualInvestingValue.textContent = fmt(Math.round((PLAN.fidelityTaxableMonthlyUsd * liveFX * 12) + PLAN.sipAnnualGbp));
   if (projected67CardValue) projected67CardValue.textContent = fmtCompactMoney(total67);
-  if (projected67Note) projected67Note.textContent = 'Live balances + PLAN monthly inputs';
+  if (projected67Note) projected67Note.textContent = 'All recorded assets: pension + taxable + both Roths + shares + cash';
   if (stateIncomeValue) stateIncomeValue.textContent = fmtCompactMoney(stateIncome67) + '+';
   if (pension67El) pension67El.textContent = fmtCompactMoney(pension67);
   document.getElementById('bal-atom').textContent       = fmt(atomEst);
