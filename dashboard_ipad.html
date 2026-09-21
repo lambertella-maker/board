@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="8106576d9cfab992">
+<meta name="finance-build" content="32a548f36f4a9c3b">
 <script>
 (() => {
   try {
-    const build = '8106576d9cfab992';
+    const build = '32a548f36f4a9c3b';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -1437,7 +1437,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="metric-card">
         <div class="metric-label">Roth IRA (Brokerage)</div>
         <div class="metric-value" id="inv-roth-value" style="color:var(--amber)">$8,309</div>
-        <div class="metric-sub">$8.31k balance · 2026 maxed</div>
+        <div class="metric-sub">$8.3k balance · 2026 maxed</div>
         <span class="metric-badge badge-amber">Brokerage Roth only</span>
       </div>
       <div class="metric-card">
@@ -1450,7 +1450,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="metric-label">Annual investing</div>
         <div class="metric-value" id="annual-investing-value" style="color:var(--indigo)">—</div>
         <div class="metric-sub">Fidelity + SIP combined</div>
-        <span class="metric-badge badge-indigo">SIP £1.80k + £1.80k match</span>
+        <span class="metric-badge badge-indigo">SIP £1.8k + £1.8k match</span>
       </div>
       <div class="metric-card">
         <div class="metric-label">Projected at 67 (7%)</div>
@@ -1664,7 +1664,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="fire-slider-value" id="fire-slider-big">£45k</div>
             </div>
             <input type="range" id="exp-slider" min="15000" max="80000" step="500" value="45000" oninput="updateFire()">
-            <div class="fire-scale"><span>£15k</span><span>£47.50k</span><span>£80k</span></div>
+            <div class="fire-scale"><span>£15k</span><span>£47.5k</span><span>£80k</span></div>
           </div>
         </div>
 
@@ -1688,7 +1688,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <label class="toggle"><input type="checkbox" id="usStateToggle" checked onchange="syncFireStateScenario(); updateFire()"><span class="toggle-slider"></span></label>
               </div>
-              <div class="fire-source-amt" id="fire-us-source-amt">~£28.49k/yr</div>
+              <div class="fire-source-amt" id="fire-us-source-amt">~£28.5k/yr</div>
             </div>
           </div>
         <div class="toggle-row fire-toggle-row">
@@ -1957,7 +1957,7 @@ function renderNwBreakdown(segs, label) {
   const usRank = totalUSD < window.PLAN.netWorthUsMedianUsd ? 'below median' : totalUSD < window.PLAN.netWorthUsAboveMedianUsd ? 'above median' : totalUSD < window.PLAN.netWorthUsTop30Usd ? 'top 30%' : 'top 15%';
   document.getElementById('nw-breakdown').innerHTML =
     `<div style="font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:2px;">` +
-    `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>` +
+    `£${Math.round(total).toLocaleString('en-GB')} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>` +
     `<div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.9rem;">(${fmtCompactK(liquid)} liquid) · FX £${gNwFx.toFixed(3)}/$ · ${label}</div>` +
     segs.map(s => {
       const pct = ((s.val / total) * 100).toFixed(1);

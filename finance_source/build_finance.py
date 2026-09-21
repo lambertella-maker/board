@@ -30,8 +30,10 @@ def format_value(value, fmt):
         return str(value)
     currency = '$' if fmt.startswith('usd') else '€' if fmt.startswith('eur') else '£'
     if 'k' in fmt:
-        places = 2 if fmt.endswith('1') else 0
+        places = 1 if fmt.endswith('1') else 0
         text = number(value / 1000, places)
+        if places:
+            text = text.rstrip('0').rstrip('.')
         return currency + text + 'k'
     # Whole amounts stay compact; fractional money always keeps both decimal
     # places so a value can never render as a bare `.5`.

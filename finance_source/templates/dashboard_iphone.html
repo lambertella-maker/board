@@ -1115,7 +1115,7 @@ function renderNWSegs(segs) {
   const nwTotalEl = document.getElementById('m-nw-total');
   const nwRowsEl  = document.getElementById('m-nw-rows');
   const rankEl    = document.getElementById('m-nw-rank');
-  if (nwTotalEl) nwTotalEl.innerHTML = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span style="font-size:0.62em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
+  if (nwTotalEl) nwTotalEl.innerHTML = `£${Math.round(total).toLocaleString('en-GB')} <span style="font-size:0.62em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
   if (nwRowsEl) nwRowsEl.innerHTML = segs.map((s, i) => {
     const pct = ((s.val / total) * 100).toFixed(1);
     const sep = i < segs.length - 1 ? `<div style="height:1px;background:var(--border);margin:0;"></div>` : '';

@@ -1642,7 +1642,7 @@ function renderNwBreakdown(segs, label) {
   const usRank = totalUSD < window.PLAN.netWorthUsMedianUsd ? 'below median' : totalUSD < window.PLAN.netWorthUsAboveMedianUsd ? 'above median' : totalUSD < window.PLAN.netWorthUsTop30Usd ? 'top 30%' : 'top 15%';
   document.getElementById('nw-breakdown').innerHTML =
     `<div style="font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:2px;">` +
-    `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>` +
+    `£${Math.round(total).toLocaleString('en-GB')} <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">total net worth</span></div>` +
     `<div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.9rem;">(${fmtCompactK(liquid)} liquid) · FX £${gNwFx.toFixed(3)}/$ · ${label}</div>` +
     segs.map(s => {
       const pct = ((s.val / total) * 100).toFixed(1);

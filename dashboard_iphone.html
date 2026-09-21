@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="8106576d9cfab992">
+<meta name="finance-build" content="32a548f36f4a9c3b">
 <script>
 (() => {
   try {
-    const build = '8106576d9cfab992';
+    const build = '32a548f36f4a9c3b';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -666,7 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot £130/mo</span></div>
     <div class="goal-row-m"><span class="goal-row-k">25th</span><span style="color:var(--amber);font-weight:700;">Wise pulls £650 from Chase UK</span></div>
     <div class="goal-row-m"><span class="goal-row-k">26th</span><span style="color:var(--amber);font-weight:700;">Wise sends $850 to Chase US</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.10k–£1.40k · ChatGPT $20 · phone <span data-plan-gbp="phoneMonthlyGbp">£30</span> incl. active Prime at £0 · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1k–£1.4k · ChatGPT $20 · phone <span data-plan-gbp="phoneMonthlyGbp">£30</span> incl. active Prime at £0 · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
     <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Subscriptions £40/mo: Spotify £12.99 · Apple TV £9.99 · Google One ~£2 · ChatGPT $20 (~£15) · Prime £0 via O2.</span><span>Funds auto-buy 1st</span></div>
   </div>
 
@@ -1022,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="fire-slider-big-m" id="m-fire-slider-big">£45k</div>
       </div>
       <input type="range" id="m-sp" min="15000" max="80000" step="1000" value="45000" oninput="mCalcFire()">
-      <div class="fire-scale-m"><span>£15k</span><span>£47.50k</span><span>£80k</span></div>
+      <div class="fire-scale-m"><span>£15k</span><span>£47.5k</span><span>£80k</span></div>
     </div>
     <div class="fire-toggle-m" style="margin-top:10px;">
       <label class="toggle"><input type="checkbox" id="m-bruceToggle" onchange="mCalcFire()"><span class="toggle-slider"></span></label>
@@ -1430,7 +1430,7 @@ function renderNWSegs(segs) {
   const nwTotalEl = document.getElementById('m-nw-total');
   const nwRowsEl  = document.getElementById('m-nw-rows');
   const rankEl    = document.getElementById('m-nw-rank');
-  if (nwTotalEl) nwTotalEl.innerHTML = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span style="font-size:0.62em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
+  if (nwTotalEl) nwTotalEl.innerHTML = `£${Math.round(total).toLocaleString('en-GB')} <span style="font-size:0.62em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
   if (nwRowsEl) nwRowsEl.innerHTML = segs.map((s, i) => {
     const pct = ((s.val / total) * 100).toFixed(1);
     const sep = i < segs.length - 1 ? `<div style="height:1px;background:var(--border);margin:0;"></div>` : '';
