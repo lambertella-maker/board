@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="f714472ffd8d15d8">
+<meta name="finance-build" content="{{BUILD}}">
 <script>
 (() => {
   try {
-    const build = 'f714472ffd8d15d8';
+    const build = '{{BUILD}}';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -19,317 +19,8 @@
 })();
 </script>
 <script>
-window.PLAN = Object.freeze({
-  "advisorBalanceUsd": 3948,
-  "advisorExpenseRatio": 0.01,
-  "advisorFeeMultiple": 66.66666666666667,
-  "advisorMonthlyUsd": 0,
-  "amazonPrimeMonthlyGbp": 0,
-  "amazonPrimeRefundGbp": 95,
-  "amexAutopayEstimateGbp": 1300,
-  "amexAutopayHighGbp": 1400,
-  "amexAutopayLowGbp": 1100,
-  "amexPayday": 4,
-  "appleTvMonthlyGbp": 9.99,
-  "atomAer": 0.0349,
-  "atomBalanceGbp": 12668,
-  "atomGrossRate": 0.0344,
-  "atomWithdrawalAer": 0.02,
-  "birthDate": [
-    2001,
-    1,
-    18
-  ],
-  "bonus2026GrossGbp": 6371,
-  "bonusSalxShare": 0.5,
-  "careerPromotionPercent": 0.11,
-  "careerStartJumpPercent": 1.05,
-  "chaseAnchorDate": [
-    2026,
-    2,
-    3
-  ],
-  "chaseUSBalanceUsd": 2000,
-  "chaseUkAnchorGbp": 3839.9,
-  "chaseUkDisplayGbp": 2146,
-  "chaseUkMinBufferGbp": 1000,
-  "chaseUsMinBufferUsd": 1500,
-  "chatgptBudgetGbp": 15,
-  "chatgptMonthlyUsd": 20,
-  "cspCreditHistoryMonths": 12,
-  "cspPortalUsd": 750,
-  "cspSpendMonths": 3,
-  "cspSpendUsd": 5000,
-  "cspStartDate": [
-    2026,
-    0,
-    30
-  ],
-  "cspWelcomePoints": 75000,
-  "dividendDrag": 0.003,
-  "eatingOutMonthlyGbp": 250,
-  "emergencyAnchorGbp": 14973,
-  "emergencyTargetHighGbp": 18000,
-  "emergencyTargetLowGbp": 16000,
-  "euSalaryGrowth": 0.08,
-  "euSalaryHighEur": 80000,
-  "euSalaryLowEur": 50000,
-  "euTuitionHighEur": 4000,
-  "euTuitionLowEur": 2000,
-  "fbarThresholdUsd": 10000,
-  "fidelityAchDay": 30,
-  "fidelityTaxableBalanceUsd": 8858,
-  "fidelityTaxableMonthlyUsd": 850,
-  "fireAccessibleMonthlyGbp": 654.5,
-  "fireLifestyleHighGbp": 65000,
-  "fireLifestyleLowGbp": 50000,
-  "fireMaxRetirementAge": 90,
-  "firePensionMonthlyGbp": 1020.0,
-  "fireReturn": 0.07,
-  "fireRothMonthlyGbp": 0.0,
-  "fireSimulationEndAge": 100,
-  "fireSliderMaxGbp": 80000,
-  "fireSliderMidGbp": 47500.0,
-  "fireSliderMinGbp": 15000,
-  "fireSliderStepGbp": 500,
-  "fireSpendHighGbp": 75000,
-  "fireSpendLowGbp": 45000,
-  "fireSpendMidGbp": 60000,
-  "fireWithdrawalRate": 0.04,
-  "flexibleCashMonthlyGbp": 808,
-  "fskaxExpenseRatio": 0.00015,
-  "fskaxMonthlyUsd": 723,
-  "fskaxReturn": 0.07,
-  "fskaxWeight": 0.85,
-  "ftihxExpenseRatio": 0.0006,
-  "ftihxMonthlyUsd": 85,
-  "ftihxReturn": 0.06,
-  "ftihxWeight": 0.1,
-  "fundBuyDay": 1,
-  "fxGbpPerUsd": 0.77,
-  "fxnaxExpenseRatio": 0.00025,
-  "fxnaxMonthlyUsd": 42,
-  "fxnaxReturn": 0.04,
-  "fxnaxWeight": 0.05,
-  "googleOneBudgetGbp": 2,
-  "groceriesMonthlyGbp": 230,
-  "gymGrossMonthlyGbp": 97.4,
-  "gymNetMonthlyGbp": 95.45,
-  "gymNiSavedMonthlyGbp": 1.95,
-  "ilrDeadlineDate": [
-    2029,
-    8,
-    12
-  ],
-  "ilrFeeBudgetGbp": 3400,
-  "ilrFeeCurrentGbp": 2885,
-  "ilrFeeGrowth": 0.05,
-  "ilrFeeProjectedGbp": 3339.7481250000005,
-  "ilrFeeYears": 3,
-  "ilrStartDate": [
-    2019,
-    8,
-    12
-  ],
-  "investReturn": 0.0675,
-  "investmentAnchorDate": [
-    2026,
-    7,
-    1
-  ],
-  "investmentFirstBuyDate": [
-    2026,
-    8,
-    1
-  ],
-  "lifeBonusSavingsRate": 0.1,
-  "lifeGoalDepositGbp": 50000,
-  "lifeGoalLargeGbp": 25000,
-  "lifeGoalMediumGbp": 15000,
-  "lifeGoalSmallGbp": 5000,
-  "lifeInUkTestGbp": 50,
-  "lifeSavingsMonthlyGbp": 150,
-  "meritAssumption": 0.03,
-  "monthlyLeftoverGbp": 1588,
-  "monthlySpendGbp": 2148,
-  "monzoEfAer": 0.0315,
-  "monzoEfBalanceGbp": 2305,
-  "monzoEfMaxWithdrawals": 2,
-  "monzoEfReducedAer": 0.026,
-  "monzoMoveAer": 0.0275,
-  "monzoMoveBalanceGbp": 1093,
-  "moveFirstPaydayDate": [
-    2026,
-    7,
-    24
-  ],
-  "moveMonthlyGbp": 130,
-  "moveRentBudgetGbp": 1700,
-  "moveTargetGbp": 1800,
-  "netBonusBudgetGbp": 4000,
-  "netWorthUkMedianGbp": 15000,
-  "netWorthUkTop10Gbp": 100000,
-  "netWorthUkTop20Gbp": 60000,
-  "netWorthUkTop30Gbp": 30000,
-  "netWorthUsAboveMedianUsd": 80000,
-  "netWorthUsMedianUsd": 39000,
-  "netWorthUsTop30Usd": 150000,
-  "octopusDay": 1,
-  "octopusDisplayedNetGbp": 55,
-  "octopusMonthlyGbp": 110.51,
-  "optionalGiftAnnualGbp": 16000,
-  "optionalGiftStartDate": [
-    2029,
-    0,
-    1
-  ],
-  "otherMonthlyGbp": 90,
-  "payday": 24,
-  "pensionAccessAge": 57,
-  "pensionAnchorDate": [
-    2026,
-    4,
-    6
-  ],
-  "pensionAnchorGbp": 23761.08,
-  "pensionAnnualGbp": 12240.0,
-  "pensionEmployeeAnnualGbp": 4080.0,
-  "pensionEmployeeMonthlyGbp": 340.0,
-  "pensionEmployeeRate": 0.06,
-  "pensionEmployerRate": 0.12,
-  "pensionMatchReturn": 2.0,
-  "pensionMonthlyGbp": 1020.0,
-  "pensionNextPaydayDate": [
-    2026,
-    4,
-    24
-  ],
-  "pensionReturn": 0.055,
-  "pensionTaxFreeShare": 0.25,
-  "pensionTaxableShare": 0.75,
-  "pensionTotalRate": 0.18,
-  "phoneMonthlyGbp": 30,
-  "polarisCashGbp": 220,
-  "previousRentMonthlyGbp": 1250,
-  "projectedUkSavingsMonthlyGbp": 200,
-  "rentDay": 12,
-  "rentMonthlyGbp": 1125,
-  "rothAccessAge": 59.5,
-  "rothBrokerageBalanceUsd": 8309,
-  "rothBrokerageMonthlyUsd": 0,
-  "rothContributed2026Usd": 7500,
-  "rothLimit2026Usd": 7500,
-  "rothRemaining2026Usd": 0,
-  "salary2025Gbp": 58794,
-  "salary2026MeritGbp": 61439,
-  "salaryAbbvieStartGbp": 57500,
-  "salaryGrossGbp": 68000,
-  "salaryGrossMonthlyGbp": 5666.666666666667,
-  "salaryLutoGbp": 28000,
-  "salaryNetAnnualGbp": 44832,
-  "salaryNetBonusMonthGbp": 5012,
-  "salaryNetMonthlyGbp": 3736,
-  "salaryNextMeritGbp": 70040.0,
-  "savingsAnchorDate": [
-    2026,
-    7,
-    1
-  ],
-  "shoppingMonthlyGbp": 120,
-  "sipAnnualGbp": 3600,
-  "sipDownsideAnnualGbp": 2880.0,
-  "sipEmployeeAnnualGbp": 1800,
-  "sipEmployeeMonthlyGbp": 150,
-  "sipEmployerAnnualGbp": 1800,
-  "sipEmployerMonthlyGbp": 150,
-  "sipHoldMonths": 60,
-  "sipHoldYears": 5,
-  "sipIncomeTaxRate": 0.4,
-  "sipMatchRatio": 1,
-  "sipMonthlyGbp": 300,
-  "sipNetAnnualGbp": 1044.0,
-  "sipNetMonthlyGbp": 87.0,
-  "sipNiRate": 0.02,
-  "sipScenarioGrowthRate": 0.2,
-  "sipScenarioUsGainsRate": 0.15,
-  "sipStartDate": [
-    2024,
-    10,
-    1
-  ],
-  "sipUpsideAnnualGbp": 4212.0,
-  "sipVestYears": 3,
-  "spotifyMonthlyGbp": 12.99,
-  "statePensionAge": 67,
-  "subscriptionsMonthlyGbp": 40,
-  "taxAdjustedIncomeGbp": 63809,
-  "taxAllowanceGbp": 12570,
-  "taxAnnualGymGbp": 1169,
-  "taxAnnualTaxableGbp": 62120,
-  "taxBasicBandUsedGbp": 37440,
-  "taxBasicPaidGbp": 7488,
-  "taxBasicRate": 0.2,
-  "taxBenefitsGbp": 1689,
-  "taxHigherBandUsedGbp": 13539,
-  "taxHigherPaidGbp": 5416,
-  "taxHigherRate": 0.4,
-  "taxHigherThresholdGbp": 50270,
-  "taxIncomeAnnualGbp": 12904,
-  "taxItSavedAnnualGbp": 2352,
-  "taxNiAnnualGbp": 3230,
-  "taxNiBandGbp": 37700,
-  "taxNiBasicRate": 0.08,
-  "taxNiHigherRate": 0.02,
-  "taxNiMonthlyGbp": 1344,
-  "taxNiSavedAnnualGbp": 141,
-  "taxPensionSipNiSavedGbp": 133,
-  "taxRaiseExampleGbp": 1000,
-  "taxRaiseHighNetGbp": 48,
-  "taxRaiseLowNetGbp": 60,
-  "taxTotalAllowanceGbp": 12830,
-  "taxWfhAllowanceGbp": 260,
-  "transportMonthlyGbp": 100,
-  "ukPropertyExampleGbp": 400000,
-  "ukPropertyExtraHighGbp": 15000,
-  "ukPropertyExtraLowGbp": 12000,
-  "ukPropertySurchargeAssumption": 0.03,
-  "ukStateAccruedAnnualGbp": 1076,
-  "ukStateAnnualGbp": 12548,
-  "ukSubscriptionsMonthlyGbp": 25,
-  "usGainsRate": 0.15,
-  "usStateBaseYears": 3,
-  "usStateFullAnnualGbp": 28490.0,
-  "usStateFullAnnualUsd": 37000,
-  "usStateFullYears": 35,
-  "usTaxOwedSnapshotUsd": 0,
-  "utilitiesExPhoneMonthlyGbp": 163,
-  "vancsiDay": 26,
-  "vancsiDisplayedMonthlyGbp": 56,
-  "vancsiMonthlyGbp": 53.48,
-  "wiseArrivalDay": 26,
-  "wiseMonthlyGbp": 650,
-  "wisePullDay": 25
-});
-// Shared date-sensitive calculations. PLAN is embedded by build_finance.py.
-window.Finance = Object.freeze({
-  sip(asOf) {
-    const p = window.PLAN;
-    const start = new Date(...p.sipStartDate);
-    const months = (asOf.getFullYear() - start.getFullYear()) * 12 + asOf.getMonth() - start.getMonth();
-    const completed = Math.max(0, months + (asOf.getDate() >= p.payday ? 1 : 0));
-    return { completed, value: completed * p.sipMonthlyGbp };
-  },
-  moveBalance(asOf) {
-    const p = window.PLAN;
-    let value = p.monzoMoveBalanceGbp;
-    const rate = p.monzoMoveAer / 12;
-    for (let d = new Date(...p.moveFirstPaydayDate); d <= asOf; d = new Date(d.getFullYear(), d.getMonth() + 1, p.payday)) {
-      value = value * (1 + rate) + p.moveMonthlyGbp;
-    }
-    return Math.round(value * 100) / 100;
-  }
-});
-
+{{PLAN_SCRIPT}}
+{{RUNTIME_SCRIPT}}
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-plan-gbp]').forEach((el) => {
     el.textContent = `£${window.PLAN[el.dataset.planGbp].toLocaleString('en-GB')}`;
@@ -629,8 +320,8 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="metrics-grid">
     <div class="metric">
       <div class="metric-label">Monthly Net</div>
-      <div class="metric-value" id="m-net-value" style="color:var(--green)">£3,736</div>
-      <div class="metric-sub" id="m-net-sub">£68,000 salary · payday 24th</div>
+      <div class="metric-value" id="m-net-value" style="color:var(--green)">{{salaryNetMonthlyGbp:gbp}}</div>
+      <div class="metric-sub" id="m-net-sub">{{salaryGrossGbp:gbp}} salary · payday 24th</div>
       <div class="metric-badge badge-green" id="m-net-badge">Post-promotion salary</div>
     </div>
     <div class="metric">
@@ -641,8 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div class="metric">
       <div class="metric-label">Emergency Fund</div>
-      <div class="metric-value" id="m-hero-ef-value" style="color:var(--cyan)">£14,973</div>
-      <div class="metric-sub" id="m-hero-ef-sub">Atom £12,668 + Monzo EF £2,305</div>
+      <div class="metric-value" id="m-hero-ef-value" style="color:var(--cyan)">{{emergencyAnchorGbp:gbp}}</div>
+      <div class="metric-sub" id="m-hero-ef-sub">Atom {{atomBalanceGbp:gbp}} + Monzo EF {{monzoEfBalanceGbp:gbp}}</div>
       <div class="metric-badge badge-cyan">6 months bare-bones covered</div>
     </div>
     <div class="metric">
@@ -655,23 +346,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <div class="section-title">After payday</div>
   <div class="card" style="margin-top:0;">
-    <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross £5,667 → £3,736 net</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension £340 · SIP £150 · GymFlex £97 · tax/NI £1,344</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot £130/mo</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">25th</span><span style="color:var(--amber);font-weight:700;">Wise pulls £650 from Chase UK</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">26th</span><span style="color:var(--amber);font-weight:700;">Wise sends $850 to Chase US</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1k–£1.4k · ChatGPT $20 · phone <span data-plan-gbp="phoneMonthlyGbp">£30</span> incl. active Prime at £0 · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Subscriptions £40/mo: Spotify £12.99 · Apple TV £9.99 · Google One ~£2 · ChatGPT $20 (~£15) · Prime £0 via O2.</span><span>Funds auto-buy 1st</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross {{salaryGrossMonthlyGbp:gbp}} → {{salaryNetMonthlyGbp:gbp}} net</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension {{pensionEmployeeMonthlyGbp:gbp}} · SIP {{sipEmployeeMonthlyGbp:gbp}} · GymFlex {{gymGrossMonthlyGbp:gbp}} · tax/NI {{taxNiMonthlyGbp:gbp}}</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary lands · move pot {{moveMonthlyGbp:gbp}}/mo</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">25th</span><span style="color:var(--amber);font-weight:700;">Wise pulls {{wiseMonthlyGbp:gbp}} from Chase UK</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">26th</span><span style="color:var(--amber);font-weight:700;">Wise sends {{fidelityTaxableMonthlyUsd:usd}} to Chase US</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th {{vancsiDisplayedMonthlyGbp:gbp}} · Amex {{amexAutopayLowGbp:gbpk1}}–{{amexAutopayHighGbp:gbpk1}} · ChatGPT {{chatgptMonthlyUsd:usd}} · phone <span data-plan-gbp="phoneMonthlyGbp">{{phoneMonthlyGbp:gbp}}</span> incl. active Prime at {{amazonPrimeMonthlyGbp:gbp}} · 12th rent <span data-plan-gbp="rentMonthlyGbp">{{rentMonthlyGbp:gbp}}</span></span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Subscriptions {{subscriptionsMonthlyGbp:gbp}}/mo: Spotify {{spotifyMonthlyGbp:gbp2}} · Apple TV {{appleTvMonthlyGbp:gbp2}} · Google One ~{{googleOneBudgetGbp:gbp}} · ChatGPT {{chatgptMonthlyUsd:usd}} (~{{chatgptBudgetGbp:gbp}}) · Prime {{amazonPrimeMonthlyGbp:gbp}} via O2.</span><span>Funds auto-buy 1st</span></div>
   </div>
 
   <div class="section-title">Accounts — live estimates</div>
   <div class="accounts-grid">
-    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Atom Bank</div><div class="acct-bal" id="m-bal-atom" style="color:var(--green)">—</div><div class="acct-note">3.44% gross · 3.49% AER reward</div></div>
-    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Monzo EF (3.15%)</div><div class="acct-bal" id="m-bal-efsavings" style="color:var(--green)">—</div><div class="acct-note">3.15% AER · max 2 withdrawals</div></div>
-<div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">£2,146</div><div class="acct-note">Avg float · min £1,000 · refills 24th</div></div>
-    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">5.5% CAGR · 18% in</div></div>
+    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Atom Bank</div><div class="acct-bal" id="m-bal-atom" style="color:var(--green)">—</div><div class="acct-note">{{atomGrossRate:percent}} gross · {{atomAer:percent}} AER reward</div></div>
+    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Monzo EF ({{monzoEfAer:percent}})</div><div class="acct-bal" id="m-bal-efsavings" style="color:var(--green)">—</div><div class="acct-note">{{monzoEfAer:percent}} AER · max 2 withdrawals</div></div>
+<div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Chase UK</div><div class="acct-bal" id="m-bal-chase" style="color:var(--indigo)">{{chaseUkDisplayGbp:gbp}}</div><div class="acct-note">Avg float · min {{chaseUkMinBufferGbp:gbp}} · refills 24th</div></div>
+    <div class="acct"><div class="acct-flag">🇬🇧</div><div class="acct-name">Pension</div><div class="acct-bal" id="m-bal-pension" style="color:var(--pink)">—</div><div class="acct-note">{{pensionReturn:percent}} CAGR · {{pensionTotalRate:percent}} in</div></div>
     <div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Fidelity Taxable</div><div class="acct-bal" id="m-bal-fid" style="color:var(--green)">—</div><div class="acct-note">FSKAX/FTIHX/FXNAX</div></div>
-<div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA (Brokerage)</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">$8,309 balance · 2026 maxed · no further buys</div></div>
+<div class="acct"><div class="acct-flag">🇺🇸</div><div class="acct-name">Roth IRA (Brokerage)</div><div class="acct-bal" id="m-bal-roth" style="color:var(--amber)">—</div><div class="acct-note">{{rothBrokerageBalanceUsd:usd}} balance · 2026 maxed · no further buys</div></div>
   </div>
 
 </div>
@@ -689,19 +380,19 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="pillar-header"><div class="pillar-ico">🏦</div><div><div class="pillar-label">Pillar 1 · UK Workplace</div><div class="pillar-name">AbbVie Pension</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" id="m-pillar-pension" style="color:var(--indigo)">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Annual input</span><span class="pillar-stat-v">£12,240 (18% total)</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Your contribution</span><span class="pillar-stat-v">6% · AbbVie matches 12%</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Annual input</span><span class="pillar-stat-v">{{pensionAnnualGbp:gbp}} ({{pensionTotalRate:percent}} total)</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Your contribution</span><span class="pillar-stat-v">{{pensionEmployeeRate:percent}} · AbbVie matches {{pensionEmployerRate:percent}}</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Projected at 67</span><span class="pillar-stat-v" id="m-pillar-pension-67" style="color:var(--green)">—</span></div>
-      <div class="pillar-why-text">AbbVie's 12% match is a 200% return on your 6% before a single penny of growth. Fully utilised.</div>
+      <div class="pillar-why-text">AbbVie's {{pensionEmployerRate:percent}} match is a {{pensionMatchReturn:percent}} return on your {{pensionEmployeeRate:percent}} before a single penny of growth. Fully utilised.</div>
     </div>
   </div>
 
   <div class="pillar-mobile p-cyan">
     <div class="pillar-header"><div class="pillar-ico">🇬🇧</div><div><div class="pillar-label">Pillar 2 · UK State</div><div class="pillar-name">UK State Pension</div></div></div>
     <div class="pillar-body">
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Qualifying progress</span><span class="pillar-stat-v" style="color:var(--cyan)">3 / 35 years</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Current earned amount</span><span class="pillar-stat-v">£1,076/yr</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Full value</span><span class="pillar-stat-v">£12,548/yr today</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Qualifying progress</span><span class="pillar-stat-v" style="color:var(--cyan)">3 / 3{{sipHoldYears:number}} years</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Current earned amount</span><span class="pillar-stat-v">{{ukStateAccruedAnnualGbp:gbp}}/yr</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Full value</span><span class="pillar-stat-v">{{ukStateAnnualGbp:gbp}}/yr today</span></div>
       <div class="pillar-why-text">Triple-lock protected. Current earned amount is a simple 3/35 estimate using today's full rate.</div>
     </div>
   </div>
@@ -710,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="pillar-header"><div class="pillar-ico">🇺🇸</div><div><div class="pillar-label">Pillar 3 · US State</div><div class="pillar-name">US Social Security</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Eligibility path</span><span class="pillar-stat-v">40 credits or UK-US totalization</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Full value est.</span><span class="pillar-stat-v">$37,000/yr</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Full value est.</span><span class="pillar-stat-v">{{usStateFullAnnualUsd:usd}}/yr</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Estimate basis</span><span class="pillar-stat-v">3 equivalent years at current pay</span></div>
       <div class="pillar-why-text">Eligibility may come via totalization. Dollar figures are salary-scaled heuristics, not an SSA quote.</div>
     </div>
@@ -720,8 +411,8 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="pillar-header"><div class="pillar-ico">📈</div><div><div class="pillar-label">Pillar 4 · US Investing</div><div class="pillar-name">Fidelity Taxable</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Taxable value</span><span class="pillar-stat-v" id="m-pillar-fid" style="color:var(--green)">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly buy</span><span class="pillar-stat-v">$850/mo taxable</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Target split</span><span class="pillar-stat-v">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Monthly buy</span><span class="pillar-stat-v">{{fidelityTaxableMonthlyUsd:usd}}/mo taxable</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Target split</span><span class="pillar-stat-v">FSKAX {{fskaxWeight:pctnumber}} / FTIHX {{ftihxWeight:pctnumber}} / FXNAX {{fxnaxWeight:pctnumber}}</span></div>
       <div class="pillar-why-text">Accessible US investing bucket. ACH pulls on the 30th; recurring fund buys happen on the 1st.</div>
     </div>
   </div>
@@ -730,9 +421,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="pillar-header"><div class="pillar-ico">🌱</div><div><div class="pillar-label">Pillar 5 · US Retirement</div><div class="pillar-name">Roth IRA (Brokerage)</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Current value</span><span class="pillar-stat-v" style="color:var(--pink)" id="m-pillar-roth">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">2026 status</span><span class="pillar-stat-v" style="color:var(--pink)">Maxed · $7,500 contributed</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">2026 status</span><span class="pillar-stat-v" style="color:var(--pink)">Maxed · {{rothContributed2026Usd:usd}} contributed</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Advisor Roth</span><span class="pillar-stat-v" style="color:var(--soft)">Separate · untouched</span></div>
-      <div class="pillar-why-text">Leave the $8,309 Roth invested. The 2026 limit is fully used, so future Fidelity buys go to taxable until 2027.</div>
+      <div class="pillar-why-text">Leave the {{rothBrokerageBalanceUsd:usd}} Roth invested. The 2026 limit is fully used, so future Fidelity buys go to taxable until 2027.</div>
     </div>
   </div>
 
@@ -740,21 +431,21 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="pillar-header"><div class="pillar-ico">💼</div><div><div class="pillar-label">Pillar 6 · UK Shares</div><div class="pillar-name">ABBV Share Incentive Plan</div></div></div>
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">Acquisition value</span><span class="pillar-stat-v" data-live-sip>—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Net cost</span><span class="pillar-stat-v">£87/mo (£150 pre-tax sacrifice)</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">AbbVie match</span><span class="pillar-stat-v">1:1 · £3,600/yr total</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Instant return</span><span class="pillar-stat-v" style="color:var(--green)">100% before growth</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Net cost</span><span class="pillar-stat-v">{{sipNetMonthlyGbp:gbp}}/mo ({{sipEmployeeMonthlyGbp:gbp}} pre-tax sacrifice)</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">AbbVie match</span><span class="pillar-stat-v">{{sipMatchRatio:number}}:1 · {{sipAnnualGbp:gbp}}/yr total</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Instant return</span><span class="pillar-stat-v" style="color:var(--green)">{{sipMatchRatio:percent}} before growth</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">First sweep</span><span class="pillar-stat-v" style="color:var(--amber)">Nov/Dec 2029</span></div>
-      <div class="pillar-why-text">Hold 5 years, sweep Nov/Dec. UK tax nil at this scale. Keep acquisition dates for US filing.</div>
+      <div class="pillar-why-text">Hold {{sipHoldYears:number}} years, sweep Nov/Dec. UK tax nil at this scale. Keep acquisition dates for US filing.</div>
     </div>
   </div>
 
   <div class="pillar-mobile p-cyan">
     <div class="pillar-header"><div class="pillar-ico">🛡️</div><div><div class="pillar-label">Pillar 7 · Foundation</div><div class="pillar-name">Emergency Fund</div></div></div>
     <div class="pillar-body">
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Total</span><span class="pillar-stat-v" id="m-pillar-ef-total" style="color:var(--cyan)">£14,973</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Atom 3.49%</span><span class="pillar-stat-v" id="m-pillar-ef-atom">£12,668</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Monzo EF 3.15%</span><span class="pillar-stat-v" id="m-pillar-ef-savings">£2,305</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Target</span><span class="pillar-stat-v">£16k–£18k (no rush)</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Total</span><span class="pillar-stat-v" id="m-pillar-ef-total" style="color:var(--cyan)">{{emergencyAnchorGbp:gbp}}</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Atom {{atomAer:percent}}</span><span class="pillar-stat-v" id="m-pillar-ef-atom">{{atomBalanceGbp:gbp}}</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Monzo EF {{monzoEfAer:percent}}</span><span class="pillar-stat-v" id="m-pillar-ef-savings">{{monzoEfBalanceGbp:gbp}}</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Target</span><span class="pillar-stat-v">{{emergencyTargetLowGbp:gbpk}}–{{emergencyTargetHighGbp:gbpk}} (no rush)</span></div>
       <div class="pillar-why-text">6 months of expenses, earning above-inflation interest, FSCS-protected. The foundation that lets every other pillar take risk.</div>
     </div>
   </div>
@@ -803,7 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="prog-wrap"><div class="prog-fill" id="m-csp-prog" style="background:linear-gradient(90deg,var(--indigo),var(--pink)); width:0%"></div></div>
     <div class="prog-labels"><span>Jan 30, 2026</span><span id="m-csp-lbl" style="color:var(--indigo)">Updating...</span><span>Jan 30, 2027</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Application date</span><span style="color:var(--amber); font-weight:600;">Jan 30, 2027 · 12mo · no earlier</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--green); font-weight:600;">75k Chase UR · $5k spend in first 3 months</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--green); font-weight:600;">{{cspWelcomePoints:k}} Chase UR · {{cspSpendUsd:usdk}} spend in first 3 months</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Transfer partners</span><span style="font-weight:600;">United · BA · Virgin · Hyatt</span></div>
     <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Building clean history</span><span>Jan 2027</span></div>
   </div>
@@ -813,15 +504,15 @@ document.addEventListener('DOMContentLoaded', () => {
       <span style="font-size:1.4rem;">🗝️</span>
       <div class="goal-card-meta"><div class="goal-card-label">Goal 2 · Jun–Jul 2027</div><div class="goal-card-title">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
-    <div class="goal-subcopy">Target rent about £1,700/mo max · £130/mo move fund</div>
+    <div class="goal-subcopy">Target rent about {{moveRentBudgetGbp:gbp}}/mo max · {{moveMonthlyGbp:gbp}}/mo move fund</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
-    <div class="prog-labels"><span>£1,093</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Move target</span><span style="font-weight:600;">£1,800 · movers, overlap, setup</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Current / target</span><span style="color:var(--green); font-weight:600;"><span data-live-move>—</span> now · £1,800 target</span></div>
+    <div class="prog-labels"><span>{{monzoMoveBalanceGbp:gbp}}</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">{{moveTargetGbp:gbp}} simple move</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Move target</span><span style="font-weight:600;">{{moveTargetGbp:gbp}} · movers, overlap, setup</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Current / target</span><span style="color:var(--green); font-weight:600;"><span data-live-move>—</span> now · {{moveTargetGbp:gbp}} target</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Deposit timing</span><span style="color:var(--indigo); font-weight:600;">Returned deposit / short EF bridge if needed</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Bonus rule</span><span style="color:var(--green); font-weight:600;">Not earmarked unless the flat requires it</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Apr 2027 salary</span><span style="color:var(--green); font-weight:600;">£70,040 with a 3% merit rise</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">£130/mo keeps the move buffer ahead</span><span>Jun–Jul 2027</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Apr 2027 salary</span><span style="color:var(--green); font-weight:600;">{{salaryNextMeritGbp:gbp}} with a {{meritAssumption:percent}} merit rise</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">{{moveMonthlyGbp:gbp}}/mo keeps the move buffer ahead</span><span>Jun–Jul 2027</span></div>
   </div>
 
 <script>
@@ -831,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!label || !bar) return;
 
   const today = new Date();
-  const r = window.PLAN.monzoMoveAer / 12;  // 2.75% AER
+  const r = window.PLAN.monzoMoveAer / 12;  // {{monzoMoveAer:percent}} AER
   const potStart = new Date(...window.PLAN.moveFirstPaydayDate);
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
   const moveTarget = window.PLAN.moveTargetGbp;
@@ -846,14 +537,14 @@ document.addEventListener('DOMContentLoaded', () => {
       <span style="font-size:1.4rem;">✈️</span>
       <div class="goal-card-meta"><div class="goal-card-label">Goal 3 · Travel · CSP Engine</div><div class="goal-card-title">Travel More for Less</div></div>
     </div>
-    <div class="goal-subcopy">UR points toward Polaris LHR→ORD · 75k welcome bonus covers it · £220 cash out of pocket (APD only)</div>
+    <div class="goal-subcopy">UR points toward Polaris LHR→ORD · {{cspWelcomePoints:k}} welcome bonus covers it · {{polarisCashGbp:gbp}} cash out of pocket (APD only)</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-travel-prog" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
     <div class="prog-labels"><span>Get CSP</span><span id="m-travel-prog-lbl" style="color:var(--amber)">0 UR · pre-card</span><span>Fly Polaris</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Core win</span><span style="font-weight:600;">Spend less on fees and bad redemptions</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--green); font-weight:600;">75k UR after $5k natural spend</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--green); font-weight:600;">{{cspWelcomePoints:k}} UR after {{cspSpendUsd:usdk}} natural spend</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Use order</span><span style="font-weight:600;">Chase Travel / Points Boost → partners → cash floor</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Decision rule</span><span style="font-weight:600;">Compare United, Aeroplan, Virgin, Flying Blue, BA, Hyatt</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Target redemption</span><span style="font-weight:600;">Transfer UR → United MileagePlus for Polaris LHR→ORD · £220 cash (APD only)</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Target redemption</span><span style="font-weight:600;">Transfer UR → United MileagePlus for Polaris LHR→ORD · {{polarisCashGbp:gbp}} cash (APD only)</span></div>
     <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">CSP first · then book Polaris with UR</span><span>2027+</span></div>
   </div>
 
@@ -865,9 +556,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="goal-subcopy">10-year long residence from 12 Sep 2019 · no more visa renewals</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
     <div class="prog-labels"><span>12 Sep 2019</span><span id="m-ilr-lbl" style="color:var(--cyan)">3 years, 1 month to go</span><span>12 Sep 2029</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">ILR fee</span><span style="color:var(--amber); font-weight:600;">£2,885 now · rises 5%/yr · £3,340 by 2029</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Total all-in</span><span style="color:var(--indigo); font-weight:600;">£3,400 fee + £50 Life in the UK test · DIY application</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Funded by</span><span style="color:var(--green); font-weight:600;">£4k net bonus</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">ILR fee</span><span style="color:var(--amber); font-weight:600;">{{ilrFeeCurrentGbp:gbp}} now · rises {{ilrFeeGrowth:percent}}/yr · {{ilrFeeProjectedGbp:gbp}} by 2029</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Total all-in</span><span style="color:var(--indigo); font-weight:600;">{{ilrFeeBudgetGbp:gbp}} fee + {{lifeInUkTestGbp:gbp}} Life in the UK test · DIY application</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Funded by</span><span style="color:var(--green); font-weight:600;">{{netBonusBudgetGbp:gbpk}} net bonus</span></div>
     <div class="goal-row-m"><span class="goal-row-k">What it unlocks</span><span style="font-weight:600;">Live and work in UK permanently · no immigration stress</span></div>
     <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Track absences · Life in the UK test · application window Sep 2029</span><span>Sep 2029</span></div>
   </div>
@@ -882,15 +573,15 @@ document.addEventListener('DOMContentLoaded', () => {
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.4rem; margin-bottom:12px;">
       <div style="text-align:center; padding:0.45rem 0.2rem; background:rgba(52,211,153,0.06); border-radius:6px;">
         <div style="font-size:0.54rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Purchase</div>
-        <div style="font-size:0.82rem; font-weight:700; color:var(--green);">€50k–€80k</div>
+        <div style="font-size:0.82rem; font-weight:700; color:var(--green);">{{euSalaryLowEur:eurk}}–{{euSalaryHighEur:eurk}}</div>
       </div>
       <div style="text-align:center; padding:0.45rem 0.2rem; background:rgba(251,191,36,0.06); border-radius:6px;">
         <div style="font-size:0.54rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Buy costs</div>
-        <div style="font-size:0.82rem; font-weight:700; color:var(--amber);">+8%</div>
+        <div style="font-size:0.82rem; font-weight:700; color:var(--amber);">+{{euSalaryGrowth:percent}}</div>
       </div>
       <div style="text-align:center; padding:0.45rem 0.2rem; background:rgba(100,116,139,0.08); border-radius:6px;">
         <div style="font-size:0.54rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Running/yr</div>
-        <div style="font-size:0.82rem; font-weight:700; color:var(--soft);">€2k–€4k</div>
+        <div style="font-size:0.82rem; font-weight:700; color:var(--soft);">{{euTuitionLowEur:eurk}}–{{euTuitionHighEur:eurk}}</div>
       </div>
     </div>
 
@@ -929,7 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <div style="background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.18); border-radius:7px; padding:0.65rem;">
         <div style="font-size:0.56rem; color:var(--amber); font-weight:700; text-transform:uppercase; margin-bottom:3px;">UK SDLT trap</div>
-        <div style="font-size:0.65rem; color:var(--soft); line-height:1.5;">Own anything abroad → lose first-time buyer SDLT relief + 3% surcharge on UK purchase. £12k–£15k extra on a £400k flat. Buy UK first, then EU.</div>
+        <div style="font-size:0.65rem; color:var(--soft); line-height:1.5;">Own anything abroad → lose first-time buyer SDLT relief + {{ukPropertySurchargeAssumption:percent}} surcharge on UK purchase. {{ukPropertyExtraLowGbp:gbpk}}–{{ukPropertyExtraHighGbp:gbpk}} extra on a {{ukPropertyExampleGbp:gbpk}} flat. Buy UK first, then EU.</div>
       </div>
     </div>
 
@@ -985,21 +676,21 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     </div>
     <div class="fire-story-m" id="m-fire-story">
-      <strong>Readout:</strong> age 47 at £75k/yr; state income trims the draw.
+      <strong>Readout:</strong> age 47 at {{fireSpendHighGbp:gbpk}}/yr; state income trims the draw.
     </div>
   </div>
 
   <div class="card">
     <div class="fire-kicker-m">Inputs</div>
     <div class="fire-backbone-m">
-      <div class="fire-pill-m">Accessible <strong id="m-acc-lbl">£655/mo</strong></div>
-      <div class="fire-pill-m">UK pension <strong id="m-pen-lbl">£1,020/mo</strong></div>
-      <div class="fire-pill-m">US Roth <strong id="m-roth-lbl">£0/mo</strong></div>
+      <div class="fire-pill-m">Accessible <strong id="m-acc-lbl">{{fireAccessibleMonthlyGbp:gbp}}/mo</strong></div>
+      <div class="fire-pill-m">UK pension <strong id="m-pen-lbl">{{pensionMonthlyGbp:gbp}}/mo</strong></div>
+      <div class="fire-pill-m">US Roth <strong id="m-roth-lbl">{{fireRothMonthlyGbp:gbp}}/mo</strong></div>
     </div>
     <div class="fire-chip-row-m">
-      <button class="fire-chip-m active" type="button" data-m-fire-spend="45000" onclick="mSetFireSpend(45000)"><strong>Base</strong><span>£45k/yr</span></button>
-      <button class="fire-chip-m" type="button" data-m-fire-spend="60000" onclick="mSetFireSpend(60000)"><strong>Comfort</strong><span>£60k/yr</span></button>
-      <button class="fire-chip-m" type="button" data-m-fire-spend="75000" onclick="mSetFireSpend(75000)"><strong>Luxe</strong><span>£75k/yr</span></button>
+      <button class="fire-chip-m active" type="button" data-m-fire-spend="45000" onclick="mSetFireSpend(45000)"><strong>Base</strong><span>{{fireSpendLowGbp:gbpk}}/yr</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-spend="60000" onclick="mSetFireSpend(60000)"><strong>Comfort</strong><span>{{fireSpendMidGbp:gbpk}}/yr</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-spend="75000" onclick="mSetFireSpend(75000)"><strong>Luxe</strong><span>{{fireSpendHighGbp:gbpk}}/yr</span></button>
     </div>
     <div class="fire-scenario-row-m">
       <button class="fire-chip-m" type="button" data-m-fire-state="self" onclick="mSetStateScenario('self')"><strong>Self</strong><span>— at 67</span></button>
@@ -1010,19 +701,19 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="fire-slider-shell-m">
       <div class="fire-slider-top-m">
         <div>
-          <div class="ctrl-label" style="margin-bottom:2px;">Annual spend <span id="m-sp-lbl">£45,000</span></div>
+          <div class="ctrl-label" style="margin-bottom:2px;">Annual spend <span id="m-sp-lbl">{{fireSpendLowGbp:gbp}}</span></div>
           <div class="fire-slider-copy-m" id="m-fire-mode-copy">Base path, current saving pace.</div>
         </div>
-        <div class="fire-slider-big-m" id="m-fire-slider-big">£45k</div>
+        <div class="fire-slider-big-m" id="m-fire-slider-big">{{fireSpendLowGbp:gbpk}}</div>
       </div>
       <input type="range" id="m-sp" min="15000" max="80000" step="1000" value="45000" oninput="mCalcFire()">
-      <div class="fire-scale-m"><span>£15k</span><span>£47.5k</span><span>£80k</span></div>
+      <div class="fire-scale-m"><span>{{fireSliderMinGbp:gbpk}}</span><span>{{fireSliderMidGbp:gbpk1}}</span><span>{{fireSliderMaxGbp:gbpk}}</span></div>
     </div>
     <div class="fire-toggle-m" style="margin-top:10px;">
       <label class="toggle"><input type="checkbox" id="m-bruceToggle" onchange="mCalcFire()"><span class="toggle-slider"></span></label>
       <div class="fire-toggle-copy-m">
         <strong>Dad gifts</strong>
-        <span id="m-fire-gift-copy">Off in the base plan. Adds £16k/yr from 2029 if switched on.</span>
+        <span id="m-fire-gift-copy">Off in the base plan. Adds {{optionalGiftAnnualGbp:gbpk}}/yr from 2029 if switched on.</span>
       </div>
     </div>
   </div>
@@ -1031,7 +722,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="section-title">Net Worth Composition</div>
   <div class="card">
     <div style="font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:2px;" id="m-nw-total">—</div>
-    <div style="font-size:0.7rem;color:var(--muted);margin-bottom:10px;">total net worth · USD at £0.77 · updates on load</div>
+    <div style="font-size:0.7rem;color:var(--muted);margin-bottom:10px;">total net worth · USD at {{fxGbpPerUsd:gbp2}} · updates on load</div>
 
     <!-- Projection slider -->
     <div style="margin-bottom:12px;padding:8px 10px;background:rgba(129,140,248,0.06);border:1px solid rgba(129,140,248,0.15);border-radius:10px;">
@@ -1060,32 +751,32 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="metric-label">Total Portfolio</div>
       <div class="metric-value" id="m-invest-total" style="color:var(--green)">—</div>
       <div class="metric-sub">All pillars · GBP equiv.</div>
-      <div class="metric-badge badge-green">£650/mo flowing in</div>
+      <div class="metric-badge badge-green">{{wiseMonthlyGbp:gbp}}/mo flowing in</div>
     </div>
     <div class="metric">
       <div class="metric-label">Monthly Flow</div>
-      <div class="metric-value" style="color:var(--indigo)">£650</div>
+      <div class="metric-value" style="color:var(--indigo)">{{wiseMonthlyGbp:gbp}}</div>
       <div class="metric-sub">25th Wise pull · 26th USD send</div>
-      <div class="metric-badge badge-indigo">$850/mo ACH</div>
+      <div class="metric-badge badge-indigo">{{fidelityTaxableMonthlyUsd:usd}}/mo ACH</div>
     </div>
   </div>
 
   <div class="section-title">Investment Accounts</div>
   <div class="card">
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">AbbVie Pension · Aviva</div><div style="font-size:0.64rem;color:var(--muted);">18% total in · 5.5% CAGR · SALX top-ups</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">AbbVie Pension · Aviva</div><div style="font-size:0.64rem;color:var(--muted);">{{pensionTotalRate:percent}} total in · {{pensionReturn:percent}} CAGR · SALX top-ups</div></div>
       <span class="fire-stat-val" id="m-inv-pension" style="color:var(--pink)">—</span>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Roth IRA (Brokerage)</div><div style="font-size:0.64rem;color:var(--muted);">$8,309 balance · 2026 maxed</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Roth IRA (Brokerage)</div><div style="font-size:0.64rem;color:var(--muted);">{{rothBrokerageBalanceUsd:usd}} balance · 2026 maxed</div></div>
       <span class="fire-stat-val" id="m-inv-roth" style="color:var(--amber)">—</span>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Fidelity Taxable</div><div style="font-size:0.64rem;color:var(--muted);">+$850/mo · FSKAX/FTIHX/FXNAX</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Fidelity Taxable</div><div style="font-size:0.64rem;color:var(--muted);">+{{fidelityTaxableMonthlyUsd:usd}}/mo · FSKAX/FTIHX/FXNAX</div></div>
       <span class="fire-stat-val" id="m-inv-fid" style="color:var(--green)">—</span>
     </div>
     <div class="fire-stat-row" style="border-bottom:none;opacity:0.6;">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--muted);">Class C Legacy</div><div style="font-size:0.64rem;color:var(--muted);">$3,948 · 1% ER · no new contributions</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--muted);">Class C Legacy</div><div style="font-size:0.64rem;color:var(--muted);">{{advisorBalanceUsd:usd}} · {{advisorExpenseRatio:percent}} ER · no new contributions</div></div>
       <span class="fire-stat-val" style="color:var(--muted);">review</span>
     </div>
   </div>
@@ -1098,16 +789,16 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="mini-note-head">
       <div>
         <div class="mini-note-title">AbbVie SIP stays in investments, not goals</div>
-        <div class="mini-note-copy">Let it run automatically, then do one annual Nov/Dec sweep once shares clear the 5-year mark.</div>
+        <div class="mini-note-copy">Let it run automatically, then do one annual Nov/Dec sweep once shares clear the {{sipHoldYears:number}}-year mark.</div>
       </div>
       <div class="mini-note-badge">SIP</div>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Real monthly cost</div><div style="font-size:0.64rem;color:var(--muted);">£150 sacrifice less 40% IT + 2% NI saved</div></div>
-      <span class="fire-stat-val" style="color:var(--green)">£87</span>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">Real monthly cost</div><div style="font-size:0.64rem;color:var(--muted);">{{sipEmployeeMonthlyGbp:gbp}} sacrifice less {{sipIncomeTaxRate:percent}} IT + {{sipNiRate:percent}} NI saved</div></div>
+      <span class="fire-stat-val" style="color:var(--green)">{{sipNetMonthlyGbp:gbp}}</span>
     </div>
     <div class="fire-stat-row">
-      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">What to do</div><div style="font-size:0.64rem;color:var(--muted);">Wait for the 5-year mark, then annual sweep</div></div>
+      <div><div style="font-size:0.78rem;font-weight:600;color:var(--text);">What to do</div><div style="font-size:0.64rem;color:var(--muted);">Wait for the {{sipHoldYears:number}}-year mark, then annual sweep</div></div>
       <span class="fire-stat-val" style="color:var(--amber)">Nov/Dec 2029</span>
     </div>
     <div class="fire-stat-row" style="border-bottom:none;">
@@ -1121,7 +812,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div style="font-size:0.75rem;color:var(--muted);line-height:1.8;">
       🚫 No ISAs while US citizen · trigger = CLN, not ILR<br>
       ✅ Always FTC (Form 1116) · never FEIE<br>
-      💸 SALX = 50% of bonus pre-tax into pension<br>
+      💸 SALX = {{bonusSalxShare:percent}} of bonus pre-tax into pension<br>
       🎯 Next: Chase Sapphire Preferred · Jan 2027
     </div>
   </div>
@@ -1200,7 +891,7 @@ function liveEstimates() {
   const daysA    = daysSince(ANCHOR);            // kept for pension/investments (Feb 24 anchor)
   const daysSav  = Math.floor(daysSince(SAVINGS_ANCHOR));
   const atomEst      = Math.round(window.PLAN.atomBalanceGbp      * Math.pow((1 + window.PLAN.atomAer), daysSav / 365));
-  const efSavingsEst = Math.round(window.PLAN.monzoEfBalanceGbp   * Math.pow((1 + window.PLAN.monzoEfAer), daysSav / 365)); // Monzo EF · 3.15% AER
+  const efSavingsEst = Math.round(window.PLAN.monzoEfBalanceGbp   * Math.pow((1 + window.PLAN.monzoEfAer), daysSav / 365)); // Monzo EF · {{monzoEfAer:percent}} AER
   const monzoEst = window.Finance.moveBalance(today);
   document.querySelectorAll("[data-live-move]").forEach(el => { el.textContent = "£" + monzoEst.toLocaleString("en-GB", {maximumFractionDigits:2}); }); // move fund only
 
@@ -1238,7 +929,7 @@ function liveEstimates() {
   ) * 100) / 100;
   const chaseUSEst = PLAN.chaseUSBalanceUsd; // confirmed 5 Aug 2026 working-capital anchor
 
-  // UK pension reanchored 6 May 2026 at £23,761.08 after SALX/recent payroll updates.
+  // UK pension reanchored 6 May 2026 at {{pensionAnchorGbp:gbp2}} after SALX/recent payroll updates.
   const PENSION_ANCHOR = new Date(...window.PLAN.pensionAnchorDate);
   const PENSION_VAL    = window.PLAN.pensionAnchorGbp;
   const NEXT_PENSION_PAYDAY = new Date(...window.PLAN.pensionNextPaydayDate);
@@ -1306,7 +997,7 @@ function liveEstimates() {
   if (mp7s) mp7s.textContent = fmt(efSavingsEst);
   // Chase UK: static display (schedule estimate too volatile; kept for NW calc only)
   const ce = document.getElementById('m-bal-chase');
-  if (ce) { ce.textContent = '£2,146'; ce.style.color = 'var(--indigo)'; }
+  if (ce) { ce.textContent = '{{chaseUkDisplayGbp:gbp}}'; ce.style.color = 'var(--indigo)'; }
   const fmtUsdRounded = value => '$' + Math.round(value).toLocaleString('en-GB');
   document.getElementById('m-bal-fid').textContent = fmtUsdRounded(fidelityEst);
   document.getElementById('m-bal-roth').textContent = fmtUsdRounded(rothEst);
@@ -1370,17 +1061,17 @@ function liveEstimates() {
   const ns = document.getElementById('m-net-sub');
   const nb = document.getElementById('m-net-badge');
   const budgetHeadroom = 'Post-promotion salary';
-  if (isJul)           { nv.textContent='£3,736'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
-  else if (isApr)      { nv.textContent='£3,736'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
-  else if (isAprPre)   { nv.textContent='£3,736'; ns.textContent='£68,000 salary · payday 24th'; nb.textContent=budgetHeadroom; }
-  else if (isMarch)    { nv.textContent='£5,012'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
-  else                 { nv.textContent='£3,736';  ns.textContent='£68,000 salary · payday 24th';  nb.textContent=budgetHeadroom; }
+  if (isJul)           { nv.textContent='{{salaryNetMonthlyGbp:gbp}}'; ns.textContent='{{salaryGrossGbp:gbp}} salary · payday 24th'; nb.textContent=budgetHeadroom; }
+  else if (isApr)      { nv.textContent='{{salaryNetMonthlyGbp:gbp}}'; ns.textContent='{{salaryGrossGbp:gbp}} salary · payday 24th'; nb.textContent=budgetHeadroom; }
+  else if (isAprPre)   { nv.textContent='{{salaryNetMonthlyGbp:gbp}}'; ns.textContent='{{salaryGrossGbp:gbp}} salary · payday 24th'; nb.textContent=budgetHeadroom; }
+  else if (isMarch)    { nv.textContent='{{salaryNetBonusMonthGbp:gbp}}'; ns.textContent='Bonus month!'; nb.textContent='SALX + salary'; }
+  else                 { nv.textContent='{{salaryNetMonthlyGbp:gbp}}';  ns.textContent='{{salaryGrossGbp:gbp}} salary · payday 24th';  nb.textContent=budgetHeadroom; }
 
   // Net worth composition
   const mSegs = [
     { label:'UK Savings',     val: atomEst + efSavingsEst + monzoEst + chaseEst,  color:'#22d3ee', note:'Atom · Monzo EF · Move Fund · Chase UK' },
-    { label:'AbbVie Pension', val: pensionEst,                      color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
-    { label:'ABBV SIP Shares',val: sipEst,                          color:'#f472b6', note:'Locked 5yr · acquisition cost' },
+    { label:'AbbVie Pension', val: pensionEst,                      color:'#818cf8', note:'Aviva · {{pensionReturn:percent}} CAGR est.' },
+    { label:'ABBV SIP Shares',val: sipEst,                          color:'#f472b6', note:'Locked {{sipHoldYears:number}}yr · acquisition cost' },
     { label:'US Brokerage',   val: Math.round(fidelityEst * FX_M), color:'#34d399', note:'Fidelity — FSKAX/FTIHX/FXNAX' },
     { label:'Brokerage Roth', val: Math.round(rothEst * FX_M),     color:'#fbbf24', note:'Active Roth IRA · Advisor Roth separate' },
     { label:'US Cash',        val: Math.round(chaseUSEst * FX_M),  color:'#6366f1', note:'Chase US — pipeline hub' },
@@ -1463,8 +1154,8 @@ function nwSliderChange(yrs) {
   const rothFV    = Math.round((gNwBases.rothUSD    * Math.pow(1+rInvest, months) + fvc(PLAN.rothBrokerageMonthlyUsd, months, rInvest)) * FX);
   renderNWSegs([
     { label:'UK Savings',     val: Math.round(ukSav),       color:'#22d3ee', note:'Atom · Monzo · Chase UK' },
-    { label:'AbbVie Pension', val: Math.round(pensionFV),   color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
-    { label:'ABBV SIP Shares',val: Math.round(sip),         color:'#f472b6', note:'Locked 5yr · acquisition cost' },
+    { label:'AbbVie Pension', val: Math.round(pensionFV),   color:'#818cf8', note:'Aviva · {{pensionReturn:percent}} CAGR est.' },
+    { label:'ABBV SIP Shares',val: Math.round(sip),         color:'#f472b6', note:'Locked {{sipHoldYears:number}}yr · acquisition cost' },
     { label:'US Brokerage',   val: fidFV,                   color:'#34d399', note:'Fidelity — FSKAX/FTIHX/FXNAX' },
     { label:'Brokerage Roth', val: rothFV,                  color:'#fbbf24', note:'Active Roth IRA · Advisor Roth separate' },
     { label:'US Cash',        val: Math.round(gNwBases.usCashUSD * FX), color:'#6366f1', note:'Chase US — pipeline hub' },
@@ -1485,8 +1176,8 @@ liveEstimates();
   document.getElementById('m-csp-prog').style.width = cspProgress.toFixed(1) + '%';
   document.getElementById('m-csp-lbl').textContent  = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
-  // Move pot — £130/mo; reanchored after the 1 Aug gift allocation.
-  const r = window.PLAN.monzoMoveAer / 12;  // 2.75% AER
+  // Move pot — {{moveMonthlyGbp:gbp}}/mo; reanchored after the 1 Aug gift allocation.
+  const r = window.PLAN.monzoMoveAer / 12;  // {{monzoMoveAer:percent}} AER
   const potStart = new Date(...window.PLAN.moveFirstPaydayDate);
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
   function potContribution(d) {
@@ -1522,7 +1213,7 @@ liveEstimates();
     travelPct = 5 + Math.round(elapsed / total * 95);
     travelLbl = `~${Math.round(elapsed / total * 75000).toLocaleString()} UR earned`;
   } else {
-    travelPct = 100; travelLbl = '75k UR · ready to book';
+    travelPct = 100; travelLbl = '{{cspWelcomePoints:k}} UR · ready to book';
   }
   const mTravelEl = document.getElementById('m-travel-prog');
   if (mTravelEl) mTravelEl.style.width = travelPct + '%';
@@ -1687,8 +1378,8 @@ function mCalcFire() {
   }
 
   const giftCopy = bruce
-    ? `On: £16k/yr from 2029, about ${giftImpactYearsRounded} years earlier.`
-    : `Off in the base plan. Adds £16k/yr from 2029 if switched on.`;
+    ? `On: {{optionalGiftAnnualGbp:gbpk}}/yr from 2029, about ${giftImpactYearsRounded} years earlier.`
+    : `Off in the base plan. Adds {{optionalGiftAnnualGbp:gbpk}}/yr from 2029 if switched on.`;
 
   const stateLabel = stateIncome === 0 ? '£0/yr' : '£' + stateIncome.toLocaleString('en-GB') + '/yr';
   let story = `Age ${fireAge} is the modeled optionality point at £${sp.toLocaleString('en-GB')}/yr. Before pension access, the bridge uses accessible assets first.`;
@@ -1733,12 +1424,12 @@ mCalcFire();
     <button class="modal-close" onclick="document.getElementById('invest-modal').classList.remove('open')">×</button>
     <div style="font-size:0.58rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:0.4rem;">Locked April 2026</div>
     <div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem;">Investing System</div>
-    <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">Wise pulls £650 from Chase UK on the 25th, sends $850 to Chase US on the 26th, Fidelity ACH pulls on the 30th, and recurring buys execute on the 1st.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Both accounts</div><div class="modal-rule-value">FSKAX 85% · FTIHX 10% · FXNAX 5%. Identical allocation. No monthly rebalancing.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Roth IRA (Brokerage) · $8,309 balance</div><div class="modal-rule-value">2026 is fully maxed at $7,500 contributed. Leave the invested balance in place; no further 2026 buys go here. Advisor Roth stays separate.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Taxable · $850/mo</div><div class="modal-rule-value">Until the 2027 Roth year opens, whole-dollar automatic buys are $723 FSKAX, $85 FTIHX, $42 FXNAX. 0.3%/yr dividend drag · 15% LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">$3,948 · 1% ER · no new money. Review migration when convenient.</div></div>
-    <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET: salary sacrifice now, tax-free growth, 25% lump sum + 75% income at drawdown. Live pension projection shown above.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Monthly flow</div><div class="modal-rule-value">Wise pulls {{wiseMonthlyGbp:gbp}} from Chase UK on the 25th, sends {{fidelityTaxableMonthlyUsd:usd}} to Chase US on the 26th, Fidelity ACH pulls on the 30th, and recurring buys execute on the 1st.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Both accounts</div><div class="modal-rule-value">FSKAX {{fskaxWeight:percent}} · FTIHX {{ftihxWeight:percent}} · FXNAX {{fxnaxWeight:percent}}. Identical allocation. No monthly rebalancing.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Roth IRA (Brokerage) · {{rothBrokerageBalanceUsd:usd}} balance</div><div class="modal-rule-value">2026 is fully maxed at {{rothContributed2026Usd:usd}} contributed. Leave the invested balance in place; no further 2026 buys go here. Advisor Roth stays separate.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Taxable · {{fidelityTaxableMonthlyUsd:usd}}/mo</div><div class="modal-rule-value">Until the 2027 Roth year opens, whole-dollar automatic buys are {{fskaxMonthlyUsd:usd}} FSKAX, {{ftihxMonthlyUsd:usd}} FTIHX, {{fxnaxMonthlyUsd:usd}} FXNAX. {{dividendDrag:percent}}/yr dividend drag · {{usGainsRate:percent}} LTCG at sale. Pre-retirement bridge. Access anytime.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">{{advisorBalanceUsd:usd}} · {{advisorExpenseRatio:percent}} ER · no new money. Review migration when convenient.</div></div>
+    <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET: salary sacrifice now, tax-free growth, {{pensionTaxFreeShare:percent}} lump sum + {{pensionTaxableShare:percent}} income at drawdown. Live pension projection shown above.</div></div>
     <div class="modal-rule" style="border-bottom:none;"><div class="modal-rule-label">No ISAs</div><div class="modal-rule-value">Blocked while US citizen. Trigger = CLN only.</div></div>
   </div>
 </div>
