@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="ab49cb850cafc19f">
+<meta name="finance-build" content="163035fc16174668">
 <script>
 (() => {
   try {
-    const build = 'ab49cb850cafc19f';
+    const build = '163035fc16174668';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -567,10 +567,11 @@ document.addEventListener('DOMContentLoaded', () => {
   .tax-row:last-child { border-bottom:none; }
   .tax-row-label { font-size:0.82rem; color:var(--soft); }
   .tax-row-value { font-size:0.9rem; font-weight:700; color:var(--text); }
-  .tax-rule { display:flex; align-items:flex-start; gap:0.8rem; padding:0.8rem; background:var(--card2); border-radius:8px; margin-bottom:0.6rem; }
-  .tax-rule-icon { font-size:1rem; flex-shrink:0; margin-top:0.1rem; }
-  .tax-rule-text { font-size:0.8rem; color:var(--soft); line-height:1.5; }
-  .tax-rule-text strong { color:var(--text); display:block; margin-bottom:0.1rem; }
+  .locked-tax-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.45rem; align-items:start; }
+  .tax-rule { display:flex; align-items:flex-start; gap:0.5rem; padding:0.55rem 0.65rem; background:var(--card2); border-radius:8px; margin-bottom:0; }
+  .tax-rule-icon { font-size:0.85rem; flex-shrink:0; margin-top:0.05rem; }
+  .tax-rule-text { font-size:0.68rem; color:var(--soft); line-height:1.3; }
+  .tax-rule-text strong { color:var(--text); display:block; margin-bottom:0.05rem; font-size:0.74rem; }
   .tax-calendar { display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem; margin-top:1rem; }
   .cal-item { background:var(--card2); border-radius:10px; padding:0.9rem; text-align:center; border:1px solid var(--border); }
   .cal-month { font-size:0.7rem; font-weight:700; color:var(--indigo); text-transform:uppercase; letter-spacing:.06em; }
@@ -785,6 +786,7 @@ document.addEventListener('DOMContentLoaded', () => {
     border:1px solid rgba(251,191,36,0.15); border-radius:7px; padding:0.5rem 0.8rem; line-height:1.5; }
   .chat-offline-msg code { background:var(--bg); padding:0.1rem 0.3rem; border-radius:3px; font-size:0.7rem; }
   @media(max-width:900px){
+    .locked-tax-grid { grid-template-columns:1fr 1fr; }
     .chatbar { padding:1rem; }
     .chatbar-inner.is-expanded { width:calc(100vw - 24px); top:12px; height:calc(100vh - 24px); }
     .chatbar-top { align-items:flex-start; gap:0.8rem; }
@@ -1419,7 +1421,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <!-- Locked Rules -->
     <div class="chart-card" style="margin-top:1.4rem;">
       <h3>Locked Tax Rules</h3>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; align-items:start;">
+      <div class="locked-tax-grid">
         <div class="tax-rule"><div class="tax-rule-icon">✅</div><div class="tax-rule-text"><strong>FTC / Form 1116 always</strong>Never FEIE / Form 2555.</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>No ISAs while US citizen</strong>S&amp;S ISAs create PFIC risk; cash ISAs add complexity.</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">🔒</div><div class="tax-rule-text"><strong>Revisit only after CLN</strong>ILR or British citizenship does not change the tax rule.</div></div>
