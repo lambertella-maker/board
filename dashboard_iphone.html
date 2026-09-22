@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="5c4e80d974a374f9">
+<meta name="finance-build" content="4f4c5f9040061271">
 <script>
 (() => {
   try {
-    const build = '5c4e80d974a374f9';
+    const build = '4f4c5f9040061271';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -39,7 +39,7 @@ window.PLAN = Object.freeze({
   "atomWithdrawalAer": 0.02,
   "birthDate": [
     2001,
-    1,
+    2,
     18
   ],
   "bonus2026GrossGbp": 6371,
@@ -76,6 +76,14 @@ window.PLAN = Object.freeze({
   "emergencyAnchorGbp": 14973,
   "emergencyTargetHighGbp": 18000,
   "emergencyTargetLowGbp": 16000,
+  "employerIncomeProtectionBasis": "Payable after injury or illness until able to return to work",
+  "employerIncomeProtectionProvider": "MetLife",
+  "employerIncomeProtectionRate": 0.67,
+  "employerLifeAssuranceBasis": "Lump sum on death; reported inheritance-tax-free",
+  "employerLifeAssuranceCoverGbp": 272000,
+  "employerLifeAssuranceEmploymentLinked": true,
+  "employerLifeAssuranceMultiple": 4,
+  "employerLifeAssuranceProvider": "Aviva",
   "euSalaryGrowth": 0.08,
   "euSalaryHighEur": 80000,
   "euSalaryLowEur": 50000,
@@ -785,10 +793,11 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="pillar-mobile p-green">
     <div class="pillar-header"><div class="pillar-ico">🌍</div><div><div class="pillar-label">Pillar 9 · Optionality</div><div class="pillar-name">Dual-Continent Architecture</div></div></div>
     <div class="pillar-body">
-      <div class="pillar-stat-row"><span class="pillar-stat-k">UK assets</span><span class="pillar-stat-v" style="color:var(--green)">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">US assets</span><span class="pillar-stat-v">—</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">UK assets</span><span class="pillar-stat-v" id="m-pillar-uk-assets" style="color:var(--green)">Calculating…</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">US assets</span><span class="pillar-stat-v" id="m-pillar-us-assets">Calculating…</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">ILR target</span><span class="pillar-stat-v">Sep 2029</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Citizenship eligible</span><span class="pillar-stat-v">12 Sep 2030+ · optional</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Protection</span><span class="pillar-stat-v">MetLife 67% · Aviva 4× salary</span></div>
       <div class="pillar-why-text">Retire in the UK, the US, or Europe. After 2030 a British passport adds 186 visa-free countries. This is exceptional.</div>
     </div>
   </div>
@@ -1404,6 +1413,12 @@ function liveEstimates() {
     { label:'US Cash',        val: Math.round(chaseUSEst * FX_M),  color:'#6366f1', note:'Chase US — pipeline hub' },
   ];
   const mTotal  = mSegs.reduce((s, x) => s + x.val, 0);
+  const mUkAssets = mSegs.filter(s => ['UK Savings', 'AbbVie Pension', 'ABBV SIP Shares'].includes(s.label)).reduce((s, x) => s + x.val, 0);
+  const mUsAssets = mSegs.filter(s => ['US Brokerage', 'Brokerage Roth', 'US Cash'].includes(s.label)).reduce((s, x) => s + x.val, 0);
+  const mUkAssetsEl = document.getElementById('m-pillar-uk-assets');
+  const mUsAssetsEl = document.getElementById('m-pillar-us-assets');
+  if (mUkAssetsEl) mUkAssetsEl.textContent = `£${Math.round(mUkAssets).toLocaleString('en-GB')}`;
+  if (mUsAssetsEl) mUsAssetsEl.textContent = `£${Math.round(mUsAssets).toLocaleString('en-GB')}`;
   const mLiquid = mSegs
     .filter(s => ['UK Savings', 'US Brokerage', 'US Cash'].includes(s.label))
     .reduce((sum, s) => sum + s.val, 0);

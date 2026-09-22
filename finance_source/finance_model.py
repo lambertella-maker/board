@@ -11,6 +11,7 @@ def load_plan(overrides=None):
     p['monthlySpendGbp'] = sum(p[k] for k in ('rentMonthlyGbp', 'groceriesMonthlyGbp', 'eatingOutMonthlyGbp', 'shoppingMonthlyGbp', 'transportMonthlyGbp', 'subscriptionsMonthlyGbp', 'utilitiesExPhoneMonthlyGbp', 'phoneMonthlyGbp', 'otherMonthlyGbp'))
     p['monthlyLeftoverGbp'] = p['salaryNetMonthlyGbp'] - p['monthlySpendGbp']
     p['salaryGrossMonthlyGbp'] = p['salaryGrossGbp'] / 12
+    p['employerLifeAssuranceCoverGbp'] = p['salaryGrossGbp'] * p['employerLifeAssuranceMultiple']
     p['salaryNetAnnualGbp'] = p['salaryNetMonthlyGbp'] * 12
     p['salaryNextMeritGbp'] = p['salaryGrossGbp'] * (1 + p['meritAssumption'])
     p['pensionEmployeeMonthlyGbp'] = p['salaryGrossGbp'] * p['pensionEmployeeRate'] / 12

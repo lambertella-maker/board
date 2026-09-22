@@ -1,5 +1,12 @@
 {
   "salaryGrossGbp": 68000,
+  "employerIncomeProtectionProvider": "MetLife",
+  "employerIncomeProtectionRate": 0.67,
+  "employerIncomeProtectionBasis": "Payable after injury or illness until able to return to work",
+  "employerLifeAssuranceMultiple": 4,
+  "employerLifeAssuranceProvider": "Aviva",
+  "employerLifeAssuranceBasis": "Lump sum on death; reported inheritance-tax-free",
+  "employerLifeAssuranceEmploymentLinked": true,
   "salaryNetMonthlyGbp": 3736,
   "salaryNetBonusMonthGbp": 5012,
   "rentMonthlyGbp": 1125,
@@ -129,7 +136,7 @@
   ],
   "birthDate": [
     2001,
-    1,
+    2,
     18
   ],
   "moveFirstPaydayDate": [

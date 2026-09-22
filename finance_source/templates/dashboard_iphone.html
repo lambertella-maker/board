@@ -464,10 +464,11 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="pillar-mobile p-green">
     <div class="pillar-header"><div class="pillar-ico">🌍</div><div><div class="pillar-label">Pillar 9 · Optionality</div><div class="pillar-name">Dual-Continent Architecture</div></div></div>
     <div class="pillar-body">
-      <div class="pillar-stat-row"><span class="pillar-stat-k">UK assets</span><span class="pillar-stat-v" style="color:var(--green)">—</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">US assets</span><span class="pillar-stat-v">—</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">UK assets</span><span class="pillar-stat-v" id="m-pillar-uk-assets" style="color:var(--green)">Calculating…</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">US assets</span><span class="pillar-stat-v" id="m-pillar-us-assets">Calculating…</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">ILR target</span><span class="pillar-stat-v">Sep 2029</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Citizenship eligible</span><span class="pillar-stat-v">12 Sep 2030+ · optional</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Protection</span><span class="pillar-stat-v">MetLife {{employerIncomeProtectionRate:percent}} · Aviva {{employerLifeAssuranceMultiple:number}}× salary</span></div>
       <div class="pillar-why-text">Retire in the UK, the US, or Europe. After 2030 a British passport adds 186 visa-free countries. This is exceptional.</div>
     </div>
   </div>
@@ -1083,6 +1084,12 @@ function liveEstimates() {
     { label:'US Cash',        val: Math.round(chaseUSEst * FX_M),  color:'#6366f1', note:'Chase US — pipeline hub' },
   ];
   const mTotal  = mSegs.reduce((s, x) => s + x.val, 0);
+  const mUkAssets = mSegs.filter(s => ['UK Savings', 'AbbVie Pension', 'ABBV SIP Shares'].includes(s.label)).reduce((s, x) => s + x.val, 0);
+  const mUsAssets = mSegs.filter(s => ['US Brokerage', 'Brokerage Roth', 'US Cash'].includes(s.label)).reduce((s, x) => s + x.val, 0);
+  const mUkAssetsEl = document.getElementById('m-pillar-uk-assets');
+  const mUsAssetsEl = document.getElementById('m-pillar-us-assets');
+  if (mUkAssetsEl) mUkAssetsEl.textContent = `£${Math.round(mUkAssets).toLocaleString('en-GB')}`;
+  if (mUsAssetsEl) mUsAssetsEl.textContent = `£${Math.round(mUsAssets).toLocaleString('en-GB')}`;
   const mLiquid = mSegs
     .filter(s => ['UK Savings', 'US Brokerage', 'US Cash'].includes(s.label))
     .reduce((sum, s) => sum + s.val, 0);
