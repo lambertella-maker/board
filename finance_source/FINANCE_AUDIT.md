@@ -25,14 +25,14 @@ shares visible but outside the liquid subtotal.
 | Chase UK display | `chaseUkDisplayGbp` | £2,146 | liquid UK cash |
 | Fidelity taxable | `fidelityTaxableBalanceUsd` | £6,920.66 | liquid invested assets |
 | Fidelity Advisor Class C | `advisorBalanceUsd` | £3,040 | liquid invested assets |
-| Brokerage Roth | `rothBrokerageBalanceUsd` | £6,398 | invested, shown separately; excluded from liquid subtotal |
+| Brokerage Roth | `rothBrokerageBalanceUsd` | £6,398 total; £5,775 documented principal | full balance shown; only documented contribution basis is liquid |
 | Chase US | `chaseUSBalanceUsd` | £1,540 | liquid US cash |
 | Aviva pension | `pensionAnchorGbp` | £23,761.08 | retirement asset; excluded from liquid subtotal |
 
 The exact Roth conversion is `$8,309 × £0.77 = £6,398`. The anchor sums are:
 
 - UK savings: **£18,212**.
-- Liquid subtotal after the fix: **£29,613** (UK savings + taxable + Advisor + Chase US).
+- Liquid subtotal after the Roth-principal fix: **about £35,388** (UK savings + taxable + Advisor + documented Roth principal + Chase US).
 - Recorded assets including Roth and pension, before SIP shares and live growth:
   **£59,772**.
 
@@ -45,6 +45,13 @@ The age-67 projection includes taxable investments, Brokerage Roth, explicit Adv
 inputs, Fidelity Advisor Class C, SIP shares, pension, UK savings, and US cash. The
 Advisor Roth inputs are explicitly zero because no Advisor Roth balance is recorded in
 the local source documents; no balance is invented.
+
+For liquidity, the model now counts the documented Roth contribution basis only. IRS
+ordering rules treat regular Roth contributions as distributed before earnings; the
+full Roth market value is still shown separately in net worth, while earnings remain
+excluded from the emergency-liquid subtotal. The current source records `$7,500` of
+2026 Roth contributions and no older basis record, so `$7,500` is a conservative known
+minimum rather than an invented lifetime basis.
 
 ## Documents reviewed
 

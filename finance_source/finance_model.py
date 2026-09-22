@@ -32,6 +32,7 @@ def load_plan(overrides=None):
     p['fireAccessibleMonthlyGbp'] = p['fidelityTaxableMonthlyUsd'] * p['fxGbpPerUsd']
     p['fireRothMonthlyGbp'] = p['rothBrokerageMonthlyUsd'] * p['fxGbpPerUsd']
     p['rothRemaining2026Usd'] = max(0, p['rothLimit2026Usd'] - p['rothContributed2026Usd'])
+    p['rothLiquidPrincipalUsd'] = min(p['rothBrokerageBalanceUsd'], p['rothContributionBasisUsd'])
     p['emergencyAnchorGbp'] = p['atomBalanceGbp'] + p['monzoEfBalanceGbp']
     p['flexibleCashMonthlyGbp'] = p['monthlyLeftoverGbp'] - p['wiseMonthlyGbp'] - p['moveMonthlyGbp']
     p['investReturn'] = sum(p[f'{fund}Weight'] * p[f'{fund}Return'] for fund in ('fskax', 'ftihx', 'fxnax'))

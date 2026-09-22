@@ -1625,8 +1625,8 @@ const PLAN = window.PLAN;
 
 function liquidNetWorthFromSegments(segs) {
   return segs
-    .filter(s => ['UK Savings', 'US Brokerage', 'US Advisory', 'US Cash'].includes(s.label))
-    .reduce((sum, s) => sum + s.val, 0);
+    .filter(s => ['UK Savings', 'US Brokerage', 'US Advisory', 'Brokerage Roth', 'US Cash'].includes(s.label))
+    .reduce((sum, s) => sum + (typeof s.liquidVal === 'number' ? s.liquidVal : s.val), 0);
 }
 
 function fmtCompactK(value) {
@@ -1677,7 +1677,7 @@ function nwSliderChange(yrs) {
     { label:'AbbVie Pension', val: Math.round(gNwBases.pension*Math.pow(1+r55,months) + fvc(PLAN.pensionMonthlyGbp, months, r55)),                         color:'#818cf8', note:'Aviva workplace pension · {{pensionReturn:percent}} CAGR est.' },
     { label:'ABBV SIP Shares',val: Math.round(gNwBases.sip + PLAN.sipMonthlyGbp * Math.min(months, Math.max(0, PLAN.sipHoldMonths - gNwBases.sipCompleted))),                color:'#f472b6', note:'Locked {{sipHoldYears:number}}yr · acquisition cost est.' },
     { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+rInvest,months) + fvc(PLAN.fidelityTaxableMonthlyUsd, months, rInvest))*FX),                color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
-    { label:'Brokerage Roth', val: Math.round((gNwBases.rothUSD*Math.pow(1+rInvest,months) + fvc(PLAN.rothBrokerageMonthlyUsd, months, rInvest))*FX),               color:'#fbbf24', note:'Active Roth IRA · Advisor Roth separate' },
+    { label:'Brokerage Roth', val: Math.round((gNwBases.rothUSD*Math.pow(1+rInvest,months) + fvc(PLAN.rothBrokerageMonthlyUsd, months, rInvest))*FX), liquidVal: Math.round(Math.min(gNwBases.rothUSD + PLAN.rothBrokerageMonthlyUsd * months, PLAN.rothContributionBasisUsd + PLAN.rothBrokerageMonthlyUsd * months)*FX), color:'#fbbf24', note:'Full balance shown; contributed principal is emergency-accessible' },
     { label:'US Advisory',    val: Math.round((gNwBases.advisorUSD*Math.pow(1+rInvest,months) + fvc(PLAN.advisorMonthlyUsd, months, rInvest))*FX),                  color:'#f97316', note:'Fidelity Advisor Growth Opps Class C · no new contributions' },
     { label:'US Cash',        val: Math.round(gNwBases.usCashUSD*FX),                                                                   color:'#6366f1', note:'Chase US — pipeline hub · {{chaseUsMinBufferUsd:usd}} min' },
   ];
@@ -1693,7 +1693,7 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
     { label: 'AbbVie Pension', val: pension,                          color: '#818cf8', note: 'Aviva workplace pension · {{pensionReturn:percent}} CAGR est.' },
     { label: 'ABBV SIP Shares',val: sip,                             color: '#f472b6', note: 'Locked {{sipHoldYears:number}}yr · acquisition cost est.' },
     { label: 'US Brokerage',   val: Math.round(fidUSD * fx),         color: '#34d399', note: 'Fidelity FSKAX / FTIHX / FXNAX' },
-    { label: 'Brokerage Roth', val: Math.round(rothUSD * fx),        color: '#fbbf24', note: 'Active Roth IRA · Advisor Roth separate' },
+    { label: 'Brokerage Roth', val: Math.round(rothUSD * fx), liquidVal: Math.round(Math.min(rothUSD, PLAN.rothContributionBasisUsd) * fx), color: '#fbbf24', note: 'Full balance shown; contributed principal is emergency-accessible' },
     { label: 'US Advisory',    val: Math.round((advisorUSD||0) * fx),color: '#f97316', note: 'Fidelity Advisor Growth Opps Class C · no new contributions' },
     { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * fx),color: '#6366f1', note: 'Chase US — pipeline hub · {{chaseUsMinBufferUsd:usd}} min' },
   ];
