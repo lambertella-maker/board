@@ -82,6 +82,7 @@
   "chatbotEnabledMac": true,
   "chatbotEnabledIpad": false,
   "chatbotEnabledIphone": false,
+  "recoveryEmail": "lambert.ella@gmail.com",
   "usGainsRate": 0.15,
   "dividendDrag": 0.003,
   "usStateFullAnnualUsd": 37000,

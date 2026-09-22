@@ -37,6 +37,7 @@
             </div>
             <div class="finance-lock__hint" id="finance-lock-hint">Choose a backup passcode so you can still get in when biometrics fail.</div>
             <button type="submit" class="finance-lock__button finance-lock__button--secondary" id="finance-lock-submit">Save backup passcode</button>
+            <button type="button" class="finance-lock__button finance-lock__button--link" id="finance-lock-recovery">Forgot passcode? Email recovery instructions</button>
             <div class="finance-lock__status" id="finance-lock-status" aria-live="polite"></div>
           </form>
         </div>
@@ -116,6 +117,7 @@
     const confirmInput = document.getElementById('finance-lock-passcode-confirm');
     const hint = document.getElementById('finance-lock-hint');
     const submitBtn = document.getElementById('finance-lock-submit');
+    const recoveryBtn = document.getElementById('finance-lock-recovery');
     const status = document.getElementById('finance-lock-status');
     let fallbackVisible = false;
 
@@ -140,6 +142,21 @@
     function hasBiometric() {
       return Boolean(localStorage.getItem(BIOMETRIC_KEY));
     }
+
+    recoveryBtn.addEventListener('click', () => {
+      const recoveryEmail = (window.PLAN && window.PLAN.recoveryEmail) || 'lambert.ella@gmail.com';
+      const subject = encodeURIComponent('Ella Finance dashboard passcode reset');
+      const body = encodeURIComponent([
+        'Please help me reset my Ella Finance dashboard passcode.',
+        '',
+        `Dashboard origin: ${window.location.origin}`,
+        `Requested from: ${navigator.userAgent}`,
+        '',
+        'No passcode is included in this request.'
+      ].join('\n'));
+      window.location.href = `mailto:${recoveryEmail}?subject=${subject}&body=${body}`;
+      setStatus(`Recovery email draft addressed to ${recoveryEmail}.`, 'info');
+    });
 
     function setFallbackVisibility(visible) {
       fallbackVisible = visible;

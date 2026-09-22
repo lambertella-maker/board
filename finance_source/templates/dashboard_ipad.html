@@ -1625,7 +1625,7 @@ const PLAN = window.PLAN;
 
 function liquidNetWorthFromSegments(segs) {
   return segs
-    .filter(s => ['UK Savings', 'US Brokerage', 'US Cash'].includes(s.label))
+    .filter(s => ['UK Savings', 'US Brokerage', 'US Advisory', 'US Cash'].includes(s.label))
     .reduce((sum, s) => sum + s.val, 0);
 }
 
@@ -1678,6 +1678,7 @@ function nwSliderChange(yrs) {
     { label:'ABBV SIP Shares',val: Math.round(gNwBases.sip + PLAN.sipMonthlyGbp * Math.min(months, Math.max(0, PLAN.sipHoldMonths - gNwBases.sipCompleted))),                color:'#f472b6', note:'Locked {{sipHoldYears:number}}yr · acquisition cost est.' },
     { label:'US Brokerage',   val: Math.round((gNwBases.fidUSD*Math.pow(1+rInvest,months) + fvc(PLAN.fidelityTaxableMonthlyUsd, months, rInvest))*FX),                color:'#34d399', note:'Fidelity FSKAX / FTIHX / FXNAX' },
     { label:'Brokerage Roth', val: Math.round((gNwBases.rothUSD*Math.pow(1+rInvest,months) + fvc(PLAN.rothBrokerageMonthlyUsd, months, rInvest))*FX),               color:'#fbbf24', note:'Active Roth IRA · Advisor Roth separate' },
+    { label:'US Advisory',    val: Math.round((gNwBases.advisorUSD*Math.pow(1+rInvest,months) + fvc(PLAN.advisorMonthlyUsd, months, rInvest))*FX),                  color:'#f97316', note:'Fidelity Advisor Growth Opps Class C · no new contributions' },
     { label:'US Cash',        val: Math.round(gNwBases.usCashUSD*FX),                                                                   color:'#6366f1', note:'Chase US — pipeline hub · {{chaseUsMinBufferUsd:usd}} min' },
   ];
   renderNwBreakdown(segs, `Projected · ${2026+yr} · {{fskaxWeight:pctnumber}}/{{ftihxWeight:pctnumber}}/{{fxnaxWeight:pctnumber}} investments · {{pensionReturn:percent}} pension`);
@@ -1685,7 +1686,7 @@ function nwSliderChange(yrs) {
 }
 
 // Called from liveEstimates() with live-computed values. FX: GBP/USD 0.77.
-function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, fx = window.PLAN.fxGbpPerUsd, mktLabel = 'Estimated · {{fskaxWeight:pctnumber}}/{{ftihxWeight:pctnumber}}/{{fxnaxWeight:pctnumber}} monthly-buy model', sip = 0, sipCompleted = 0) {
+function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUSUSD, advisorUSD = window.PLAN.advisorBalanceUsd, fx = window.PLAN.fxGbpPerUsd, mktLabel = 'Estimated · {{fskaxWeight:pctnumber}}/{{ftihxWeight:pctnumber}}/{{fxnaxWeight:pctnumber}} monthly-buy model', sip = 0, sipCompleted = 0) {
   gNwFx = fx;
   const segments = [
     { label: 'UK Savings',     val: atom + monzo + chase,            color: '#22d3ee', note: 'Atom · Monzo EF · Move Fund · Chase UK' },
@@ -1693,6 +1694,7 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
     { label: 'ABBV SIP Shares',val: sip,                             color: '#f472b6', note: 'Locked {{sipHoldYears:number}}yr · acquisition cost est.' },
     { label: 'US Brokerage',   val: Math.round(fidUSD * fx),         color: '#34d399', note: 'Fidelity FSKAX / FTIHX / FXNAX' },
     { label: 'Brokerage Roth', val: Math.round(rothUSD * fx),        color: '#fbbf24', note: 'Active Roth IRA · Advisor Roth separate' },
+    { label: 'US Advisory',    val: Math.round((advisorUSD||0) * fx),color: '#f97316', note: 'Fidelity Advisor Growth Opps Class C · no new contributions' },
     { label: 'US Cash',        val: Math.round((chaseUSUSD||0) * fx),color: '#6366f1', note: 'Chase US — pipeline hub · {{chaseUsMinBufferUsd:usd}} min' },
   ];
   const total = segments.reduce((s, x) => s + x.val, 0);
@@ -1705,7 +1707,7 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
   if (spNw)   spNw.innerHTML   = `${nwFmt} <span style="font-size:0.38em;color:var(--muted);font-weight:600;white-space:nowrap;">(${fmtCompactK(liquid)} liquid)</span>`;
   if (spNwNote) spNwNote.textContent = 'Total incl. pension · liquid shown beside figure';
 
-  gNwBases = { ukSav: atom+monzo+chase, pension, sip, sipCompleted, fidUSD, rothUSD, usCashUSD: chaseUSUSD||0, segs: segments, mktLabel };
+  gNwBases = { ukSav: atom+monzo+chase, pension, sip, sipCompleted, fidUSD, rothUSD, advisorUSD: advisorUSD||0, usCashUSD: chaseUSUSD||0, segs: segments, mktLabel };
   renderNwBreakdown(segments, mktLabel);
 
   gNwChart = new Chart(document.getElementById('nwChart'), {
@@ -2140,7 +2142,7 @@ function liveEstimates() {
   if (pillarEl) pillarEl.textContent = fmt(pensionEst);
   const pensionSubEl = document.getElementById('hero-pension-sub');
   if (pensionSubEl) pensionSubEl.textContent = 'Cash, investments, pension';
-  drawNetWorthChart(atomEst, efSavingsEst + monzoEst, chaseEst, pensionEst, fidelityEst, rothEst, chaseUSEst, liveFX, mktLabel, sipEst, sipCompleted);
+  drawNetWorthChart(atomEst, efSavingsEst + monzoEst, chaseEst, pensionEst, fidelityEst, rothEst, chaseUSEst, PLAN.advisorBalanceUsd, liveFX, mktLabel, sipEst, sipCompleted);
 }
 liveEstimates();
 updateFire();
