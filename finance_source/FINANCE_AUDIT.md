@@ -70,6 +70,31 @@ Historical notes, statements, payslips, tax records, travel records, and archive
 dashboards were left in place because they are source evidence or separately linked
 projects. No folder was moved, so hard-coded paths and LaunchAgents remain valid.
 
+## Complete recorded money inventory
+
+| Pot or asset | Recorded amount/source | Counted in liquid? | Reason |
+|---|---:|---|---|
+| Chase UK current account | £2,146, `chaseUkDisplayGbp` | Yes | Current cash balance and spending hub. The £3,839.90 `chaseUkAnchorGbp` is an older anchor, not an additional pot. |
+| Atom Reward Saver | £12,668, `atomBalanceGbp` | Yes | Instant-access savings, subject to its withdrawal-rate rule. |
+| Monzo EF | £2,305, `monzoEfBalanceGbp` | Yes | Accessible savings buffer. |
+| Monzo Move Pot | £1,093, `monzoMoveBalanceGbp` | Yes | Instant-access cash, even though earmarked for the move. The £1,800 is only a target, not extra money. |
+| Chase US checking | $2,000, `chaseUSBalanceUsd` | Yes | Cash account; retain the documented $1,500 operating floor. |
+| Fidelity taxable brokerage | $8,858 anchor, `fidelityTaxableBalanceUsd` | Yes | Saleable taxable investments; value can move and sale may create tax. |
+| Fidelity Advisor Growth Opps Class C | $3,948, `advisorBalanceUsd` | Yes | Saleable investment holding with no lock recorded; included as practical liquid invested wealth. |
+| Brokerage Roth IRA | $8,309, `rothBrokerageBalanceUsd` | Partly | Full balance belongs in net worth. Only the documented $7,500 regular contribution basis is counted as emergency-accessible principal; earnings are excluded. |
+| Aviva workplace pension | £23,761.08, `pensionAnchorGbp` | No | Retirement account; modeled access age is 57. |
+| AbbVie SIP shares | Runtime acquisition estimate from `sipStartDate`, `sipMonthlyGbp`, and match | No | Shares remain inside the SIP until their holding rules are met; no exact current market-value anchor is recorded. |
+| Polaris cash | £220, `polarisCashGbp` | No separate pot | This is the planned APD cash out-of-pocket for a points redemption, not a separately held balance. Counting it would double-count cash already held in an account. |
+| Chase Ultimate Rewards points | 75,000, `cspWelcomePoints` | No | Rewards points are not cash or a deposit balance. |
+| Wise £650 monthly transfer | `wiseMonthlyGbp` | No | Future transfer flow, not an account balance. |
+| Fidelity $850 monthly buy | `fidelityTaxableMonthlyUsd` | No | Future contribution, not current money. |
+| Move £130 monthly contribution | `moveMonthlyGbp` | No | Future contribution, not current money. |
+| Potential Bruce gift | Planning assumption only | No | Not received and therefore not an asset. |
+
+No other current balance is present in the canonical input file. Credit-card accounts are
+paid monthly and are liabilities/expenses, not money pots. Future pension and SIP
+contributions are flows rather than existing balances.
+
 ## Verification
 
 Run from this folder after any input change:
