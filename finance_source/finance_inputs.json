@@ -79,6 +79,7 @@
   "advisorMonthlyUsd": 0,
   "advisorRothBalanceUsd": 0,
   "advisorRothMonthlyUsd": 0,
+  "chatbotEnabled": false,
   "usGainsRate": 0.15,
   "dividendDrag": 0.003,
   "usStateFullAnnualUsd": 37000,

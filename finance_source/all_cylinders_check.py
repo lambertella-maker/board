@@ -185,6 +185,10 @@ def main():
                 diffs.append(f"  CANONICAL MODEL DRIFT on {name}")
             if "window.PLAN ||" in html:
                 diffs.append(f"  DUPLICATE FALLBACK MODEL on {name}")
+            if 'data-chatbot-enabled="false"' not in html:
+                diffs.append(f"  CHATBOT POLICY DRIFT on {name}: chatbot must be disabled consistently")
+        if expected.get("chatbotEnabled") is not False:
+            diffs.append("  CHATBOT POLICY DRIFT: canonical chatbotEnabled must be false")
         for label, html in (("Mac", mac_text), ("iPad", ipad_text)):
             nav_targets = re.findall(r'data-nav-target="([^"]+)"', html)
             section_ids = set(re.findall(r'<(?:section|div)[^>]+id="([^"]+)"', html))

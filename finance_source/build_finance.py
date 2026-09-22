@@ -27,7 +27,7 @@ def format_value(value, fmt):
     if fmt == 'percent':
         return number(value * 100, 3).rstrip('0').rstrip('.') + '%'
     if fmt == 'raw':
-        return str(value)
+        return str(value).lower() if isinstance(value, bool) else str(value)
     currency = '$' if fmt.startswith('usd') else '€' if fmt.startswith('eur') else '£'
     if 'k' in fmt:
         places = 1 if fmt.endswith('1') else 0

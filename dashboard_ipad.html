@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="a8d07e9e322de16b">
+<meta name="finance-build" content="932a367963300e9f">
 <script>
 (() => {
   try {
-    const build = 'a8d07e9e322de16b';
+    const build = '932a367963300e9f';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -56,6 +56,7 @@ window.PLAN = Object.freeze({
   "chaseUkDisplayGbp": 2146,
   "chaseUkMinBufferGbp": 1000,
   "chaseUsMinBufferUsd": 1500,
+  "chatbotEnabled": false,
   "chatgptBudgetGbp": 15,
   "chatgptMonthlyUsd": 20,
   "cspCreditHistoryMonths": 12,
@@ -366,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; }
+  body[data-chatbot-enabled="false"] .chatbar { display:none; }
 
   /* NAV */
   nav { display:flex; justify-content:space-between; align-items:center; padding:1.2rem 2.5rem;
@@ -805,7 +807,7 @@ document.addEventListener('DOMContentLoaded', () => {
   .paye-section-label { font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin:0.8rem 0 0.3rem; }
 </style>
 </head>
-<body>
+<body data-chatbot-enabled="false">
 
 <nav>
   <div class="logo">Ella Lambert — Finance Hub</div>

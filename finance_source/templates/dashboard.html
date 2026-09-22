@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; }
+  body[data-chatbot-enabled="false"] .chatbar { display:none; }
 
   /* NAV */
   nav { display:flex; justify-content:space-between; align-items:center; padding:1.2rem 2.5rem;
@@ -490,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
   .paye-section-label { font-size:0.67rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin:0.8rem 0 0.3rem; }
 </style>
 </head>
-<body>
+<body data-chatbot-enabled="{{chatbotEnabled:raw}}">
 
 <nav>
   <div class="logo">Ella Lambert — Finance Hub</div>
