@@ -495,13 +495,13 @@ document.addEventListener('DOMContentLoaded', () => {
 <nav>
   <div class="logo">Ella Lambert — Finance Hub</div>
   <div class="nav-links">
-    <button onclick="scrollToSection('overview')">Overview</button>
-    <button onclick="scrollToSection('superplan')">Superplan</button>
-    <button onclick="scrollToSection('journey')">Journey</button>
-    <button onclick="scrollToSection('goals')">Goals</button>
-    <button onclick="scrollToSection('tax')">Tax</button>
-    <button onclick="scrollToSection('investments')">Investments</button>
-    <button onclick="scrollToSection('fire')">Optionality</button>
+    <button type="button" data-nav-target="overview">Overview</button>
+    <button type="button" data-nav-target="superplan">Superplan</button>
+    <button type="button" data-nav-target="journey">Journey</button>
+    <button type="button" data-nav-target="goals">Goals</button>
+    <button type="button" data-nav-target="tax">Tax</button>
+    <button type="button" data-nav-target="investments">Investments</button>
+    <button type="button" data-nav-target="fire">Optionality</button>
   </div>
   <div class="date-pill" id="live-date"></div>
 </nav>
@@ -1553,6 +1553,10 @@ function scrollToSection(id) {
     window.scrollTo({ top: top - navH - 16, behavior: 'smooth' });
   }, 0);
 }
+
+document.querySelectorAll('[data-nav-target]').forEach(button => {
+  button.addEventListener('click', () => scrollToSection(button.dataset.navTarget));
+});
 
 // ── CHART DEFAULTS ───────────────────────────────────────────────────────────
 Chart.defaults.color = '#64748b';

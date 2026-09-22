@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="32a548f36f4a9c3b">
+<meta name="finance-build" content="a8d07e9e322de16b">
 <script>
 (() => {
   try {
-    const build = '32a548f36f4a9c3b';
+    const build = 'a8d07e9e322de16b';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -611,11 +611,11 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="sb-logo">Ella Lambert<br>Finance</div>
   <span class="sb-date-txt" id="sb-date">—</span>
   <nav class="sb-nav">
-    <button class="sb-btn active" data-tab="overview" onclick="showTab('overview',this)"><span class="sb-btn-icon">📊</span>Overview</button>
-    <button class="sb-btn" data-tab="superplan" onclick="showTab('superplan',this)"><span class="sb-btn-icon">🏛️</span>Superplan</button>
-    <button class="sb-btn" data-tab="goals" onclick="showTab('goals',this)"><span class="sb-btn-icon">🎯</span>Goals</button>
-    <button class="sb-btn" data-tab="invest" onclick="showTab('invest',this)"><span class="sb-btn-icon">📈</span>Invest</button>
-    <button class="sb-btn" data-tab="fire" onclick="showTab('fire',this)"><span class="sb-btn-icon">🔥</span>FIRE</button>
+    <button type="button" class="sb-btn active" data-tab="overview"><span class="sb-btn-icon">📊</span>Overview</button>
+    <button type="button" class="sb-btn" data-tab="superplan"><span class="sb-btn-icon">🏛️</span>Superplan</button>
+    <button type="button" class="sb-btn" data-tab="goals"><span class="sb-btn-icon">🎯</span>Goals</button>
+    <button type="button" class="sb-btn" data-tab="invest"><span class="sb-btn-icon">📈</span>Invest</button>
+    <button type="button" class="sb-btn" data-tab="fire"><span class="sb-btn-icon">🔥</span>FIRE</button>
   </nav>
   <div class="sb-footer">
     <a href="dashboard.html" class="sb-desktop-link">↗ Desktop Dashboard</a>
@@ -1137,19 +1137,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- ════════════ TAB BAR ════════════ -->
 <div id="tabbar">
-  <div class="tab active" data-tab="overview" onclick="showTab('overview',this)">
+  <div class="tab active" data-tab="overview" role="button" tabindex="0">
     <div class="tab-icon">📊</div><div class="tab-label">Overview</div>
   </div>
-  <div class="tab" data-tab="superplan" onclick="showTab('superplan',this)">
+  <div class="tab" data-tab="superplan" role="button" tabindex="0">
     <div class="tab-icon">🏛️</div><div class="tab-label">Superplan</div>
   </div>
-  <div class="tab" data-tab="goals" onclick="showTab('goals',this)">
+  <div class="tab" data-tab="goals" role="button" tabindex="0">
     <div class="tab-icon">🎯</div><div class="tab-label">Goals</div>
   </div>
-  <div class="tab" data-tab="invest" onclick="showTab('invest',this)">
+  <div class="tab" data-tab="invest" role="button" tabindex="0">
     <div class="tab-icon">📈</div><div class="tab-label">Invest</div>
   </div>
-  <div class="tab" data-tab="fire" onclick="showTab('fire',this)">
+  <div class="tab" data-tab="fire" role="button" tabindex="0">
     <div class="tab-icon">🔥</div><div class="tab-label">FIRE</div>
   </div>
 </div>
@@ -1181,6 +1181,10 @@ function showTab(name, el) {
   document.querySelectorAll('[data-tab="' + name + '"]').forEach(t => t.classList.add('active'));
   document.getElementById('content').scrollTop = 0;
 }
+
+document.querySelectorAll('[data-tab]').forEach(tab => {
+  tab.addEventListener('click', () => showTab(tab.dataset.tab, tab));
+});
 
 // ── LIVE DATE ─────────────────────────────────────────────────────────────────
 const dateShort = today.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short'});
