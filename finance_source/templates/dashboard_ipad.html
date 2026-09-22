@@ -1095,9 +1095,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="chart-card" style="margin-top:1.4rem;">
       <h3>Locked Tax Rules</h3>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; align-items:start;">
-        <div class="tax-rule"><div class="tax-rule-icon">✅</div><div class="tax-rule-text"><strong>Always FTC (Form 1116)</strong>Locked filing method. UK taxes fully offset US liability. No US tax owed.</div></div>
-        <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>Never Form 2555 (FEIE)</strong>Not part of this setup. FTC stays locked unless the whole tax plan changes.</div></div>
-        <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>No ISAs — ever (while US citizen)</strong>S&amp;S ISAs = PFIC. Only trigger: renouncing US citizenship (CLN). ILR and British citizenship do NOT change this.</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">✅</div><div class="tax-rule-text"><strong>FTC / Form 1116 always</strong>Never FEIE / Form 2555.</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">🚫</div><div class="tax-rule-text"><strong>No ISAs while US citizen</strong>S&amp;S ISAs create PFIC risk; cash ISAs add complexity.</div></div>
+        <div class="tax-rule"><div class="tax-rule-icon">🔒</div><div class="tax-rule-text"><strong>Revisit only after CLN</strong>ILR or British citizenship does not change the tax rule.</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">📋</div><div class="tax-rule-text"><strong>FBAR every year</strong>File FinCEN 114 by Oct 15. Free via <a href="https://bsaefiling.fincen.treas.gov" target="_blank" style="color:var(--cyan); text-decoration:none;">BSA E-Filing →</a> All UK accounts over {{fbarThresholdUsd:usdk}} aggregate.</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">💰</div><div class="tax-rule-text"><strong>Sacrifice rules — know your benefit</strong>Pension + SIP save IT + NI ({{taxPensionSipNiSavedGbp:gbp}}/yr combined NI saving, all at {{taxNiHigherRate:percent}} above UEL). GymFlex (from Apr 2026) saves NI only — {{gymGrossMonthlyGbp:gbp2}}/mo gross − {{gymNiSavedMonthlyGbp:gbp2}} NI saving ({{taxNiHigherRate:percent}} above UEL) = <span style="color:var(--text);font-weight:700;">{{gymNetMonthlyGbp:gbp}}/mo net cost</span>. Not income-tax deductible (HMRC OpRA).</div></div>
         <div class="tax-rule"><div class="tax-rule-icon">🤝</div><div class="tax-rule-text"><strong>Totalization Agreement</strong>UK NI + US SS credits can combine for Social Security eligibility. Separate question from FTC vs FEIE.</div></div>
@@ -2642,7 +2642,7 @@ setInterval(checkChatStatus, 30000);
     <div class="modal-rule"><div class="modal-rule-label">Taxable · {{fidelityTaxableMonthlyUsd:usd}}/mo</div><div class="modal-rule-value">Until the 2027 Roth year opens, route the monthly buy here: {{fskaxMonthlyUsd:usd}} FSKAX, {{ftihxMonthlyUsd:usd}} FTIHX, {{fxnaxMonthlyUsd:usd}} FXNAX. {{dividendDrag:percent}}/yr dividend drag. {{usGainsRate:percent}} LTCG on gains at sale. Pre-retirement bridge and liquidity layer.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">Class C legacy</div><div class="modal-rule-value">{{advisorBalanceUsd:usd}} in Fidelity Advisor Growth Opps Class C. {{advisorExpenseRatio:percent}} expense ratio. No new contributions. Separate from the Advisor Roth.</div></div>
     <div class="modal-rule"><div class="modal-rule-label">UK pension</div><div class="modal-rule-value">EET wrapper: salary sacrifice removes income tax + NI now, tax-free growth, {{pensionTaxFreeShare:percent}} lump sum tax-free + {{pensionTaxableShare:percent}} taxed as income at drawdown. Treaty-protected in US. Live pension projection shown above. Retirement fully covered regardless of Fidelity.</div></div>
-    <div class="modal-rule" style="border-bottom:none;"><div class="modal-rule-label">No ISAs</div><div class="modal-rule-value">Blocked while US citizen. Trigger = CLN (renouncing citizenship) only. Not ILR. Not British passport.</div></div>
+    <div class="modal-rule" style="border-bottom:none;"><div class="modal-rule-label">No ISAs</div><div class="modal-rule-value">No ISAs while US citizen. Revisit only after CLN.</div></div>
   </div>
 </div>
 
