@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="e660908020a987c2">
+<meta name="finance-build" content="a40c9b4ffb9f5f90">
 <script>
 (() => {
   try {
-    const build = 'e660908020a987c2';
+    const build = 'a40c9b4ffb9f5f90';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -172,13 +172,13 @@ window.PLAN = Object.freeze({
   "monzoEfMaxWithdrawals": 2,
   "monzoEfReducedAer": 0.026,
   "monzoMoveAer": 0.0275,
-  "monzoMoveBalanceGbp": 1491.43,
+  "monzoMoveBalanceGbp": 1093,
   "moveComfortRentBudgetGbp": 1700,
   "moveFidelityComfortMonthlyGbp": 500,
   "moveFidelityTemporaryFloorGbp": 400,
   "moveFirstPaydayDate": [
     2026,
-    9,
+    7,
     24
   ],
   "moveMonthlyGbp": 130,
@@ -1205,7 +1205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="margin-bottom:1rem;">
           <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Rent max £1,800 · comfort £1,700</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
-          <div class="progress-labels"><span>£1,491.43</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
+          <div class="progress-labels"><span>£1,093</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Move fund</span><span class="goal-row-value">£1,800 · movers, overlap, setup</span></div>
         <div class="goal-row"><span class="goal-row-label">Deposit / bonus</span><span class="goal-row-value" style="color:var(--indigo)">Deposit / EF bridge · 10% March bonus</span></div>
@@ -2505,7 +2505,7 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = cspProgress.toFixed(1) + '%';
   document.getElementById('csp-months-lbl').textContent = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
-  // Move pot — £130/mo; reanchored to the 27 Sep 2026 balance.
+  // Move pot — £130/mo; reanchored after the 1 Aug gift allocation.
   const r        = window.PLAN.monzoMoveAer / 12;  // 2.75% AER
   const potStart = new Date(...window.PLAN.moveFirstPaydayDate);
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
