@@ -1,10 +1,10 @@
 # Finance variables
 
-Edit `finance_inputs.json` for a balance, contribution, rate, budget category, or scenario assumption. Related totals are calculated in `finance_model.py`; shared date-sensitive SIP and Move Pot balances are calculated in `finance_runtime.js`. Currency, units, and purpose are explicit in the keys. Equal amounts with different purposes (for example move target and annual SIP contribution) remain distinct.
+Edit `01 - Finance App/finance_inputs.json` for a balance, contribution, rate, budget category, or scenario assumption. Related totals are calculated in `01 - Finance App/finance_model.py`; shared date-sensitive SIP and Move Pot balances are calculated in `01 - Finance App/finance_runtime.js`. Currency, units, and purpose are explicit in the keys. Equal amounts with different purposes (for example move target and annual SIP contribution) remain distinct.
 
-Edit layout/copy in `templates/dashboard.html`, `templates/dashboard_ipad.html`, or `templates/dashboard_iphone.html`. Use `{{variable:gbp}}`, `{{variable:usd}}`, `{{variable:percent}}`, or the other formats in `build_finance.py`. Use `window.PLAN.variable` in calculations. Never edit the generated dashboard files directly.
+Edit layout/copy in `01 - Finance App/templates/dashboard.html`, `01 - Finance App/templates/dashboard_ipad.html`, or `01 - Finance App/templates/dashboard_iphone.html`. Use `{{variable:gbp}}`, `{{variable:usd}}`, `{{variable:percent}}`, or the other formats in `01 - Finance App/build_finance.py`. Use `window.PLAN.variable` in calculations. Never edit the generated dashboard files directly.
 
-Run from `/Users/ellalambert/Desktop/Finances`:
+Run from `/Users/ellalambert/Desktop/Finances/01 - Finance App`:
 
 ```sh
 python3 build_finance.py

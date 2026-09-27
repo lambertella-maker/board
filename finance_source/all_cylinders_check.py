@@ -10,7 +10,7 @@ It compares shared goal-row content and key HTML anchors, while allowing
 known variant-specific differences. Any drift in shared finance logic/copy
 should fail the check.
 
-Run standalone:  python3 ~/Desktop/Finances/all_cylinders_check.py
+Run standalone:  python3 '~/Desktop/Finances/01 - Finance App/all_cylinders_check.py'
 Auto-run:        wired into deploy_dashboards.sh before every git push
 """
 
@@ -23,11 +23,12 @@ from pathlib import Path
 from build_finance import check_generated
 from finance_model import load_plan
 
-FINANCES  = Path.home() / "Desktop" / "Finances"
-MAC       = FINANCES / "dashboard.html"
-IPAD      = FINANCES / "dashboard_ipad.html"
-IPHONE    = FINANCES / "dashboard_iphone.html"
-NOTEBOOK  = FINANCES / "LAB_NOTEBOOK.md"
+FINANCES  = Path(__file__).resolve().parent.parent
+APP       = FINANCES / "01 - Finance App"
+MAC       = APP / "dashboard.html"
+IPAD      = APP / "dashboard_ipad.html"
+IPHONE    = APP / "dashboard_iphone.html"
+NOTEBOOK  = FINANCES / "00 - Control" / "LAB_NOTEBOOK.md"
 LOG       = Path.home() / ".claude" / "logs" / "dashpush.log"
 HANDOFFS  = Path.home() / "Documents" / "AI_Handoffs"
 PUBLISH_REPO = Path.home() / ".claude" / "repos" / "board_autopush"
@@ -51,13 +52,13 @@ DEVICE_NEEDLES = {
 }
 
 REQUIRED_PUBLISH_COPIES = {
-    "dashboard.html": str(FINANCES / "dashboard.html"),
-    "dashboard_ipad.html": str(FINANCES / "dashboard_ipad.html"),
-    "dashboard_iphone.html": str(FINANCES / "dashboard_iphone.html"),
-    "finance-apple-touch-icon.png": str(FINANCES / "finance-apple-touch-icon.png"),
-    "finance-icon-512.png": str(FINANCES / "finance-icon-512.png"),
-    "finance_lock.css": str(FINANCES / "finance_lock.css"),
-    "finance_lock.js": str(FINANCES / "finance_lock.js"),
+    "dashboard.html": str(APP / "dashboard.html"),
+    "dashboard_ipad.html": str(APP / "dashboard_ipad.html"),
+    "dashboard_iphone.html": str(APP / "dashboard_iphone.html"),
+    "finance-apple-touch-icon.png": str(APP / "finance-apple-touch-icon.png"),
+    "finance-icon-512.png": str(APP / "finance-icon-512.png"),
+    "finance_lock.css": str(APP / "finance_lock.css"),
+    "finance_lock.js": str(APP / "finance_lock.js"),
 }
 
 
@@ -119,8 +120,8 @@ def check_publish_topology():
         diffs.append(f"  PUBLISH RULE branch must be {BRANCH}")
 
     preflight = config.get("preflight", [])
-    expected_preflight = f"python3 {FINANCES / 'all_cylinders_check.py'}"
-    if expected_preflight not in preflight:
+    expected_preflight = f"python3 '{APP / 'all_cylinders_check.py'}'"
+    if not any(command.startswith(expected_preflight) for command in preflight):
         diffs.append(f"  PUBLISH RULE preflight missing {expected_preflight!r}")
 
     copies = {
@@ -278,7 +279,7 @@ def main():
         # Append warning to lab notebook
         notebook_warning = (
             f"\n> **⚠ All-cylinders drift detected {today}** — "
-            f"run `python3 ~/Desktop/Finances/all_cylinders_check.py` to review.\n"
+            f"run `python3 '~/Desktop/Finances/01 - Finance App/all_cylinders_check.py'` to review.\n"
         )
         nb = NOTEBOOK.read_text(encoding="utf-8")
         if notebook_warning.strip() not in nb:
