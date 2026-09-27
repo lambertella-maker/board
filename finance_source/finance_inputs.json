@@ -166,6 +166,8 @@
   "gymGrossMonthlyGbp": 97.4,
   "taxNiMonthlyGbp": 1344,
   "bonus2026GrossGbp": 6371,
+  "bonusMinimumRate": 0.10,
+  "bonus2026ActualRate": 0.11,
   "netBonusBudgetGbp": 4000,
   "moveRentBudgetGbp": 1700,
   "meritAssumption": 0.03,
