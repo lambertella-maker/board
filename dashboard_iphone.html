@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="4b0651624849869d">
+<meta name="finance-build" content="09197c1b5f0e22a6">
 <script>
 (() => {
   try {
-    const build = '4b0651624849869d';
+    const build = '09197c1b5f0e22a6';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -1452,8 +1452,8 @@ let gNwBases = null;
 function renderNWSegs(segs) {
   const total = segs.reduce((s, x) => s + x.val, 0);
   const liquid = segs
-    .filter(s => ['UK Savings', 'US Brokerage', 'US Cash'].includes(s.label))
-    .reduce((sum, s) => sum + s.val, 0);
+    .filter(s => ['UK Savings', 'US Brokerage', 'US Advisory', 'Brokerage Roth', 'US Cash'].includes(s.label))
+    .reduce((sum, s) => sum + (typeof s.liquidVal === 'number' ? s.liquidVal : s.val), 0);
   const nwTotalEl = document.getElementById('m-nw-total');
   const nwRowsEl  = document.getElementById('m-nw-rows');
   const rankEl    = document.getElementById('m-nw-rank');

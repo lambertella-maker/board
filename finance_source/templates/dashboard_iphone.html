@@ -1123,8 +1123,8 @@ let gNwBases = null;
 function renderNWSegs(segs) {
   const total = segs.reduce((s, x) => s + x.val, 0);
   const liquid = segs
-    .filter(s => ['UK Savings', 'US Brokerage', 'US Cash'].includes(s.label))
-    .reduce((sum, s) => sum + s.val, 0);
+    .filter(s => ['UK Savings', 'US Brokerage', 'US Advisory', 'Brokerage Roth', 'US Cash'].includes(s.label))
+    .reduce((sum, s) => sum + (typeof s.liquidVal === 'number' ? s.liquidVal : s.val), 0);
   const nwTotalEl = document.getElementById('m-nw-total');
   const nwRowsEl  = document.getElementById('m-nw-rows');
   const rankEl    = document.getElementById('m-nw-rank');
