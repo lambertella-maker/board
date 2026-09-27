@@ -505,15 +505,18 @@ document.addEventListener('DOMContentLoaded', () => {
       <span style="font-size:1.4rem;">🗝️</span>
       <div class="goal-card-meta"><div class="goal-card-label">Goal 2 · Jun–Jul 2027</div><div class="goal-card-title">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
-    <div class="goal-subcopy">Target rent about {{moveRentBudgetGbp:gbp}}/mo max · {{moveMonthlyGbp:gbp}}/mo move fund</div>
+    <div class="goal-subcopy">Rent: {{moveRentBudgetGbp:gbp}}/mo max · {{moveComfortRentBudgetGbp:gbp}}/mo comfort · {{moveMonthlyGbp:gbp}}/mo move fund</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
     <div class="prog-labels"><span>{{monzoMoveBalanceGbp:gbp}}</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">{{moveTargetGbp:gbp}} simple move</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Move target</span><span style="font-weight:600;">{{moveTargetGbp:gbp}} · movers, overlap, setup</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Move fund</span><span style="font-weight:600;">{{moveTargetGbp:gbp}} · movers, overlap, setup</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Current / target</span><span style="color:var(--green); font-weight:600;"><span data-live-move>—</span> now · {{moveTargetGbp:gbp}} target</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Deposit timing</span><span style="color:var(--indigo); font-weight:600;">Returned deposit / short EF bridge if needed</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Bonus rule</span><span style="color:var(--green); font-weight:600;">Not earmarked unless the flat requires it</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Apr 2027 salary</span><span style="color:var(--green); font-weight:600;">{{salaryNextMeritGbp:gbp}} with a {{meritAssumption:percent}} merit rise</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">{{moveMonthlyGbp:gbp}}/mo keeps the move buffer ahead</span><span>Jun–Jul 2027</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Deposit</span><span style="color:var(--indigo); font-weight:600;">Returned deposit or short EF bridge</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Bonus</span><span style="color:var(--green); font-weight:600;">{{bonusMinimumRate:percent}} minimum in March; deposit / first rent if needed</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">After move</span><span style="color:var(--cyan); font-weight:600;">{{moveMonthlyGbp:gbp}} pot ends after June; ordinary cash</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Flex</span><span style="color:var(--indigo); font-weight:600;">Fidelity {{wiseMonthlyGbp:gbp}} → {{moveFidelityComfortMonthlyGbp:gbp}}; {{moveFidelityTemporaryFloorGbp:gbp}} floor</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Protect</span><span style="font-weight:600;">Pension {{pensionEmployeeRate:percent}} · SIP {{sipEmployeeMonthlyGbp:gbp}} + match · Roth via bonus / taxable</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Raise</span><span style="color:var(--green); font-weight:600;">April payday · {{meritAssumption:percent}} model · 3–4% expected</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">{{moveMonthlyGbp:gbp}}/mo until move</span><span>Jun–Jul 2027</span></div>
   </div>
 
 <script>
