@@ -509,6 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
     <div class="prog-labels"><span>{{monzoMoveBalanceGbp:gbp}}</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">{{moveTargetGbp:gbp}} simple move</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Move fund</span><span style="font-weight:600;">{{moveTargetGbp:gbp}} · movers, overlap, setup</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Projected by move</span><span id="m-move-projected-lbl" style="color:var(--green); font-weight:600;">Calculating...</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Deposit / bonus</span><span style="color:var(--indigo); font-weight:600;">Deposit / EF bridge · {{bonusMinimumRate:percent}} March bonus</span></div>
     <div class="goal-row-m"><span class="goal-row-k">After move</span><span style="color:var(--cyan); font-weight:600;">{{moveMonthlyGbp:gbp}} pot ends June → cash</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Investing flex</span><span style="color:var(--indigo); font-weight:600;">Fidelity {{wiseMonthlyGbp:gbp}} → {{moveFidelityComfortMonthlyGbp:gbp}} · {{moveFidelityTemporaryFloorGbp:gbp}} floor · protect pension/SIP · Roth via bonus</span></div>
@@ -1201,8 +1202,10 @@ liveEstimates();
   }
   function potFV(asOf) { return window.Finance.moveBalance(asOf); }
   const flatSaved = potFV(today);
+  const moveDate = new Date(2027, 5, 1);
   document.getElementById('m-move-prog').style.width = Math.min(100, flatSaved / PLAN.moveTargetGbp * 100) + '%';
   document.getElementById('m-move-lbl').textContent  = `£${flatSaved.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
+  document.getElementById('m-move-projected-lbl').textContent = `£${potFV(moveDate).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} on 1 Jun 2027`;
 
   const ilrDeadline = new Date(...window.PLAN.ilrDeadlineDate);
   const ilrStart    = new Date(...window.PLAN.ilrStartDate); // UK arrival — full 10-year journey

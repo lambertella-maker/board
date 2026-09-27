@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="47c81a731a43cf36">
+<meta name="finance-build" content="1fc30fe60f9ef104">
 <script>
 (() => {
   try {
-    const build = '47c81a731a43cf36';
+    const build = '1fc30fe60f9ef104';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -677,7 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
   .goals-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; }
   .goal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; transition:transform .2s,border-color .2s; }
   .goal-card:hover { transform:translateY(-2px); border-color:var(--indigo); }
-  .goal-header { display:flex; align-items:flex-start; gap:0.8rem; margin-bottom:1rem; }
+  .goal-header { display:flex; align-items:flex-start; gap:0.8rem; margin-bottom:1rem; min-height:3.2rem; }
   .goal-icon { font-size:1.8rem; flex-shrink:0; }
   .goal-name { font-size:0.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:0.2rem; }
   .goal-title { font-size:1rem; font-weight:700; }
@@ -691,6 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
   .goal-pill.no-bruce   { background:rgba(129,140,248,0.1); border:1px solid rgba(129,140,248,0.25); color:var(--indigo); }
   .goal-pill.with-bruce { background:rgba(251,191,36,0.1);  border:1px solid rgba(251,191,36,0.25);  color:var(--amber); }
   .goal-pill .gp-label  { font-size:0.6rem; font-weight:600; color:var(--muted); margin-bottom:0.1rem; }
+  .goal-progress-copy { min-height:2.05rem; }
 
   /* LIFE ARCHITECTURE */
   .life-architecture { margin-top:1.2rem; }
@@ -1172,7 +1173,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Clean Amex Blue Cash history — opened Jan 30, 2026 · 2 prior rejections as AU · apply after 1 full year</div>
+          <div class="goal-progress-copy" style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Clean Amex Blue Cash history — opened Jan 30, 2026 · 2 prior rejections as AU · apply after 1 full year</div>
           <div class="progress-bar"><div class="progress-fill" id="csp-prog" style="background:linear-gradient(90deg,var(--indigo),var(--pink)); width:0%"></div></div>
           <div class="progress-labels"><span>Jan 30, 2026</span><span id="csp-months-lbl" style="color:var(--indigo)">Updating...</span><span>Apply Jan 30, 2027</span></div>
         </div>
@@ -1199,11 +1200,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Rent max £1,800 · comfort £1,700</div>
+          <div class="goal-progress-copy" style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Rent max £1,800 · comfort £1,700</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
           <div class="progress-labels"><span>£1,356</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Move fund</span><span class="goal-row-value">£1,800 · movers, overlap, setup</span></div>
+        <div class="goal-row"><span class="goal-row-label">Projected by move</span><span class="goal-row-value" id="move-projected-lbl" style="color:var(--green)">Calculating...</span></div>
         <div class="goal-row"><span class="goal-row-label">Deposit / bonus</span><span class="goal-row-value" style="color:var(--indigo)">Deposit / EF bridge · 10% March bonus</span></div>
         <div class="goal-row"><span class="goal-row-label">After move</span><span class="goal-row-value" style="color:var(--cyan)">£130 pot ends June → cash</span></div>
         <div class="goal-row"><span class="goal-row-label">Investing flex</span><span class="goal-row-value" style="color:var(--indigo)">Fidelity £650 → £500 · £400 floor · protect pension/SIP · Roth via bonus</span></div>
@@ -1225,7 +1227,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">UR points toward Polaris LHR→ORD · 75k welcome bonus covers it · £220 cash out of pocket (APD only)</div>
+          <div class="goal-progress-copy" style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">UR points toward Polaris LHR→ORD · 75k welcome bonus covers it · £220 cash out of pocket (APD only)</div>
           <div class="progress-bar"><div class="progress-fill" id="travel-prog" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
           <div class="progress-labels"><span>Get CSP</span><span id="travel-prog-lbl" style="color:var(--amber)">0 UR · pre-card</span><span>Fly Polaris</span></div>
         </div>
@@ -1251,7 +1253,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from 12 Sep 2019 · no more visa renewals</div>
+          <div class="goal-progress-copy" style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">10-yr long residence from 12 Sep 2019 · no more visa renewals</div>
           <div class="progress-bar"><div class="progress-fill" id="ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
           <div class="progress-labels"><span>12 Sep 2019</span><span id="ilr-lbl" style="color:var(--cyan)">3 years, 1 month to go</span><span>12 Sep 2029</span></div>
         </div>
@@ -2510,6 +2512,8 @@ function updateGoals() {
   }
   function potFV(asOf) { return window.Finance.moveBalance(asOf); }
   const flatSaved = potFV(today);
+  const moveDate = new Date(2027, 5, 1);
+  document.getElementById('move-projected-lbl').textContent = `£${potFV(moveDate).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} on 1 Jun 2027`;
 
   // Goal 2: Move to nicer flat with a simple £1,800 move buffer.
   const moveTarget = window.PLAN.moveTargetGbp;
