@@ -1143,7 +1143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="metric-label">Projected at {{statePensionAge:number}} ({{fireReturn:percent}})</div>
         <div class="metric-value" id="projected-67-card-value" style="color:var(--cyan)">—</div>
         <div class="metric-sub">Pension + US investing</div>
-        <span class="metric-badge badge-green">Pension + taxable + both Roths + shares + cash</span>
+        <span class="metric-badge badge-green">Pension + taxable + Roths + shares + cash</span>
       </div>
     </div>
 
@@ -2115,7 +2115,7 @@ function liveEstimates() {
   if (projected67Value) projected67Value.textContent = fmtCompactMoney(total67);
   if (annualInvestingValue) annualInvestingValue.textContent = fmt(Math.round((PLAN.fidelityTaxableMonthlyUsd * liveFX * 12) + PLAN.sipAnnualGbp));
   if (projected67CardValue) projected67CardValue.textContent = fmtCompactMoney(total67);
-  if (projected67Note) projected67Note.textContent = 'All recorded assets: pension + taxable + both Roths + shares + cash';
+  if (projected67Note) projected67Note.textContent = 'Pension + taxable + Roths + shares + cash';
   if (stateIncomeValue) stateIncomeValue.textContent = fmtCompactMoney(stateIncome67) + '+';
   if (pension67El) pension67El.textContent = fmtCompactMoney(pension67);
   document.getElementById('bal-atom').textContent       = fmt(atomEst);
