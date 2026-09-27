@@ -21,7 +21,7 @@
   "cspCreditHistoryMonths": 12,
   "atomBalanceGbp": 12668,
   "monzoEfBalanceGbp": 2305,
-  "monzoMoveBalanceGbp": 1093,
+  "monzoMoveBalanceGbp": 1356,
   "fidelityTaxableBalanceUsd": 8858,
   "rothBrokerageBalanceUsd": 8309,
   "rothContributed2026Usd": 7500,
@@ -141,7 +141,7 @@
   ],
   "moveFirstPaydayDate": [
     2026,
-    7,
+    9,
     24
   ],
   "cspStartDate": [
