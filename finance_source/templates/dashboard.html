@@ -874,13 +874,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="progress-labels"><span>{{monzoMoveBalanceGbp:gbp}}</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">{{moveTargetGbp:gbp}} simple move</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Move fund</span><span class="goal-row-value">{{moveTargetGbp:gbp}} · movers, overlap, setup</span></div>
-        <div class="goal-row"><span class="goal-row-label">Current / target</span><span class="goal-row-value" style="color:var(--green)"><span data-live-move>—</span> now · {{moveTargetGbp:gbp}} target</span></div>
-        <div class="goal-row"><span class="goal-row-label">Deposit</span><span class="goal-row-value" style="color:var(--indigo)">Returned deposit or short EF bridge if needed</span></div>
-        <div class="goal-row"><span class="goal-row-label">Bonus</span><span class="goal-row-value" style="color:var(--green)">{{bonusMinimumRate:percent}} minimum in March; deposit / first rent if needed</span></div>
+        <div class="goal-row"><span class="goal-row-label">Deposit / bonus</span><span class="goal-row-value" style="color:var(--indigo)">Returned deposit / EF bridge · {{bonusMinimumRate:percent}} March minimum for deposit or first rent</span></div>
         <div class="goal-row"><span class="goal-row-label">After move</span><span class="goal-row-value" style="color:var(--cyan)">{{moveMonthlyGbp:gbp}} pot ends after June; becomes ordinary cash</span></div>
-        <div class="goal-row"><span class="goal-row-label">Flex</span><span class="goal-row-value" style="color:var(--indigo)">Fidelity {{wiseMonthlyGbp:gbp}} → {{moveFidelityComfortMonthlyGbp:gbp}}; {{moveFidelityTemporaryFloorGbp:gbp}} temporary floor</span></div>
-        <div class="goal-row"><span class="goal-row-label">Protect</span><span class="goal-row-value">Pension {{pensionEmployeeRate:percent}} · SIP {{sipEmployeeMonthlyGbp:gbp}} + match · Roth via bonus / taxable redirect</span></div>
-        <div class="goal-row"><span class="goal-row-label">Raise</span><span class="goal-row-value">April payday · {{meritAssumption:percent}} model · 3–4% expected</span></div>
+        <div class="goal-row"><span class="goal-row-label">Investing flex</span><span class="goal-row-value" style="color:var(--indigo)">Fidelity {{wiseMonthlyGbp:gbp}} → {{moveFidelityComfortMonthlyGbp:gbp}}; {{moveFidelityTemporaryFloorGbp:gbp}} floor · protect pension/SIP match · Roth via bonus</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
             <div class="gp-label" id="move-pill-label">{{moveMonthlyGbp:gbp}}/mo from 24 Jul keeps the move fund on track</div>
