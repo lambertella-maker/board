@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="62cc5f0e01fd7e8d">
+<meta name="finance-build" content="4b0651624849869d">
 <script>
 (() => {
   try {
-    const build = '62cc5f0e01fd7e8d';
+    const build = '4b0651624849869d';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -1476,7 +1476,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="metric-label">Projected at 67 (7%)</div>
         <div class="metric-value" id="projected-67-card-value" style="color:var(--cyan)">—</div>
         <div class="metric-sub">Pension + US investing</div>
-        <span class="metric-badge badge-green">Pension + taxable + Roths + shares + cash</span>
+        <span class="metric-badge badge-green">Pension · taxable · Roths · shares · cash</span>
       </div>
     </div>
 
@@ -2448,7 +2448,7 @@ function liveEstimates() {
   if (projected67Value) projected67Value.textContent = fmtCompactMoney(total67);
   if (annualInvestingValue) annualInvestingValue.textContent = fmt(Math.round((PLAN.fidelityTaxableMonthlyUsd * liveFX * 12) + PLAN.sipAnnualGbp));
   if (projected67CardValue) projected67CardValue.textContent = fmtCompactMoney(total67);
-  if (projected67Note) projected67Note.textContent = 'Pension + taxable + Roths + shares + cash';
+  if (projected67Note) projected67Note.textContent = 'Pension · taxable · Roths · shares · cash';
   if (stateIncomeValue) stateIncomeValue.textContent = fmtCompactMoney(stateIncome67) + '+';
   if (pension67El) pension67El.textContent = fmtCompactMoney(pension67);
   document.getElementById('bal-atom').textContent       = fmt(atomEst);

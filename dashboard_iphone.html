@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="62cc5f0e01fd7e8d">
+<meta name="finance-build" content="4b0651624849869d">
 <script>
 (() => {
   try {
-    const build = '62cc5f0e01fd7e8d';
+    const build = '4b0651624849869d';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -1355,7 +1355,7 @@ function liveEstimates() {
   if (invFid) invFid.textContent = fmtUsdRounded(fidelityEst);
   if (invRoth) invRoth.textContent = fmtUsdRounded(rothEst);
   if (invTotal) {
-    const totalInvest = pensionEst + Math.round(fidelityEst * FX_M) + Math.round(rothEst * FX_M);
+    const totalInvest = pensionEst + Math.round(fidelityEst * FX_M) + Math.round(rothEst * FX_M) + Math.round(PLAN.advisorBalanceUsd * FX_M);
     invTotal.textContent = '£' + Math.round(totalInvest / 1000) + 'k';
   }
 
@@ -1409,19 +1409,20 @@ function liveEstimates() {
     { label:'AbbVie Pension', val: pensionEst,                      color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
     { label:'ABBV SIP Shares',val: sipEst,                          color:'#f472b6', note:'Locked 5yr · acquisition cost' },
     { label:'US Brokerage',   val: Math.round(fidelityEst * FX_M), color:'#34d399', note:'Fidelity — FSKAX/FTIHX/FXNAX' },
-    { label:'Brokerage Roth', val: Math.round(rothEst * FX_M),     color:'#fbbf24', note:'Active Roth IRA · Advisor Roth separate' },
+    { label:'Brokerage Roth', val: Math.round(rothEst * FX_M), liquidVal: Math.round(Math.min(rothEst, PLAN.rothContributionBasisUsd) * FX_M), color:'#fbbf24', note:'Full balance shown; contributed principal is emergency-accessible' },
+    { label:'US Advisory',    val: Math.round((PLAN.advisorBalanceUsd || 0) * FX_M), color:'#f97316', note:'Fidelity Advisor Class C · no new contributions' },
     { label:'US Cash',        val: Math.round(chaseUSEst * FX_M),  color:'#6366f1', note:'Chase US — pipeline hub' },
   ];
   const mTotal  = mSegs.reduce((s, x) => s + x.val, 0);
   const mUkAssets = mSegs.filter(s => ['UK Savings', 'AbbVie Pension', 'ABBV SIP Shares'].includes(s.label)).reduce((s, x) => s + x.val, 0);
-  const mUsAssets = mSegs.filter(s => ['US Brokerage', 'Brokerage Roth', 'US Cash'].includes(s.label)).reduce((s, x) => s + x.val, 0);
+  const mUsAssets = mSegs.filter(s => ['US Brokerage', 'Brokerage Roth', 'US Advisory', 'US Cash'].includes(s.label)).reduce((s, x) => s + x.val, 0);
   const mUkAssetsEl = document.getElementById('m-pillar-uk-assets');
   const mUsAssetsEl = document.getElementById('m-pillar-us-assets');
   if (mUkAssetsEl) mUkAssetsEl.textContent = `£${Math.round(mUkAssets).toLocaleString('en-GB')}`;
   if (mUsAssetsEl) mUsAssetsEl.textContent = `£${Math.round(mUsAssets).toLocaleString('en-GB')}`;
   const mLiquid = mSegs
-    .filter(s => ['UK Savings', 'US Brokerage', 'US Cash'].includes(s.label))
-    .reduce((sum, s) => sum + s.val, 0);
+    .filter(s => ['UK Savings', 'US Brokerage', 'US Advisory', 'Brokerage Roth', 'US Cash'].includes(s.label))
+    .reduce((sum, s) => sum + (typeof s.liquidVal === 'number' ? s.liquidVal : s.val), 0);
   const mNwFmt  = `£${Math.round(mTotal / 1000).toLocaleString()}k`;
   const mNwHero = document.getElementById('m-nw-hero');
   const mSpNw   = document.getElementById('m-sp-nw');
@@ -1438,6 +1439,7 @@ function liveEstimates() {
     sipCompleted:sipCompleted,
     fidelityUSD: fidelityEst,
     rothUSD:     rothEst,
+    advisorUSD:  PLAN.advisorBalanceUsd,
     usCashUSD:   chaseUSEst,
     fx:          FX_M,
     segs:        mSegs
@@ -1494,12 +1496,14 @@ function nwSliderChange(yrs) {
   const sip       = gNwBases.sip + PLAN.sipMonthlyGbp * Math.min(months, sipLeft);
   const fidFV     = Math.round((gNwBases.fidelityUSD * Math.pow(1+rInvest, months) + fvc(PLAN.fidelityTaxableMonthlyUsd, months, rInvest)) * FX);
   const rothFV    = Math.round((gNwBases.rothUSD    * Math.pow(1+rInvest, months) + fvc(PLAN.rothBrokerageMonthlyUsd, months, rInvest)) * FX);
+  const advisorFV = Math.round((gNwBases.advisorUSD * Math.pow(1+rInvest, months) + fvc(PLAN.advisorMonthlyUsd, months, rInvest)) * FX);
   renderNWSegs([
     { label:'UK Savings',     val: Math.round(ukSav),       color:'#22d3ee', note:'Atom · Monzo · Chase UK' },
     { label:'AbbVie Pension', val: Math.round(pensionFV),   color:'#818cf8', note:'Aviva · 5.5% CAGR est.' },
     { label:'ABBV SIP Shares',val: Math.round(sip),         color:'#f472b6', note:'Locked 5yr · acquisition cost' },
     { label:'US Brokerage',   val: fidFV,                   color:'#34d399', note:'Fidelity — FSKAX/FTIHX/FXNAX' },
-    { label:'Brokerage Roth', val: rothFV,                  color:'#fbbf24', note:'Active Roth IRA · Advisor Roth separate' },
+    { label:'Brokerage Roth', val: rothFV,                  color:'#fbbf24', note:'Full balance shown; contributed principal is emergency-accessible' },
+    { label:'US Advisory',    val: advisorFV,              color:'#f97316', note:'Fidelity Advisor Class C · no new contributions' },
     { label:'US Cash',        val: Math.round(gNwBases.usCashUSD * FX), color:'#6366f1', note:'Chase US — pipeline hub' },
   ]);
 }
