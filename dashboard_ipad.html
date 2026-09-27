@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="4f4c5f9040061271">
+<meta name="finance-build" content="563583329b1a4cf6">
 <script>
 (() => {
   try {
-    const build = '4f4c5f9040061271';
+    const build = '563583329b1a4cf6';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -2032,8 +2032,8 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
   const usAssetsEl = document.getElementById('pillar-us-assets');
   const ukAssets = segments.filter(s => ['UK Savings', 'AbbVie Pension', 'ABBV SIP Shares'].includes(s.label)).reduce((s, x) => s + x.val, 0);
   const usAssets = segments.filter(s => ['US Brokerage', 'Brokerage Roth', 'US Advisory', 'US Cash'].includes(s.label)).reduce((s, x) => s + x.val, 0);
-  if (ukAssetsEl) ukAssetsEl.textContent = fmt(ukAssets);
-  if (usAssetsEl) usAssetsEl.textContent = fmt(usAssets);
+  if (ukAssetsEl) ukAssetsEl.textContent = '£' + window.Finance.money(ukAssets);
+  if (usAssetsEl) usAssetsEl.textContent = '£' + window.Finance.money(usAssets);
   const liquid = liquidNetWorthFromSegments(segments);
   const nwFmt = `£${Math.round(total / 1000).toLocaleString()}k`;
   const heroNw = document.getElementById('hero-nw-value');

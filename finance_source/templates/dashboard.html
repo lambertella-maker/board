@@ -1707,8 +1707,8 @@ function drawNetWorthChart(atom, monzo, chase, pension, fidUSD, rothUSD, chaseUS
   const usAssetsEl = document.getElementById('pillar-us-assets');
   const ukAssets = segments.filter(s => ['UK Savings', 'AbbVie Pension', 'ABBV SIP Shares'].includes(s.label)).reduce((s, x) => s + x.val, 0);
   const usAssets = segments.filter(s => ['US Brokerage', 'Brokerage Roth', 'US Advisory', 'US Cash'].includes(s.label)).reduce((s, x) => s + x.val, 0);
-  if (ukAssetsEl) ukAssetsEl.textContent = fmt(ukAssets);
-  if (usAssetsEl) usAssetsEl.textContent = fmt(usAssets);
+  if (ukAssetsEl) ukAssetsEl.textContent = '£' + window.Finance.money(ukAssets);
+  if (usAssetsEl) usAssetsEl.textContent = '£' + window.Finance.money(usAssets);
   const liquid = liquidNetWorthFromSegments(segments);
   const nwFmt = `£${Math.round(total / 1000).toLocaleString()}k`;
   const heroNw = document.getElementById('hero-nw-value');
