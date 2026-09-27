@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="9a7a7a45281f02e7">
+<meta name="finance-build" content="af89b27f85ea3049">
 <script>
 (() => {
   try {
-    const build = '9a7a7a45281f02e7';
+    const build = 'af89b27f85ea3049';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -173,13 +173,16 @@ window.PLAN = Object.freeze({
   "monzoEfReducedAer": 0.026,
   "monzoMoveAer": 0.0275,
   "monzoMoveBalanceGbp": 1093,
+  "moveComfortRentBudgetGbp": 1700,
+  "moveFidelityComfortMonthlyGbp": 500,
+  "moveFidelityTemporaryFloorGbp": 400,
   "moveFirstPaydayDate": [
     2026,
     7,
     24
   ],
   "moveMonthlyGbp": 130,
-  "moveRentBudgetGbp": 1700,
+  "moveRentBudgetGbp": 1800,
   "moveTargetGbp": 1800,
   "netBonusBudgetGbp": 4000,
   "netWorthUkMedianGbp": 15000,
@@ -1200,7 +1203,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Target rent budget: about £1,700/mo or less</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Mental max: £1,800/mo · comfort target: £1,700/mo</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
           <div class="progress-labels"><span>£1,093</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
         </div>
@@ -1208,6 +1211,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="goal-row"><span class="goal-row-label">Current / target</span><span class="goal-row-value" style="color:var(--green)"><span data-live-move>—</span> now · £1,800 target</span></div>
         <div class="goal-row"><span class="goal-row-label">Deposit bridge</span><span class="goal-row-value" style="color:var(--indigo)">Use returned deposit / short EF bridge if timing needs it</span></div>
         <div class="goal-row"><span class="goal-row-label">Bonus rule</span><span class="goal-row-value" style="color:var(--green)">Not earmarked for the move unless the actual flat requires it</span></div>
+        <div class="goal-row"><span class="goal-row-label">After-move flex</span><span class="goal-row-value" style="color:var(--cyan)">The £130 move pot ends; it becomes ordinary cash after June</span></div>
+        <div class="goal-row"><span class="goal-row-label">Comfort lever</span><span class="goal-row-value" style="color:var(--indigo)">At £1,800 rent: Fidelity £650 → £500/mo; temporary floor £400</span></div>
+        <div class="goal-row"><span class="goal-row-label">Protect first</span><span class="goal-row-value">Pension 6% · SIP £150 match · fund Roth from bonus/redirected taxable</span></div>
         <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">£70,040 with a 3% merit rise assumption</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
@@ -1797,7 +1803,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="life-lane">
             <div class="life-lane-label">Home & partnership</div>
             <div class="life-lane-title">Beauty without fragility</div>
-            <div class="life-lane-copy">Target a better flat around £1,700 or less, then let the old move-pot money become the fund for an intimate wedding, hosting, and shared-life deposits.</div>
+            <div class="life-lane-copy">Target a better flat around £1,800 or less, then let the old move-pot money become the fund for an intimate wedding, hosting, and shared-life deposits.</div>
           </div>
           <div class="life-lane">
             <div class="life-lane-label">Family cushion</div>

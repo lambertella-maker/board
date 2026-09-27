@@ -865,7 +865,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Target rent budget: about {{moveRentBudgetGbp:gbp}}/mo or less</div>
+          <div style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Mental max: {{moveRentBudgetGbp:gbp}}/mo · comfort target: {{moveComfortRentBudgetGbp:gbp}}/mo</div>
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
           <div class="progress-labels"><span>{{monzoMoveBalanceGbp:gbp}}</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">{{moveTargetGbp:gbp}} simple move</span></div>
         </div>
@@ -873,6 +873,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="goal-row"><span class="goal-row-label">Current / target</span><span class="goal-row-value" style="color:var(--green)"><span data-live-move>—</span> now · {{moveTargetGbp:gbp}} target</span></div>
         <div class="goal-row"><span class="goal-row-label">Deposit bridge</span><span class="goal-row-value" style="color:var(--indigo)">Use returned deposit / short EF bridge if timing needs it</span></div>
         <div class="goal-row"><span class="goal-row-label">Bonus rule</span><span class="goal-row-value" style="color:var(--green)">Not earmarked for the move unless the actual flat requires it</span></div>
+        <div class="goal-row"><span class="goal-row-label">After-move flex</span><span class="goal-row-value" style="color:var(--cyan)">The {{moveMonthlyGbp:gbp}} move pot ends; it becomes ordinary cash after June</span></div>
+        <div class="goal-row"><span class="goal-row-label">Comfort lever</span><span class="goal-row-value" style="color:var(--indigo)">At {{moveRentBudgetGbp:gbp}} rent: Fidelity {{wiseMonthlyGbp:gbp}} → {{moveFidelityComfortMonthlyGbp:gbp}}/mo; temporary floor {{moveFidelityTemporaryFloorGbp:gbp}}</span></div>
+        <div class="goal-row"><span class="goal-row-label">Protect first</span><span class="goal-row-value">Pension {{pensionEmployeeRate:percent}} · SIP {{sipEmployeeMonthlyGbp:gbp}} match · fund Roth from bonus/redirected taxable</span></div>
         <div class="goal-row"><span class="goal-row-label">Apr 2027 salary</span><span class="goal-row-value">{{salaryNextMeritGbp:gbp}} with a {{meritAssumption:percent}} merit rise assumption</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">

@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="9a7a7a45281f02e7">
+<meta name="finance-build" content="af89b27f85ea3049">
 <script>
 (() => {
   try {
-    const build = '9a7a7a45281f02e7';
+    const build = 'af89b27f85ea3049';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -173,13 +173,16 @@ window.PLAN = Object.freeze({
   "monzoEfReducedAer": 0.026,
   "monzoMoveAer": 0.0275,
   "monzoMoveBalanceGbp": 1093,
+  "moveComfortRentBudgetGbp": 1700,
+  "moveFidelityComfortMonthlyGbp": 500,
+  "moveFidelityTemporaryFloorGbp": 400,
   "moveFirstPaydayDate": [
     2026,
     7,
     24
   ],
   "moveMonthlyGbp": 130,
-  "moveRentBudgetGbp": 1700,
+  "moveRentBudgetGbp": 1800,
   "moveTargetGbp": 1800,
   "netBonusBudgetGbp": 4000,
   "netWorthUkMedianGbp": 15000,
@@ -836,7 +839,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <span style="font-size:1.4rem;">🗝️</span>
       <div class="goal-card-meta"><div class="goal-card-label">Goal 2 · Jun–Jul 2027</div><div class="goal-card-title">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
-    <div class="goal-subcopy">Target rent about £1,700/mo max · £130/mo move fund</div>
+    <div class="goal-subcopy">Target rent about £1,800/mo max · £130/mo move fund</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
     <div class="prog-labels"><span>£1,093</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Move target</span><span style="font-weight:600;">£1,800 · movers, overlap, setup</span></div>
