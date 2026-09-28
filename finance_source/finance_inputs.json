@@ -58,7 +58,7 @@
   "monzoEfReducedAer": 0.026,
   "monzoEfMaxWithdrawals": 2,
   "monzoMoveAer": 0.0275,
-  "pensionAnchorGbp": 23761.08,
+  "pensionAnchorGbp": 31021,
   "chaseUkAnchorGbp": 3839.9,
   "chaseUkDisplayGbp": 2146,
   "octopusMonthlyGbp": 110.51,
@@ -121,12 +121,12 @@
   ],
   "pensionAnchorDate": [
     2026,
-    4,
-    6
+    8,
+    28
   ],
   "pensionNextPaydayDate": [
     2026,
-    4,
+    9,
     24
   ],
   "chaseAnchorDate": [
@@ -166,7 +166,7 @@
   "gymGrossMonthlyGbp": 97.4,
   "taxNiMonthlyGbp": 1344,
   "bonus2026GrossGbp": 6371,
-  "bonusMinimumRate": 0.10,
+  "bonusMinimumRate": 0.1,
   "bonus2026ActualRate": 0.11,
   "netBonusBudgetGbp": 4000,
   "moveRentBudgetGbp": 1800,

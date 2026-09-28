@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="88a9ed90cfb88f6a">
+<meta name="finance-build" content="cab43022c69d7181">
 <script>
 (() => {
   try {
-    const build = '88a9ed90cfb88f6a';
+    const build = 'cab43022c69d7181';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -206,10 +206,10 @@ window.PLAN = Object.freeze({
   "pensionAccessAge": 57,
   "pensionAnchorDate": [
     2026,
-    4,
-    6
+    8,
+    28
   ],
-  "pensionAnchorGbp": 23761.08,
+  "pensionAnchorGbp": 31021,
   "pensionAnnualGbp": 12240.0,
   "pensionEmployeeAnnualGbp": 4080.0,
   "pensionEmployeeMonthlyGbp": 340.0,
@@ -219,7 +219,7 @@ window.PLAN = Object.freeze({
   "pensionMonthlyGbp": 1020.0,
   "pensionNextPaydayDate": [
     2026,
-    4,
+    9,
     24
   ],
   "pensionReturn": 0.055,
@@ -1272,7 +1272,7 @@ function liveEstimates() {
   ) * 100) / 100;
   const chaseUSEst = PLAN.chaseUSBalanceUsd; // confirmed 5 Aug 2026 working-capital anchor
 
-  // UK pension reanchored 6 May 2026 at £23,761.08 after SALX/recent payroll updates.
+  // UK pension reanchored 28 Sep 2026 at £31,021.00 per user-confirmed current balance.
   const PENSION_ANCHOR = new Date(...window.PLAN.pensionAnchorDate);
   const PENSION_VAL    = window.PLAN.pensionAnchorGbp;
   const NEXT_PENSION_PAYDAY = new Date(...window.PLAN.pensionNextPaydayDate);
