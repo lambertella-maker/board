@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="cab43022c69d7181">
+<meta name="finance-build" content="40039179cee78b33">
 <script>
 (() => {
   try {
-    const build = 'cab43022c69d7181';
+    const build = '40039179cee78b33';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -2367,7 +2367,7 @@ function liveEstimates() {
   document.querySelectorAll("[data-live-sip]").forEach(el => { el.textContent = "£" + sipEst.toLocaleString("en-GB"); });
 
   // UK PENSION — reanchored 28 Sep 2026 at £31,021.00 per user-confirmed current balance.
-  // Monthly contributions: £1,020 from the next payroll contribution on May 24 2026.
+  // Monthly contributions: £1,020 from the next payroll contribution on Oct 24 2026.
   const PENSION_ANCHOR = new Date(...window.PLAN.pensionAnchorDate);   // Sep 28 2026
   const PENSION_VAL    = window.PLAN.pensionAnchorGbp;
   const NEXT_PENSION_PAYDAY = new Date(...window.PLAN.pensionNextPaydayDate);
