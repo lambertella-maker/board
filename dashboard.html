@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="40039179cee78b33">
+<meta name="finance-build" content="c54d024b0e6547e2">
 <script>
 (() => {
   try {
-    const build = '40039179cee78b33';
+    const build = 'c54d024b0e6547e2';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -600,8 +600,8 @@ document.addEventListener('DOMContentLoaded', () => {
   .superplan-intro { background:linear-gradient(135deg,rgba(129,140,248,0.08),rgba(34,211,238,0.04)); border:1px solid rgba(129,140,248,0.2); border-radius:16px; padding:2rem; margin-bottom:2rem; text-align:center; }
   .superplan-intro h3 { font-size:1.6rem; font-weight:800; background:linear-gradient(135deg,var(--amber),var(--pink),var(--indigo)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.6rem; }
   .superplan-intro p { color:var(--soft); font-size:0.95rem; line-height:1.7; max-width:700px; margin:0 auto; }
-  .pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
-  .pillar { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; position:relative; overflow:hidden; transition:transform .2s,border-color .2s; }
+  .pillars { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0.8rem; }
+  .pillar { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:0.9rem 1rem; min-width:0; position:relative; overflow:hidden; transition:transform .2s,border-color .2s; }
   .pillar:hover { transform:translateY(-3px); }
   .pillar::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
   .pillar.p-indigo { border-color:rgba(129,140,248,0.3); } .pillar.p-indigo::before { background:var(--indigo); } .pillar.p-indigo:hover { border-color:var(--indigo); }
@@ -609,13 +609,14 @@ document.addEventListener('DOMContentLoaded', () => {
   .pillar.p-amber  { border-color:rgba(251,191,36,0.3);  } .pillar.p-amber::before  { background:var(--amber);  } .pillar.p-amber:hover  { border-color:var(--amber);  }
   .pillar.p-green  { border-color:rgba(52,211,153,0.3);  } .pillar.p-green::before  { background:var(--green);  } .pillar.p-green:hover  { border-color:var(--green);  }
   .pillar.p-pink   { border-color:rgba(244,114,182,0.3); } .pillar.p-pink::before   { background:var(--pink);   } .pillar.p-pink:hover   { border-color:var(--pink);   }
-  .pillar-icon { font-size:1.8rem; margin-bottom:0.8rem; }
-  .pillar-name { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:0.3rem; }
-  .pillar-title { font-size:1rem; font-weight:700; margin-bottom:0.8rem; }
-  .pillar-stat { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; margin-bottom:0.35rem; }
+  .pillar-heading { display:grid; grid-template-columns:1.8rem minmax(0,1fr); column-gap:0.5rem; align-items:center; margin-bottom:0.6rem; }
+  .pillar-icon { grid-row:1 / 3; font-size:1.4rem; line-height:1; }
+  .pillar-name { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:0.15rem; }
+  .pillar-title { font-size:1rem; font-weight:700; line-height:1.25; }
+  .pillar-stat { display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem; margin-bottom:0.25rem; }
   .pillar-stat-label { font-size:0.75rem; color:var(--muted); }
   .pillar-stat-value { font-size:0.78rem; font-weight:700; text-align:right; }
-  .pillar-why { font-size:0.75rem; color:var(--soft); line-height:1.5; margin-top:0.9rem; padding-top:0.8rem; border-top:1px solid var(--border); }
+  .pillar-why { font-size:0.75rem; color:var(--soft); line-height:1.4; margin-top:0.55rem; padding-top:0.5rem; border-top:1px solid var(--border); }
   .superplan-total { background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(244,114,182,0.05)); border:1px solid rgba(251,191,36,0.25); border-radius:16px; padding:2rem; margin-top:2rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; text-align:center; }
   .st-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin-bottom:0.4rem; }
   .st-value { font-size:1.6rem; font-weight:800; }
@@ -989,9 +990,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="pillars">
 
       <div class="pillar p-indigo">
-        <div class="pillar-icon">🏦</div>
+        <div class="pillar-heading"><div class="pillar-icon">🏦</div>
         <div class="pillar-name">Pillar 1 · UK Workplace</div>
-        <div class="pillar-title">AbbVie Pension</div>
+        <div class="pillar-title">AbbVie Pension</div></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-pension-val" style="color:var(--indigo)">£31,021</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Annual input</span><span class="pillar-stat-value">£12,240 (18% total)</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Your contribution</span><span class="pillar-stat-value">6% · AbbVie matches 12%</span></div>
@@ -1000,9 +1001,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="pillar p-cyan">
-        <div class="pillar-icon">🇬🇧</div>
+        <div class="pillar-heading"><div class="pillar-icon">🇬🇧</div>
         <div class="pillar-name">Pillar 2 · UK State</div>
-        <div class="pillar-title">UK State Pension</div>
+        <div class="pillar-title">UK State Pension</div></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Qualifying progress</span><span class="pillar-stat-value" style="color:var(--cyan)">3 / 35 years</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Current earned amount</span><span class="pillar-stat-value">£1,076/yr</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Full pension value</span><span class="pillar-stat-value">£12,548/yr (today's money)</span></div>
@@ -1011,9 +1012,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="pillar p-amber">
-        <div class="pillar-icon">🇺🇸</div>
+        <div class="pillar-heading"><div class="pillar-icon">🇺🇸</div>
         <div class="pillar-name">Pillar 3 · US State</div>
-        <div class="pillar-title">US Social Security</div>
+        <div class="pillar-title">US Social Security</div></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Eligibility path</span><span class="pillar-stat-value">40 credits or UK-US totalization</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Full salary-scaled est.</span><span class="pillar-stat-value">$37,000/yr</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Estimate basis</span><span class="pillar-stat-value">3 equivalent years at current pay</span></div>
@@ -1021,9 +1022,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="pillar p-green">
-        <div class="pillar-icon">📈</div>
+        <div class="pillar-heading"><div class="pillar-icon">📈</div>
         <div class="pillar-name">Pillar 4 · US Investing</div>
-        <div class="pillar-title">Fidelity Taxable</div>
+        <div class="pillar-title">Fidelity Taxable</div></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Taxable value</span><span class="pillar-stat-value" id="pillar-fid-val" style="color:var(--green)">$8,858</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Monthly buy</span><span class="pillar-stat-value">$850/mo taxable</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Target allocation</span><span class="pillar-stat-value">FSKAX 85 / FTIHX 10 / FXNAX 5</span></div>
@@ -1031,9 +1032,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="pillar p-pink">
-        <div class="pillar-icon">🌱</div>
+        <div class="pillar-heading"><div class="pillar-icon">🌱</div>
         <div class="pillar-name">Pillar 5 · US Retirement</div>
-        <div class="pillar-title">Roth IRA (Brokerage)</div>
+        <div class="pillar-title">Roth IRA (Brokerage)</div></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Current value</span><span class="pillar-stat-value" id="pillar-roth-val" style="color:var(--pink)">$8,309</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">2026 status</span><span class="pillar-stat-value" style="color:var(--pink)">Maxed · $7,500 contributed</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Contribution principal</span><span class="pillar-stat-value" style="color:var(--green)">Accessible</span></div>
@@ -1042,9 +1043,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="pillar p-indigo">
-        <div class="pillar-icon">💼</div>
+        <div class="pillar-heading"><div class="pillar-icon">💼</div>
         <div class="pillar-name">Pillar 6 · UK Shares</div>
-        <div class="pillar-title">ABBV Share Incentive Plan</div>
+        <div class="pillar-title">ABBV Share Incentive Plan</div></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Acquisition value</span><span class="pillar-stat-value" data-live-sip>—</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Annual sacrifice</span><span class="pillar-stat-value" style="color:var(--indigo)">£1,800/yr</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">AbbVie match</span><span class="pillar-stat-value">1:1 (£1,800 free shares)</span></div>
@@ -1054,9 +1055,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="pillar p-cyan">
-        <div class="pillar-icon">🛡️</div>
+        <div class="pillar-heading"><div class="pillar-icon">🛡️</div>
         <div class="pillar-name">Pillar 7 · Foundation</div>
-        <div class="pillar-title">Emergency Fund</div>
+        <div class="pillar-title">Emergency Fund</div></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Total</span><span class="pillar-stat-value" id="pillar-ef-total" style="color:var(--cyan)">£14,973</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Atom Bank (3.49%)</span><span class="pillar-stat-value" id="pillar-ef-atom">£12,668</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Monzo EF (3.15% · max 2 withdrawals)</span><span class="pillar-stat-value" id="pillar-ef-savings">£2,305</span></div>
@@ -1065,9 +1066,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="pillar p-amber">
-        <div class="pillar-icon">✈️</div>
+        <div class="pillar-heading"><div class="pillar-icon">✈️</div>
         <div class="pillar-name">Pillar 8 · Credit &amp; Travel</div>
-        <div class="pillar-title">Cross-Continent Credit</div>
+        <div class="pillar-title">Cross-Continent Credit</div></div>
         <div class="pillar-stat"><span class="pillar-stat-label">UK: BA Amex</span><span class="pillar-stat-value" style="color:var(--muted)">Retiring once CSP live</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">US: Amex Blue Cash</span><span class="pillar-stat-value">Building credit history</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">Next: Chase Sapphire</span><span class="pillar-stat-value">Target Jan 2027</span></div>
@@ -1076,9 +1077,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="pillar p-green">
-        <div class="pillar-icon">🌍</div>
+        <div class="pillar-heading"><div class="pillar-icon">🌍</div>
         <div class="pillar-name">Pillar 9 · Optionality</div>
-        <div class="pillar-title">Dual-Continent Architecture</div>
+        <div class="pillar-title">Dual-Continent Architecture</div></div>
         <div class="pillar-stat"><span class="pillar-stat-label">UK assets</span><span class="pillar-stat-value" id="pillar-uk-assets" style="color:var(--green)">Calculating…</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">US assets</span><span class="pillar-stat-value" id="pillar-us-assets">Calculating…</span></div>
         <div class="pillar-stat"><span class="pillar-stat-label">ILR target</span><span class="pillar-stat-value">Sep 2029</span></div>
