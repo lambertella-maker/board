@@ -54,4 +54,22 @@ if(window.Finance.moveBalance(new Date(2026,7,23))!==window.PLAN.monzoMoveBalanc
         result=subprocess.run(['node','-e',js],capture_output=True,text=True)
         self.assertEqual(result.returncode,0,result.stderr)
 
+    def test_move_fund_chase_redirect(self):
+        p = load_plan()
+        js = 'global.window={PLAN:'+json.dumps(p)+'};\n'+(ROOT/'finance_runtime.js').read_text()+'''
+const f=window.Finance;
+const p=window.PLAN;
+if(f.moveBalance(new Date(2026,9,23))!==1356) throw Error('Pre-payment balance changed');
+const first=f.moveBalance(new Date(2026,9,24));
+const expected=Math.round((1356*Math.pow(1+p.monzoMoveAer,1/12)+150)*100)/100;
+if(first!==expected) throw Error('First Chase deposit double counted or backdated');
+if(f.moveBalance(new Date(2026,10,24))>=1800 || f.moveBalance(new Date(2026,11,24))<1800) throw Error('Target crossing drift');
+p.moveMonthlyGbp=0;
+const monzoOnly=f.moveBalance(new Date(2027,5,1));
+p.chaseRegularSaverAer=0.5;
+if(f.moveBalance(new Date(2027,5,1))!==monzoOnly) throw Error('Chase rate applied to existing Monzo balance');
+'''
+        result=subprocess.run(['node','-e',js],capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+
 if __name__ == '__main__': unittest.main()

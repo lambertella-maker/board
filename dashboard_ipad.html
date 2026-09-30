@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="c54d024b0e6547e2">
+<meta name="finance-build" content="dbb6af9a51595726">
 <script>
 (() => {
   try {
-    const build = 'c54d024b0e6547e2';
+    const build = 'dbb6af9a51595726';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -53,6 +53,9 @@ window.PLAN = Object.freeze({
     2,
     3
   ],
+  "chaseRegularSaverAer": 0.065,
+  "chaseRegularSaverMonthlyCapGbp": 300,
+  "chaseRegularSaverTermMonths": 12,
   "chaseUSBalanceUsd": 2000,
   "chaseUkAnchorGbp": 3839.9,
   "chaseUkDisplayGbp": 2146,
@@ -111,7 +114,7 @@ window.PLAN = Object.freeze({
   "fireSpendLowGbp": 45000,
   "fireSpendMidGbp": 60000,
   "fireWithdrawalRate": 0.04,
-  "flexibleCashMonthlyGbp": 808,
+  "flexibleCashMonthlyGbp": 788,
   "fskaxExpenseRatio": 0.00015,
   "fskaxMonthlyUsd": 723,
   "fskaxReturn": 0.07,
@@ -181,7 +184,7 @@ window.PLAN = Object.freeze({
     9,
     24
   ],
-  "moveMonthlyGbp": 130,
+  "moveMonthlyGbp": 150,
   "moveRentBudgetGbp": 1800,
   "moveTargetGbp": 1800,
   "netBonusBudgetGbp": 4000,
@@ -350,12 +353,17 @@ window.Finance = Object.freeze({
   },
   moveBalance(asOf) {
     const p = window.PLAN;
-    let value = p.monzoMoveBalanceGbp;
-    const rate = p.monzoMoveAer / 12;
+    // Monthly planning estimate through the June 2027 move, within Chase's first term.
+    // Existing Monzo principal stays put; only new contributions go to Chase.
+    let monzo = p.monzoMoveBalanceGbp;
+    let chase = 0;
+    const monzoRate = Math.pow(1 + p.monzoMoveAer, 1 / 12) - 1;
+    const chaseRate = Math.pow(1 + p.chaseRegularSaverAer, 1 / 12) - 1;
     for (let d = new Date(...p.moveFirstPaydayDate); d <= asOf; d = new Date(d.getFullYear(), d.getMonth() + 1, p.payday)) {
-      value = value * (1 + rate) + p.moveMonthlyGbp;
+      monzo *= 1 + monzoRate;
+      chase = chase * (1 + chaseRate) + p.moveMonthlyGbp;
     }
-    return Math.round(value * 100) / 100;
+    return Math.round((monzo + chase) * 100) / 100;
   }
 });
 
@@ -958,7 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
           <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Post-payday flow</div>
-          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,736 lands in Chase UK. Move Pot starts <strong style="color:var(--text)">24 Jul</strong> at £130/mo.</div></div>
+          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> £3,736 lands in Chase UK. Move fund → Chase saver £150/mo from October.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Wise pulls <strong style="color:var(--text)">£650</strong> from Chase UK.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">26th:</strong> Wise sends <strong style="color:var(--text)">$850</strong> to Chase US.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> <strong style="color:var(--text)">£56</strong> goes out for flatmate bills.</div></div>
@@ -1209,14 +1217,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
           <div class="progress-labels"><span>£1,356</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">Move fund</span><span class="goal-row-value">£1,800 · movers, overlap, setup</span></div>
-        <div class="goal-row"><span class="goal-row-label">Projected by move</span><span class="goal-row-value" id="move-projected-lbl" style="color:var(--green)">Calculating...</span></div>
+        <div class="goal-row"><span class="goal-row-label">Move fund</span><span class="goal-row-value">Monzo + Chase · £1,800 target</span></div>
+        <div class="goal-row"><span class="goal-row-label">If saving to May</span><span class="goal-row-value" title="Monzo + Chase estimate if monthly payments continue through May; rates held constant, before tax." id="move-projected-lbl" style="color:var(--green)">Calculating...</span></div>
         <div class="goal-row"><span class="goal-row-label">Deposit / bonus</span><span class="goal-row-value" style="color:var(--indigo)">Deposit / EF bridge · 10% March bonus</span></div>
-        <div class="goal-row"><span class="goal-row-label">After move</span><span class="goal-row-value" style="color:var(--cyan)">£130 pot ends June → cash</span></div>
+        <div class="goal-row"><span class="goal-row-label">Chase saver</span><span class="goal-row-value" style="color:var(--cyan)">6.5% AER · 12mo · £300/mo cap</span></div>
         <div class="goal-row"><span class="goal-row-label">Investing flex</span><span class="goal-row-value" style="color:var(--indigo)">Fidelity £650 → £500 · £400 floor · protect pension/SIP · Roth via bonus</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
-            <div class="gp-label" id="move-pill-label">£130/mo from 24 Jul keeps the move fund on track</div>
+            <div class="gp-label" id="move-pill-label">At £1,800: pause or fund next goal; withdraw when needed</div>
             <span id="move-timeline">Jun–Jul 2027</span>
           </div>
         </div>
@@ -1290,6 +1298,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
   const moveTarget = window.PLAN.moveTargetGbp;
   const total = window.Finance.moveBalance(today);
+  document.getElementById('move-projected-lbl').textContent = `£${window.Finance.moveBalance(new Date(2027, 5, 1)).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} on 1 Jun 2027`;
   label.textContent = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
   bar.style.width = Math.min(100, total / moveTarget * 100).toFixed(1) + '%';
 })();
@@ -1495,7 +1504,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="pipe-icon">🇬🇧</div>
           <div class="pipe-label">Chase UK</div>
           <div class="pipe-amount">£650</div>
-          <div class="pipe-note">Salary hub · comfort float £1,300+ · £808/mo flexible</div>
+          <div class="pipe-note">Salary hub · comfort float £1,300+ · £788/mo flexible</div>
         </div>
         <div class="pipe-arrow">→</div>
         <div class="pipe-step">
@@ -1792,7 +1801,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="life-funding">
             <div class="life-funding-row"><span>Start serious funding</span><span>After Jun-Jul 2027 move</span></div>
             <div class="life-funding-row"><span>Monthly baseline</span><span>£150/mo</span></div>
-            <div class="life-funding-row"><span>Move-pot rule</span><span>£130/mo from 24 Jul</span></div>
+            <div class="life-funding-row"><span>Move-pot rule</span><span>£150/mo → Chase saver</span></div>
             <div class="life-funding-row"><span>Bonus rule</span><span>10% of net bonus cash</span></div>
             <div class="life-funding-row"><span>Protect first</span><span>£650/mo Fidelity</span></div>
           </div>
@@ -2508,7 +2517,7 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = cspProgress.toFixed(1) + '%';
   document.getElementById('csp-months-lbl').textContent = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
-  // Move pot — £130/mo; reanchored to the 27 Sep 2026 balance.
+  // Move pot — £150/mo; reanchored to the 27 Sep 2026 balance.
   const r        = window.PLAN.monzoMoveAer / 12;  // 2.75% AER
   const potStart = new Date(...window.PLAN.moveFirstPaydayDate);
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
@@ -2518,7 +2527,7 @@ function updateGoals() {
   function potFV(asOf) { return window.Finance.moveBalance(asOf); }
   const flatSaved = potFV(today);
   const moveDate = new Date(2027, 5, 1);
-  document.getElementById('move-projected-lbl').textContent = `£${potFV(moveDate).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} on 1 Jun 2027`;
+
 
   // Goal 2: Move to nicer flat with a simple £1,800 move buffer.
   const moveTarget = window.PLAN.moveTargetGbp;
@@ -2540,7 +2549,7 @@ function updateGoals() {
   document.getElementById('ilr-lbl').textContent  = ilrTimeParts.length ? `${ilrTimeParts.join(', ')} to go` : 'Eligible now';
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Jan 2027");
-  setPill('move', "£130/mo keeps the £1,800 move buffer ahead", "Jun–Jul 2027");
+  setPill('move', "At £1,800: pause or fund next goal; withdraw when needed", "Jun–Jul 2027");
 
   // Travel — UR points toward Polaris (independent of CSP credit-history bar)
   // Phase 1: pre-CSP (now → Oct 1 2026) → 0–5%

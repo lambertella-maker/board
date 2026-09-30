@@ -13,11 +13,16 @@ window.Finance = Object.freeze({
   },
   moveBalance(asOf) {
     const p = window.PLAN;
-    let value = p.monzoMoveBalanceGbp;
-    const rate = p.monzoMoveAer / 12;
+    // Monthly planning estimate through the June 2027 move, within Chase's first term.
+    // Existing Monzo principal stays put; only new contributions go to Chase.
+    let monzo = p.monzoMoveBalanceGbp;
+    let chase = 0;
+    const monzoRate = Math.pow(1 + p.monzoMoveAer, 1 / 12) - 1;
+    const chaseRate = Math.pow(1 + p.chaseRegularSaverAer, 1 / 12) - 1;
     for (let d = new Date(...p.moveFirstPaydayDate); d <= asOf; d = new Date(d.getFullYear(), d.getMonth() + 1, p.payday)) {
-      value = value * (1 + rate) + p.moveMonthlyGbp;
+      monzo *= 1 + monzoRate;
+      chase = chase * (1 + chaseRate) + p.moveMonthlyGbp;
     }
-    return Math.round(value * 100) / 100;
+    return Math.round((monzo + chase) * 100) / 100;
   }
 });

@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div style="background:rgba(34,211,238,0.04); border:1px solid rgba(34,211,238,0.16); border-radius:10px; padding:0.7rem 0.8rem;">
           <div style="font-size:0.6rem; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.45rem;">Post-payday flow</div>
-          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> {{salaryNetMonthlyGbp:gbp}} lands in Chase UK. Move Pot starts <strong style="color:var(--text)">24 Jul</strong> at {{moveMonthlyGbp:gbp}}/mo.</div></div>
+          <div class="action-item" style="padding-bottom:0.45rem; border-bottom:1px solid var(--border);"><span class="action-dot green"></span><div><strong style="color:var(--text)">24th:</strong> {{salaryNetMonthlyGbp:gbp}} lands in Chase UK. Move fund → Chase saver {{moveMonthlyGbp:gbp}}/mo from October.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">25th:</strong> Wise pulls <strong style="color:var(--text)">{{wiseMonthlyGbp:gbp}}</strong> from Chase UK.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot cyan"></span><div><strong style="color:var(--text)">26th:</strong> Wise sends <strong style="color:var(--text)">{{fidelityTaxableMonthlyUsd:usd}}</strong> to Chase US.</div></div>
           <div class="action-item" style="padding:0.45rem 0; border-bottom:1px solid var(--border);"><span class="action-dot indigo"></span><div><strong style="color:var(--text)">26th:</strong> <strong style="color:var(--text)">{{vancsiDisplayedMonthlyGbp:gbp}}</strong> goes out for flatmate bills.</div></div>
@@ -871,14 +871,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="progress-bar"><div class="progress-fill" id="move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
           <div class="progress-labels"><span>{{monzoMoveBalanceGbp:gbp}}</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">{{moveTargetGbp:gbp}} simple move</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">Move fund</span><span class="goal-row-value">{{moveTargetGbp:gbp}} · movers, overlap, setup</span></div>
-        <div class="goal-row"><span class="goal-row-label">Projected by move</span><span class="goal-row-value" id="move-projected-lbl" style="color:var(--green)">Calculating...</span></div>
+        <div class="goal-row"><span class="goal-row-label">Move fund</span><span class="goal-row-value">Monzo + Chase · {{moveTargetGbp:gbp}} target</span></div>
+        <div class="goal-row"><span class="goal-row-label">If saving to May</span><span class="goal-row-value" title="Monzo + Chase estimate if monthly payments continue through May; rates held constant, before tax." id="move-projected-lbl" style="color:var(--green)">Calculating...</span></div>
         <div class="goal-row"><span class="goal-row-label">Deposit / bonus</span><span class="goal-row-value" style="color:var(--indigo)">Deposit / EF bridge · {{bonusMinimumRate:percent}} March bonus</span></div>
-        <div class="goal-row"><span class="goal-row-label">After move</span><span class="goal-row-value" style="color:var(--cyan)">{{moveMonthlyGbp:gbp}} pot ends June → cash</span></div>
+        <div class="goal-row"><span class="goal-row-label">Chase saver</span><span class="goal-row-value" style="color:var(--cyan)">{{chaseRegularSaverAer:percent}} AER · {{chaseRegularSaverTermMonths:number}}mo · {{chaseRegularSaverMonthlyCapGbp:gbp}}/mo cap</span></div>
         <div class="goal-row"><span class="goal-row-label">Investing flex</span><span class="goal-row-value" style="color:var(--indigo)">Fidelity {{wiseMonthlyGbp:gbp}} → {{moveFidelityComfortMonthlyGbp:gbp}} · {{moveFidelityTemporaryFloorGbp:gbp}} floor · protect pension/SIP · Roth via bonus</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
-            <div class="gp-label" id="move-pill-label">{{moveMonthlyGbp:gbp}}/mo from 24 Jul keeps the move fund on track</div>
+            <div class="gp-label" id="move-pill-label">At {{moveTargetGbp:gbp}}: pause or fund next goal; withdraw when needed</div>
             <span id="move-timeline">Jun–Jul 2027</span>
           </div>
         </div>
@@ -952,6 +952,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
   const moveTarget = window.PLAN.moveTargetGbp;
   const total = window.Finance.moveBalance(today);
+  document.getElementById('move-projected-lbl').textContent = `£${window.Finance.moveBalance(new Date(2027, 5, 1)).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} on 1 Jun 2027`;
   label.textContent = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
   bar.style.width = Math.min(100, total / moveTarget * 100).toFixed(1) + '%';
 })();
@@ -1454,7 +1455,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="life-funding">
             <div class="life-funding-row"><span>Start serious funding</span><span>After Jun-Jul 2027 move</span></div>
             <div class="life-funding-row"><span>Monthly baseline</span><span>{{lifeSavingsMonthlyGbp:gbp}}/mo</span></div>
-            <div class="life-funding-row"><span>Move-pot rule</span><span>{{moveMonthlyGbp:gbp}}/mo from 24 Jul</span></div>
+            <div class="life-funding-row"><span>Move-pot rule</span><span>{{moveMonthlyGbp:gbp}}/mo → Chase saver</span></div>
             <div class="life-funding-row"><span>Bonus rule</span><span>{{lifeBonusSavingsRate:percent}} of net bonus cash</span></div>
             <div class="life-funding-row"><span>Protect first</span><span>{{wiseMonthlyGbp:gbp}}/mo Fidelity</span></div>
           </div>
@@ -2180,7 +2181,7 @@ function updateGoals() {
   function potFV(asOf) { return window.Finance.moveBalance(asOf); }
   const flatSaved = potFV(today);
   const moveDate = new Date(2027, 5, 1);
-  document.getElementById('move-projected-lbl').textContent = `£${potFV(moveDate).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} on 1 Jun 2027`;
+
 
   // Goal 2: Move to nicer flat with a simple {{moveTargetGbp:gbp}} move buffer.
   const moveTarget = window.PLAN.moveTargetGbp;
@@ -2202,7 +2203,7 @@ function updateGoals() {
   document.getElementById('ilr-lbl').textContent  = ilrTimeParts.length ? `${ilrTimeParts.join(', ')} to go` : 'Eligible now';
 
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Jan 2027");
-  setPill('move', "{{moveMonthlyGbp:gbp}}/mo keeps the {{moveTargetGbp:gbp}} move buffer ahead", "Jun–Jul 2027");
+  setPill('move', "At {{moveTargetGbp:gbp}}: pause or fund next goal; withdraw when needed", "Jun–Jul 2027");
 
   // Travel — UR points toward Polaris (independent of CSP credit-history bar)
   // Phase 1: pre-CSP (now → Oct 1 2026) → 0–5%
