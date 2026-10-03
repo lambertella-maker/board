@@ -2940,14 +2940,16 @@ function clearPhoto() {
 function backToInput() {
   arPhotoData = null;
   document.getElementById('ar-photo-url').value = '';
-  document.getElementById('ar-step-input').style.display = 'block';
+  document.getElementById('ar-step-input').style.display = 'flex';
   document.getElementById('ar-step-preview').style.display = 'none';
   document.getElementById('ar-loading').style.display = 'none';
   document.getElementById('ar-error').style.display = 'none';
 }
 
 async function generateRecipe() {
-  const text = document.getElementById('ar-text-input').value.trim();
+  const recipeUrl = document.getElementById('ar-recipe-url').value.trim();
+  let text = recipeUrl || document.getElementById('ar-text-input').value.trim();
+  if (/^www\./i.test(text)) text = 'https://' + text;
   if (!text) { alert('Paste something first — a dish name, URL, or recipe text.'); return; }
 
   arGeneratedRecipe = null;
@@ -2972,7 +2974,7 @@ async function generateRecipe() {
   const isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
   const proxyUrl = localStorage.getItem('ar_proxy_url') || (isLocal ? 'http://localhost:8766' : 'https://mealplan-proxy.lambert-ella.workers.dev/');
   if (!proxyUrl) {
-    document.getElementById('ar-step-input').style.display = 'block';
+    document.getElementById('ar-step-input').style.display = 'flex';
     document.getElementById('ar-loading').style.display = 'none';
     document.getElementById('ar-key-panel').style.display = 'block';
     document.getElementById('ar-key-toggle').textContent = '⚙️ Setup required';
@@ -2993,7 +2995,7 @@ async function generateRecipe() {
         body: JSON.stringify({ fetch_url: text })
       });
       const fetchData = await fetchRes.json();
-      if (!fetchRes.ok || !fetchData.text || fetchData.text.length < 100) throw new Error("Could not read this recipe website. Paste the ingredients and method instead.");
+      if (!fetchRes.ok || typeof fetchData.text !== 'string' || !fetchData.text.trim()) throw new Error("Could not read this recipe website. Paste the ingredients and method instead.");
       if (fetchData.text) sourceText = `URL: ${text}\n\n${fetchData.text}`;
       if (fetchData.images) fetchedImages = fetchData.images;
     } catch (e) { throw new Error("Could not read this recipe website. Paste the ingredients and method instead."); }
@@ -3097,7 +3099,7 @@ Source: ${sourceText}`;
 
   } catch (err) {
     document.getElementById('ar-loading').style.display = 'none';
-    document.getElementById('ar-step-input').style.display = 'block';
+    document.getElementById('ar-step-input').style.display = 'flex';
     document.getElementById('ar-error').style.display = 'block';
     const msg = (err.message || '').toLowerCase();
     const isFetch = msg.includes('failed to fetch') || msg.includes('networkerror') || msg.includes('network request failed');
@@ -3163,6 +3165,7 @@ function confirmAddRecipe() {
   arGeneratedRecipe = null;
   arPhotoData = null;
   document.getElementById('ar-text-input').value = '';
+  document.getElementById('ar-recipe-url').value = '';
   document.getElementById('ar-photo-url').value = '';
   clearPhoto();
   hideAddRecipe();
@@ -3386,6 +3389,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Enter key submits recipe (Shift+Enter for newline)
   const ta = document.getElementById('ar-text-input');
+  document.getElementById('ar-recipe-url').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); generateRecipe(); }
+  });
   if (ta) {
     ta.addEventListener('keydown', e => {
       if (e.key === 'Enter' && !e.shiftKey) {
@@ -3476,9 +3482,11 @@ function openLightbox(src, alt) {
     <!-- STEP 1: INPUT -->
     <div id="ar-step-input" style="display:flex;flex-direction:column;flex:1;">
       <div class="ar-body-content">
-        <div class="ar-label">Paste anything</div>
+        <label class="ar-label" for="ar-recipe-url">Recipe website URL</label>
+        <input id="ar-recipe-url" class="fridge-input" type="url" inputmode="url" placeholder="https://… Paste a recipe link" style="width:100%;margin-bottom:14px" autocomplete="off">
+        <label class="ar-label" for="ar-text-input">Or paste recipe text / a dish idea</label>
         <div class="ar-hint">A URL, recipe text, dish name, Instagram caption — Claude will figure it out</div>
-        <textarea id="ar-text-input" class="ar-textarea" placeholder="e.g. "Ottolenghi's roast aubergine with pomegranate" or paste a full recipe…"></textarea>
+        <textarea id="ar-text-input" class="ar-textarea" placeholder="Paste a recipe link, full recipe, or dish idea…"></textarea>
 
         <div class="ar-label" style="margin-top:14px">Photo <span class="ar-hint-inline">(optional)</span></div>
         <input id="ar-photo-url" class="fridge-input" type="url" placeholder="Paste image URL…" style="margin-bottom:8px" autocomplete="off" />
