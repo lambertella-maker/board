@@ -3536,7 +3536,7 @@ function openLightbox(src, alt) {
 <div id="toast"></div>
 
 <script>
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   // Unregister any stale SW first, then register fresh — guarantees old cached HTML is never served
   navigator.serviceWorker.getRegistrations()
     .then(regs => Promise.all(regs.map(r => r.unregister())))
