@@ -2950,7 +2950,15 @@ function backToInput() {
 }
 
 async function readRecipePage(proxyUrl, url, reader = false) {
-  const pageUrl = reader ? 'https://r.jina.ai/' + url : url;
+  if (reader) {
+    // Read public recipe content directly: some reader endpoints reject proxy user agents.
+    const res = await fetch('https://r.jina.ai/' + url, { signal: AbortSignal.timeout(35000) });
+    const content = await res.text();
+    if (!res.ok || !content.trim() || /^(?:<!doctype|<html)/i.test(content.trim())) throw new Error('The recipe website is unavailable. Please try the link again.');
+    const images = [...content.matchAll(/!\[[^\]]*\]\((https?:[^\s)]+)\)/g)].map(m => m[1]).filter(u => !/logo|avatar|icon|badge|pixel/i.test(u));
+    return { text: `URL: ${url}\n\n${content}`, images };
+  }
+  const pageUrl = url;
   const res = await fetch(proxyUrl, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fetch_url: pageUrl }), signal: AbortSignal.timeout(35000)
