@@ -1641,20 +1641,75 @@ const RECIPE_IMGS = {
   'sh5':'https://static01.nyt.com/images/2018/11/21/dining/latkes/latkes-videoSixteenByNineJumbo1600.jpg',
 };
 
+// Every view resolves photos from the same saved recipe state.
+function recipePhoto(r) {
+  return photoOverrides[r.id] || r._photoData || RECIPE_IMGS[r.id] || '';
+}
+
+function recipePhotoFailed(img) {
+  // Keep the slot and recipe identity: a temporary failure must not become a permanent emoji.
+  img.dataset.photoFailed = 'true';
+  if (Number(img.dataset.photoRetries || 0) >= 2) return;
+  img.dataset.photoRetries = String(Number(img.dataset.photoRetries || 0) + 1);
+  setTimeout(() => {
+    if (img.isConnected && img.dataset.photoFailed) img.src = img.getAttribute('src');
+  }, 750 * Number(img.dataset.photoRetries));
+}
+
+function recipePhotoLoaded(img) {
+  delete img.dataset.photoFailed;
+  delete img.dataset.photoRetries;
+  // A successful expanded view also recovers thumbnails that previously failed.
+  document.querySelectorAll('[data-recipe-id]').forEach(slot => {
+    if (slot !== img && slot.dataset.recipeId === img.dataset.recipeId && slot.dataset.photoFailed) {
+      delete slot.dataset.photoRetries;
+      slot.src = img.getAttribute('src');
+    }
+  });
+}
+
+function refreshRecipePhotos() {
+  document.querySelectorAll('[data-recipe-id]').forEach(slot => {
+    const r = RECIPES.find(r => r.id === slot.dataset.recipeId);
+    const src = r && recipePhoto(r);
+    if (!src) return;
+    let img = slot;
+    if (slot.tagName !== 'IMG') {
+      img = document.createElement('img');
+      img.className = slot.dataset.photoClass || '';
+      img.dataset.recipeId = r.id;
+      img.alt = r.name;
+      img.loading = 'eager';
+      slot.replaceWith(img);
+    }
+    img.onerror = () => recipePhotoFailed(img);
+    img.onload = () => recipePhotoLoaded(img);
+    if (img.getAttribute('src') !== src || img.dataset.photoFailed) {
+      delete img.dataset.photoRetries;
+      img.src = src;
+    }
+  });
+}
+
+window.addEventListener('online', refreshRecipePhotos);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') refreshRecipePhotos();
+});
+
 function recipeImgEl(r, type) {
-  const src = photoOverrides[r.id] || RECIPE_IMGS[r.id];
+  const src = recipePhoto(r);
   const pc = cuisinePlaceholder(r.cuisine);
   if (type === 'banner') {
-    if (src) return `<img src="${src}" class="recipe-card-img" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onclick="event.stopPropagation();openLightbox(this.src,this.alt)" style="cursor:zoom-in" onerror="this.outerHTML='<div class=\\'recipe-card-img-placeholder ${pc}\\'>${r.emoji}</div>'">`;
-    return `<div class="recipe-card-img-placeholder ${pc}">${r.emoji}</div>`;
+    if (src) return `<img src="${src}" class="recipe-card-img" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onclick="event.stopPropagation();openLightbox(this.src,this.alt)" style="cursor:zoom-in" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`;
+    return `<div class="recipe-card-img-placeholder ${pc}" data-recipe-id="${r.id}" data-photo-class="recipe-card-img">${r.emoji}</div>`;
   }
   if (type === 'thumb') {
-    if (src) return `<img src="${src}" class="meal-thumb" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onclick="event.stopPropagation();openLightbox(this.src,this.alt)" style="cursor:zoom-in" onerror="this.outerHTML='<div class=\\'meal-thumb-placeholder ${pc}\\'>${r.emoji}</div>'">`;
-    return `<div class="meal-thumb-placeholder ${pc}">${r.emoji}</div>`;
+    if (src) return `<img src="${src}" class="meal-thumb" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onclick="event.stopPropagation();openLightbox(this.src,this.alt)" style="cursor:zoom-in" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`;
+    return `<div class="meal-thumb-placeholder ${pc}" data-recipe-id="${r.id}" data-photo-class="meal-thumb">${r.emoji}</div>`;
   }
   if (type === 'hero') {
-    if (src) return `<img src="${src}" class="modal-hero" alt="${r.name}" data-recipe-id="${r.id}" loading="eager" onclick="openLightbox(this.src,this.alt)" onerror="this.outerHTML='<div class=\\'modal-hero-placeholder ${pc}\\'>${r.emoji}</div>'">`;
-    return `<div class="modal-hero-placeholder ${pc}">${r.emoji}</div>`;
+    if (src) return `<img src="${src}" class="modal-hero" alt="${r.name}" data-recipe-id="${r.id}" loading="eager" onclick="openLightbox(this.src,this.alt)" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`;
+    return `<div class="modal-hero-placeholder ${pc}" data-recipe-id="${r.id}" data-photo-class="modal-hero">${r.emoji}</div>`;
   }
   return '';
 }
@@ -1896,11 +1951,11 @@ function renderHome() {
     try { localStorage.setItem('home_picks_v2', JSON.stringify({ date: today, heroId: hero.id, pickIds: picks.map(r => r.id) })); } catch(e) {}
   }
   const dateStr = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
-  const src = photoOverrides[hero.id] || RECIPE_IMGS[hero.id];
+  const src = recipePhoto(hero);
   const pc = cuisinePlaceholder(hero.cuisine);
   const heroImg = src
-    ? `<img src="${src}" alt="${hero.name}" data-recipe-id="${hero.id}" loading="eager" onerror="this.style.display='none'">`
-    : `<div class="home-pick-placeholder ${pc}">${hero.emoji}</div>`;
+    ? `<img src="${src}" alt="${hero.name}" data-recipe-id="${hero.id}" loading="eager" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`
+    : `<div class="home-pick-placeholder ${pc}" data-recipe-id="${hero.id}" data-photo-class="">${hero.emoji}</div>`;
 
   const cuisines = [
     {name:'Vietnamese',emoji:'🇻🇳'},{name:'Mexican',emoji:'🌮'},
@@ -1935,11 +1990,11 @@ function renderHome() {
         <div class="home-section-hdr">Try these</div>
         <div class="home-picks">
           ${picks.map(r => {
-            const s = photoOverrides[r.id] || RECIPE_IMGS[r.id];
+            const s = recipePhoto(r);
             const p = cuisinePlaceholder(r.cuisine);
             const img = s
-              ? `<img src="${s}" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="this.outerHTML='<div class=\\'home-pick-placeholder ${p}\\'>${r.emoji}</div>'">`
-              : `<div class="home-pick-placeholder ${p}">${r.emoji}</div>`;
+              ? `<img src="${s}" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`
+              : `<div class="home-pick-placeholder ${p}" data-recipe-id="${r.id}" data-photo-class="">${r.emoji}</div>`;
             return `<div class="home-pick-card" onclick="openModal('${r.id}')">
               <div class="home-pick-photo">${img}</div>
               <div class="home-pick-info">
@@ -2090,12 +2145,12 @@ function renderIdeas() {
 }
 
 function ideaCard(r, mealType, index) {
-  const src = photoOverrides[r.id] || RECIPE_IMGS[r.id];
+  const src = recipePhoto(r);
   const pc = cuisinePlaceholder(r.cuisine);
   const cuisineLabel = isPlantBasedRecipe(r) ? `Plant Based · ${r.cuisine}` : r.cuisine;
   const img = src
-    ? `<img src="${src}" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="this.outerHTML='<div class=\\'idea-photo-placeholder ${pc}\\'>${r.emoji}</div>'">`
-    : `<div class="idea-photo-placeholder ${pc}">${r.emoji}</div>`;
+    ? `<img src="${src}" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`
+    : `<div class="idea-photo-placeholder ${pc}" data-recipe-id="${r.id}" data-photo-class="">${r.emoji}</div>`;
   return `<div class="idea-card" onclick="openModal('${r.id}')">
     <div class="idea-photo-wrap">
       ${img}
@@ -2493,14 +2548,9 @@ function readAndSavePhoto(id, file) {
       localStorage.setItem('photo_meta', JSON.stringify(photoMeta));
     } catch(e) {}
     RECIPE_IMGS[id] = e.target.result;
+    refreshRecipePhotos();
     // Update every rendered image for this recipe across all tabs instantly
     document.querySelectorAll(`img[data-recipe-id="${id}"]`).forEach(img => { img.src = e.target.result; });
-    // Also update modal hero if open
-    const wrap = document.getElementById('modal-hero-wrap');
-    if (wrap) {
-      const existing = wrap.querySelector('img, .modal-hero-placeholder');
-      if (existing) { const img = new Image(); img.src = e.target.result; img.className = 'modal-hero'; img.alt = id; existing.replaceWith(img); }
-    }
     // Re-render cards for tabs that reconstruct full HTML (recipes list, favourites)
     renderRecipes(currentFilter);
     renderFavourites();
@@ -3222,6 +3272,7 @@ function applySyncedState(nextRecipes, nextPhotos, nextPhotoMeta) {
     localStorage.setItem('photo_meta', JSON.stringify(photoMeta));
   } catch(e) {}
   Object.assign(RECIPE_IMGS, photoOverrides);
+  refreshRecipePhotos();
 }
 
 async function syncPush() {
