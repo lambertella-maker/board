@@ -688,9 +688,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="fire-pill-m">US Roth <strong id="m-roth-lbl">{{fireRothMonthlyGbp:gbp}}/mo</strong></div>
     </div>
     <div class="fire-chip-row-m">
-      <button class="fire-chip-m active" type="button" data-m-fire-spend="45000" onclick="mSetFireSpend(45000)"><strong>Base</strong><span>{{fireSpendLowGbp:gbpk}}/yr</span></button>
-      <button class="fire-chip-m" type="button" data-m-fire-spend="60000" onclick="mSetFireSpend(60000)"><strong>Comfort</strong><span>{{fireSpendMidGbp:gbpk}}/yr</span></button>
-      <button class="fire-chip-m" type="button" data-m-fire-spend="75000" onclick="mSetFireSpend(75000)"><strong>Luxe</strong><span>{{fireSpendHighGbp:gbpk}}/yr</span></button>
+      <button class="fire-chip-m active" type="button" data-m-fire-spend="{{fireSpendLowGbp:raw}}" onclick="mSetFireSpend(window.PLAN.fireSpendLowGbp)"><strong>Base</strong><span>{{fireSpendLowGbp:gbpk}}/yr</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-spend="{{fireSpendMidGbp:raw}}" onclick="mSetFireSpend(window.PLAN.fireSpendMidGbp)"><strong>Comfort</strong><span>{{fireSpendMidGbp:gbpk}}/yr</span></button>
+      <button class="fire-chip-m" type="button" data-m-fire-spend="{{fireSpendHighGbp:raw}}" onclick="mSetFireSpend(window.PLAN.fireSpendHighGbp)"><strong>Luxe</strong><span>{{fireSpendHighGbp:gbpk}}/yr</span></button>
     </div>
     <div class="fire-scenario-row-m">
       <button class="fire-chip-m" type="button" data-m-fire-state="self" onclick="mSetStateScenario('self')"><strong>Self</strong><span>— at 67</span></button>
@@ -1220,16 +1220,17 @@ liveEstimates();
   document.getElementById('m-ilr-lbl').textContent  = ilrTimeParts.length ? `${ilrTimeParts.join(', ')} to go` : 'Eligible now';
 
   // Travel — UR points toward Polaris (independent of CSP credit-history bar)
-  const travelPhase2Start = new Date(2026, 9, 1);
-  const travelPhase2End   = new Date(2027, 0, 1);
+  // Earning starts only once cspApprovalDate is set in finance_inputs.json (null = no card yet).
+  const travelPhase2Start = PLAN.cspApprovalDate ? new Date(...PLAN.cspApprovalDate) : null;
+  const travelPhase2End   = travelPhase2Start ? new Date(travelPhase2Start.getFullYear(), travelPhase2Start.getMonth() + PLAN.cspSpendMonths, travelPhase2Start.getDate()) : null;
   let travelPct, travelLbl;
-  if (today < travelPhase2Start) {
+  if (!travelPhase2Start || today < travelPhase2Start) {
     travelPct = 5; travelLbl = '0 UR · pre-card';
   } else if (today < travelPhase2End) {
     const elapsed = today - travelPhase2Start;
     const total   = travelPhase2End - travelPhase2Start;
     travelPct = 5 + Math.round(elapsed / total * 95);
-    travelLbl = `~${Math.round(elapsed / total * 75000).toLocaleString()} UR earned`;
+    travelLbl = `~${Math.round(elapsed / total * window.PLAN.cspWelcomePoints).toLocaleString()} UR earned`;
   } else {
     travelPct = 100; travelLbl = '{{cspWelcomePoints:k}} UR · ready to book';
   }

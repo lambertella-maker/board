@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="9f42f9bc45ccc433">
+<meta name="finance-build" content="8568bf823eb27617">
 <script>
 (() => {
   try {
-    const build = '9f42f9bc45ccc433';
+    const build = '8568bf823eb27617';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -60,6 +60,7 @@ window.PLAN = Object.freeze({
   "chatbotEnabledMac": true,
   "chatgptBudgetGbp": 15,
   "chatgptMonthlyUsd": 20,
+  "cspApprovalDate": null,
   "cspCreditHistoryMonths": 12,
   "cspPortalUsd": 750,
   "cspSpendMonths": 3,
@@ -2558,13 +2559,12 @@ function updateGoals() {
   setPill('move', "At £1,800: pause or fund next goal; withdraw when needed", "Jun–Jul 2027");
 
   // Travel — UR points toward Polaris (independent of CSP credit-history bar)
-  // Phase 1: pre-CSP (now → Oct 1 2026) → 0–5%
-  // Phase 2: CSP approved, earning welcome bonus (Oct 1 2026 → Jan 1 2027) → 5–100%
-  // Phase 3: bonus earned (Jan 1 2027+) → 100%
-  const travelPhase2Start = new Date(2026, 9, 1);   // Oct 1 2026
-  const travelPhase2End   = new Date(2027, 0, 1);   // Jan 1 2027
+  // Phase 1: no card (cspApprovalDate null) → 5% · Phase 2: approval → +cspSpendMonths, earning bonus · Phase 3: bonus earned → 100%
+  // Earning starts only once cspApprovalDate is set in finance_inputs.json (null = no card yet).
+  const travelPhase2Start = PLAN.cspApprovalDate ? new Date(...PLAN.cspApprovalDate) : null;
+  const travelPhase2End   = travelPhase2Start ? new Date(travelPhase2Start.getFullYear(), travelPhase2Start.getMonth() + PLAN.cspSpendMonths, travelPhase2Start.getDate()) : null;
   let travelPct, travelLbl, travelTime;
-  if (today < travelPhase2Start) {
+  if (!travelPhase2Start || today < travelPhase2Start) {
     travelPct = 5;
     travelLbl = '0 UR · pre-card';
     travelTime = '2027+';
