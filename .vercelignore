@@ -1,0 +1,6 @@
+# Source, notes and tooling stay in git but are not served
+finance_source/
+.github/
+.wrangler/
+*.md
+*.py

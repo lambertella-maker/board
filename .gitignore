@@ -14,3 +14,8 @@ tmp*
 # Partial icon files (tracked versions are finance-icon-512.png etc.)
 finance-icon-512
 finance_lock
+
+# Vercel local link
+.vercel/
+.vercel
+.env*
