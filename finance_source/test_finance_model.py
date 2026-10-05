@@ -59,11 +59,13 @@ if(window.Finance.moveBalance(new Date(2026,7,23))!==window.PLAN.monzoMoveBalanc
         js = 'global.window={PLAN:'+json.dumps(p)+'};\n'+(ROOT/'finance_runtime.js').read_text()+'''
 const f=window.Finance;
 const p=window.PLAN;
-if(f.moveBalance(new Date(2026,9,23))!==1356) throw Error('Pre-payment balance changed');
-const first=f.moveBalance(new Date(2026,9,24));
-const expected=Math.round((1356*Math.pow(1+p.monzoMoveAer,1/12)+150)*100)/100;
+const start=new Date(...p.moveFirstPaydayDate);
+const anchor=p.monzoMoveBalanceGbp;
+if(f.moveBalance(new Date(start.getFullYear(),start.getMonth(),start.getDate()-1))!==anchor) throw Error('Pre-payment balance changed');
+const first=f.moveBalance(start);
+const expected=Math.round((anchor*Math.pow(1+p.monzoMoveAer,1/12)+p.moveMonthlyGbp)*100)/100;
 if(first!==expected) throw Error('First Chase deposit double counted or backdated');
-if(f.moveBalance(new Date(2026,10,24))>=1800 || f.moveBalance(new Date(2026,11,24))<1800) throw Error('Target crossing drift');
+if(f.moveBalance(new Date(2027,5,1))<first) throw Error('Move balance shrank over time');
 p.moveMonthlyGbp=0;
 const monzoOnly=f.moveBalance(new Date(2027,5,1));
 p.chaseRegularSaverAer=0.5;

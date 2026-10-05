@@ -2022,8 +2022,8 @@ function liveEstimates() {
     return total;
   }
   const fidelityEst = Math.round((
-    growUSD(FIDELITY_TAXABLE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(...window.PLAN.investmentFirstBuyDate))
+    growUSD(FIDELITY_TAXABLE_ANCHOR, new Date(...window.PLAN.fidelityTaxableAnchorDate)) +
+    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(...window.PLAN.fidelityTaxableFirstBuyDate))
   ) * 100) / 100;
   const rothEst = Math.round((
     growUSD(ROTH_BROKERAGE_ANCHOR, INVEST_ANCHOR) +
@@ -2175,7 +2175,7 @@ function updateGoals() {
   document.getElementById('csp-prog').style.width = cspProgress.toFixed(1) + '%';
   document.getElementById('csp-months-lbl').textContent = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
-  // Move pot — {{moveMonthlyGbp:gbp}}/mo; reanchored to the 27 Sep 2026 balance.
+  // Move pot — target reached 5 Oct 2026 (£1,800); contributions {{moveMonthlyGbp:gbp}}/mo.
   const r        = window.PLAN.monzoMoveAer / 12;  // {{monzoMoveAer:percent}} AER
   const potStart = new Date(...window.PLAN.moveFirstPaydayDate);
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;

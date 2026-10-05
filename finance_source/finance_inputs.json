@@ -22,13 +22,13 @@
   "cspCreditHistoryMonths": 12,
   "atomBalanceGbp": 12668,
   "monzoEfBalanceGbp": 2305,
-  "monzoMoveBalanceGbp": 1356,
-  "fidelityTaxableBalanceUsd": 8858,
+  "monzoMoveBalanceGbp": 1800,
+  "fidelityTaxableBalanceUsd": 12503,
   "rothBrokerageBalanceUsd": 8309,
   "rothContributed2026Usd": 7500,
   "rothContributionBasisUsd": 7500,
   "chaseUSBalanceUsd": 2000,
-  "moveMonthlyGbp": 150,
+  "moveMonthlyGbp": 0,
   "chaseRegularSaverAer": 0.065,
   "chaseRegularSaverMonthlyCapGbp": 300,
   "chaseRegularSaverTermMonths": 12,
@@ -121,6 +121,16 @@
   "investmentFirstBuyDate": [
     2026,
     8,
+    1
+  ],
+  "fidelityTaxableAnchorDate": [
+    2026,
+    9,
+    5
+  ],
+  "fidelityTaxableFirstBuyDate": [
+    2026,
+    10,
     1
   ],
   "pensionAnchorDate": [

@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="6a7edf4257ce540e">
+<meta name="finance-build" content="32e39c1e553812a5">
 <script>
 (() => {
   try {
-    const build = '6a7edf4257ce540e';
+    const build = '32e39c1e553812a5';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -98,7 +98,17 @@ window.PLAN = Object.freeze({
   "euTuitionLowEur": 2000,
   "fbarThresholdUsd": 10000,
   "fidelityAchDay": 30,
-  "fidelityTaxableBalanceUsd": 8858,
+  "fidelityTaxableAnchorDate": [
+    2026,
+    9,
+    5
+  ],
+  "fidelityTaxableBalanceUsd": 12503,
+  "fidelityTaxableFirstBuyDate": [
+    2026,
+    10,
+    1
+  ],
   "fidelityTaxableMonthlyUsd": 850,
   "fireAccessibleMonthlyGbp": 654.5,
   "fireLifestyleHighGbp": 65000,
@@ -116,7 +126,7 @@ window.PLAN = Object.freeze({
   "fireSpendLowGbp": 45000,
   "fireSpendMidGbp": 60000,
   "fireWithdrawalRate": 0.04,
-  "flexibleCashMonthlyGbp": 787.0,
+  "flexibleCashMonthlyGbp": 937.0,
   "fskaxExpenseRatio": 0.00015,
   "fskaxMonthlyUsd": 723,
   "fskaxReturn": 0.07,
@@ -177,7 +187,7 @@ window.PLAN = Object.freeze({
   "monzoEfMaxWithdrawals": 2,
   "monzoEfReducedAer": 0.026,
   "monzoMoveAer": 0.0275,
-  "monzoMoveBalanceGbp": 1356,
+  "monzoMoveBalanceGbp": 1800,
   "moveComfortRentBudgetGbp": 1700,
   "moveFidelityComfortMonthlyGbp": 500,
   "moveFidelityTemporaryFloorGbp": 400,
@@ -186,7 +196,7 @@ window.PLAN = Object.freeze({
     9,
     24
   ],
-  "moveMonthlyGbp": 150,
+  "moveMonthlyGbp": 0,
   "moveRentBudgetGbp": 1800,
   "moveTargetGbp": 1800,
   "netBonusBudgetGbp": 4000,
@@ -696,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="card" style="margin-top:0;">
     <div class="goal-row-m"><span class="goal-row-k">Payroll</span><span style="color:var(--green);font-weight:700;">Gross £5,666.67 → £3,736 net</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Pre-net</span><span style="font-weight:700;">Pension £340 · SIP £150 · GymFlex £97.40 · tax/NI £1,344</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary · Chase saver £150/mo from Oct</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">24th</span><span style="color:var(--cyan);font-weight:700;">Salary · Chase saver £0/mo from Oct</span></div>
     <div class="goal-row-m"><span class="goal-row-k">25th</span><span style="color:var(--amber);font-weight:700;">Wise pulls £650 from Chase UK</span></div>
     <div class="goal-row-m"><span class="goal-row-k">26th</span><span style="color:var(--amber);font-weight:700;">Wise sends $850 to Chase US</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1k–£1.4k · ChatGPT $20 · phone <span data-plan-gbp="phoneMonthlyGbp">£30</span> incl. active Prime at £0 · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
@@ -853,9 +863,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <span style="font-size:1.4rem;">🗝️</span>
       <div class="goal-card-meta"><div class="goal-card-label">Goal 2 · Jun–Jul 2027</div><div class="goal-card-title">Upgrade to a Nicer Flat <button onclick="document.getElementById('rent-modal').classList.add('open')" style="background:none;border:none;color:var(--muted);font-size:0.65rem;font-family:inherit;padding:0;text-decoration:underline;cursor:pointer;">ℹ rent rules</button></div></div>
     </div>
-    <div class="goal-subcopy">Rent max £1,800 · comfort £1,700 · £150 move fund</div>
+    <div class="goal-subcopy">Rent max £1,800 · comfort £1,700 · £0 move fund</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
-    <div class="prog-labels"><span>£1,356</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
+    <div class="prog-labels"><span>£1,800</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Move fund</span><span style="font-weight:600;">Monzo + Chase · £1,800 target</span></div>
     <div class="goal-row-m"><span class="goal-row-k">If saving to May</span><span title="Monzo + Chase estimate if monthly payments continue through May; rates held constant, before tax." id="m-move-projected-lbl" style="color:var(--green); font-weight:600;">Calculating...</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Deposit / bonus</span><span style="color:var(--indigo); font-weight:600;">Deposit / EF bridge · 10% March bonus</span></div>
@@ -1274,8 +1284,8 @@ function liveEstimates() {
   const FIDELITY_TAXABLE_ANCHOR = window.PLAN.fidelityTaxableBalanceUsd;
   const ROTH_BROKERAGE_ANCHOR = window.PLAN.rothBrokerageBalanceUsd;
   const fidelityEst = Math.round((
-    growUSD(FIDELITY_TAXABLE_ANCHOR, INVEST_ANCHOR) +
-    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(...window.PLAN.investmentFirstBuyDate))
+    growUSD(FIDELITY_TAXABLE_ANCHOR, new Date(...window.PLAN.fidelityTaxableAnchorDate)) +
+    monthlyBuyValue(PLAN.fidelityTaxableMonthlyUsd, new Date(...window.PLAN.fidelityTaxableFirstBuyDate))
   ) * 100) / 100;
   const rothEst = Math.round((
     growUSD(ROTH_BROKERAGE_ANCHOR, INVEST_ANCHOR) +
@@ -1542,7 +1552,7 @@ liveEstimates();
   document.getElementById('m-csp-prog').style.width = cspProgress.toFixed(1) + '%';
   document.getElementById('m-csp-lbl').textContent  = `${cspProgress.toFixed(0)}% · ${cspMonths}mo in`;
 
-  // Move pot — £150/mo; reanchored to the 27 Sep 2026 balance.
+  // Move pot — target reached 5 Oct 2026 (£1,800); contributions £0/mo.
   const r = window.PLAN.monzoMoveAer / 12;  // 2.75% AER
   const potStart = new Date(...window.PLAN.moveFirstPaydayDate);
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
