@@ -63,8 +63,7 @@
   "monzoEfMaxWithdrawals": 2,
   "monzoMoveAer": 0.0275,
   "pensionAnchorGbp": 31021,
-  "chaseUkAnchorGbp": 3839.9,
-  "chaseUkDisplayGbp": 2146,
+  "chaseUkDisplayGbp": 2000,
   "octopusMonthlyGbp": 110.51,
   "amexAutopayEstimateGbp": 1300,
   "vancsiMonthlyGbp": 53.48,
@@ -142,11 +141,6 @@
     2026,
     9,
     24
-  ],
-  "chaseAnchorDate": [
-    2026,
-    2,
-    3
   ],
   "birthDate": [
     2001,
