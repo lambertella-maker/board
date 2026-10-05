@@ -20,8 +20,8 @@
   "domainAnnualGbp": 12,
   "utilitiesExPhoneMonthlyGbp": 163,
   "cspCreditHistoryMonths": 12,
-  "atomBalanceGbp": 12668,
-  "monzoEfBalanceGbp": 2305,
+  "atomBalanceGbp": 12740,
+  "monzoEfBalanceGbp": 2200,
   "monzoMoveBalanceGbp": 1800,
   "fidelityTaxableBalanceUsd": 12503,
   "rothBrokerageBalanceUsd": 8309,
@@ -109,8 +109,8 @@
   "optionalGiftAnnualGbp": 16000,
   "savingsAnchorDate": [
     2026,
-    7,
-    1
+    9,
+    5
   ],
   "investmentAnchorDate": [
     2026,
