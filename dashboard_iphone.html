@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="fcd74ee237e03d5e">
+<meta name="finance-build" content="e34a2fc4a1859a2e">
 <script>
 (() => {
   try {
-    const build = 'fcd74ee237e03d5e';
+    const build = 'e34a2fc4a1859a2e';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -183,8 +183,6 @@ window.PLAN = Object.freeze({
   "monzoMoveAer": 0.0275,
   "monzoMoveBalanceGbp": 1800,
   "moveComfortRentBudgetGbp": 1700,
-  "moveFidelityComfortMonthlyGbp": 500,
-  "moveFidelityTemporaryFloorGbp": 400,
   "moveFirstPaydayDate": [
     2026,
     9,
@@ -861,10 +859,8 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="prog-wrap"><div class="prog-fill" id="m-move-prog" style="background:linear-gradient(90deg,var(--green),var(--cyan)); width:0%"></div></div>
     <div class="prog-labels"><span>£1,800</span><span id="m-move-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Move fund</span><span style="font-weight:600;">Monzo + Chase · £1,800 target</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">If saving to May</span><span title="Monzo + Chase estimate if monthly payments continue through May; rates held constant, before tax." id="m-move-projected-lbl" style="color:var(--green); font-weight:600;">Calculating...</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Deposit / bonus</span><span style="color:var(--indigo); font-weight:600;">Deposit / EF bridge · 10% March bonus</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Chase saver</span><span style="color:var(--cyan); font-weight:600;">6.5% AER · 12mo · £300/mo cap</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Investing flex</span><span style="color:var(--indigo); font-weight:600;">Fidelity £650 → £500 · £400 floor · protect pension/SIP · Roth via bonus</span></div>
     <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">At £1,800: pause or fund next goal</span><span>Easy access</span></div>
   </div>
 
@@ -880,7 +876,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
   const moveTarget = window.PLAN.moveTargetGbp;
   const total = window.Finance.moveBalance(today);
-  document.getElementById('m-move-projected-lbl').textContent = `£${window.Finance.moveBalance(new Date(2027, 5, 1)).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} on 1 Jun 2027`;
   label.textContent = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
   bar.style.width = Math.min(100, total / moveTarget * 100).toFixed(1) + '%';
 })();

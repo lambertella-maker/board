@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="fcd74ee237e03d5e">
+<meta name="finance-build" content="e34a2fc4a1859a2e">
 <script>
 (() => {
   try {
-    const build = 'fcd74ee237e03d5e';
+    const build = 'e34a2fc4a1859a2e';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -183,8 +183,6 @@ window.PLAN = Object.freeze({
   "monzoMoveAer": 0.0275,
   "monzoMoveBalanceGbp": 1800,
   "moveComfortRentBudgetGbp": 1700,
-  "moveFidelityComfortMonthlyGbp": 500,
-  "moveFidelityTemporaryFloorGbp": 400,
   "moveFirstPaydayDate": [
     2026,
     9,
@@ -1228,10 +1226,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="progress-labels"><span>£1,800</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">£1,800 simple move</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Move fund</span><span class="goal-row-value">Monzo + Chase · £1,800 target</span></div>
-        <div class="goal-row"><span class="goal-row-label">If saving to May</span><span class="goal-row-value" title="Monzo + Chase estimate if monthly payments continue through May; rates held constant, before tax." id="move-projected-lbl" style="color:var(--green)">Calculating...</span></div>
         <div class="goal-row"><span class="goal-row-label">Deposit / bonus</span><span class="goal-row-value" style="color:var(--indigo)">Deposit / EF bridge · 10% March bonus</span></div>
         <div class="goal-row"><span class="goal-row-label">Chase saver</span><span class="goal-row-value" style="color:var(--cyan)">6.5% AER · 12mo · £300/mo cap</span></div>
-        <div class="goal-row"><span class="goal-row-label">Investing flex</span><span class="goal-row-value" style="color:var(--indigo)">Fidelity £650 → £500 · £400 floor · protect pension/SIP · Roth via bonus</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
             <div class="gp-label" id="move-pill-label">At £1,800: pause or fund next goal; withdraw when needed</div>
@@ -1308,7 +1304,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
   const moveTarget = window.PLAN.moveTargetGbp;
   const total = window.Finance.moveBalance(today);
-  document.getElementById('move-projected-lbl').textContent = `£${window.Finance.moveBalance(new Date(2027, 5, 1)).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} on 1 Jun 2027`;
   label.textContent = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
   bar.style.width = Math.min(100, total / moveTarget * 100).toFixed(1) + '%';
 })();

@@ -872,10 +872,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="progress-labels"><span>{{monzoMoveBalanceGbp:gbp}}</span><span id="move-saved-lbl" style="color:var(--green)">Saved so far</span><span style="color:var(--cyan)">{{moveTargetGbp:gbp}} simple move</span></div>
         </div>
         <div class="goal-row"><span class="goal-row-label">Move fund</span><span class="goal-row-value">Monzo + Chase · {{moveTargetGbp:gbp}} target</span></div>
-        <div class="goal-row"><span class="goal-row-label">If saving to May</span><span class="goal-row-value" title="Monzo + Chase estimate if monthly payments continue through May; rates held constant, before tax." id="move-projected-lbl" style="color:var(--green)">Calculating...</span></div>
         <div class="goal-row"><span class="goal-row-label">Deposit / bonus</span><span class="goal-row-value" style="color:var(--indigo)">Deposit / EF bridge · {{bonusMinimumRate:percent}} March bonus</span></div>
         <div class="goal-row"><span class="goal-row-label">Chase saver</span><span class="goal-row-value" style="color:var(--cyan)">{{chaseRegularSaverAer:percent}} AER · {{chaseRegularSaverTermMonths:number}}mo · {{chaseRegularSaverMonthlyCapGbp:gbp}}/mo cap</span></div>
-        <div class="goal-row"><span class="goal-row-label">Investing flex</span><span class="goal-row-value" style="color:var(--indigo)">Fidelity {{wiseMonthlyGbp:gbp}} → {{moveFidelityComfortMonthlyGbp:gbp}} · {{moveFidelityTemporaryFloorGbp:gbp}} floor · protect pension/SIP · Roth via bonus</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="move-pill">
             <div class="gp-label" id="move-pill-label">At {{moveTargetGbp:gbp}}: pause or fund next goal; withdraw when needed</div>
@@ -952,7 +950,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const potAnchor = window.PLAN.monzoMoveBalanceGbp;
   const moveTarget = window.PLAN.moveTargetGbp;
   const total = window.Finance.moveBalance(today);
-  document.getElementById('move-projected-lbl').textContent = `£${window.Finance.moveBalance(new Date(2027, 5, 1)).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} on 1 Jun 2027`;
   label.textContent = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})} saved`;
   bar.style.width = Math.min(100, total / moveTarget * 100).toFixed(1) + '%';
 })();
