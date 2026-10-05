@@ -16,6 +16,5 @@ finance-icon-512
 finance_lock
 
 # Vercel local link
-.vercel/
 .vercel
-.env*
+.env*.local
