@@ -10,7 +10,7 @@ It compares shared goal-row content and key HTML anchors, while allowing
 known variant-specific differences. Any drift in shared finance logic/copy
 should fail the check.
 
-Run standalone:  python3 '~/Desktop/Finances/01 - Finance App/all_cylinders_check.py'
+Run standalone:  python3 '~/Desktop/Finances/01 - Finance App.nosync/all_cylinders_check.py'
 Auto-run:        wired into deploy_dashboards.sh before every git push
 """
 
@@ -24,7 +24,7 @@ from build_finance import check_generated
 from finance_model import load_plan
 
 FINANCES  = Path(__file__).resolve().parent.parent
-APP       = FINANCES / "01 - Finance App"
+APP       = Path(__file__).resolve().parent
 MAC       = APP / "dashboard.html"
 IPAD      = APP / "dashboard_ipad.html"
 IPHONE    = APP / "dashboard_iphone.html"
@@ -32,7 +32,7 @@ NOTEBOOK  = FINANCES / "00 - Control" / "LAB_NOTEBOOK.md"
 LOG       = Path.home() / ".claude" / "logs" / "dashpush.log"
 HANDOFFS  = Path.home() / "Documents" / "AI_Handoffs"
 PUBLISH_REPO = Path.home() / ".claude" / "repos" / "board_autopush"
-AUTOPUSH_CONFIG = HANDOFFS / "Finances" / "autopush.json"
+AUTOPUSH_CONFIG = Path.home() / ".claude" / "autopush" / "finances.json"
 DEPLOY_SCRIPT = Path.home() / ".claude" / "scripts" / "deploy_dashboards.sh"
 PAGES_WORKFLOW = PUBLISH_REPO / ".github" / "workflows" / "pages.yml"
 REMOTE_URL = "git@github.com:lambertella-maker/board.git"
@@ -279,7 +279,7 @@ def main():
         # Append warning to lab notebook
         notebook_warning = (
             f"\n> **⚠ All-cylinders drift detected {today}** — "
-            f"run `python3 '~/Desktop/Finances/01 - Finance App/all_cylinders_check.py'` to review.\n"
+            f"run `python3 '~/Desktop/Finances/01 - Finance App.nosync/all_cylinders_check.py'` to review.\n"
         )
         nb = NOTEBOOK.read_text(encoding="utf-8")
         if notebook_warning.strip() not in nb:
