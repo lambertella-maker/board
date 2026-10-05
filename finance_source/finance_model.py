@@ -7,7 +7,8 @@ ROOT = Path(__file__).resolve().parent
 def load_plan(overrides=None):
     p = json.loads((ROOT / 'finance_inputs.json').read_text())
     p.update(overrides or {})
-    p['subscriptionsMonthlyGbp'] = p['ukSubscriptionsMonthlyGbp'] + p['chatgptBudgetGbp'] + p['amazonPrimeMonthlyGbp']
+    p['domainMonthlyGbp'] = p['domainAnnualGbp'] / 12
+    p['subscriptionsMonthlyGbp'] = p['ukSubscriptionsMonthlyGbp'] + p['chatgptBudgetGbp'] + p['amazonPrimeMonthlyGbp'] + p['domainMonthlyGbp']
     p['monthlySpendGbp'] = sum(p[k] for k in ('rentMonthlyGbp', 'groceriesMonthlyGbp', 'eatingOutMonthlyGbp', 'shoppingMonthlyGbp', 'transportMonthlyGbp', 'subscriptionsMonthlyGbp', 'utilitiesExPhoneMonthlyGbp', 'phoneMonthlyGbp', 'otherMonthlyGbp'))
     p['monthlyLeftoverGbp'] = p['salaryNetMonthlyGbp'] - p['monthlySpendGbp']
     p['salaryGrossMonthlyGbp'] = p['salaryGrossGbp'] / 12

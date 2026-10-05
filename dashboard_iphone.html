@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="finance-build" content="dbb6af9a51595726">
+<meta name="finance-build" content="6a7edf4257ce540e">
 <script>
 (() => {
   try {
-    const build = 'dbb6af9a51595726';
+    const build = '6a7edf4257ce540e';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -77,6 +77,8 @@ window.PLAN = Object.freeze({
   ],
   "cspWelcomePoints": 75000,
   "dividendDrag": 0.003,
+  "domainAnnualGbp": 12,
+  "domainMonthlyGbp": 1.0,
   "eatingOutMonthlyGbp": 250,
   "emergencyAnchorGbp": 14973,
   "emergencyTargetHighGbp": 18000,
@@ -114,7 +116,7 @@ window.PLAN = Object.freeze({
   "fireSpendLowGbp": 45000,
   "fireSpendMidGbp": 60000,
   "fireWithdrawalRate": 0.04,
-  "flexibleCashMonthlyGbp": 788,
+  "flexibleCashMonthlyGbp": 787.0,
   "fskaxExpenseRatio": 0.00015,
   "fskaxMonthlyUsd": 723,
   "fskaxReturn": 0.07,
@@ -168,8 +170,8 @@ window.PLAN = Object.freeze({
   "lifeInUkTestGbp": 50,
   "lifeSavingsMonthlyGbp": 150,
   "meritAssumption": 0.03,
-  "monthlyLeftoverGbp": 1588,
-  "monthlySpendGbp": 2148,
+  "monthlyLeftoverGbp": 1587.0,
+  "monthlySpendGbp": 2149.0,
   "monzoEfAer": 0.0315,
   "monzoEfBalanceGbp": 2305,
   "monzoEfMaxWithdrawals": 2,
@@ -285,7 +287,7 @@ window.PLAN = Object.freeze({
   "sipVestYears": 3,
   "spotifyMonthlyGbp": 12.99,
   "statePensionAge": 67,
-  "subscriptionsMonthlyGbp": 40,
+  "subscriptionsMonthlyGbp": 41.0,
   "taxAdjustedIncomeGbp": 63809,
   "taxAllowanceGbp": 12570,
   "taxAnnualGymGbp": 1169,
@@ -698,7 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="goal-row-m"><span class="goal-row-k">25th</span><span style="color:var(--amber);font-weight:700;">Wise pulls £650 from Chase UK</span></div>
     <div class="goal-row-m"><span class="goal-row-k">26th</span><span style="color:var(--amber);font-weight:700;">Wise sends $850 to Chase US</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Bills</span><span style="font-weight:700;">26th £56 · Amex £1.1k–£1.4k · ChatGPT $20 · phone <span data-plan-gbp="phoneMonthlyGbp">£30</span> incl. active Prime at £0 · 12th rent <span data-plan-gbp="rentMonthlyGbp">£1,125</span></span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Subscriptions £40/mo: Spotify £12.99 · Apple TV £9.99 · Google One ~£2 · ChatGPT $20 (~£15) · Prime £0 via O2.</span><span>Funds auto-buy 1st</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft);font-size:0.72rem;">Subscriptions £41/mo: Spotify £12.99 · Apple TV £9.99 · Google One ~£2 · ChatGPT $20 (~£15) · Prime £0 via O2 · Domain £12/yr (~£1/mo).</span><span>Funds auto-buy 1st</span></div>
   </div>
 
   <div class="section-title">Accounts — live estimates</div>

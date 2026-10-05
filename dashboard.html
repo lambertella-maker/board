@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="finance-build" content="dbb6af9a51595726">
+<meta name="finance-build" content="6a7edf4257ce540e">
 <script>
 (() => {
   try {
-    const build = 'dbb6af9a51595726';
+    const build = '6a7edf4257ce540e';
     const key = 'finance-build:' + location.pathname;
     const seen = localStorage.getItem(key);
     if (seen !== build) {
@@ -77,6 +77,8 @@ window.PLAN = Object.freeze({
   ],
   "cspWelcomePoints": 75000,
   "dividendDrag": 0.003,
+  "domainAnnualGbp": 12,
+  "domainMonthlyGbp": 1.0,
   "eatingOutMonthlyGbp": 250,
   "emergencyAnchorGbp": 14973,
   "emergencyTargetHighGbp": 18000,
@@ -114,7 +116,7 @@ window.PLAN = Object.freeze({
   "fireSpendLowGbp": 45000,
   "fireSpendMidGbp": 60000,
   "fireWithdrawalRate": 0.04,
-  "flexibleCashMonthlyGbp": 788,
+  "flexibleCashMonthlyGbp": 787.0,
   "fskaxExpenseRatio": 0.00015,
   "fskaxMonthlyUsd": 723,
   "fskaxReturn": 0.07,
@@ -168,8 +170,8 @@ window.PLAN = Object.freeze({
   "lifeInUkTestGbp": 50,
   "lifeSavingsMonthlyGbp": 150,
   "meritAssumption": 0.03,
-  "monthlyLeftoverGbp": 1588,
-  "monthlySpendGbp": 2148,
+  "monthlyLeftoverGbp": 1587.0,
+  "monthlySpendGbp": 2149.0,
   "monzoEfAer": 0.0315,
   "monzoEfBalanceGbp": 2305,
   "monzoEfMaxWithdrawals": 2,
@@ -285,7 +287,7 @@ window.PLAN = Object.freeze({
   "sipVestYears": 3,
   "spotifyMonthlyGbp": 12.99,
   "statePensionAge": 67,
-  "subscriptionsMonthlyGbp": 40,
+  "subscriptionsMonthlyGbp": 41.0,
   "taxAdjustedIncomeGbp": 63809,
   "taxAllowanceGbp": 12570,
   "taxAnnualGymGbp": 1169,
@@ -980,8 +982,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
       <div style="margin-top:0.7rem; padding:0.8rem 0.9rem; background:rgba(167,139,250,0.07); border:1px solid rgba(167,139,250,0.18); border-radius:10px;">
-        <div style="font-size:0.6rem; color:#c4b5fd; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.4rem;">Subscriptions · £40/mo budget</div>
-        <div style="font-size:0.78rem; color:var(--soft); line-height:1.55;">Subscriptions £40/mo: Spotify £12.99 · Apple TV £9.99 · Google One ~£2 · ChatGPT $20 (~£15) · Prime £0 via O2.</div>
+        <div style="font-size:0.6rem; color:#c4b5fd; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:0.4rem;">Subscriptions · £41/mo budget</div>
+        <div style="font-size:0.78rem; color:var(--soft); line-height:1.55;">Subscriptions £41/mo: Spotify £12.99 · Apple TV £9.99 · Google One ~£2 · ChatGPT $20 (~£15) · Prime £0 via O2 · Domain £12/yr (~£1/mo).</div>
       </div>
     </div>
   </section>
@@ -1508,7 +1510,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="pipe-icon">🇬🇧</div>
           <div class="pipe-label">Chase UK</div>
           <div class="pipe-amount">£650</div>
-          <div class="pipe-note">Salary hub · comfort float £1,300+ · £788/mo flexible</div>
+          <div class="pipe-note">Salary hub · comfort float £1,300+ · £787/mo flexible</div>
         </div>
         <div class="pipe-arrow">→</div>
         <div class="pipe-step">
