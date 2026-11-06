@@ -159,14 +159,14 @@
   ],
   "cspApprovalDate": null,
   "ilrStartDate": [
-    2019,
-    8,
-    12
+    2025,
+    6,
+    4
   ],
   "ilrDeadlineDate": [
-    2029,
-    8,
-    12
+    2030,
+    6,
+    4
   ],
   "salaryLutoGbp": 28000,
   "salaryAbbvieStartGbp": 57500,
@@ -192,8 +192,9 @@
   "polarisCashGbp": 220,
   "ilrFeeCurrentGbp": 2885,
   "ilrFeeGrowth": 0.05,
-  "ilrFeeYears": 3,
+  "ilrFeeYears": 4,
   "ilrFeeBudgetGbp": 3400,
+  "ilrEarningsThresholdGbp": 50271,
   "lifeInUkTestGbp": 50,
   "fireSpendLowGbp": 45000,
   "fireSpendMidGbp": 60000,

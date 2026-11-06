@@ -466,8 +466,8 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="pillar-body">
       <div class="pillar-stat-row"><span class="pillar-stat-k">UK assets</span><span class="pillar-stat-v" id="m-pillar-uk-assets" style="color:var(--green)">Calculating…</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">US assets</span><span class="pillar-stat-v" id="m-pillar-us-assets">Calculating…</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">ILR target</span><span class="pillar-stat-v">Sep 2029</span></div>
-      <div class="pillar-stat-row"><span class="pillar-stat-k">Citizenship eligible</span><span class="pillar-stat-v">12 Sep 2030+ · optional</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">ILR target</span><span class="pillar-stat-v">Jul 2030</span></div>
+      <div class="pillar-stat-row"><span class="pillar-stat-k">Citizenship eligible</span><span class="pillar-stat-v">Jul 2031+ · optional</span></div>
       <div class="pillar-stat-row"><span class="pillar-stat-k">Protection</span><span class="pillar-stat-v">MetLife {{employerIncomeProtectionRate:percent}} · Aviva {{employerLifeAssuranceMultiple:number}}× salary</span></div>
       <div class="pillar-why-text">Retire in the UK, the US, or Europe. After 2030 a British passport adds 186 visa-free countries. This is exceptional.</div>
     </div>
@@ -551,16 +551,16 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="card">
     <div class="goal-card-head">
       <span style="font-size:1.4rem;">🇬🇧</span>
-      <div class="goal-card-meta"><div class="goal-card-label">Goal 4 · Sep 2029</div><div class="goal-card-title">ILR — Permanent Residency</div></div>
+      <div class="goal-card-meta"><div class="goal-card-label">Goal 4 · Jul 2030</div><div class="goal-card-title">ILR — Permanent Residency</div></div>
     </div>
-    <div class="goal-subcopy">10-year long residence from 12 Sep 2019 · no more visa renewals</div>
+    <div class="goal-subcopy">5-year Skilled Worker route from 4 Jul 2025 · Long Residence closing</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-ilr-prog" style="background:linear-gradient(90deg,var(--cyan),var(--indigo)); width:0%"></div></div>
-    <div class="prog-labels"><span>12 Sep 2019</span><span id="m-ilr-lbl" style="color:var(--cyan)">3 years, 1 month to go</span><span>12 Sep 2029</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">ILR fee</span><span style="color:var(--green); font-weight:600;">{{ilrFeeCurrentGbp:gbp}} now · rises {{ilrFeeGrowth:percent}}/yr · {{ilrFeeProjectedGbp:gbp}} by 2029</span></div>
+    <div class="prog-labels"><span>4 Jul 2025</span><span id="m-ilr-lbl" style="color:var(--cyan)">3 years, 1 month to go</span><span>4 Jul 2030</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">ILR fee</span><span style="color:var(--green); font-weight:600;">{{ilrFeeCurrentGbp:gbp}} now · rises {{ilrFeeGrowth:percent}}/yr · {{ilrFeeProjectedGbp:gbp}} by 2030</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Total all-in</span><span style="color:var(--cyan); font-weight:600;">{{ilrFeeBudgetGbp:gbp}} fee + {{lifeInUkTestGbp:gbp}} Life in the UK test · DIY application</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Funded by</span><span style="color:var(--indigo); font-weight:600;">{{netBonusBudgetGbp:gbpk}} net bonus</span></div>
     <div class="goal-row-m"><span class="goal-row-k">What it unlocks</span><span style="color:var(--amber); font-weight:600;">Live and work in UK permanently · no immigration stress</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Track absences · Life in the UK test · application window Sep 2029</span><span>Sep 2029</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">Track absences · Life in the UK test · B2 English · apply Jul 2030</span><span>Jul 2030</span></div>
   </div>
 
   <!-- Long Horizon: Southern Europe Bolthole -->
@@ -594,7 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div style="flex:1; height:2px; background:rgba(129,140,248,0.25); margin-top:3px;"></div>
       <div style="flex:0 0 auto; text-align:center;">
         <div style="width:7px; height:7px; background:var(--indigo); border-radius:50%; margin:0 auto 3px;"></div>
-        <div style="font-size:0.54rem; color:var(--indigo); font-weight:700; white-space:nowrap;">ILR '29</div>
+        <div style="font-size:0.54rem; color:var(--indigo); font-weight:700; white-space:nowrap;">ILR '30</div>
       </div>
       <div style="flex:1; height:2px; background:rgba(52,211,153,0.2); margin-top:3px;"></div>
       <div style="flex:0 0 auto; text-align:center;">
@@ -1207,7 +1207,7 @@ liveEstimates();
 
 
   const ilrDeadline = new Date(...window.PLAN.ilrDeadlineDate);
-  const ilrStart    = new Date(...window.PLAN.ilrStartDate); // UK arrival — full 10-year journey
+  const ilrStart    = new Date(...window.PLAN.ilrStartDate); // Skilled Worker start — 5-year route
   const ilrFrac     = Math.min(1, Math.max(0, (today - ilrStart) / (ilrDeadline - ilrStart)));
   const ilrMonthsLeft = Math.max(0, Math.round((ilrDeadline - today) / (30.44 * 24 * 3600 * 1000)));
   const ilrYearsLeft = Math.floor(ilrMonthsLeft / 12);
