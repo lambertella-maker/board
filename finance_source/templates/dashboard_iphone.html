@@ -535,17 +535,18 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="card">
     <div class="goal-card-head">
       <span style="font-size:1.4rem;">✈️</span>
-      <div class="goal-card-meta"><div class="goal-card-label">Goal 3 · Travel · CSP Engine</div><div class="goal-card-title">Travel More for Less</div></div>
+      <div class="goal-card-meta"><div class="goal-card-label">Goal 3 · Travel · FinallyBusiness</div><div class="goal-card-title">Business Class at Sale Prices</div></div>
     </div>
-    <div class="goal-subcopy">UR points toward Polaris LHR→ORD · {{cspWelcomePoints:k}} welcome bonus covers it · {{polarisCashGbp:gbp}} cash out of pocket (APD only)</div>
+    <div class="goal-subcopy">Buy Aeroplan or Qatar Avios only in bonus sales · top up with CSP UR · {{cspWelcomePoints:k}} welcome bonus seeds the first trip</div>
     <div class="prog-wrap"><div class="prog-fill" id="m-travel-prog" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
-    <div class="prog-labels"><span>Get CSP</span><span id="m-travel-prog-lbl" style="color:var(--amber)">0 UR · pre-card</span><span>Fly Polaris</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Core win</span><span style="color:var(--green); font-weight:600;">Spend less on fees and bad redemptions</span></div>
+    <div class="prog-labels"><span>Get CSP</span><span id="m-travel-prog-lbl" style="color:var(--amber)">0 UR · pre-card</span><span>Fly business</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Core win</span><span style="color:var(--green); font-weight:600;">Fly business for a fraction of cash fares</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Star Alliance</span><span style="color:var(--cyan); font-weight:600;">Aeroplan · buy in 100% bonus sales · UR → Aeroplan 1:1</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">oneworld</span><span style="color:var(--pink); font-weight:600;">Qatar Avios · buy in sales · UR → BA Avios → Qatar 1:1</span></div>
     <div class="goal-row-m"><span class="goal-row-k">Welcome bonus</span><span style="color:var(--cyan); font-weight:600;">{{cspWelcomePoints:k}} UR after {{cspSpendUsd:usdk}} natural spend</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Use order</span><span style="color:var(--indigo); font-weight:600;">Chase Travel / Points Boost → partners → cash floor</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Decision rule</span><span style="color:var(--amber); font-weight:600;">Compare United, Aeroplan, Virgin, Flying Blue, BA, Hyatt</span></div>
-    <div class="goal-row-m"><span class="goal-row-k">Target redemption</span><span style="color:var(--green); font-weight:600;">Transfer UR → United MileagePlus for Polaris LHR→ORD · {{polarisCashGbp:gbp}} cash (APD only)</span></div>
-    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">CSP first · then book Polaris with UR</span><span>2027+</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">CSP boost</span><span style="color:var(--indigo); font-weight:600;">Buy the bulk in a sale, transfer UR only to close the gap</span></div>
+    <div class="goal-row-m"><span class="goal-row-k">Decision rule</span><span style="color:var(--amber); font-weight:600;">Find award space first → buy or transfer → book same day</span></div>
+    <div class="goal-pill-m"><span style="color:var(--soft); font-size:0.72rem;">CSP first · buy points in sales · book business</span><span>2027+</span></div>
   </div>
 
   <div class="card">
@@ -1219,7 +1220,7 @@ liveEstimates();
   document.getElementById('m-ilr-prog').style.width = (ilrFrac * 100).toFixed(1) + '%';
   document.getElementById('m-ilr-lbl').textContent  = ilrTimeParts.length ? `${ilrTimeParts.join(', ')} to go` : 'Eligible now';
 
-  // Travel — UR points toward Polaris (independent of CSP credit-history bar)
+  // Travel — UR points toward FinallyBusiness (independent of CSP credit-history bar)
   // Earning starts only once cspApprovalDate is set in finance_inputs.json (null = no card yet).
   const travelPhase2Start = PLAN.cspApprovalDate ? new Date(...PLAN.cspApprovalDate) : null;
   const travelPhase2End   = travelPhase2Start ? new Date(travelPhase2Start.getFullYear(), travelPhase2Start.getMonth() + PLAN.cspSpendMonths, travelPhase2Start.getDate()) : null;

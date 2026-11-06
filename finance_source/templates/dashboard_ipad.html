@@ -887,27 +887,29 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Goal 3: CSP travel engine -->
+      <!-- Goal 3: FinallyBusiness (buy points in sales + CSP top-up) -->
       <div class="goal-card goal-travel">
         <div class="goal-header">
           <div class="goal-icon">✈️</div>
           <div>
-            <div class="goal-name">Goal 3 · Travel · CSP Engine</div>
-            <div class="goal-title">Travel more for less</div>
+            <div class="goal-name">Goal 3 · Travel · FinallyBusiness</div>
+            <div class="goal-title">Business class at sale prices</div>
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div class="goal-progress-copy" style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">UR points toward Polaris LHR→ORD · {{cspWelcomePoints:k}} welcome bonus covers it · {{polarisCashGbp:gbp}} cash out of pocket (APD only)</div>
+          <div class="goal-progress-copy" style="font-size:0.72rem; color:var(--muted); margin-bottom:0.3rem;">Buy Aeroplan or Qatar Avios only in bonus sales · top up with CSP UR · {{cspWelcomePoints:k}} welcome bonus seeds the first trip</div>
           <div class="progress-bar"><div class="progress-fill" id="travel-prog" style="background:linear-gradient(90deg,var(--amber),var(--pink)); width:5%"></div></div>
-          <div class="progress-labels"><span>Get CSP</span><span id="travel-prog-lbl" style="color:var(--amber)">0 UR · pre-card</span><span>Fly Polaris</span></div>
+          <div class="progress-labels"><span>Get CSP</span><span id="travel-prog-lbl" style="color:var(--amber)">0 UR · pre-card</span><span>Fly business</span></div>
         </div>
-        <div class="goal-row"><span class="goal-row-label">Core win</span><span class="goal-row-value" style="color:var(--green);">Spend less on fees and bad redemptions, not chase one flight</span></div>
+        <div class="goal-row"><span class="goal-row-label">Core win</span><span class="goal-row-value" style="color:var(--green);">Fly business for a fraction of cash fares</span></div>
+        <div class="goal-row"><span class="goal-row-label">Star Alliance</span><span class="goal-row-value" style="color:var(--cyan);">Aeroplan · buy in 100% bonus sales · UR → Aeroplan 1:1</span></div>
+        <div class="goal-row"><span class="goal-row-label">oneworld</span><span class="goal-row-value" style="color:var(--pink);">Qatar Avios · buy in sales · UR → BA Avios → Qatar 1:1 (Qsuites)</span></div>
         <div class="goal-row"><span class="goal-row-label">Welcome bonus</span><span class="goal-row-value" style="color:var(--cyan);">{{cspWelcomePoints:k}} UR after {{cspSpendUsd:usdk}} spend · only if natural and paid in full</span></div>
-        <div class="goal-row"><span class="goal-row-label">Use order</span><span class="goal-row-value" style="color:var(--indigo);">Chase Travel / Points Boost → partners → cash floor</span></div>
-        <div class="goal-row"><span class="goal-row-label">Decision rule</span><span class="goal-row-value" style="color:var(--amber);">Compare United, Aeroplan, Virgin, Flying Blue, BA, Hyatt before transfer</span></div>
+        <div class="goal-row"><span class="goal-row-label">CSP boost</span><span class="goal-row-value" style="color:var(--indigo);">Buy the bulk in a sale, then transfer UR only to close the gap</span></div>
+        <div class="goal-row"><span class="goal-row-label">Decision rule</span><span class="goal-row-value" style="color:var(--amber);">Find award space first → buy or transfer → book same day</span></div>
         <div class="goal-timeline">
           <div class="goal-pill no-bruce" id="travel-pill">
-            <div class="gp-label" id="travel-pill-label">CSP first · then choose the best-value trip</div>
+            <div class="gp-label" id="travel-pill-label">CSP first · buy points in sales · book business</div>
             <span id="travel-timeline">2027+</span>
           </div>
         </div>
@@ -2207,7 +2209,7 @@ function updateGoals() {
   setPill('csp', `Building history · ${cspMonthsLeft} months to go`, "Jan 2027");
   setPill('move', "At {{moveTargetGbp:gbp}}: pause or fund next goal; withdraw when needed", "Jun–Jul 2027");
 
-  // Travel — UR points toward Polaris (independent of CSP credit-history bar)
+  // Travel — UR points toward FinallyBusiness (independent of CSP credit-history bar)
   // Phase 1: no card (cspApprovalDate null) → 5% · Phase 2: approval → +cspSpendMonths, earning bonus · Phase 3: bonus earned → 100%
   // Earning starts only once cspApprovalDate is set in finance_inputs.json (null = no card yet).
   const travelPhase2Start = PLAN.cspApprovalDate ? new Date(...PLAN.cspApprovalDate) : null;
@@ -2233,7 +2235,7 @@ function updateGoals() {
   if (travelEl) travelEl.style.width = travelPct + '%';
   const travelLblEl = document.getElementById('travel-prog-lbl');
   if (travelLblEl) travelLblEl.textContent = travelLbl;
-  setPill('travel', "CSP first · then book Polaris with UR · no BA surcharges", travelTime);
+  setPill('travel', "CSP first · buy points in sales · book business", travelTime);
 }
 
 function setPill(id, label, value) {
