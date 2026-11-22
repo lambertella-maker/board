@@ -733,6 +733,19 @@
     #ideas-results .idea-grid{min-width:min(520px, 100%);}
     .idea-title{font-size:0.82rem;}
   }
+  /* Mac / wide screens: let the week fill the window. 3:2 photos (a gentle crop) keep
+     two rows on one screen while the grid grows with the window, up to 1360px. */
+  @media (min-width:900px){
+    #tab-ideas.tab-section{max-width:1400px;}
+    #ideas-results .idea-photo-wrap,#fridge-results .idea-photo-wrap{aspect-ratio:3/2;}
+    #ideas-results .idea-grid,#ideas-results .ideas-toolbar,#ideas-results #ideas-dessert{
+      max-width:min(1360px, calc((100vh - 430px) * 2.25 + 20px));
+      max-width:min(1360px, calc((100dvh - 430px) * 2.25 + 20px));}
+    #ideas-results .idea-grid{gap:14px;}
+    #ideas-results .idea-title{font-size:0.92rem;}
+    #ideas-results .idea-info{padding:9px 11px 6px;}
+    #ideas-results .idea-list-btn{margin:0 11px 11px;min-height:30px;font-size:0.68rem;}
+  }
   @media (min-width:600px) and (max-width:899px) and (min-height:900px){
     #ideas-results .idea-photo-wrap,#fridge-results .idea-photo-wrap{aspect-ratio:1/1;}
   }
@@ -771,6 +784,10 @@
   .ar-preview-ings li.ing-section{margin-left:-16px;}
   .modal-ingredients li.ing-section:first-child,.ar-preview-ings li.ing-section:first-child{margin-top:0;}
   .modal-ingredients li.ing-section::before,.modal-ingredients li.ing-section::marker{content:none;}
+
+  /* Neutral tile behind photos while they load (no emoji flash). */
+  .photo-loading{background:var(--card2);}
+  .recipe-card-img,.modal-hero,.home-pick-photo img,.home-hero img,.idea-photo-wrap img{background-color:var(--card2);}
 
   /* ── Photo clipping (so zoomed framing stays inside its box) ── */
   .photo-clip{overflow:hidden;position:relative;}
@@ -962,14 +979,14 @@
     <span class="tab-icon">🍽️</span>
     <span class="tab-label">Recipes</span>
   </div>
-  <button class="tab tab-add" type="button" onclick="showAddRecipe()" aria-label="Add a recipe">
-    <span class="tab-icon tab-add-icon">＋</span>
-    <span class="tab-label">Add Recipe</span>
-  </button>
   <div class="tab" data-tab="ideas" onclick="onTabTap('ideas')">
     <span class="tab-icon">✨</span>
     <span class="tab-label">Ideas</span>
   </div>
+  <button class="tab tab-add" type="button" onclick="showAddRecipe()" aria-label="Add a recipe">
+    <span class="tab-icon tab-add-icon">＋</span>
+    <span class="tab-label">Add Recipe</span>
+  </button>
 </nav>
 </div><!-- /app -->
 
@@ -2570,7 +2587,10 @@ function ideaCard(r, mealType, index, context = 'ideas') {
   const src = recipePhoto(r);
   const pc = cuisinePlaceholder(r.cuisine);
   const ready = src && photoDecoded.has(src);
-  const placeholder = `<div class="idea-photo-placeholder ${pc}"${src ? '' : ` data-recipe-id="${r.id}" data-photo-class=""`}>${r.emoji}</div>`;
+  // While a real photo loads, show a quiet neutral tile, never the emoji.
+  const placeholder = src
+    ? `<div class="idea-photo-placeholder photo-loading" aria-hidden="true"></div>`
+    : `<div class="idea-photo-placeholder ${pc}" data-recipe-id="${r.id}" data-photo-class="">${r.emoji}</div>`;
   const img = src
     ? `<img src="${src}" alt="${r.name}" data-recipe-id="${r.id}" loading="eager" decoding="${ready ? 'sync' : 'async'}"${ready ? '' : ' class="ph-fade"'} onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`
     : '';
