@@ -720,6 +720,16 @@
   .idea-card.selected .idea-list-btn{background:var(--accent2);color:#fff;border-top-color:var(--accent2);}
   .idea-card.selected .idea-list-icon{border-color:#fff;background:#fff;color:var(--accent2);}
 
+  /* Larger screens: size idea photos from the window height so the whole week
+     (2 rows) and the dessert button fit without scrolling. */
+  @media (min-width:600px){
+    #ideas-results .idea-photo-wrap,#fridge-results .idea-photo-wrap{aspect-ratio:auto;
+      height:clamp(96px, calc((100vh - 560px) / 2), 230px);
+      height:clamp(96px, calc((100dvh - 560px) / 2), 230px);}
+    #ideas-results .idea-grid{max-width:900px;margin:0 auto;}
+    #ideas-results .ideas-toolbar,#ideas-results #ideas-dessert{max-width:900px;margin-left:auto;margin-right:auto;}
+  }
+
   /* ── Recipes A–Z: section letters + thumb scrubber ── */
   .alpha-hdr{font-size:0.7rem;font-weight:800;color:var(--accent);letter-spacing:.06em;
     padding:10px 18px 6px;font-family:var(--font-serif);}
