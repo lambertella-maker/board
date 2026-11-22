@@ -250,9 +250,14 @@
   .empty-state-text{font-size:0.8rem;line-height:1.65;}
 
   /* DELETE / RESTORE */
-  .delete-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.72rem;
-    padding:4px 6px;flex-shrink:0;transition:color .15s;line-height:1;}
-  .delete-btn:hover{color:#c0392b;}
+  .delete-btn{background:none;border:none;cursor:pointer;color:var(--muted);flex-shrink:0;line-height:1;
+    width:32px;height:32px;margin:-6px -6px -6px 0;display:flex;align-items:center;justify-content:center;
+    border-radius:50%;transition:color .15s,background .15s;}
+  .delete-btn:hover,.delete-btn:active{color:#c0392b;background:rgba(192,57,43,0.08);}
+  .trash-ico{width:17px;height:17px;display:block;}
+  .modal-trash{margin-right:6px;color:var(--muted);}
+  .modal-trash .trash-ico{width:15px;height:15px;}
+  .modal-trash:hover,.modal-trash:active{color:#c0392b;border-color:rgba(192,57,43,0.35);}
   .delete-recipe-btn{display:block;width:100%;margin-top:14px;padding:10px;
     background:rgba(192,57,43,0.05);border:1px solid rgba(192,57,43,0.15);border-radius:10px;
     color:#c0392b;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;
@@ -942,7 +947,8 @@
       <div class="modal-title" id="modal-title" contenteditable="true" spellcheck="false" autocorrect="off" role="textbox" aria-label="Recipe name (tap to rename)" enterkeyhint="done"></div>
       <button class="modal-cook-btn" onclick="startCookMode(openRecipeId)">👨‍🍳 Cook Mode</button>
       <button class="modal-expand" id="modal-expand-btn" onclick="toggleModalExpand()" title="Full screen">⛶</button>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close modal-trash" onclick="if(openRecipeId)deleteRecipe(openRecipeId)" title="Delete recipe" aria-label="Delete recipe"><svg class="trash-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="modal-close" onclick="closeModal()" title="Close" aria-label="Close">✕</button>
     </div>
     <div class="modal-body" id="modal-body"></div>
   </div>
@@ -2807,7 +2813,7 @@ function recipeCard(r) {
           <div class="recipe-cuisine">${cuisineLine}</div>
         </div>
         <button class="card-photo-btn-inline" onclick="event.stopPropagation();showPhotoMenu('${r.id}')" title="Photo" aria-label="Adjust or replace photo">📷</button>
-        <button class="delete-btn" onclick="event.stopPropagation();deleteRecipe('${r.id}')" title="Remove">✕</button>
+        <button class="delete-btn" onclick="event.stopPropagation();deleteRecipe('${r.id}')" title="Delete recipe" aria-label="Delete ${r.name}"><svg class="trash-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
       <div class="recipe-chips"><span class="meal-tag meal-protein">🥩 ${r.protein}</span>${plantBadge}${badges}</div>
     </div>
