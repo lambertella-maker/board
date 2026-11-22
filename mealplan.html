@@ -431,11 +431,8 @@
     font-size:0.65rem;color:#fff;cursor:pointer;transition:all .15s;}
   .idea-check.on{background:var(--accent2);border-color:var(--accent2);}
   .idea-info{padding:6px 7px 8px;}
-  .idea-cuisine{font-size:0.48rem;font-weight:700;color:var(--muted);
-    text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
-  .idea-title{font-size:0.65rem;font-weight:800;color:var(--text);line-height:1.25;
+  .idea-title{font-size:0.7rem;font-weight:800;color:var(--text);line-height:1.25;min-height:2.5em;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-  .idea-stats{font-size:0.52rem;color:var(--muted);margin-top:3px;}
 
   /* GROCERY MODAL */
   #grocery-modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:300;
@@ -722,14 +719,22 @@
   .idea-list-icon{font-size:0.8rem;line-height:1;width:12px;text-align:center;}
   .idea-card.selected .idea-list-btn{background:var(--accent2);color:#fff;}
 
-  /* Larger screens: size idea photos from the window height so the whole week
-     (2 rows) and the dessert button fit without scrolling. */
+  /* Ideas: the photo leads (ATK/NYT style). Cards are just photo, title, List.
+     Phones: tall 3:4 photos, capped so the week + dessert fit above the tab bar.
+     Larger screens: photos stay 4:3 (no letterbox strips); the grid narrows with
+     window height instead, so both rows still fit without scrolling. */
+  #ideas-results .idea-photo-wrap,#fridge-results .idea-photo-wrap{aspect-ratio:3/4;
+    max-height:calc((100vh - 430px) / 2);max-height:calc((100dvh - 430px) / 2);min-height:96px;}
   @media (min-width:600px){
-    #ideas-results .idea-photo-wrap,#fridge-results .idea-photo-wrap{aspect-ratio:auto;
-      height:clamp(96px, calc((100vh - 560px) / 2), 230px);
-      height:clamp(96px, calc((100dvh - 560px) / 2), 230px);}
-    #ideas-results .idea-grid{max-width:900px;margin:0 auto;}
-    #ideas-results .ideas-toolbar,#ideas-results #ideas-dessert{max-width:900px;margin-left:auto;margin-right:auto;}
+    #ideas-results .idea-photo-wrap,#fridge-results .idea-photo-wrap{aspect-ratio:4/3;max-height:none;min-height:0;}
+    #ideas-results .idea-grid,#ideas-results .ideas-toolbar,#ideas-results #ideas-dessert{
+      max-width:min(980px, calc((100vh - 430px) * 2));max-width:min(980px, calc((100dvh - 430px) * 2));
+      margin-left:auto;margin-right:auto;}
+    #ideas-results .idea-grid{min-width:min(520px, 100%);}
+    .idea-title{font-size:0.82rem;}
+  }
+  @media (min-width:600px) and (max-width:899px) and (min-height:900px){
+    #ideas-results .idea-photo-wrap,#fridge-results .idea-photo-wrap{aspect-ratio:1/1;}
   }
 
   /* ── Recipes A–Z: section letters + thumb scrubber ── */
@@ -2523,7 +2528,7 @@ function updateIdeasToolbar() {
 function skeletonCard() {
   return `<div class="idea-card skeleton-card" aria-hidden="true">
     <div class="idea-photo-wrap skeleton"></div>
-    <div class="idea-info"><div class="skeleton-line" style="width:50%"></div><div class="skeleton-line" style="width:90%"></div><div class="skeleton-line" style="width:70%"></div></div>
+    <div class="idea-info"><div class="skeleton-line" style="width:90%"></div><div class="skeleton-line" style="width:60%"></div></div>
     <div class="idea-list-btn" style="color:transparent;border-color:var(--border)">·····</div>
   </div>`;
 }
@@ -2564,7 +2569,6 @@ function dessertSectionHtml(pending = false) {
 function ideaCard(r, mealType, index, context = 'ideas') {
   const src = recipePhoto(r);
   const pc = cuisinePlaceholder(r.cuisine);
-  const cuisineLabel = isPlantBasedRecipe(r) ? `Plant Based · ${r.cuisine}` : r.cuisine;
   const ready = src && photoDecoded.has(src);
   const placeholder = `<div class="idea-photo-placeholder ${pc}"${src ? '' : ` data-recipe-id="${r.id}" data-photo-class=""`}>${r.emoji}</div>`;
   const img = src
@@ -2579,9 +2583,7 @@ function ideaCard(r, mealType, index, context = 'ideas') {
       <button class="idea-swap" onclick="event.stopPropagation();swapIdea('${mealType}',${index})" title="Swap for another" aria-label="Swap ${r.name}">↺</button>` : ''}
     </div>
     <div class="idea-info">
-      <div class="idea-cuisine">${cuisineLabel}</div>
       <div class="idea-title">${r.name}</div>
-      <div class="idea-stats">${r.time} · 🥩 ${r.protein}</div>
     </div>
     ${planControls ? `<button class="idea-list-btn" aria-pressed="${on}" aria-label="${on ? 'Remove from' : 'Add to'} grocery list" onclick="event.stopPropagation();toggleIdeaCheck('${r.id}')">
       <span class="idea-list-icon">${on ? '✓' : '+'}</span><span class="idea-list-lbl">${on ? 'On list' : 'List'}</span>
