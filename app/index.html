@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Ella Finance">
+  <link rel="apple-touch-icon" href="./finance-apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="./finance-icon-512.png">
+  <title>Ella Finance</title>
+  <script>
+    // Apply the saved theme before first paint, so there is no light/dark flash.
+    try { const t = JSON.parse(localStorage.getItem('finance-app:theme') || '"system"'); if (t && t !== 'system') document.documentElement.dataset.theme = t; } catch (_) {}
+  </script>
+  <script type="module" crossorigin src="./assets/index-DN_pOaVb.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-giIX7hDn.css">
+  <link rel="stylesheet" href="./finance_lock.css">
+  <script defer src="./finance_lock.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+</html>
