@@ -808,11 +808,10 @@
     box-shadow:0 2px 8px rgba(181,69,27,0.3);}
   .tab-add .tab-label{color:var(--accent);}
   @media(min-width:900px){
-    .tab-add{margin-left:auto !important;border-bottom:none !important;order:1;}
+    .tab-add{padding-top:0;}
     .tab-add .tab-icon.tab-add-icon{display:none;}
-    .tab-add .tab-label{background:var(--accent);color:#fff;font-weight:700;padding:7px 16px;border-radius:18px;
-      font-family:inherit;font-size:0.78rem;}
-    .tab-add:hover .tab-label{filter:brightness(1.08);}
+    .tab-add .tab-label{color:var(--accent);font-weight:700;margin-top:0;}
+    .tab-add .tab-label::before{content:'＋ ';}
   }
 
   /* ── Undo toast ── */
