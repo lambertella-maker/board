@@ -74,8 +74,6 @@
 
 
   /* CARDS */
-  .section-title{font-size:0.62rem;font-weight:700;text-transform:uppercase;
-    letter-spacing:.1em;color:var(--muted);padding:18px 14px 8px;}
   .card{background:var(--card);border:1px solid var(--border);border-radius:14px;
     margin:0 14px 10px;padding:14px;}
 
@@ -200,6 +198,7 @@
   .modal-header{padding:12px 16px 10px;border-bottom:1px solid var(--border);
     display:flex;justify-content:space-between;align-items:flex-start;}
   .modal-header,.modal-handle{touch-action:pan-x;user-select:none;cursor:grab;}
+  @media (pointer:coarse){#modal-hero-wrap{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}}
   .modal-title{font-size:1rem;font-weight:800;flex:1;padding-right:12px;line-height:1.3;color:var(--text);}
   .modal-close{background:var(--card2);border:1px solid var(--border);border-radius:50%;
     width:28px;height:28px;cursor:pointer;color:var(--soft);font-size:0.85rem;
@@ -225,6 +224,7 @@
   .modal-tips li:last-child{border-bottom:none;}
   .modal-tips li::before{content:'→';position:absolute;left:0;top:7px;
     font-size:0.7rem;color:var(--accent);font-weight:700;}
+  .modal-method-lbl{margin-top:16px;}
   .modal-method{list-style:none;counter-reset:step;}
   .modal-method li{font-size:0.8rem;padding:8px 0 8px 32px;position:relative;
     border-bottom:1px solid var(--border);color:var(--soft);line-height:1.55;
@@ -270,18 +270,11 @@
     border-radius:8px;padding:5px 12px;font-size:0.7rem;font-weight:700;
     color:var(--accent2);cursor:pointer;font-family:inherit;white-space:nowrap;}
 
-  /* TIPS */
-  .tip-card{background:var(--card);border:1px solid var(--border);border-radius:14px;
-    margin:0 14px 10px;padding:14px;}
-  .tip-title{font-size:0.8rem;font-weight:800;margin-bottom:10px;
-    display:flex;align-items:center;gap:8px;color:var(--text);}
-  .tip-row{display:flex;justify-content:space-between;padding:6px 0;
-    border-bottom:1px solid var(--border);font-size:0.73rem;align-items:baseline;gap:8px;}
-  .tip-row:last-child{border-bottom:none;}
-  .tip-k{color:var(--muted);flex-shrink:0;}
-  .tip-v{font-weight:600;color:var(--soft);text-align:right;}
-  .tip-ok{color:var(--accent2);}
-  .tip-no{color:#c0392b;}
+  /* RECIPES FOOTER: restore deleted built-ins */
+  .recipes-manage{display:flex;justify-content:space-between;align-items:center;gap:10px;
+    margin:18px 14px 8px;padding:12px 14px;border-top:1px solid var(--border);
+    font-size:0.72rem;color:var(--muted);}
+  #recipes-list.has-rail + .alpha-rail + .alpha-bubble + .recipes-manage{margin-right:36px;}
 
   /* DESSERT CUISINE */
   --c-dessert:#b5741b;
@@ -648,7 +641,27 @@
     .modal-expand:hover{background:var(--border);}
     .modal.expanded{width:94vw!important;max-width:94vw!important;
       height:92vh!important;max-height:92vh!important;border-radius:16px!important;}
-    .modal.expanded .modal-hero{height:420px;}
+    /* Full screen = cookbook spread: modest photo banner, ingredients left
+       (stays in view while you read), method right, everything at reading size. */
+    .modal.expanded .modal-hero,.modal.expanded .modal-hero-placeholder{height:min(32vh,300px);border-radius:16px 16px 0 0;}
+    .modal.expanded .modal-header{max-width:1180px;margin:0 auto;padding:18px 40px 14px;align-items:center;}
+    .modal.expanded .modal-title{font-family:var(--font-serif);font-size:1.75rem;line-height:1.15;letter-spacing:-0.01em;}
+    .modal.expanded .modal-body{max-width:1180px;margin:0 auto;padding:20px 40px 32px;}
+    .modal.expanded .modal-meta-row{margin-bottom:22px;}
+    .modal.expanded .modal-cols{display:grid;grid-template-columns:minmax(260px,1fr) 1.7fr;gap:48px;align-items:start;}
+    .modal.expanded .modal-col-ings{position:sticky;top:0;max-height:calc(92vh - 40px);overflow-y:auto;
+      padding:4px 20px 12px 0;border-right:1px solid var(--border);}
+    .modal.expanded .modal-method-lbl{margin-top:4px;}
+    .modal.expanded .modal-section-lbl{font-size:0.72rem;margin-bottom:10px;}
+    .modal.expanded .modal-ingredients li{font-size:0.95rem;padding:9px 0;line-height:1.4;}
+    .modal.expanded .modal-ingredients li.ing-section{font-size:0.7rem;padding:16px 0 4px;}
+    .modal.expanded .modal-method li{font-size:1.02rem;line-height:1.65;padding:12px 0 12px 40px;color:var(--text);}
+    .modal.expanded .modal-method li::before{top:13px;width:26px;height:26px;line-height:26px;font-size:0.8rem;}
+    .modal.expanded .modal-tips li{font-size:0.92rem;}
+    .modal.expanded .modal-macros{max-width:420px;margin-top:24px;}
+    .modal.expanded .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:28px;
+      padding-top:16px;border-top:1px solid var(--border);}
+    .modal.expanded .modal-actions button{width:auto;margin:0;padding:10px 18px;}
 
     /* ── Add Recipe → centered dialog ── */
     #add-recipe-screen{background:rgba(0,0,0,0.42);align-items:center;
@@ -737,6 +750,66 @@
   .modal-ingredients li.ing-section:first-child,.ar-preview-ings li.ing-section:first-child{margin-top:0;}
   .modal-ingredients li.ing-section::before,.modal-ingredients li.ing-section::marker{content:none;}
 
+  /* ── Photo clipping (so zoomed framing stays inside its box) ── */
+  .photo-clip{overflow:hidden;}
+  #modal-hero-wrap{overflow:hidden;border-radius:20px 20px 0 0;}
+
+  /* ── Editable recipe title: quiet until touched ── */
+  .modal-title[contenteditable]{cursor:text;user-select:text;-webkit-user-select:text;outline:none;
+    border-radius:6px;margin:-2px -6px;padding:2px 6px;transition:background .15s,box-shadow .15s;}
+  @media (hover:hover){.modal-title[contenteditable]:hover{background:var(--card2);}}
+  .modal-title[contenteditable]:focus{background:var(--card2);box-shadow:0 0 0 1.5px var(--accent);}
+
+  /* ── Action sheet (📷 menu) + photo adjust ── */
+  .action-sheet-backdrop{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,0.38);display:none;
+    align-items:flex-end;justify-content:center;padding:0 10px calc(10px + var(--safe-bottom));}
+  .action-sheet-backdrop.open{display:flex;animation:fadeIn .18s ease-out;}
+  .action-sheet{width:100%;max-width:420px;animation:sheetUp .28s cubic-bezier(.2,.8,.3,1);}
+  .action-group{background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-radius:14px;overflow:hidden;margin-bottom:8px;}
+  .pm-title{font-size:0.72rem;color:var(--muted);text-align:center;padding:12px 16px;border-bottom:1px solid var(--border);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .action-group button,.action-cancel{display:block;width:100%;min-height:54px;border:none;background:transparent;
+    font-family:inherit;font-size:1rem;color:var(--accent);cursor:pointer;}
+  .action-group button + button{border-top:1px solid var(--border);}
+  .action-group button:active,.action-cancel:active{background:rgba(0,0,0,0.06);}
+  .action-cancel{background:#fff;border-radius:14px;font-weight:700;}
+  .pa-sheet{width:100%;max-width:520px;background:var(--card);border-radius:18px;padding:0 0 16px;
+    animation:sheetUp .3s cubic-bezier(.2,.8,.3,1);overflow:hidden;}
+  .pa-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;}
+  .pa-title{font-weight:800;font-size:0.9rem;}
+  .pa-text-btn{background:none;border:none;font-family:inherit;font-size:0.9rem;color:var(--soft);
+    min-height:44px;padding:0 6px;cursor:pointer;}
+  .pa-save{color:var(--accent);font-weight:800;}
+  .pa-frame{position:relative;aspect-ratio:4/3;overflow:hidden;background:#111;touch-action:none;cursor:grab;
+    user-select:none;-webkit-user-select:none;}
+  .pa-frame:active{cursor:grabbing;}
+  .pa-frame img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;}
+  .pa-hint{font-size:0.68rem;color:var(--muted);text-align:center;margin:8px 0 4px;}
+  .pa-zoom-row{display:flex;align-items:center;gap:12px;padding:6px 22px;color:var(--muted);font-weight:800;}
+  .pa-zoom-row input{flex:1;accent-color:var(--accent);height:32px;}
+  .pa-reset{display:block;margin:6px auto 0;background:none;border:none;color:var(--muted);font-family:inherit;
+    font-size:0.75rem;text-decoration:underline;min-height:36px;cursor:pointer;}
+  @keyframes fadeIn{from{opacity:0}}
+  @keyframes sheetUp{from{transform:translateY(40px);opacity:.6}}
+  @media(min-width:900px){.action-sheet-backdrop{align-items:center;}}
+  @media (prefers-reduced-motion: reduce){.action-sheet,.pa-sheet,.action-sheet-backdrop.open{animation:none;}}
+
+  /* ── Add Recipe tab ── */
+  .tab-add{background:none;border:none;font-family:inherit;padding-top:8px;}
+  .tab-add .tab-label{margin-top:-1px;}
+  .tab-add .tab-icon.tab-add-icon{width:30px;height:24px;border-radius:12px;background:var(--accent);color:#fff;
+    font-size:1rem;font-weight:800;display:flex;align-items:center;justify-content:center;line-height:1;
+    box-shadow:0 2px 8px rgba(181,69,27,0.3);}
+  .tab-add .tab-label{color:var(--accent);}
+  @media(min-width:900px){
+    .tab-add{margin-left:auto !important;border-bottom:none !important;}
+    .tab-add .tab-icon.tab-add-icon{display:none;}
+    .tab-add .tab-label{background:var(--accent);color:#fff;font-weight:700;padding:7px 16px;border-radius:18px;
+      font-family:inherit;font-size:0.78rem;}
+    .tab-add:hover .tab-label{filter:brightness(1.08);}
+  }
+
   /* ── Undo toast ── */
   #undo-toast{position:fixed;left:50%;bottom:calc(var(--tab-h) + var(--safe-bottom) + 14px);z-index:9999;
     transform:translateX(-50%) translateY(16px);display:flex;align-items:center;gap:14px;max-width:calc(100vw - 32px);
@@ -787,6 +860,10 @@
   <div id="recipes-list"></div>
   <div class="alpha-rail" id="alpha-rail" aria-label="Jump to letter"></div>
   <div class="alpha-bubble" id="alpha-bubble" aria-hidden="true"></div>
+  <div class="recipes-manage">
+    <span id="deleted-count">No built-in recipes deleted</span>
+    <button class="restore-btn" onclick="restoreAll()">Restore all</button>
+  </div>
 </div>
 
 <!-- ════ IDEAS ════ -->
@@ -834,79 +911,6 @@
   <div id="ideas-results" style="display:none"></div>
 </div>
 
-<!-- ════ TIPS ════ -->
-<div class="tab-section" id="tab-tips">
-  <div class="topbar">
-    <div class="topbar-logo">FODMAP Tips</div>
-    <div class="topbar-date" id="topbar-date-tips">—</div>
-  </div>
-
-  <div class="section-title">🚦 Safe vs Avoid</div>
-  <div class="tip-card">
-    <div class="tip-row"><span class="tip-k">Garlic-infused oil</span><span class="tip-v tip-ok">✓ Safe</span></div>
-    <div class="tip-row"><span class="tip-k">Spring onion greens</span><span class="tip-v tip-ok">✓ Safe</span></div>
-    <div class="tip-row"><span class="tip-k">Chives, ginger, lemongrass</span><span class="tip-v tip-ok">✓ Safe</span></div>
-    <div class="tip-row"><span class="tip-k">Gluten-free tamari</span><span class="tip-v tip-ok">✓ Safe</span></div>
-    <div class="tip-row"><span class="tip-k">Lactose-free / hard cheese</span><span class="tip-v tip-ok">✓ Safe</span></div>
-    <div class="tip-row"><span class="tip-k">Avocado</span><span class="tip-v tip-ok">✓ Limit to ⅛</span></div>
-    <div class="tip-row"><span class="tip-k">Coconut milk</span><span class="tip-v tip-ok">✓ Limit to ½ cup</span></div>
-    <div class="tip-row"><span class="tip-k">Gochujang / chilli paste</span><span class="tip-v tip-ok">✓ Small serve OK</span></div>
-    <div class="tip-row" style="border-top:2px solid var(--border);margin-top:4px;padding-top:10px"><span class="tip-k">Raw garlic / onion</span><span class="tip-v tip-no">✗ Avoid</span></div>
-    <div class="tip-row"><span class="tip-k">Spring onion white bulb</span><span class="tip-v tip-no">✗ Avoid</span></div>
-    <div class="tip-row"><span class="tip-k">Wheat / regular soy sauce</span><span class="tip-v tip-no">✗ Avoid</span></div>
-    <div class="tip-row"><span class="tip-k">Regular milk / soft cheese</span><span class="tip-v tip-no">✗ Avoid</span></div>
-    <div class="tip-row"><span class="tip-k">Most legumes (large serve)</span><span class="tip-v tip-no">✗ Avoid</span></div>
-  </div>
-
-  <div class="section-title">🧑‍🍳 Flavour Without Triggers</div>
-  <div class="tip-card">
-    <div class="tip-row"><span class="tip-k">Garlic flavour</span><span class="tip-v">Infuse oil with garlic cloves, remove cloves before eating</span></div>
-    <div class="tip-row"><span class="tip-k">Onion flavour</span><span class="tip-v">Spring onion greens, chives, asafoetida (tiny pinch)</span></div>
-    <div class="tip-row"><span class="tip-k">Depth & umami</span><span class="tip-v">Fish sauce, gluten-free soy, miso paste (1 tsp max)</span></div>
-    <div class="tip-row"><span class="tip-k">Heat</span><span class="tip-v">Fresh chilli, bird's eye, chilli flakes, chilli crisp</span></div>
-    <div class="tip-row"><span class="tip-k">Richness</span><span class="tip-v">Butter, sesame oil, coconut milk (½c max)</span></div>
-    <div class="tip-row"><span class="tip-k">Acid & brightness</span><span class="tip-v">Lime juice, rice vinegar, lemon juice</span></div>
-  </div>
-
-  <div class="section-title">🔄 Easy Swaps</div>
-  <div class="tip-card">
-    <div class="tip-row"><span class="tip-k">Wheat noodles</span><span class="tip-v">Rice noodles · glass noodles · vermicelli</span></div>
-    <div class="tip-row"><span class="tip-k">Regular soy sauce</span><span class="tip-v">Gluten-free tamari or San-J soy</span></div>
-    <div class="tip-row"><span class="tip-k">Regular milk</span><span class="tip-v">Lactose-free milk · almond milk</span></div>
-    <div class="tip-row"><span class="tip-k">Cream</span><span class="tip-v">Lactose-free cream · coconut cream (½c max)</span></div>
-    <div class="tip-row"><span class="tip-k">Bread / wraps</span><span class="tip-v">Sourdough (2 slices) · corn tortillas</span></div>
-    <div class="tip-row"><span class="tip-k">Pasta</span><span class="tip-v">Rice pasta · 100% buckwheat soba</span></div>
-  </div>
-
-  <div class="section-title">📦 Snack Prep Tips</div>
-  <div class="tip-card">
-    <div class="tip-row"><span class="tip-k">Batch cook</span><span class="tip-v">Hard boil 4–6 eggs on Sunday — ready all week</span></div>
-    <div class="tip-row"><span class="tip-k">Frozen bark</span><span class="tip-v">Yogurt bark keeps in freezer 2 weeks in a zip-lock</span></div>
-    <div class="tip-row"><span class="tip-k">Energy balls</span><span class="tip-v">Roll on Sunday, fridge 1 week or freeze 1 month</span></div>
-    <div class="tip-row"><span class="tip-k">Chia pudding</span><span class="tip-v">Prep 4 jars at once — just top with fruit each morning</span></div>
-    <div class="tip-row"><span class="tip-k">Pinwheels</span><span class="tip-v">Make, wrap in cling film, slice day-of — 2 day shelf life</span></div>
-    <div class="tip-row"><span class="tip-k">Smashed cucumber</span><span class="tip-v">Best fresh, but holds dressed in fridge 1 day</span></div>
-  </div>
-
-  <div class="section-title">⚙️ Manage Recipes</div>
-  <div class="tip-card">
-    <div class="tip-row">
-      <span class="tip-k" id="deleted-count">No recipes hidden</span>
-      <button class="restore-btn" onclick="restoreAll()">Restore all</button>
-    </div>
-  </div>
-
-  <div class="section-title">⚖️ Portion Notes</div>
-  <div class="tip-card">
-    <div class="tip-row"><span class="tip-k">Pumpkin seeds</span><span class="tip-v">2 tbsp safe · ¼ cup still OK</span></div>
-    <div class="tip-row"><span class="tip-k">Peanuts / peanut butter</span><span class="tip-v">32g nuts · 2 tbsp PB safe</span></div>
-    <div class="tip-row"><span class="tip-k">Sourdough bread</span><span class="tip-v">2 slices — fermentation reduces fructans</span></div>
-    <div class="tip-row"><span class="tip-k">Oats (gluten-free)</span><span class="tip-v">½ cup dry — not plain oats</span></div>
-    <div class="tip-row"><span class="tip-k">Banana</span><span class="tip-v">Slightly firm = lower FODMAP than fully ripe</span></div>
-    <div class="tip-row"><span class="tip-k">Dark chocolate</span><span class="tip-v">30g (70%+) is safe</span></div>
-  </div>
-</div>
-
 </div><!-- /content -->
 
 <!-- TAB BAR -->
@@ -923,10 +927,10 @@
     <span class="tab-icon">✨</span>
     <span class="tab-label">Ideas</span>
   </div>
-  <div class="tab" data-tab="tips" onclick="onTabTap('tips')">
-    <span class="tab-icon">💡</span>
-    <span class="tab-label">Tips</span>
-  </div>
+  <button class="tab tab-add" type="button" onclick="showAddRecipe()" aria-label="Add a recipe">
+    <span class="tab-icon tab-add-icon">＋</span>
+    <span class="tab-label">Add Recipe</span>
+  </button>
 </nav>
 </div><!-- /app -->
 
@@ -935,7 +939,7 @@
   <div class="modal" id="modal">
     <div class="modal-handle"></div>
     <div class="modal-header">
-      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-title" id="modal-title" contenteditable="true" spellcheck="false" autocorrect="off" role="textbox" aria-label="Recipe name (tap to rename)" enterkeyhint="done"></div>
       <button class="modal-cook-btn" onclick="startCookMode(openRecipeId)">👨‍🍳 Cook Mode</button>
       <button class="modal-expand" id="modal-expand-btn" onclick="toggleModalExpand()" title="Full screen">⛶</button>
       <button class="modal-close" onclick="closeModal()">✕</button>
@@ -1795,11 +1799,11 @@ function recipeImgEl(r, type) {
   const src = recipePhoto(r);
   const pc = cuisinePlaceholder(r.cuisine);
   if (type === 'banner') {
-    if (src) return `<img src="${src}" class="recipe-card-img" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onclick="event.stopPropagation();openLightbox(this.src,this.alt)" style="cursor:zoom-in" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`;
-    return `<div class="recipe-card-img-placeholder ${pc}" data-recipe-id="${r.id}" data-photo-class="recipe-card-img">${r.emoji}</div>`;
+    if (src) return `<div class="photo-clip"><img src="${src}" class="recipe-card-img" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)"></div>`;
+    return `<div class="photo-clip"><div class="recipe-card-img-placeholder ${pc}" data-recipe-id="${r.id}" data-photo-class="recipe-card-img">${r.emoji}</div></div>`;
   }
   if (type === 'thumb') {
-    if (src) return `<img src="${src}" class="meal-thumb" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onclick="event.stopPropagation();openLightbox(this.src,this.alt)" style="cursor:zoom-in" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`;
+    if (src) return `<img src="${src}" class="meal-thumb" alt="${r.name}" data-recipe-id="${r.id}" loading="lazy" onerror="recipePhotoFailed(this)" onload="recipePhotoLoaded(this)">`;
     return `<div class="meal-thumb-placeholder ${pc}" data-recipe-id="${r.id}" data-photo-class="meal-thumb">${r.emoji}</div>`;
   }
   if (type === 'hero') {
@@ -1833,6 +1837,10 @@ JSON.parse(localStorage.getItem('fodmap_deleted') || '[]').forEach(id => {
   if (!recipeTombstones[id]) recipeTombstones[id] = { d: 1, t: Date.now() };
 });
 let deleted = new Set(Object.keys(recipeTombstones).filter(id => recipeTombstones[id]?.d));
+// Renamed built-in recipes ({id:{name,t}}) and photo framing ({id:{x,y,z,t}}), synced newest-wins.
+const readJson = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || 'null') || d; } catch(e) { return d; } };
+let titleOverrides = readJson('title_overrides', {});
+let photoFrames = readJson('photo_frames', {});
 let photoOverrides = JSON.parse(localStorage.getItem('photo_overrides') || '{}');
 let photoMeta = JSON.parse(localStorage.getItem('photo_meta') || '{}');
 let BASE_RECIPE_IMGS = {}; // set in DOMContentLoaded before overrides — device-independent pool
@@ -2075,7 +2083,7 @@ function restoreUiState() {
 
     // Tab + per-tab scroll
     Object.assign(tabScroll, s.scroll || {});
-    const tab = ['home', 'recipes', 'ideas', 'tips'].includes(s.tab) ? s.tab : 'home';
+    const tab = ['home', 'recipes', 'ideas'].includes(s.tab) ? s.tab : 'home';
     currentTab = '';
     showTab(tab);
     const content = document.getElementById('content');
@@ -2210,9 +2218,21 @@ function renderHome() {
   // Cache today's picks in localStorage so they're stable across code updates/pool changes
   let hero, picks;
   const cached = (() => { try { return JSON.parse(localStorage.getItem('home_picks_v2') || 'null'); } catch(e) { return null; } })();
+  const homePool = () => active().filter(r => !r.id.startsWith('c_') && BASE_RECIPE_IMGS[r.id] && !r.meal.includes('dessert'));
   if (cached?.date === today) {
     hero = active().find(r => r.id === cached.heroId);
     picks = (cached.pickIds || []).map(id => active().find(r => r.id === id)).filter(Boolean);
+    // A deleted pick is replaced in its own spot; everything else stays put.
+    if (cached.heroId && (!hero || picks.length < (cached.pickIds || []).length)) {
+      const used = new Set([cached.heroId, ...(cached.pickIds || [])]);
+      const spare = homePool().filter(r => !used.has(r.id));
+      const take = () => spare.splice(Math.floor(Math.random() * spare.length), 1)[0];
+      if (!hero) hero = take();
+      picks = (cached.pickIds || []).map(id => active().find(r => r.id === id) || take()).filter(Boolean);
+      if (hero && picks.length >= 3) {
+        try { localStorage.setItem('home_picks_v2', JSON.stringify({ date: today, heroId: hero.id, pickIds: picks.map(r => r.id) })); } catch(e) {}
+      }
+    }
   }
   if (!hero || picks.length < 3) {
     // Generate fresh picks — only built-in recipes with photos, no desserts
@@ -2491,14 +2511,17 @@ function renderIdeas(pending = false) {
       </div>
     </div>
     <div class="idea-grid">${cards.join('')}</div>
-    ${dessertIdea
-      ? `<div class="ideas-section-hdr">Dessert</div>
-         <div class="idea-grid">${pending ? skeletonCard() : ideaCard(dessertIdea, 'dessert', 0)}</div>`
-      : `<div style="padding:4px 14px 16px">
-           <button class="btn-want-dessert" onclick="addDessert()">🍑 Want a dessert?</button>
-         </div>`
-    }`;
+    <div id="ideas-dessert">${dessertSectionHtml(pending)}</div>`;
   updateIdeasToolbar();
+}
+
+function dessertSectionHtml(pending = false) {
+  return dessertIdea
+    ? `<div class="ideas-section-hdr">Dessert</div>
+       <div class="idea-grid">${pending ? skeletonCard() : ideaCard(dessertIdea, 'dessert', 0)}</div>`
+    : `<div style="padding:4px 14px 16px">
+         <button class="btn-want-dessert" onclick="addDessert()">🍑 Want a dessert?</button>
+       </div>`;
 }
 
 // context 'fridge' hides swap and list controls (fridge matches aren't part of a plan).
@@ -2556,10 +2579,14 @@ function addDessert() {
   const avail = pool.filter(r => !exclude.includes(r.id));
   const next = (avail.length ? avail : pool)[Math.floor(Math.random() * (avail.length || pool.length))];
   const token = ideasRenderToken;
+  document.querySelector('#ideas-dessert .idea-swap')?.classList.add('loading');
+  haptic();
   preloadRecipePhotos([next], 1500).then(() => {
     if (token !== ideasRenderToken || !ideas) return;
     dessertIdea = next;
-    renderIdeas();
+    // Only the dessert area changes, so the week's meal cards never redraw.
+    const box = document.getElementById('ideas-dessert');
+    if (box) box.innerHTML = dessertSectionHtml(); else renderIdeas();
     scheduleUiSave();
   });
 }
@@ -2779,7 +2806,7 @@ function recipeCard(r) {
           <div class="recipe-title">${r.name}</div>
           <div class="recipe-cuisine">${cuisineLine}</div>
         </div>
-        <button class="card-photo-btn-inline" onclick="event.stopPropagation();triggerPhotoUpload('${r.id}')" title="Change photo">📷</button>
+        <button class="card-photo-btn-inline" onclick="event.stopPropagation();showPhotoMenu('${r.id}')" title="Photo" aria-label="Adjust or replace photo">📷</button>
         <button class="delete-btn" onclick="event.stopPropagation();deleteRecipe('${r.id}')" title="Remove">✕</button>
       </div>
       <div class="recipe-chips"><span class="meal-tag meal-protein">🥩 ${r.protein}</span>${plantBadge}${badges}</div>
@@ -2981,7 +3008,9 @@ function openModal(id) {
   modalBaseServings = r.servings || 2;
   modalCurrentServings = modalBaseServings;
   const isFav = favourites.includes(id);
-  document.getElementById('modal-title').textContent = r.name;
+  const titleEl = document.getElementById('modal-title');
+  titleEl.textContent = r.name;
+  titleEl.dataset.original = r.name;
   const existingHero = document.getElementById('modal-hero-wrap');
   if (existingHero) existingHero.remove();
   const heroWrap = document.createElement('div');
@@ -3002,6 +3031,8 @@ function openModal(id) {
       <span class="meal-tag f-salty">🍽 ${r.cuisine}</span>
       ${r.flavors.map(f => `<span class="meal-tag f-${f}">${flavorEmoji(f)} ${f}</span>`).join('')}
     </div>
+    <div class="modal-cols">
+    <section class="modal-col-ings">
     <div class="serving-row">
       <span class="serving-lbl">Serves</span>
       <div class="serving-ctrl">
@@ -3012,7 +3043,9 @@ function openModal(id) {
     </div>
     <div class="modal-section-lbl">Ingredients</div>
     <ul class="modal-ingredients" id="modal-ings">${renderIngredients(r)}</ul>
-    <div class="modal-section-lbl" style="margin-top:16px">Method</div>
+    </section>
+    <section class="modal-col-method">
+    <div class="modal-section-lbl modal-method-lbl">Method</div>
     <ol class="modal-method">${r.method.map(s => `<li>${s}</li>`).join('')}</ol>
     ${r.tips?.length ? `<div class="modal-section-lbl" style="margin-top:16px">Tips</div><ul class="modal-tips">${r.tips.map(t => `<li>${t}</li>`).join('')}</ul>` : ''}
     <div class="modal-macros">
@@ -3020,8 +3053,12 @@ function openModal(id) {
       <div class="macro-box"><div class="macro-val" style="color:var(--accent2)">${r.macros.protein}g</div><div class="macro-lbl">protein</div></div>
       <div class="macro-box"><div class="macro-val" style="color:var(--c-every)">${r.macros.carbs}g</div><div class="macro-lbl">carbs</div></div>
     </div>
+    </section>
+    </div>
+    <div class="modal-actions">
     ${id.startsWith('c_') ? `<button class="edit-recipe-btn" onclick="showEditRecipe('${id}')">Edit recipe</button>` : ''}
     <button class="delete-recipe-btn" onclick="deleteRecipe('${id}')">Remove this recipe</button>
+    </div>
     `;
   document.getElementById('recipe-modal').classList.add('open');
   document.getElementById('modal').scrollTop = 0;
@@ -3033,6 +3070,7 @@ function readAndSavePhoto(id, file) {
   reader.onload = e => {
     photoMeta[id] = Date.now();
     photoOverrides[id] = e.target.result;
+    if (photoFrames[id]) { photoFrames[id] = { x: 50, y: 50, z: 1, t: Date.now() }; savePhotoFrames(); }
     try {
       localStorage.setItem('photo_overrides', JSON.stringify(photoOverrides));
       localStorage.setItem('photo_meta', JSON.stringify(photoMeta));
@@ -3079,6 +3117,121 @@ function toggleModalExpand() {
   scheduleUiSave();
 }
 
+// 📷 → "Adjust current photo" (reframe + zoom) or "Replace photo".
+function showPhotoMenu(id) {
+  const r = RECIPES.find(x => x.id === id);
+  if (!r) return;
+  const hasPhoto = !!recipePhoto(r);
+  const sheet = document.getElementById('photo-menu');
+  sheet.querySelector('.pm-title').textContent = r.name;
+  const adj = document.getElementById('pm-adjust');
+  adj.style.display = hasPhoto ? '' : 'none';
+  adj.onclick = () => { hidePhotoMenu(); showPhotoAdjust(id); };
+  document.getElementById('pm-replace').onclick = () => { hidePhotoMenu(); triggerPhotoUpload(id); };
+  sheet.classList.add('open');
+}
+function hidePhotoMenu() { document.getElementById('photo-menu').classList.remove('open'); }
+
+// ── Photo framing (object-position + zoom), applied to every rendered photo of a recipe
+function frameFor(id) {
+  const f = photoFrames[id];
+  return f && (f.x !== 50 || f.y !== 50 || f.z > 1) ? f : null;
+}
+function applyFrameTo(img) {
+  const id = img.dataset.recipeId;
+  if (!id) return;
+  const f = frameFor(id);
+  img.style.objectPosition = f ? `${f.x}% ${f.y}%` : '';
+  const zoom = f && f.z > 1 && !img.classList.contains('meal-thumb');
+  img.style.transformOrigin = zoom ? `${f.x}% ${f.y}%` : '';
+  img.style.transform = zoom ? `scale(${f.z})` : '';
+}
+function applyPhotoFrames(root = document) {
+  root.querySelectorAll?.('img[data-recipe-id]').forEach(applyFrameTo);
+}
+function savePhotoFrames() { try { localStorage.setItem('photo_frames', JSON.stringify(photoFrames)); } catch(e) {} }
+
+let adjustState = null;
+function showPhotoAdjust(id) {
+  const r = RECIPES.find(x => x.id === id);
+  const src = r && recipePhoto(r);
+  if (!src) return;
+  const f = photoFrames[id] || { x: 50, y: 50, z: 1 };
+  adjustState = { id, x: f.x, y: f.y, z: f.z || 1 };
+  const img = document.getElementById('pa-img');
+  img.src = src;
+  img.alt = r.name;
+  document.getElementById('pa-zoom').value = adjustState.z;
+  renderAdjust();
+  document.getElementById('photo-adjust').classList.add('open');
+}
+function renderAdjust() {
+  const img = document.getElementById('pa-img');
+  const { x, y, z } = adjustState;
+  img.style.objectPosition = `${x}% ${y}%`;
+  img.style.transformOrigin = `${x}% ${y}%`;
+  img.style.transform = `scale(${z})`;
+}
+function closePhotoAdjust() { document.getElementById('photo-adjust').classList.remove('open'); adjustState = null; }
+function resetPhotoAdjust() { Object.assign(adjustState, { x: 50, y: 50, z: 1 }); document.getElementById('pa-zoom').value = 1; renderAdjust(); }
+function savePhotoAdjust() {
+  if (!adjustState) return;
+  const { id, x, y, z } = adjustState;
+  photoFrames[id] = { x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10, z: Math.round(z * 100) / 100, t: Date.now() };
+  savePhotoFrames();
+  applyPhotoFrames();
+  closePhotoAdjust();
+  syncPush();
+  showToast('✓ Photo adjusted');
+}
+function initPhotoAdjust() {
+  const frame = document.getElementById('pa-frame');
+  const img = document.getElementById('pa-img');
+  let drag = null;
+  frame.addEventListener('pointerdown', e => {
+    if (!adjustState) return;
+    e.preventDefault();
+    frame.setPointerCapture(e.pointerId);
+    drag = { id: e.pointerId, x: e.clientX, y: e.clientY, sx: adjustState.x, sy: adjustState.y };
+  });
+  frame.addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    // Photo follows the finger: how far a % of object-position moves depends on how
+    // much of the image overflows the frame at this zoom.
+    const fw = frame.clientWidth, fh = frame.clientHeight;
+    const nw = img.naturalWidth || fw, nh = img.naturalHeight || fh;
+    const cover = Math.max(fw / nw, fh / nh);
+    const z = adjustState.z;
+    const overX = Math.max(1, nw * cover * z - fw), overY = Math.max(1, nh * cover * z - fh);
+    adjustState.x = Math.max(0, Math.min(100, drag.sx - (e.clientX - drag.x) / overX * 100));
+    adjustState.y = Math.max(0, Math.min(100, drag.sy - (e.clientY - drag.y) / overY * 100));
+    renderAdjust();
+  });
+  const end = e => { if (drag && e.pointerId === drag.id) drag = null; };
+  frame.addEventListener('pointerup', end);
+  frame.addEventListener('pointercancel', end);
+  frame.addEventListener('wheel', e => {
+    if (!adjustState) return;
+    e.preventDefault();
+    adjustState.z = Math.max(1, Math.min(3, adjustState.z - e.deltaY * 0.002));
+    document.getElementById('pa-zoom').value = adjustState.z;
+    renderAdjust();
+  }, { passive: false });
+  document.getElementById('pa-zoom').addEventListener('input', e => {
+    if (!adjustState) return;
+    adjustState.z = Number(e.target.value);
+    renderAdjust();
+  });
+  document.getElementById('photo-menu').addEventListener('click', e => { if (e.target.id === 'photo-menu') hidePhotoMenu(); });
+  // Any photo that appears anywhere picks up its saved framing.
+  new MutationObserver(muts => muts.forEach(m => m.addedNodes.forEach(n => {
+    if (n.nodeType !== 1) return;
+    if (n.matches?.('img[data-recipe-id]')) applyFrameTo(n);
+    applyPhotoFrames(n);
+  }))).observe(document.body, { childList: true, subtree: true });
+  applyPhotoFrames();
+}
+
 function triggerPhotoUpload(id) {
   // Works on all devices: iOS/Android shows gallery picker, desktop shows file dialog
   const inp = document.createElement('input');
@@ -3089,6 +3242,54 @@ function triggerPhotoUpload(id) {
 }
 
 function isTombstoned(id) { return !!recipeTombstones[id]?.d; }
+
+// ── Rename a recipe from its title. Built-ins store a synced override; custom recipes update in place.
+function applyTitleOverrides() {
+  Object.entries(titleOverrides).forEach(([id, v]) => {
+    if (id.startsWith('c_') || !v?.name) return;
+    const r = RECIPES.find(x => x.id === id);
+    if (r) r.name = v.name;
+  });
+}
+function renameRecipe(id, name) {
+  const r = RECIPES.find(x => x.id === id);
+  name = String(name || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+  if (!r || !name || name === r.name) return false;
+  r.name = name;
+  if (id.startsWith('c_')) {
+    const c = customRecipes.find(x => x.id === id);
+    if (c) { c.name = name; c._updatedAt = Date.now(); }
+    r._updatedAt = Date.now();
+    persistCustomState();
+  } else {
+    titleOverrides[id] = { name, t: Date.now() };
+    try { localStorage.setItem('title_overrides', JSON.stringify(titleOverrides)); } catch(e) {}
+  }
+  renderRecipes(currentFilter);
+  renderFavourites();
+  renderHome();
+  document.querySelectorAll(`.idea-card[data-idea-id="${id}"] .idea-title`).forEach(el => { el.textContent = name; });
+  if (cookRecipe?.id === id) document.getElementById('cook-name').textContent = name;
+  syncPush();
+  return true;
+}
+function initTitleEditing() {
+  const el = document.getElementById('modal-title');
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    if (e.key === 'Escape') { el.textContent = el.dataset.original || ''; el.blur(); }
+  });
+  el.addEventListener('paste', e => {
+    e.preventDefault();
+    document.execCommand('insertText', false, (e.clipboardData?.getData('text/plain') || '').replace(/\s+/g, ' '));
+  });
+  el.addEventListener('blur', () => {
+    const name = el.textContent.replace(/\s+/g, ' ').trim();
+    if (!openRecipeId || !name) { el.textContent = el.dataset.original || ''; return; }
+    if (renameRecipe(openRecipeId, name)) { el.dataset.original = name; showToast('✓ Renamed'); }
+    el.textContent = el.dataset.original;
+  });
+}
 
 function saveTombstones() {
   deleted = new Set(Object.keys(recipeTombstones).filter(isTombstoned));
@@ -3144,6 +3345,14 @@ function deleteRecipe(id) {
   favourites = favourites.filter(f => f !== id);
   localStorage.setItem('fodmap_favs', JSON.stringify(favourites));
   if (openRecipeId === id) closeModal();
+  // If it was one of this week's ideas, swap a new recipe into that same slot.
+  if (ideas) {
+    const di = ideas.dinners.findIndex(x => x.id === id);
+    const li = ideas.lunches.findIndex(x => x.id === id);
+    if (di !== -1) swapIdea('dinner', di);
+    if (li !== -1) swapIdea('lunch', li);
+    if (dessertIdea?.id === id) addDessert();
+  }
 
   // Let the card fade out where it is, then reflow the list.
   const cards = document.querySelectorAll(`.recipe-card[data-id="${id}"]`);
@@ -3885,16 +4094,34 @@ function applySyncedState(nextRecipes, nextPhotos, nextPhotoMeta) {
   refreshRecipePhotos();
 }
 
+// Merge synced renames and photo framing; returns true if anything changed here.
+function mergeTitlesAndFrames(remoteTitles, remoteFrames) {
+  const nextTitles = mergeTombstones(titleOverrides, remoteTitles);
+  const nextFrames = mergeTombstones(photoFrames, remoteFrames);
+  const changed = JSON.stringify(nextTitles) !== JSON.stringify(titleOverrides) || JSON.stringify(nextFrames) !== JSON.stringify(photoFrames);
+  if (!changed) return false;
+  titleOverrides = nextTitles;
+  photoFrames = nextFrames;
+  try { localStorage.setItem('title_overrides', JSON.stringify(titleOverrides)); } catch(e) {}
+  savePhotoFrames();
+  applyTitleOverrides();
+  applyPhotoFrames();
+  return true;
+}
+
 async function syncPush() {
   try {
-    const [remoteRecipes, remotePhotos, remotePhotoMeta, remoteTombs] = await Promise.all([
+    const [remoteRecipes, remotePhotos, remotePhotoMeta, remoteTombs, remoteTitles, remoteFrames] = await Promise.all([
       kvGet('custom_recipes'),
       kvGet('photo_overrides'),
       kvGet('photo_meta'),
-      kvGet('recipe_tombstones')
+      kvGet('recipe_tombstones'),
+      kvGet('title_overrides'),
+      kvGet('photo_frames')
     ]);
     recipeTombstones = mergeTombstones(recipeTombstones, remoteTombs);
     saveTombstones();
+    mergeTitlesAndFrames(remoteTitles, remoteFrames);
     const mergedRecipes = mergeRecipes(customRecipes, remoteRecipes, true);
     const mergedPhotoState = mergePhotos(photoOverrides, remotePhotos, photoMeta, remotePhotoMeta, true);
     applySyncedState(mergedRecipes, mergedPhotoState.photos, mergedPhotoState.stamps);
@@ -3902,25 +4129,30 @@ async function syncPush() {
       kvSet('custom_recipes', customRecipes),
       kvSet('photo_overrides', photoOverrides),
       kvSet('photo_meta', photoMeta),
-      kvSet('recipe_tombstones', recipeTombstones)
+      kvSet('recipe_tombstones', recipeTombstones),
+      kvSet('title_overrides', titleOverrides),
+      kvSet('photo_frames', photoFrames)
     ]);
   } catch(e) {}
 }
 
 async function syncPull() {
   try {
-    const [remoteRecipes, remotePhotos, remotePhotoMeta, remoteTombs] = await Promise.all([
+    const [remoteRecipes, remotePhotos, remotePhotoMeta, remoteTombs, remoteTitles, remoteFrames] = await Promise.all([
       kvGet('custom_recipes'),
       kvGet('photo_overrides'),
       kvGet('photo_meta'),
-      kvGet('recipe_tombstones')
+      kvGet('recipe_tombstones'),
+      kvGet('title_overrides'),
+      kvGet('photo_frames')
     ]);
+    const extrasChanged = mergeTitlesAndFrames(remoteTitles, remoteFrames);
     const nextTombs = mergeTombstones(recipeTombstones, remoteTombs);
     const tombsChanged = JSON.stringify(nextTombs) !== JSON.stringify(recipeTombstones);
     if (tombsChanged) { recipeTombstones = nextTombs; saveTombstones(); }
     const mergedRecipes = mergeRecipes(customRecipes, remoteRecipes, false).filter(r => !isTombstoned(r.id));
     const mergedPhotoState = mergePhotos(photoOverrides, remotePhotos, photoMeta, remotePhotoMeta, false);
-    const changed = tombsChanged || JSON.stringify(mergedRecipes) !== JSON.stringify(customRecipes) ||
+    const changed = tombsChanged || extrasChanged || JSON.stringify(mergedRecipes) !== JSON.stringify(customRecipes) ||
       JSON.stringify(mergedPhotoState.photos) !== JSON.stringify(photoOverrides);
     if (changed) applySyncedState(mergedRecipes, mergedPhotoState.photos, mergedPhotoState.stamps);
     if (changed) {
@@ -3935,7 +4167,7 @@ async function syncPull() {
 // ─── INIT ────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const dateStr = new Date().toLocaleDateString('en-GB', {day:'numeric', month:'short'});
-  ['topbar-date-recipes','topbar-date-ideas','topbar-date-tips']
+  ['topbar-date-recipes','topbar-date-ideas']
     .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = dateStr; });
 
   for (let i = RECIPES.length - 1; i >= 0; i--) {
@@ -3956,6 +4188,7 @@ document.addEventListener('DOMContentLoaded', () => {
   customRecipes.forEach(r => {
     if (r._photoData && !RECIPE_IMGS[r.id]) RECIPE_IMGS[r.id] = r._photoData;
   });
+  applyTitleOverrides();
   // Snapshot built-in images before overrides — used for home page pool (device-independent)
   BASE_RECIPE_IMGS = { ...RECIPE_IMGS };
   // Apply photo overrides on top of everything (drag-and-drop replacements)
@@ -3973,7 +4206,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Pull remote data first, then push merged state back to KV.
   // The push-after-pull ensures recipes/photos added before sync was set up reach KV.
   syncPull().then(() => {
-    if (customRecipes.length > 0 || Object.keys(photoOverrides).length > 0 || Object.keys(recipeTombstones).length > 0) syncPush();
+    if (customRecipes.length > 0 || Object.keys(photoOverrides).length > 0 || Object.keys(recipeTombstones).length > 0 ||
+        Object.keys(titleOverrides).length > 0 || Object.keys(photoFrames).length > 0) syncPush();
   });
 
   // Purge any API key that was previously stored in browser — key now lives only in Cloudflare Worker secret
@@ -3986,6 +4220,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reopen exactly where you left off (tab, scroll, open recipe, ideas, cook step).
   localStorage.removeItem('lastTab');
   initAlphaRail();
+  initTitleEditing();
+  initPhotoAdjust();
   restoreUiState();
   initUiStatePersistence();
 
@@ -3994,32 +4230,80 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === document.getElementById('add-recipe-screen')) hideAddRecipe();
   });
 
-  // Drag the sheet header down to dismiss, without intercepting recipe scrolling.
+  // Drag the sheet down to dismiss. Header/handle work with any pointer; on touch
+  // screens the photo works too. Dragging the photo upward scrolls the recipe instead,
+  // and a short tap on the photo still opens it full size.
   const sheet = document.getElementById('modal');
+  const backdrop = document.getElementById('recipe-modal');
   let sheetDrag = null;
+  let suppressHeroClick = false;
+  const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   sheet.addEventListener('pointerdown', e => {
-    if (!e.isPrimary || e.button !== 0 || !e.target.closest('.modal-header, .modal-handle') || e.target.closest('button')) return;
-    sheetDrag = { id: e.pointerId, x: e.clientX, y: e.clientY, distance: 0 };
+    if (!e.isPrimary || e.button !== 0 || e.target.closest('button')) return;
+    const onChrome = e.target.closest('.modal-header, .modal-handle');
+    const onPhoto = e.pointerType !== 'mouse' && e.target.closest('#modal-hero-wrap');
+    if (!onChrome && !onPhoto) return;
+    if (e.target.closest('.modal-title') && document.activeElement === document.getElementById('modal-title')) return;
+    suppressHeroClick = false;
+    sheetDrag = { id: e.pointerId, x: e.clientX, y: e.clientY, lastY: e.clientY, distance: 0,
+      photo: !!onPhoto, mode: null, samples: [{ y: e.clientY, t: e.timeStamp }] };
     sheet.setPointerCapture(e.pointerId);
     sheet.style.transition = 'none';
+    backdrop.style.transition = 'none';
   });
   sheet.addEventListener('pointermove', e => {
     if (!sheetDrag || e.pointerId !== sheetDrag.id) return;
-    const down = Math.max(0, e.clientY - sheetDrag.y);
-    if (Math.abs(e.clientX - sheetDrag.x) > down + 20) return;
-    sheetDrag.distance = down;
-    sheet.style.transform = `translateY(${down}px)`;
+    const dy = e.clientY - sheetDrag.y, dx = e.clientX - sheetDrag.x;
+    sheetDrag.samples.push({ y: e.clientY, t: e.timeStamp });
+    if (sheetDrag.samples.length > 5) sheetDrag.samples.shift();
+    if (!sheetDrag.mode) {
+      if (Math.abs(dy) < 8 && Math.abs(dx) < 8) return;          // ~10px hysteresis before committing
+      if (Math.abs(dx) > Math.abs(dy) + 10) { sheetDrag.mode = 'ignore'; return; }
+      sheetDrag.mode = dy > 0 && sheet.scrollTop <= 0 ? 'dismiss' : (sheetDrag.photo ? 'scroll' : 'ignore');
+      if (sheetDrag.photo) suppressHeroClick = true;
+    }
+    if (sheetDrag.mode === 'scroll') {
+      sheet.scrollTop -= e.clientY - sheetDrag.lastY;
+    } else if (sheetDrag.mode === 'dismiss') {
+      const down = Math.max(0, dy);
+      sheetDrag.distance = down;
+      sheet.style.transform = `translateY(${down}px)`;
+      backdrop.style.backgroundColor = `rgba(0,0,0,${0.45 * Math.max(0.2, 1 - down / 500)})`;
+    }
+    sheetDrag.lastY = e.clientY;
   });
   const finishSheetDrag = e => {
     if (!sheetDrag || e.pointerId !== sheetDrag.id) return;
-    const dismiss = e.type === 'pointerup' && sheetDrag.distance >= 80;
+    const d = sheetDrag;
     sheetDrag = null;
     if (sheet.hasPointerCapture(e.pointerId)) sheet.releasePointerCapture(e.pointerId);
-    if (dismiss) closeModal();
-    else { sheet.style.transition = 'transform .18s ease-out'; sheet.style.transform = ''; }
+    if (d.photo && suppressHeroClick) setTimeout(() => { suppressHeroClick = false; }, 400);
+    if (d.mode !== 'dismiss') { sheet.style.transform = ''; backdrop.style.backgroundColor = ''; return; }
+    // Release velocity (px/s) from recent samples; project momentum forward to decide.
+    const first = d.samples[0], last = d.samples[d.samples.length - 1];
+    const v = last.t > first.t ? (last.y - first.y) / (last.t - first.t) * 1000 : 0;
+    const projected = d.distance + (v / 1000) * 0.998 / (1 - 0.998);
+    const dismiss = e.type === 'pointerup' && (projected > Math.min(220, sheet.offsetHeight * 0.3) || d.distance >= 140);
+    if (dismiss) {
+      const ms = reduceMotion() ? 0 : Math.max(140, Math.min(260, (sheet.offsetHeight - d.distance) / Math.max(v, 900) * 1000));
+      sheet.style.transition = `transform ${ms}ms cubic-bezier(.2,.7,.3,1)`;
+      backdrop.style.transition = `background-color ${ms}ms linear`;
+      sheet.style.transform = `translateY(${sheet.offsetHeight + 40}px)`;
+      backdrop.style.backgroundColor = 'rgba(0,0,0,0)';
+      setTimeout(() => { closeModal(); backdrop.style.backgroundColor = ''; backdrop.style.transition = ''; }, ms);
+    } else {
+      sheet.style.transition = reduceMotion() ? 'none' : 'transform .32s cubic-bezier(.3,1.25,.5,1)';
+      backdrop.style.transition = 'background-color .25s';
+      sheet.style.transform = '';
+      backdrop.style.backgroundColor = '';
+    }
   };
   sheet.addEventListener('pointerup', finishSheetDrag);
   sheet.addEventListener('pointercancel', finishSheetDrag);
+  // A drag on the photo must not also count as a tap that opens the full-size photo.
+  sheet.addEventListener('click', e => {
+    if (suppressHeroClick && e.target.closest('#modal-hero-wrap')) { e.stopPropagation(); e.preventDefault(); }
+  }, true);
 
   document.getElementById('recipe-modal').addEventListener('click', e => {
     if (e.target === document.getElementById('recipe-modal')) closeModal();
@@ -4234,6 +4518,35 @@ function openLightbox(src, alt) {
 </div>
 
 <div id="toast"></div>
+<div id="photo-menu" class="action-sheet-backdrop">
+  <div class="action-sheet" role="dialog" aria-label="Photo options">
+    <div class="action-group">
+      <div class="pm-title"></div>
+      <button id="pm-adjust" type="button">Adjust current photo</button>
+      <button id="pm-replace" type="button">Replace photo</button>
+    </div>
+    <button class="action-cancel" type="button" onclick="hidePhotoMenu()">Cancel</button>
+  </div>
+</div>
+
+<div id="photo-adjust" class="action-sheet-backdrop">
+  <div class="pa-sheet" role="dialog" aria-label="Adjust photo">
+    <div class="pa-header">
+      <button type="button" class="pa-text-btn" onclick="closePhotoAdjust()">Cancel</button>
+      <div class="pa-title">Adjust photo</div>
+      <button type="button" class="pa-text-btn pa-save" onclick="savePhotoAdjust()">Save</button>
+    </div>
+    <div class="pa-frame" id="pa-frame"><img id="pa-img" alt="" draggable="false"></div>
+    <div class="pa-hint">Drag to reposition</div>
+    <div class="pa-zoom-row">
+      <span aria-hidden="true">−</span>
+      <input id="pa-zoom" type="range" min="1" max="3" step="0.01" value="1" aria-label="Zoom">
+      <span aria-hidden="true">＋</span>
+    </div>
+    <button type="button" class="pa-reset" onclick="resetPhotoAdjust()">Reset</button>
+  </div>
+</div>
+
 <div id="undo-toast" role="status" aria-live="polite"><span id="undo-toast-msg"></span><button id="undo-toast-btn" type="button">Undo</button></div>
 
 <script>
