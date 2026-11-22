@@ -577,10 +577,11 @@
       border-bottom:1px solid var(--border);border-top:none;
       padding:0 28px;background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);
       box-shadow:0 1px 0 var(--border);}
-    #tabbar::before{content:'Meal Planner';display:block;flex-shrink:0;
+    .tabbar-logo{display:block;flex-shrink:0;background:none;border:none;cursor:pointer;
       font-size:1.1rem;font-weight:900;color:var(--text);
       font-family:var(--font-serif);
       margin-right:36px;padding:0;}
+    .tabbar-logo:hover{color:var(--accent);}
     .tab{flex:0 0 auto;flex-direction:row;gap:0;
       height:52px;padding:0 14px;align-items:center;justify-content:center;
       border-radius:0;margin:0;
@@ -810,6 +811,8 @@
   @media(min-width:900px){.action-sheet-backdrop{align-items:center;}}
   @media (prefers-reduced-motion: reduce){.action-sheet,.pa-sheet,.action-sheet-backdrop.open{animation:none;}}
 
+  @media(max-width:899px){.tabbar-logo{display:none;}}
+
   /* ── Add Recipe tab ── */
   .tab-add{background:none;border:none;font-family:inherit;padding-top:8px;}
   .tab-add .tab-label{margin-top:-1px;}
@@ -929,6 +932,7 @@
 
 <!-- TAB BAR -->
 <nav id="tabbar">
+  <button class="tabbar-logo" type="button" onclick="onTabTap('home')" aria-label="Meal Planner, go to Home">Meal Planner</button>
   <div class="tab active" data-tab="home" onclick="onTabTap('home')">
     <span class="tab-icon">🏠</span>
     <span class="tab-label">Home</span>
