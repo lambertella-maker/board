@@ -6,7 +6,24 @@
   "headers": [
     {
       "source": "/(.*)",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/app",
+      "destination": "/financeapp/",
+      "permanent": false
+    },
+    {
+      "source": "/app/(.*)",
+      "destination": "/financeapp/",
+      "permanent": false
     }
   ]
 }
