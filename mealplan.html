@@ -644,27 +644,37 @@
     .modal-expand:hover{background:var(--border);}
     .modal.expanded{width:94vw!important;max-width:94vw!important;
       height:92vh!important;max-height:92vh!important;border-radius:16px!important;}
-    /* Full screen = cookbook spread: modest photo banner, ingredients left
-       (stays in view while you read), method right, everything at reading size. */
-    .modal.expanded .modal-hero,.modal.expanded .modal-hero-placeholder{height:min(32vh,300px);border-radius:16px 16px 0 0;}
-    .modal.expanded .modal-header{max-width:1180px;margin:0 auto;padding:18px 40px 14px;align-items:center;}
-    .modal.expanded .modal-title{font-family:var(--font-serif);font-size:1.75rem;line-height:1.15;letter-spacing:-0.01em;}
-    .modal.expanded .modal-body{max-width:1180px;margin:0 auto;padding:20px 40px 32px;}
-    .modal.expanded .modal-meta-row{margin-bottom:22px;}
-    .modal.expanded .modal-cols{display:grid;grid-template-columns:minmax(260px,1fr) 1.7fr;gap:48px;align-items:start;}
-    .modal.expanded .modal-col-ings{position:sticky;top:0;max-height:calc(92vh - 40px);overflow-y:auto;
-      padding:4px 20px 12px 0;border-right:1px solid var(--border);}
-    .modal.expanded .modal-method-lbl{margin-top:4px;}
-    .modal.expanded .modal-section-lbl{font-size:0.72rem;margin-bottom:10px;}
-    .modal.expanded .modal-ingredients li{font-size:0.95rem;padding:9px 0;line-height:1.4;}
-    .modal.expanded .modal-ingredients li.ing-section{font-size:0.7rem;padding:16px 0 4px;}
-    .modal.expanded .modal-method li{font-size:1.02rem;line-height:1.65;padding:12px 0 12px 40px;color:var(--text);}
-    .modal.expanded .modal-method li::before{top:13px;width:26px;height:26px;line-height:26px;font-size:0.8rem;}
-    .modal.expanded .modal-tips li{font-size:0.92rem;}
-    .modal.expanded .modal-macros{max-width:420px;margin-top:24px;}
-    .modal.expanded .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:28px;
-      padding-top:16px;border-top:1px solid var(--border);}
-    .modal.expanded .modal-actions button{width:auto;margin:0;padding:10px 18px;}
+    /* Full screen = one-screen cookbook spread (no page scroll):
+       photo fills the left column; title + details across the top right;
+       ingredients | method side by side below, each scrolling only if a recipe is long. */
+    .modal.expanded{display:grid!important;grid-template-columns:minmax(260px,30%) 1fr;
+      grid-template-rows:auto minmax(0,1fr);overflow:hidden!important;}
+    .modal.expanded .modal-handle{display:none;}
+    .modal.expanded #modal-hero-wrap{grid-column:1;grid-row:1 / span 2;height:100%;border-radius:16px 0 0 16px;}
+    .modal.expanded .modal-hero,.modal.expanded .modal-hero-placeholder{height:100%!important;border-radius:0;}
+    .modal.expanded .modal-header{grid-column:2;grid-row:1;padding:18px 28px 12px;align-items:center;}
+    .modal.expanded .modal-title{font-family:var(--font-serif);font-size:1.6rem;line-height:1.15;letter-spacing:-0.01em;}
+    .modal.expanded .modal-body{grid-column:2;grid-row:2;min-height:0;display:flex;flex-direction:column;
+      padding:12px 28px 16px;overflow:hidden;}
+    .modal.expanded .modal-meta-row{margin-bottom:12px;flex-shrink:0;}
+    .modal.expanded .modal-cols{flex:1;min-height:0;display:grid;grid-template-columns:minmax(240px,1fr) 1.6fr;gap:32px;}
+    .modal.expanded .modal-col-ings,.modal.expanded .modal-col-method{min-height:0;overflow-y:auto;overscroll-behavior:contain;
+      scrollbar-width:thin;}
+    .modal.expanded .modal-col-ings{padding:0 20px 8px 0;border-right:1px solid var(--border);}
+    .modal.expanded .modal-col-method{padding:0 4px 8px 0;}
+    .modal.expanded .serving-row{margin-bottom:10px;padding:8px 12px;}
+    .modal.expanded .modal-method-lbl{margin-top:0;}
+    .modal.expanded .modal-section-lbl{font-size:0.68rem;margin-bottom:6px;}
+    .modal.expanded .modal-ingredients li{font-size:0.88rem;padding:6px 0;line-height:1.35;}
+    .modal.expanded .modal-ingredients li.ing-section{font-size:0.66rem;padding:12px 0 3px;}
+    .modal.expanded .modal-method li{font-size:0.95rem;line-height:1.5;padding:8px 0 8px 36px;color:var(--text);}
+    .modal.expanded .modal-method li::before{top:9px;width:24px;height:24px;line-height:24px;font-size:0.75rem;}
+    .modal.expanded .modal-tips li{font-size:0.86rem;padding:5px 0 5px 22px;}
+    .modal.expanded .modal-macros{max-width:360px;margin-top:14px;}
+    .modal.expanded .macro-box{padding:6px;}
+    .modal.expanded .modal-actions{display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;margin-top:10px;
+      padding-top:10px;border-top:1px solid var(--border);}
+    .modal.expanded .modal-actions button{width:auto;margin:0;padding:8px 16px;}
 
     /* ── Add Recipe → centered dialog ── */
     #add-recipe-screen{background:rgba(0,0,0,0.42);align-items:center;
@@ -690,8 +700,8 @@
   .idea-info{flex:1;}
   .idea-photo-wrap .idea-photo-placeholder{position:absolute;inset:0;}
   .idea-photo-wrap img{position:relative;z-index:1;}
-  .idea-photo-wrap img.ph-fade{opacity:0;transition:opacity .28s ease-out;}
-  .idea-photo-wrap img.ph-fade.is-loaded{opacity:1;}
+  img.ph-fade{opacity:0;transition:opacity .28s ease-out;}
+  img.ph-fade.is-loaded{opacity:1;}
   .idea-photo-wrap.skeleton{background:linear-gradient(100deg,var(--card2) 30%,#efe9e1 50%,var(--card2) 70%);
     background-size:300% 100%;animation:shimmer 1.2s linear infinite;}
   .idea-card.skeleton-card{pointer-events:none;}
@@ -786,7 +796,10 @@
   .modal-ingredients li.ing-section::before,.modal-ingredients li.ing-section::marker{content:none;}
 
   /* Neutral tile behind photos while they load (no emoji flash). */
-  .photo-loading{background:var(--card2);}
+  .photo-loading,.photo-clip,#modal-hero-wrap,.home-hero,.home-pick-photo,.ar-photo-preview-wrap{background-color:var(--card2);}
+  .photo-loading{background:linear-gradient(100deg,var(--card2) 30%,#efe9e1 50%,var(--card2) 70%);
+    background-size:300% 100%;animation:shimmer 1.4s linear infinite;}
+  @media (prefers-reduced-motion: reduce){.photo-loading{animation:none;background:var(--card2);}}
   .recipe-card-img,.modal-hero,.home-pick-photo img,.home-hero img,.idea-photo-wrap img{background-color:var(--card2);}
 
   /* ── Photo clipping (so zoomed framing stays inside its box) ── */
@@ -1801,6 +1814,17 @@ function recipePhoto(r) {
   return photoOverrides[r.id] || r._photoData || RECIPE_IMGS[r.id] || '';
 }
 
+// Swap an <img> to a new photo without ever showing the previous one: blank it,
+// let the grey tile show, then fade the new photo in once it has loaded.
+function setPhotoSrc(img, src) {
+  if (!img || !src || img.getAttribute('src') === src) return;
+  img.classList.remove('is-loaded');
+  img.classList.add('ph-fade');
+  img.removeAttribute('src');
+  img.onload = () => recipePhotoLoaded(img);
+  img.src = src;
+}
+
 function recipePhotoFailed(img) {
   // Keep the slot and recipe identity: a temporary failure must not become a permanent emoji.
   img.dataset.photoFailed = 'true';
@@ -1840,7 +1864,10 @@ function refreshRecipePhotos() {
     }
     img.onerror = () => recipePhotoFailed(img);
     img.onload = () => recipePhotoLoaded(img);
-    if (img.getAttribute('src') !== src || img.dataset.photoFailed) {
+    if (img.getAttribute('src') !== src) {
+      delete img.dataset.photoRetries;
+      setPhotoSrc(img, src);
+    } else if (img.dataset.photoFailed) {
       delete img.dataset.photoRetries;
       img.src = src;
     }
@@ -2440,7 +2467,6 @@ function smartPick(pool, count, excludeIds = []) {
 // all at once instead of popping in one by one.
 const photoReady = new Map();   // src -> Promise<boolean>
 const photoDecoded = new Set(); // srcs that are decoded and safe to paint synchronously
-const photoKeep = [];           // hold decoded images so the browser keeps them warm
 
 function preloadPhoto(src) {
   if (!src) return Promise.resolve(false);
@@ -2449,7 +2475,7 @@ function preloadPhoto(src) {
     const img = new Image();
     img.decoding = 'async';
     img.onload = () => {
-      const done = () => { photoDecoded.add(src); photoKeep.push(img); if (photoKeep.length > 80) photoKeep.shift(); resolve(true); };
+      const done = () => { photoDecoded.add(src); resolve(true); };
       img.decode ? img.decode().then(done, done) : done();
     };
     img.onerror = () => { photoReady.delete(src); resolve(false); };
@@ -2517,21 +2543,15 @@ function swapIdea(mealType, index) {
   const replacement = avail[Math.floor(Math.random() * avail.length)] || pool[Math.floor(Math.random() * pool.length)];
   if (!replacement) return;
   const slot = `${mealType}-${index}`;
-  const oldCard = document.querySelector(`#ideas-results .idea-card[data-slot="${slot}"]`);
-  const btn = oldCard?.querySelector('.idea-swap');
-  if (btn) btn.classList.add('loading');
   haptic();
-  const token = ideasRenderToken;
-  preloadRecipePhotos([replacement], 1500).then(() => {
-    if (token !== ideasRenderToken || !ideas) return;
-    checkedIdeas.delete(list[index]?.id);
-    list[index] = replacement;
-    const card = document.querySelector(`#ideas-results .idea-card[data-slot="${slot}"]`);
-    if (card) card.outerHTML = ideaCard(replacement, mealType, index);
-    else renderIdeas();
-    updateIdeasToolbar();
-    scheduleUiSave();
-  });
+  // Old photo disappears at once; the new card shows the grey tile until its photo loads.
+  checkedIdeas.delete(list[index]?.id);
+  list[index] = replacement;
+  const card = document.querySelector(`#ideas-results .idea-card[data-slot="${slot}"]`);
+  if (card) card.outerHTML = ideaCard(replacement, mealType, index);
+  else renderIdeas();
+  updateIdeasToolbar();
+  scheduleUiSave();
 }
 
 function updateIdeasToolbar() {
@@ -2636,17 +2656,12 @@ function addDessert() {
   const exclude = dessertIdea ? [dessertIdea.id] : [];
   const avail = pool.filter(r => !exclude.includes(r.id));
   const next = (avail.length ? avail : pool)[Math.floor(Math.random() * (avail.length || pool.length))];
-  const token = ideasRenderToken;
-  document.querySelector('#ideas-dessert .idea-swap')?.classList.add('loading');
   haptic();
-  preloadRecipePhotos([next], 1500).then(() => {
-    if (token !== ideasRenderToken || !ideas) return;
-    dessertIdea = next;
-    // Only the dessert area changes, so the week's meal cards never redraw.
-    const box = document.getElementById('ideas-dessert');
-    if (box) box.innerHTML = dessertSectionHtml(); else renderIdeas();
-    scheduleUiSave();
-  });
+  dessertIdea = next;
+  // Only the dessert area changes (meal cards never redraw); grey tile until its photo loads.
+  const box = document.getElementById('ideas-dessert');
+  if (box) box.innerHTML = dessertSectionHtml(); else renderIdeas();
+  scheduleUiSave();
 }
 
 function backToSplash() {
@@ -3127,6 +3142,8 @@ function openModal(id) {
 function readAndSavePhoto(id, file) {
   const reader = new FileReader();
   reader.onload = e => {
+    const oldSrc = photoOverrides[id];
+    if (oldSrc) { photoReady.delete(oldSrc); photoDecoded.delete(oldSrc); }
     photoMeta[id] = Date.now();
     photoOverrides[id] = e.target.result;
     if (photoFrames[id]) { photoFrames[id] = { x: 50, y: 50, z: 1, t: Date.now() }; savePhotoFrames(); }
@@ -3137,7 +3154,7 @@ function readAndSavePhoto(id, file) {
     RECIPE_IMGS[id] = e.target.result;
     refreshRecipePhotos();
     // Update every rendered image for this recipe across all tabs instantly
-    document.querySelectorAll(`img[data-recipe-id="${id}"]`).forEach(img => { img.src = e.target.result; });
+    document.querySelectorAll(`img[data-recipe-id="${id}"]`).forEach(img => setPhotoSrc(img, e.target.result));
     // Re-render cards for tabs that reconstruct full HTML (recipes list, favourites)
     renderRecipes(currentFilter);
     renderFavourites();
@@ -3218,7 +3235,7 @@ function showPhotoAdjust(id) {
   const f = photoFrames[id] || { x: 50, y: 50, z: 1 };
   adjustState = { id, x: f.x, y: f.y, z: f.z || 1 };
   const img = document.getElementById('pa-img');
-  img.src = src;
+  setPhotoSrc(img, src);
   img.alt = r.name;
   document.getElementById('pa-zoom').value = adjustState.z;
   renderAdjust();
@@ -3768,7 +3785,7 @@ function handlePhotoFile(input) {
 }
 
 function showPhotoPreview(src) {
-  document.getElementById('ar-photo-img').src = src;
+  setPhotoSrc(document.getElementById('ar-photo-img'), src);
   document.getElementById('ar-photo-preview').style.display = 'block';
   document.getElementById('ar-drop-zone').style.display = 'none';
 }
@@ -4408,7 +4425,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function openLightbox(src, alt) {
   const lb = document.getElementById('img-lightbox');
-  lb.querySelector('img').src = src;
+  setPhotoSrc(lb.querySelector('img'), src);
   lb.querySelector('img').alt = alt || '';
   lb.classList.add('open');
 }
